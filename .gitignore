@@ -37,6 +37,10 @@
 # the rules below will still not be ignored.
 !*/
 
+# ignore data storage directories
+0_raw_data/
+1_secondary_data/
+
 #######################
 # The following file types are code that should always be
 # included no matter where in the repository folder they are
@@ -53,7 +57,7 @@
 !/**/*.Rmd
 !/**/*.Rproj
 !/**/*.qmd
-!/**/*.lock
+!/**/renv.lock
 # Still ignore user file for R projects
 .Rproj.user
 
@@ -98,8 +102,19 @@
 # to change the name of the Output folder to whatever it is called in your
 # project, but we strongly recommend that you only include these files in
 # a subset of the folders where you are certain no private data is ever stored.
-# !/**/Output/**/*.txt
-# !/**/Output/**/*.csv
+
+!/**/3_cleaned_data/**/*.txt
+!/**/3_cleaned_data/**/*.csv
+!/**/3_cleaned_data/**/*.RDATA
+!/**/3_cleaned_data/**/*.rda
+
+!/**/4_output/**/*.txt
+!/**/4_output/**/*.html
+!/**/4_output/**/*.eps
+!/**/4_output/**/*.png
+!/**/4_output/**/*.pdf
+
+#!/**/Output/**/*.csv
 # !/**/Output/**/*.xml
 # !/**/Output/**/*.eps
 # !/**/Output/**/*.svg
