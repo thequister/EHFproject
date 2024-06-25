@@ -53,6 +53,7 @@
 !/**/*.Rmd
 !/**/*.Rproj
 !/**/*.qmd
+!/**/*.lock
 # Still ignore user file for R projects
 .Rproj.user
 
