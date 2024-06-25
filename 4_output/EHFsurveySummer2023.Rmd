@@ -1,0 +1,1037 @@
+---
+title: "Employee Hardship Funds as Private Welfare?"
+subtitle: "evidence from one matched worker-employer survey"
+author: 
+  - John S. Ahlquist, UCSD^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  Research supported with grants from the UCSD Center for Global Transformation and the Yankelovitch Center.  Keng-Chi Chiang and Yuchen Wang provided research assistance.  Versions of this research were presented at the 2022 APSA, LERA, and CAPE meetings and the 2023 EPSA meetings. Kate Bronfenbrenner, Daniel Galvin, and Jake Grumbach provided helpful comments. I thank Shane Xuan for interceding at Facebook.]
+  
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+abstract: | 
+  Hundreds of major US employers have created programs that pool money donations from employees in order to offer emergency cash grants to their workers. These programs are known as "employee hardship funds" or EHFs. There is a modest practitioner literature on EHFs but the programs have received no academic attention whatever.  This paper presents results from an original survey of workers at one major US retailer that maintains one of the oldest and most widely publicized EHFs.  I investigate workers' awareness of their employer's EHF and use an embedded survey experiment to evaluate whether the EHF has any effect on worker financial well-being, attachment to their employer and co-workers, and attitudes toward unionization and government-funded social insurance and welfare programs.  I find that there is a high level of worker awareness and engagement with the EHF correlated with tenure at this firm.  Simply informing workers about the EHF has no effect on any outcome, but a more agressive video vingette treatment describing EHF benefits for a particular recipient increases loyalty to co-workers and the employer, increases uncertainty about unionization, and increases support for government aid to the unemployed.  There is no evidence that prompting workers with information about the EHF affects their perceived financial security.
+
+output: 
+  bookdown::pdf_document2:
+    toc: false
+    citation_package: natbib
+    extra_dependencies: ["hyperref", "bbm"]
+biblio-style: "`r here::here('inputs', 'apsr.bst')`"
+bibliography: 
+   - "`r here::here('inputs', 'EHFbib3')`"
+link-citations: true
+header-includes:
+   - \usepackage{setspace}
+   - \onehalfspacing
+
+---
+
+```{r setup, file = "`r here::here('1_code', 'THD', 'libraries_and_settings.R')`" include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(here)
+library(MASS)
+library(tidyverse)
+library(codebook)
+library(survey)
+library(questionr)
+library(srvyr)
+#install.packages("remotes")
+#remotes::install_github("carlganz/svrepmisc")
+library(svrepmisc)
+library(svyVGAM)
+#library(apsrtable)
+library(stargazer)
+#library(texreg)
+#install.packages("devtools")
+#devtools::install_github("pewresearch/pewmethods", build_vignettes = TRUE)
+library(pewmethods)
+library(ri2)
+library(modelsummary)
+library(DescTools)
+ggplot2::theme_set(ggplot2::theme_bw())
+here()
+set.seed(98)
+```
+
+Past generations of workers built organizations to help one another in hard times. Mutual aid societies were the precursors to modern trade unions [@webb_history_1920; @bacharach_mutual_2018; @jarley_unions_2005].  Many unions continue to maintain emergency aid programs to support, recruit, and retain members [@derickson_workers_1988; @dreyfus_labour_1993;@beito_mutual_2000;@glenn_understanding_2001] while rotating credit and lending circles are observed the world over [@besleyEconomicsRotatingSavings1993; @ardenerComparativeStudyRotating1964].  These organizations transformed workplace relations, socialized workers into political life, and produced labor-based political movements. But unions are vanishing and the American welfare and social insurance systems are creaking, as unprecedented demand encounters decades of disinvestment. Ordinary Americans have seen years of stagnating wages while also bearing more economic risk [@hacker_great_2019].  Temporary, project-based, and other forms of "non-standard" employment relationships do not carry access to traditional social insurance and labor market protections.  Yet such arrangements are increasingly widespread [@abraham_measuring_2018]. Precarious employment, "fissured" workplaces, and distributed supply chains are making it harder for workers to develop the occupational identities and dense networks of coworkers that supported the organization-building of the past [@ahlquist_research_2018;@thelen_american_2019;@naidu_is_nodate;@weil_fissured_2014].   
+
+Even as social insurance deteriorates, hundreds of major US employers have sponsored the creation of "employee hardship funds" (EHFs).  EHFs, organized as tax-exempt charities, take in money donations to fund emergency cash grants to a specific firm's employees when facing certain hardships.^[See [https://emergencyassistancefdn.org/fund-portals/](https://emergencyassistancefdn.org/fund-portals/) for one partial listing of EHFs.] Donations typically come from the workers themselves, although corporate money is sometimes used to seed the fund or provide incentives for workers' contributions and contributions from executives can be considerable. EHFs present a novel form of employer-driven mutual aid.  As such, these programs pose a series of interesting questions, especially when contrasted with employers' behavior around standard issues of pay, benefits, and collective worker voice.  Nevertheless, we know almost nothing known about EHFs.  There is a small practitioner literature [@noauthor_environmental_2013; @employee_relief_fund_education_group_environmental_2019;@aspen_institute_illuminating_2019; @rodriguez_creating_2020;@rodriguez_every_2020], but scholarly attention has been minimal and oblique [@amorim_schedule_2022; @reich_working_2018]. 
+
+Consultants and human resources practitioners charged with designing and implementing EHF programs have produced most of the existing research. Unsurprisingly, these reports focus on documenting the positive impact that receiving an EHF grant can have for recipients in need.  Interviews with EHF grant recipients and aggregated data on grant disbursement amounts and the subsequent outcomes form the empirical basis for these reports.  There is no comparison between grant recipients and non-recipients nor any effort to address selection into grant application, receipt, or the study. Consequently, there are large holes in what we can say about EHFs.  
+
+To begin addressing these weaknesses, I fielded an original survey of workers at one large US retailer that maintains one of the oldest and most internally publicized EHF programs.  I am thus in a position to provide the first _systematic_ evidence of employee awareness, experience, and opinion about one specific EHF. I use survey experimental designs to identify the impact of EHFs (or at least prompts to think about them) on workers' subjective financial stability, attachment to co-workers and employer, and support for labor unions and government-provided social insurance.  
+
+EHFs present a tractable and underexploited opportunity to improve our understanding of worker attachment to one another and their employers, including employer efforts to inculcate corporate culture across a widely distributed and often low-paid workforce [@gorton_corporate_2020; @hayton_little_2012] and workers' ability to construct of a "community of fate" [@ahlquist_interest_2013]. Just as important, the project will provide a needed empirical baseline for further study of EHFs and similar "private welfare" initiatives.  The study connects to several cross-disciplinary social science literatures, most notably the studies of support for the welfare state.  The project is most directly connected to a new wave of research looking at how private programs can displace support for government welfare and social insurance policies.  EHFs also connect with the literature on "private governance" and self-regulation in large, multinational firms and supply chains [@anderson_private_2017; @ahlquist_firm_2020; @locke_promise_2013; @malesky_chains_2018; @distelhorst_does_2017].  Similarly, EHFs connect to the study of unionization (and union avoidance) [@bronfenbrenner_2009;@kochan_us_2022'@ahlquist_import_2019]. Does an employer-driven EHF decrease unions' attractiveness in the eyes of workers? In short, EHFs may affect politically important attitudes.  
+
+The study has policy implications in several domains.  First, EHFs speak to the role of tax policy around "charity" in the American political economy [@reich_just_2018].  In the late 1990s, the IRS was skeptical of EHFs, worried that they might be exploited for business-related (as opposed to purely charitable) purposes [@aprill_charitable_2016]. But Congress overruled the IRS in the aftermath of the 9/11 attacks.  This research will speak to the outcomes of that decision.  Second, this research speaks to the process and tools available for union avoidance and---perhaps---rebuilding.  Most recent research on union avoidance emphasizes employers' use of "education campaigns", threats, and retaliatory firings during unionization drives.  This project broadens the discussion to include other strategies. On the labor side, this research could speak to whether a renewed emphasis on mutual aid--and other solidaristic selective incentives--could provide a basis for renewal in the American labor movement [@hertel-fernandez_why_nodate; @jarley_unions_2005; @horowitz_mutualism_2021]. 
+
+# EHFs: history and theory
+
+Consider the Home Depot and Wal-Mart.  Since 1999, The Home Depot has maintained the Homer Fund. Wal-Mart started its EHF, the Associates in Critical Need fund, in 2001.  Both programs are set up as non-profit charities (501c(3)) offering cash grants for employees facing emergency expenses.^[The Homer Fund makes grants of up to \$10,000 while the Wal-Mart fund makes grants of up to \$1,500.]   Both funds take (tax deductible) corporate funds while also soliciting (tax deductible) donations from both corporate and front-line employees themselves.  Grants to workers are tax-exempt.
+
+Prior to 2001, the IRS expressed skepticism about firm-controlled charities set up for the benefit of their own workers, fearing that EHFs might be used to funnel tax-advantaged compensation to workers or be deployed for strategic or even nefarious purposes.  But Congress changed the law after the 9/11 attacks to allow employer-sponsored foundations to provide assistance to employees [@noauthor_disaster_2014; @aprill_charitable_2016]. EHFs can now provide grants if an employee suffers a "qualified disaster," which typically include natural disasters, terrorist or military actions, etc.  Funds can only be used for basic living expenses (food, clothing, transportation, housing/house repair, burial) for the recipient and immediate family [@noauthor_disaster_2014].
+
+Although there is no central database of EHFs, our research team has documented over 300 companies operating EHFs as of Fall 2022; 9 of the 10 top retailers in the US maintain a fund. The Employee Assistance Foundation, a non-profit organization that manages EHFs on behalf of firms, claims to have over 400 clients, some of which do not even operate in the US [@employeeassistancefoundationDecadeAssistanceOffering2022]. And EHFs appear to be growing, particularly in the shadow of the coronavirus pandemic.  Levi Strauss & Co. reported a three-fold increase in applications to their EHF in 2020 [@rodriguez_every_2020], with another spike in applications once coronavirus emergency aid programs expired in the US.  The Home Depot suspended fundraising from employees and expedited grant processing during the pandemic emergency. The Employee Assistance Foundation reported a more than tenfold increase in grant applications relative to historical averages in the first two quarters of 2020 as well as 140 new client EHFs [@employeeassistancefoundationDecadeAssistanceOffering2022].   In May 2020 Amazon.com launched its EHF--using \$25 million in corporate money--in the face of extensive criticism of its workplace safety practices during the coronavirus outbreak as well as ongoing attempts to unionize its warehouse and fulfillment centers.  Amazon shuttered its EHF in August 2022.  
+
+EHFs illustrate one important aspect of the American political economy: employers have tremendous leeway to introduce or modify benefit plans and other incentives that may influence workers perceptions and attitudes, including around politics.  Two critical features distinguish EHFs from other perks or employer-based insurance programs, making them particularly interesting objects of study.  The first is their mutual aid nature.  In EHFs, workers donate their own money into a fund, with the goal of assisting fellow employees in need. Firms choose to maintain an administrative and outreach apparatus to solicit and direct charitable contributions towards their own workforce.  Second: EHFs are potentially accessible to hourly, part-time, or even contract workers.  This sets EHFs apart from other benefits and protections that tend to accrue primarily to salaried and full-time workers. For example, Amazon.com restricted its EHF to "Amazon Flex Delivery Partners, Delivery Service Partner Delivery Associates, Temporary Associates employed by eligible staffing agencies, and drivers of eligible line haul partners," i.e., non-standard, temporary contract labor.^[As of 31 July 2022, Amazon will no longer accept applications to its EHF.  It also appears that Amazon never aggressively solicited donations to its EHF.  Rather, it was using the EHF as a vehicle to (appear to) target some benefits to its "nontraditional" workforce.  It is unclear how much money was actually distributed.]  The Employee Assistance Foundation updated its EHF program guidelines to "include contractors, furloughed employees, and franchise employees." [@employeeassistancefoundationDecadeAssistanceOffering2022]           
+
+## Why EHFs?
+
+Although EHFs are a relatively recent development, mutual aid is not.  Workers in an industry, region, or ethnic group routinely pooled their money to assist one another in hard times or pool savings [@beito_mutual_2000; @glenn_understanding_2001; @dreyfus_labour_1993].  Early mutual aid funds--many affiliated with labor unions--filled an unmet need: industrialization uprooted workers from traditional sources of support and government social insurance programs were nascent or absent altogether.  Mutual aid and friendly societies have played an outsized role in the literature on social capital [@putnam_making_1994;@ismay_trust_2018].  What distinguishes EHFs from past mutual aid programs are their employer-organized and firm-centered structure.  Workers do not organize or direct the EHF, a worker need not donate in order to apply for benefits (unlike a strictly mutualist arrangement), and EHFs are employer-specific.  Although all EHFs have a mutual aid component, the communication around the programs can vary, sometimes emphasizing charitable contributions and sometimes framing the program as more of an employment benefit.
+
+There are a variety of reasons why large firms might develop EHFs.  Strong corporate cultures that signal caring and mutual interdependence can increase worker identification with the employer and positive affect towards coworkers, which can increase productivity and decrease turnover [@kampkotter_employee_2020; @lin_modeling_2010]. Based on reports from practitioners and preliminary interviews with EHF managers, EHFs are believed to be useful in signaling corporate values and commitments.  Mutual aid programs might be a mechanism whereby workers from diverse backgrounds and spread all over the country come to see their fates as intertwined with one another and the firm, developing a sort of  of ``community of fate'' [@ahlquist_interest_2013;@ismay_trust_2018]. Some EHFs appear to be the result of spontaneous initiatives from executives or even workers, often in response to a major natural disaster affecting a region closely connected to the firm and its employees.^[Disaster aid and social insurance are closely linked in the US [@landis_fate_1999].]  Even before COVID-19, there was plenty of evidence that the existing social insurance and welfare systems were stigmatizing, encumbered with numerous "administrative burdens" [@herd_administrative_2019], and straining to deliver to those in need.  EHFs may present a private, partial solution to a weakening public system.  By locating mutual aid programs in the firm, program participation might be higher and the EHF can benefit from corporate resources.  Applying for an EHF grant could be easier or less stigmatizing than applying for government assistance.  
+
+The nature of work and labor contracting are changing [@weil_fissured_2014;@ahlquist_research_2018], with increasing prevalence of precarious and supplier-like "independent contractor" relationships.  In the US, standard labor protections and social insurance benefits do not cover workers in such "nonstandard" employment relationships nor are these workers eligible for employer-provided benefits such as health insurance and paid time off.  This may save some labor-related costs in the short term, but more transactional and short-term employment relationships have additional costs.  Workers in non-standard contracting arrangements may be less loyal to the firm and less motivated to exert additional effort and therefore less productive.  Nonstandard work may also pose a threat to the corporate brand, to the extent that the broader public finds such arrangements unfair or exploitative.  EHFs may represent one avenue by which firms can direct some benefits to their workers--perhaps improving morale and blunting public criticism--without jeopardizing the savings that make labor outsourcing attractive.
+
+But there are other ends that EHFs might serve alongside charitable motivations or team-building functions.  Unions routinely offer "selective incentives" to attract members [@olson_logic_1965; @hertel-fernandez_why_nodate].  For their part, employers offered wage increases and fringe benefits in an effort to preempt unionization and retain employees [@bacharach_mutual_2018; @derickson_workers_1988; @quadagno_transformation_1988].  EHFs may both provide workers a direct benefit while also displacing the "social custom" or solidaristic motivations for looking elsewhere, such as a union [@akerlof_theory_1980; @naylor_economic_1993].  I draw theoretical inspiration from the growing body of scholarship on the government substitution hypothesis, i.e., that government programs and privately organized "welfare" substitute for one another [@beito_mutual_2000; @yeo_working_1979; @wiedemann_how_2022].  Public programs often step in when private mutual aid or insurance pools collapse.  Conversely, introducing private insurance or employer-provided benefits can crowd out support for government programs [@ansell_political_2014; @busemeyer_welfare_2020; @rosner_struggle_2003; @hacker_insecure_2013; @zhu_policy_2015] and possibly unions [@bacharach_mutual_2018; @quadagno_transformation_1988].  This dynamic relationship between public programs and private mutual aid forms the theoretical core for this project.  Specifically, EHFs could blunt support for more stringent labor regulation of non-standard work or government aid programs in times of emergency (e.g., COVID-19).
+
+Finally, firm-based mutual aid arrangements could have a variety of drawbacks, depending on how the program is run.   For example, an EHF is not "portable" from the perspective of the worker; should the worker leave her job at a specific firm, her access to the emergency grant goes with it.  Emergency relief might vanish when it is most needed.  EHFs might also enhance management's leverage over workers at moments of vulnerability.  As a specific example, in the EHF program studied in this paper, workers seeking grants must first receive "support" from their manager to apply.^[A similar dynamic might apply in some union-run mutual aid arrangements to the extent that aid applications or decisions depend on the goodwill of union leaders.]  Finally, EHFs could be *more* stigmatizing, to the extent that a worker's hardship or need is now visible to managers or co-workers.  EHF benefits are more akin to charity one must ask for than an insurance payment one is owed as a result of past contributions and bad luck [@fothergill_stigma_2003;@parsell_clarke_2022;@williamson_stigma_1974].  
+
+
+## Research goals
+
+As this project breaks new ground, I have both descriptive and hypothesis-driven research questions.  On the descriptive side, I am most concerned with worker awareness of their employer's EHF, something previous work has not addressed.  Specifically, I ask what proportion of workers are aware of their employer's EHF? What are the predictors of EHF awareness?  I ask the same question about who _contributes_ to their employer's EHF.
+
+Based on interview reports, EHFs may provide workers with an improved sense of financial security in addition to needed cash during hard times.  I hypothesize that prompting workers with information about their employer's EHF will improve their evaluation of their financial security, as measured by reported ability to meet a $400 emergency expense. EHFs may also improve disposition toward co-workers and morale, so I examine whether the same randomized prompt increases a worker's positive disposition toward co-workers and towards the employer.  Finally, existing work suggests that an EHF may be viewed as "private insurance", dampening support for other forms of collective organization (unionization) and public social insurance. I evaluate whether prompts about EHFs have any effect on willingness to vote for unionization and support for government programs to support the unemployed.   
+
+All these hypotheses come with two important points of clarification.  First, I am not claiming that EHFs were necessarily designed or implemented to achieve the goals of team-building, union avoidance or changing public opinion. And even if EHFs were designed to affect workers' attitudes, they would still likely go unnoticed or unremembered most of the time.  The research design here speaks to whether an employer _could_ affect worker attitudes by calling attention to an EHF, for example as part of a  anti-unionization strategy.  From an organizational sociology perspective, findings here will also cast light on how organizational attachments are formed.  Second, worker knowledge of the EHF program, _not_ grant receipt itself, is what matters.  As a result I propose survey experiments that randomly provide respondents with informational prompts about their employer's EHF.          
+
+# The survey and sample
+
+The goal of the larger project is to survey workers at several firms with and without EHFs and with different levels of unionization and in multiple industries.  This paper reports on the initial survey at one large, nonunionized US retailer. 
+
+Constructing a matched worker-employer survey sample is quite challenging.  In designing this study, I follow @schneider_whats_2019 and use Facebook ads targeted at Facebook users 18+ based on their Facebook-reported status as employees of the chosen firm.  @schneider_whats_2019 show that this strategy has considerable promise, providing an accurate estimates of the employee population of a large number of retail firms.  But the Facebook strategy has the primary drawback of sample selection.  I follow @schneider_whats_2019 and construct raking weights using the Facebook-reported gender and age distributions for Facebook/Instagram users who report employment at the firm in question.^[Results are not sensitive to the application of weights.]  Recent work shows that Facebook-reported age and gender appear quite accurate [@grow_is_nodate]. 
+
+Survey recruitment occurred between 7 September and 15 October 2021 using an ad on the Facebook and Instagram platforms that offered entry into a raffle for a free iPad Mini for those completing the survey.  We ultimately received 515 valid responses. 
+
+## The survey experiment
+
+We include a randomized experiment in the survey.  Survey experiments are particularly useful here for two reasons.  First, the survey experiment provides better control and more credible causal estimates than those relying on comparisons of observational data.  Second, the survey experiment retains internal validity even in the face of questions about selection into the survey, survey weighting, or selection into EHF programs.
+
+The experiment examines the effect of EHFs on respondents' attachment to co-workers, their employer, and support for unionization and government-provided social assistance.  Within the experiment were a control condition and two treatment arms, referred to as the _text_ and _video_ treatments, respectively.  Those in the text treatment were presented with a neutral, factual statement about their employer's EHF (its existence, funding, and maximum grant amount).  Specifically, the treatment was:
+
+> Your employer, [employer name], maintains a program called [EHF program name].   [EHF program name] combines donations from workers like you with money from [employer name] corporation.  [EHF program name] uses this money to offer cash grants of up to $10,000 to [employer name] employees in times of unexpected financial hardship like a natural disaster, illness, or death in the family.
+
+The prompt can be interpreted as reminding or priming respondents about the EHF program. We then solicit respondents' opinions on the key outcome variables.  Respondents in the control arm saw no prompt or mention of the EHF before answering the same questions.  Later in the survey, subjects in the control group were presented with a straightforward question asking about their awareness of their employer's EHF. This question will form the part of the basis for estimating EHF awareness.    
+
+Some may argue that a neutral text prompt does not realistically reflect how employers would communicate with their employees about an EHF.  To address this concern and vary the intensity of the EHF stimulus, we take advantage of the fact that employer has posted several professionally-produced video testimonials from its EHF recipients on the EHF's website and YouTube channel.  Respondents in the video treatment were asked to watch one of these testimonial videos (2:41 in length) before answering the same set of questions.  We expect the video treatment to elicit a stronger response, although we did see noticeable attrition in the survey at the video stage relative to the text treatment.  
+
+```{r data-format, echo=FALSE}
+THD_comp_uw<-read_csv(here("0_data", "THD", "THD_completed.csv")) %>%
+  mutate(emergency_expense = factor(Q3.4, levels = 
+                                           c("I am certain I could not come up with $400",
+                                             "I could probably not come up with $400",
+                                             "I could probably come up with $400",
+                                             "I am certain I could come up with the full $400"),
+                                    ordered= TRUE
+                                    ),
+         emergency_expense_bin = ifelse(  #binary expense variable; T if can cover expense 
+           grepl(" not ", Q3.4),
+           FALSE,
+           TRUE),
+         bills = factor(Q6.15),
+         EHF_aware_list = grepl("Cash", Q2.15, fixed=T), #asked of all respondents
+         EHF_aware_simp = as.factor(Q3.10),  #asked only of control group
+         HF_know = factor(Q3.12),
+         HF_applied = factor(Q3.13),
+         HF_mgr = factor(Q3.16),
+         HF_received = factor(Q3.19),
+         HF_donate = factor(Q3.24),
+         nonwhite = Q6.3 != "White",
+         main_job = Q2.7 == "Yes",
+         tenure_fac = factor(Q2.9, levels = 
+                               c("Less than 6 months", "At least 6 months but less than 1 year",
+                                 "At least 1 year but less than 2 years",
+                                 "At least 2 years but less than 3 years",
+                                 "3 or more years")
+                             ),
+         tenure_fac_h = C(ordered(tenure_fac),contr.helmert),
+         tenure_num = unclass(tenure_fac_h),
+         fulltime = Q2.10 == "Regular full-time",
+         hourly = Q2.13 == "Yes",
+         ed = factor(Q6.5, levels = 
+                       c("No degree or diploma earned",
+                         "High school diploma/GED",
+                         "Some college",
+                         "Associate's degree",
+                         "Bachelor's degree",
+                         "Master's degree/Advanced degree")),
+         ed_h = C(ordered(ed), contr.helmert),
+         college = ed %in% c(
+                         "Bachelor's degree",
+                         "Master's degree/Advanced degree"),
+         male = Q6.2=="Male",
+         wrk_loyal = factor(Q3.5, levels = 
+                               c("No loyalty at all", "Only a little loyalty",
+                                 "Some loyalty","A lot of loyalty"),
+                             ordered = TRUE),
+         emp_loyal = factor(Q3.6, levels = 
+                               c("No loyalty at all", "Only a little loyalty",
+                                 "Some loyalty","A lot of loyalty"),
+                             ordered = TRUE),
+         union_vote = factor(Q3.7),
+         emp_reco = factor(Q3.8, levels = 
+                               c("Definitely would not recommend", "Might not recommend",
+                                 "Not sure", "Might recommend",
+                                 "Certainly would recommend"),
+                             ordered = TRUE),
+         #emp_reco_bin = emp
+         gov_pension = factor(Q3.9_1, levels =
+                           c("No responsibility", "A little responsibility",
+                             "Some responsibility", "A lot of responsibility"),
+                         ordered=TRUE),
+         gov_ui = factor(Q3.9_2, levels =
+                           c("No responsibility", "A little responsibility",
+                             "Some responsibility", "A lot of responsibility"),
+                         ordered=TRUE),
+         gov_childcare = factor(Q3.9_3, levels =
+                           c("No responsibility", "A little responsibility",
+                             "Some responsibility", "A lot of responsibility"),
+                         ordered=TRUE),
+         home_ownership = factor(Q6.13),
+         healthcare = (Q2.16 == "Yes")
+         ) 
+
+THD_comp <- THD_comp_uw %>%
+  as_survey_design(ids = 1, weights = rk_wgt)
+```
+# Results
+## EHF engagement
+We first look at workers' awareness of their employer's EHF and how much they have engaged with it.  Based on anecdotal reports and the fact that this employer conducts regular, intensive campaigns to drive donations to the fund, we expect widespread awareness among workers.  
+
+```{r awareness-calcs, echo=FALSE}
+aware_tab<-summarise(THD_comp, 
+          aware.prop.l = survey_mean(EHF_aware_list), 
+          aware.prop.s = survey_mean(EHF_aware_simp=="Yes", na.rm=T),
+          know.prop = survey_mean(HF_know=="Yes", na.rm=T),  # too many NAs
+          applied.prop = survey_mean(HF_applied=="Yes", na.rm=T),
+         received.prop = survey_mean(HF_received=="Yes", na.rm=T),
+         donated.prop = survey_mean(HF_donate=="Yes", na.rm=T)
+          )
+aware_tab_uw<-summarise(THD_comp_uw, 
+          aware.prop.l = mean(EHF_aware_list), 
+          aware.prop.s = mean(EHF_aware_simp=="Yes", na.rm=T),
+          know.prop = mean(HF_know=="Yes", na.rm=T),  # too many NAs
+          applied.prop = mean(HF_applied=="Yes", na.rm=T),
+         received.prop = mean(HF_received=="Yes", na.rm=T),
+         donated.prop = mean(HF_donate=="Yes", na.rm=T)
+          )
+
+
+#sum(grepl("Cash", THD_comp$Q2.15, fixed=T))/sum(!is.na(THD_comp$Q2.15)) #.61 unweighted
+#svymean(~grepl("Cash", THD_comp$Q2.15, fixed=T),THD_dgn, na.rm=TRUE) # .61 weighted
+#summary(as.factor(THD_comp$Q3.10))  #~85% awareness, unweighted
+#svymean(~factor(THD_comp$Q3.10), THD_dgn, na.rm=TRUE)  #81% awareness, weighted
+
+aware_xt <- svytable(~EHF_aware_list + EHF_aware_simp, THD_comp, round=T)
+aware_know_xt <- svytable(~EHF_aware_list + HF_know, THD_comp, round=T)
+aware_donate_xt <- svytable(~EHF_aware_list + HF_donate, THD_comp, round=T)
+```
+
+We calculate awareness in three ways.  First, we look at the proportion of control group respondents who answer "yes" to a direct question about whether their employer has an EHF.  On this basis, we estimate the proportion of control-condition respondents who report knowing about the EHF as `r round(aware_tab$aware.prop.s,2)` (se = `r round(aware_tab$aware.prop.s_se,2)`) . Second, we gave all respondents a list of work-related benefits their employer offers and asked them to select the ones that apply to "workers like them." Among the possible answers was "cash grants to help in times of emergency."  The proportion of respondents selecting this answer provides an alternate measure for EHF awareness.  Among this group we find a proportion of `r round(aware_tab$aware.prop.l,2)` (se = `r round(aware_tab$aware.prop.l_se,2)`) of all respondents report awareness of a cash grant program.     Both values are quite high, but the difference between the two measurement methods is striking.  Among those in the control group correctly answering "yes" to the direct question about their employer's EHF, `r round(100*aware_xt["FALSE","Yes"]/sum(aware_xt[,"Yes"]),0)`% _failed_ to identify the cash grant program as one of their job benefits whereas nearly all of those correctly choosing the cash grant program from the list of benefits also correctly answered direct question.^[The direct question referred to the EHF program by its program name, which is likely to be more widely recognized than the purpose of the program itself.]  Consequently, I interpret the lower estimate based on the "list" question as the more accurate reflection of EHF awareness in terms of program function (rather than name). I use this question as the indicator of awareness in the analysis below.      
+
+As a third indicator of awareness, I asked respondents in the EHF treatment groups whether they know personally someone who has received money from the EHF.  We find that `r round(100*aware_tab$know.prop,1)`% (se = `r round(100*aware_tab$know.prop_se,1)`%) claim to know someone who has gotten money from the program.  I consider this a remarkably high number, but when we again look at the respondents saying they know someone who received EHF money to those identifying the cash grant program from the list of benefits, we find that `r round(100*aware_know_xt["FALSE","Yes"]/sum(aware_know_xt[,"Yes"]),0)`% _failed_ to identify the cash grant program as one of their job benefits.  
+
+As indicators of engagement, we asked whether respondents had donated to, applied to, and received money from the EHF.^[The donation and grant receipt questions were asked of all respondents while the applied question was asked only of treatment group respondents.]     A remarkable `r round(100*aware_tab$donated.prop,1)`% (se = `r round(100*aware_tab$donated.prop_se,1)`%) of respondents reported that they had donated.  Again, roughly 30% of the respondents indicating donation fail to identify emergency cash grants as a benefit their employer offers.  Taken together with the awareness results and consistent with the messaging around the donation drive, it appears that workers at this firm are knowledgeable about the _name_ of the EHF program and appear to understand it is a charitable endeavor.  But worker awareness of the program's _benefit_ function appears relatively thin.
+
+Application and grant receipt estimates are also quite high.  Among our respondents we find that, respectively, `r round(100*aware_tab$applied.prop)`% and  `r round(100*aware_tab$received.prop)`% applied for and received EHF grants.
+
+To explore the predictors of EHF awareness and engagement, we fit weighted (quasibinomial) logistic regression models, including age, gender, tenure at the firm, race (white/nonwhite), and education (college/no college) as covariates.  We also include indicators for whether this job is the respondent's main job, whether it's paid on an hourly basis, and whether it's full time.  Coefficient estimates and standard errors appear in Table \@ref(tab:awareness-model).  Once we condition on multiple covariates, tenure at the firm is the only predictor with a relatively precisely estimated relationship across all indicators of awareness and engagement in the expected positive direction.  Full-time workers are also more likely to report awareness of a cash grant program but these estimates are less-precise and tenure and full-time status are closely related: over 72% of the respondents with tenure over 3 years work full time against less than 50% for those with less than 3 years at the firm.  Other worker attributes appear to have little relationship with EHF awareness. Older workers are marginally more likely to donate and less likely to receive grants whereas men are less likely to apply to the EHF or know other recipients.
+
+```{r awareness-model, echo=FALSE, results='asis'}
+#predictors of EHF awareness
+## Using EHF_aware_list
+
+aware_reg_list<-svyglm(EHF_aware_list ~
+                    age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family = quasibinomial)
+
+aware_reg_simp <- svyglm(EHF_aware_simp ~
+                    age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    ed, 
+                  design = THD_comp,
+                  family = quasibinomial)
+
+know_reg <- svyglm(HF_know=="Yes" ~
+                    age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family = quasibinomial)
+
+applied_reg <- svyglm(HF_applied =="Yes" ~
+                    age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family = quasibinomial)
+
+
+received_reg <- svyglm(HF_received =="Yes" ~
+                    age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family = quasibinomial)
+
+donate_reg <- svyglm(HF_donate=="Yes" ~
+                    age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family = quasibinomial)
+
+
+stargazer(aware_reg_list, know_reg, applied_reg, received_reg,donate_reg,
+          title = "Weighted logistic regression of EHF awareness \\& engagement",
+          covariate.labels = c("age", "male", "main job",
+                               "tenure: 6-12mos", "  1-2 yrs.", 
+                               "  2-3 yrs.", "  3+ yrs.",
+                               "nonwhite", "full-time", "hourly",
+                               "BA/BS+"),
+          dep.var.caption = "",
+          dep.var.labels = c("awareness", "know recipient", "applied", "received", "donated"),
+          header = FALSE, no.space = T, digits = 2,
+          label = "tab:awareness-model"
+          )
+```
+
+## EHF experimental treatment effects
+
+We now turn to an examination of the survey experiment.  Specifically, we compare the average answers among the various treatment groups to a series of questions that were asked immediately after exposure to the EHF stimulus (if any).  We then look for potential differences in treatment effects, depending on whether the respondent was aware of the EHF program before the survey experiment.   
+
+### Financial insecurity
+
+Reports from interviews with EHF grant recipients show (unsurprisingly) that those receiving grants in times of emergency feel that their financial situation is better for having gotten the money.  But what about workers in general?  Does the presence of the "private safety net" reduce feelings of financial insecurity?  We asked two questions on this topic: whether a worker could cover a $400 emergency expense and how easily they can cover their monthly bills.  
+
+Figure \@ref(fig:fig-finsec) displays the distribution of respondent evaluation by treatment condition.  The upper panel reports the full distribution of the Likert scale for the response whereas the lower panel dichotomizes the variable based on whether the respondent was able or unable to cover the expense.  Vertical lines represent 95% confidence intervals.  
+
+```{r fig-finsec, echo=FALSE, fig.cap="Subjective financial security"}
+
+n<-dim(THD_comp$variables)[1]
+ntr<-table(THD_comp$variables$HDTreatment)
+lm1<-lm(as.numeric(emergency_expense_bin)~as.factor(HDTreatment), data = THD_comp$variables)  
+mm.ee<-lm1$model
+names(mm.ee)[1]<-"emergency_expense_bin"
+
+ri_dat<-THD_comp$variables
+ri_dat$emergency_expense_bin<-as.numeric(ri_dat$emergency_expense_bin)
+ri_dat$HDTreatment<-as.factor(ri_dat$HDTreatment)
+
+thd_dec<-declare_ra(N=n, m_each=ntr, conditions = c("cntrl", "txt", "vid"))
+ri_out <- conduct_ri(emergency_expense_bin ~ HDTreatment,
+                     declaration = thd_dec,
+                     sharp_hypothesis = 0,
+                     data = ri_dat,
+                     assignment = "HDTreatment",
+                     sims=3000)
+
+ee.out<-THD_comp %>% 
+  group_by(HDTreatment, emergency_expense) %>%
+  summarise(finsec = survey_mean(proportion=TRUE, vartype="ci"),
+            w_n = n(),
+            n = unweighted(n()))
+ee.out$emergency_expense_num<-as.numeric(ee.out$emergency_expense)
+
+ee.out.bin<-THD_comp %>% 
+  group_by(HDTreatment, emergency_expense_bin) %>%
+  summarise(finsec = survey_mean(proportion=TRUE, vartype="ci"),
+            w_n = n(),
+            n = unweighted(n()))
+ee.out.bin$emergency_expense_num<-as.numeric(ee.out.bin$emergency_expense_bin)
+
+
+p.ord <- ggplot(data = ee.out,
+            mapping = aes(x = emergency_expense_num, y = finsec,
+                          ymin = finsec_low,
+                          ymax = finsec_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+dodge <- position_dodge(width=0.9)
+
+p.ord<- p.ord + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    scale_x_continuous(name=NULL, 
+                     breaks = 1:4,
+                     labels = c("1" ="definitely can't cover $400",
+                                "2"="","3"="",
+                                "4"="can definitely cover $400")) +
+  labs(title = "Financial insecurity by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "top",
+        panel.grid = element_blank())
+
+p.bin<- ggplot(data = ee.out.bin,
+            mapping = aes(x = emergency_expense_num, y = finsec,
+                          ymin = finsec_low,
+                          ymax = finsec_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+p.bin<- p.bin + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    scale_x_continuous(name=NULL, 
+                     breaks = 0:1,
+                     labels = c("0" ="can't cover $400",
+                                "1"="can cover $400")) +
+  labs(title = "Financial insecurity by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+  
+  
+gridExtra::grid.arrange(p.ord, p.bin, nrow = 2)
+
+#summary(svyglm(emergency_expense_bin~HDTreatment, design = THD_comp, family=binomial))
+
+```
+
+Three findings emerge.  First, workers in this sample were relatively confident in their ability to cover the expense, regardless of treatment status although just under 40% of respondents expressed concern about their ability to meet this financial challenge.  Second, to the extent the EHF treatment had any effects at all, it is concentrated in the video treatment and the direction is contrary to expectations.  Respondents in the video treatment were _less_ financially secure than those in the control or text treatment arms.  Third, none of these treatment effects were distinguishable from 0 at conventional thresholds for inference.  
+
+We also examine the self-reported difficulty in covering monthly bills as reported on a three-level Likert scale.  Figure \@ref(fig:fig-bills) reports results.  Using this alternate measure there does not appear to be any connection between the EHF treatment and subjective financial security.  Overall, priming respondents with information about their employer's EHF has no effect on their feelings of financial well-being.
+
+```{r fig-bills, echo=FALSE, fig.cap="Subjective financial security"}
+bill.out<-THD_comp %>% 
+  group_by(HDTreatment, bills) %>%
+  summarise(billpay = survey_mean(proportion=TRUE, vartype="ci"),
+            w_n = n(),
+            n = unweighted(n()))
+
+bill.out$bill_num<-as.numeric(bill.out$bills)
+
+
+p.ord <- ggplot(data = bill.out,
+            mapping = aes(x = bill_num, y = billpay,
+                          ymin = billpay_low,
+                          ymax = billpay_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+p.ord + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    scale_x_continuous(name=NULL, 
+                     breaks = 1:3,
+                     labels = c("1" ="not difficult",
+                                "2"="",
+                                "3"="very difficult")) +
+  labs(title = "Difficulty paying bills by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "top",
+        panel.grid = element_blank())
+
+
+```
+
+
+### Attitudes towards employer and co-workers
+
+EHFs may not improve subjective financial security, but they may improve worker attachment to one another and the employer to the extent that workers attribute EHF benefits to their co-workers and employer, respectively.  We asked respondents to report how loyal they felt toward their co-workers and their employer, with responses in four categories ranging from "none at all" to "a lot".  We also asked respondents how willing they would be to recommend their employer to a friend as a place to work.  Figures \@ref(fig:fig-loyalty) displays the distribution of responses by treatment groups across all three sets of questions.     
+
+```{r fig-loyalty, echo=FALSE, fig.height=12, fig.cap="Attachment to co-workers and employer"}
+#summary tables
+wrk.loyal.out<-THD_comp %>% 
+  group_by(HDTreatment, wrk_loyal) %>%
+  summarise(loyal = survey_mean(proportion=TRUE, vartype="ci"),
+            w_n = n(),
+            n = unweighted(n()))
+#wrk.loyal.out
+wrk.loyal.out$loyal_num<-as.numeric(wrk.loyal.out$wrk_loyal)
+
+emp.loyal.out<-THD_comp %>% 
+  group_by(HDTreatment, emp_loyal) %>%
+  summarise(loyal = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+emp.loyal.out$loyal_num<-as.numeric(emp.loyal.out$emp_loyal)
+#emp.loyal.out
+
+emp.reco.out <- THD_comp %>% 
+  group_by(HDTreatment, emp_reco) %>%
+  summarise(reco = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+emp.reco.out$reco_num <- as.numeric(emp.reco.out$emp_reco)
+#emp.loyal.out
+
+nps<-emp.reco.out %>%  #calculating reco + v. reco - props by treatment
+  group_map(~sum(.x$reco[.x$reco_num>3], na.rm=T) - 
+              sum(.x$reco[.x$reco_num<3], na.rm=T))
+
+sds<-THD_comp %>% 
+  summarise(wl.sd = survey_sd(as.numeric(wrk_loyal), vartype="ci", na.rm=T),
+            el.sd = survey_sd(as.numeric(emp_loyal), vartype="ci", na.rm=T),
+            er.sd = survey_sd(as.numeric(emp_reco), vartype="ci", na.rm=T)
+            )
+
+#plots
+wk.loyal <- ggplot(data = wrk.loyal.out,
+            mapping = aes(x = loyal_num, y = loyal,
+                          ymin = loyal_low,
+                          ymax = loyal_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+wk.loyal <- wk.loyal + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    scale_x_continuous(name=NULL, 
+                     breaks = 1:4,
+                     labels = c("1" ="none at all",
+                                "2"="", "3" = "",
+                                "4"="a lot")) +
+  labs(title = "Loyalty to coworkers by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "top",
+        panel.grid = element_blank())
+
+
+emp.loyal <- ggplot(data = emp.loyal.out,
+            mapping = aes(x = loyal_num, y = loyal,
+                          ymin = loyal_low,
+                          ymax = loyal_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+emp.loyal <- emp.loyal + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    scale_x_continuous(name=NULL, 
+                     breaks = 1:4,
+                     labels = c("1" ="none at all",
+                                "2"="", "3" = "",
+                                "4"="a lot")) +
+  labs(title = "Loyalty to employer by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+
+
+emp.reco <- ggplot(data = emp.reco.out,
+            mapping = aes(x = reco_num, y = reco,
+                          ymin = reco_low,
+                          ymax = reco_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+emp.reco <- emp.reco + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    scale_x_continuous(name=NULL, 
+                     breaks = 1:5,
+                     labels = c("1" ="def. wouldn't",
+                                "2"="", "3" = "unsure",
+                                "4"="",
+                                "5" = "def. would")) +
+  labs(title = "Would recommend employer by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+
+
+gridExtra::grid.arrange(wk.loyal, emp.loyal, emp.reco, nrow = 3)
+#pdf("attachments.pdf")
+#gridExtra::grid.arrange(wk.loyal, emp.reco, nrow = 2)
+#dev.off()
+```
+
+Across the various measurement options, we consistently find that respondents are reasonably positive on their co-workers and their employer.  In six of the nine treatment-outcome combinations, the most extreme positive answer was the modal response.  Workers are also, unsurprisingly, more positive about their co-workers than their employer. 
+
+Across the treatments, we see that the text treatment had no effect but the video treatment has a noticeable positive impact on all three outcome variables.  Respondents exposed to the video describing the EHF in the context of a specific worker became noticeably more positive about their coworkers and their employer, although the pattern differed somewhat across outcome items.  For the co-worker loyalty item, the video treatment caused a notable increase in the top category and declines in all others whereas in the two questions looking at the employer, the video treatment caused a large and significant decrease in responses in the bottom category with more modest (relative to estimation uncertainty) increases in positive responses.  Looking at net promoter score (% promoters - % detractors, a commonly used metric in marketing research) for the employer recommendation score, we see that the video treatment caused an increase from `r 100*round(nps[[1]],2)` under control to `r 100*round(nps[[3]],2)`; the difference between control and the text treatment was negligible.  
+
+To put more precision on these estimates and account for covariates, we report OLS regressions for each of the loyalty/attachment measures.^[Results are robust to ordered logit/probit specifications; we report OLS results here for simplicity.]  We report results in Table \@ref(tab:tab-loyalty-models).  
+
+```{r tab-loyalty-models, echo=FALSE, results='asis'}
+wrkloyal_reg_b<-svyglm(as.numeric(wrk_loyal) ~
+                    HDTreatment, 
+                  design = THD_comp)
+
+wrkloyal_reg_b_int<-svyglm(as.numeric(wrk_loyal) ~
+                    HDTreatment*EHF_aware_list +
+                      tenure_fac, 
+                  design = THD_comp)
+
+wrkloyal_reg_c<-svyglm(as.numeric(wrk_loyal) ~
+                    HDTreatment + age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp)  # fitted values outside [1,4] 
+
+wrkloyal_reg_polr<-svy_vglm(wrk_loyal ~
+                    HDTreatment+ age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family=propodds())
+
+employal_reg_b<-svyglm(as.numeric(emp_loyal) ~
+                    HDTreatment, 
+                  design = THD_comp)
+
+employal_reg_b_int<-svyglm(as.numeric(emp_loyal) ~
+                    HDTreatment*EHF_aware_list +
+                      tenure_fac, 
+                  design = THD_comp)
+
+
+employal_reg_c<-svyglm(as.numeric(emp_loyal) ~
+                    HDTreatment +age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp)
+
+employal_reg_polr<-svy_vglm(emp_loyal ~
+                    HDTreatment+ age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family=propodds())
+
+
+empreco_reg_b<-svyglm(as.numeric(emp_reco) ~
+                    HDTreatment, 
+                  design = THD_comp)
+
+empreco_reg_b_int<-svyglm(as.numeric(emp_reco) ~
+                    HDTreatment*EHF_aware_list +
+                      tenure_fac, 
+                  design = THD_comp)
+
+empreco_reg_c<-svyglm(as.numeric(emp_reco) ~
+                    HDTreatment +age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp)
+
+empreco_reg_polr<-svy_vglm(emp_reco ~
+                    HDTreatment +age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family=propodds())
+
+#wrkloyal_reg_polr etc. won't work with stargazer til I fix it.
+
+stargazer(wrkloyal_reg_b, wrkloyal_reg_c, employal_reg_b, employal_reg_c,
+          empreco_reg_b, empreco_reg_c,
+          title = "Weighted OLS regression of treatments on attachment to coworkers \\& employer",
+          covariate.labels = c("TRT: text", "TRT: vid", "age", "male", "main job",
+                               "tenure: 6-12mos", "  1-2 yrs.", 
+                               "  2-3 yrs.", "  3+ yrs.",
+                               "nonwhite", "full-time", "hourly",
+                               "BA/BS+"),
+          dep.var.caption = "",
+          dep.var.labels = c("coworker\n loyalty (1-4)",
+                             "employer\n loyalty",
+                             "recommend\n employer (1-5)"),
+          model.numbers = F,
+          label="tab:tab-loyalty-models",
+          no.space = T,
+          digits = 2,
+         # column.labels = c("OLS", "OLS", "Ordered logit"),
+          header = FALSE
+         #notes = c("All results use raking weights to the Facebook-reported gender/age distribution for the recuitment target population.")
+          )
+```
+
+Across models and specifications we recover a positive and precisely estimated treatment effect for the video condition.  The coefficient for the text treatment is consistently positive but far smaller and indistinguishable from 0. In terms of magnitude, the video treatment effect averages about `r round(mean(as.numeric(c(coef(wrkloyal_reg_b)[3],coef(employal_reg_b)[3],coef(empreco_reg_b)[3])/sds)),2)` of a standard deviation on the relevant scale.
+
+Findings here suggest that simply informing workers by providing dry, technical summaries of an EHF has little impact on their attachment to employers or co-workers.  More intensive "propaganda", on the other hand, shows a marked increase in attachment.  Whether these effects are durable or fade rapidly is unknown.
+
+### Attitudes toward unions and government welfare policy
+
+Finally, we examine experimental effects on support for unions and government-provided social insurance.  Specifically we ask the now-standard question of whether the respondent would vote for a union if a representation election were held today.  In examining social insurance, we take a question from the GSS that asks the extent to which the respondent thinks the government has a responsibility to provide for the unemployed (4-category response ranging from "none at all" to "a lot").  The distribution of responses by EHF treatment is displayed in Figure \@ref(fig:fig-uvui).
+
+```{r fig-uvui,eval=TRUE, echo=FALSE, fig.cap="Support for unions and UI"}
+unionvote.out<-THD_comp %>% 
+  group_by(HDTreatment, union_vote) %>%
+  summarise(union = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+
+ui.out<-THD_comp %>% 
+  group_by(HDTreatment, gov_ui) %>%
+  summarise(ui = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+ui.out$ui_num <- as.numeric(ui.out$gov_ui)
+
+pension.out<-THD_comp %>% 
+  group_by(HDTreatment, gov_pension) %>%
+  summarise(pension = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+
+cc.out<-THD_comp %>% 
+  group_by(HDTreatment, gov_childcare) %>%
+  summarise(childcare = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+
+
+
+#plots
+uv_plot <- ggplot(data = unionvote.out,
+            mapping = aes(x = union_vote, y = union,
+                          ymin = union_low,
+                          ymax = union_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+uv_plot <- uv_plot + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    #scale_x_continuous(name=NULL, 
+    #                 breaks = 1:4,
+    #                 labels = c("1" ="none at all",
+    #                            "2"="", "3" = "",
+    #                            "4"="a lot")) +
+  labs(title = "Support for unionization by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "top",
+        panel.grid = element_blank())
+
+ui_plot <- ggplot(data = ui.out,
+            mapping = aes(x = ui_num, y = ui,
+                          ymin = ui_low,
+                          ymax = ui_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+ui_plot <- ui_plot + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    scale_x_continuous(name=NULL, 
+                     breaks = 1:4,
+                     labels = c("1" ="none",
+                                "2"="", "3" = "",
+                                "4"="a lot")) +
+  labs(title = "Support for UI by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "none",
+        panel.grid = element_blank())
+
+gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
+#pdf("ui_uv.pdf")
+#gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
+#dev.off()
+```
+
+We see that workers in this sample are generally skeptical of unions, with no more the one quarter of respondents reporting a willingness to vote for a union, substantially lower than recent estimates from nationally representative samples.  There are, however, a substantial portion of undecided workers; undecided is the modal response among the video treatment group.  Workers are more supportive of unemployment insurance, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.
+
+Turning to treatment effects, we see some surprising results.  First, echoing findings for the attachment questions, we find no evidence that the text treatment has any effect at all for either outcome.  Second, we find that the video treatment again moves respondents' opinions.  In support for unionization, the video treatment makes workers more _uncertain_.  Specifically, respondents in the video treatment become less likely to vote either for or against the union and more likely to choose "don't know." something that would have been missed if we had failed to include a DK option or ignored those responses.  Whether this represents an increase in disengagement or truly increased uncertainty will take additional work, but the fact that respondents chose to answer the question (as opposed to skipping it) is consistent with increased uncertainty as opposed to disinterest.
+
+Looking at the UI question, we see that the video treatment substantially reduces the proportion of responses in the "none" category in favor of the two positive categories.  The EHF video treatment made respondents more rather than less supportive of government-provided social insurance, contrary to expectations.
+
+In Tables \@ref(tab:tab-uv) and \@ref(tab:tab-ui) and we confirm these results in a regression framework.  Table \@ref(tab:tab-uv) uses (weighted) multinomial logistic regression to analyze the union question, given the importance of all three categories.^[In the multinomial model we exclude the hourly worker indicator variable due to perfect separation.]  Table \@ref(tab:tab-ui) uses OLS to analyze the UI support question.   
+
+```{r eval=TRUE, echo = FALSE}
+
+uv_multinom_b<- svy_vglm(
+    formula = union_vote ~ HDTreatment,
+    design = THD_comp, 
+    family = multinomial(refLevel = "Not sure"))
+
+uv_multinom_b_int<- svy_vglm(
+    formula = union_vote ~ HDTreatment*EHF_aware_list + tenure_fac,
+    design = THD_comp, 
+    family = multinomial(refLevel = "Not sure"))
+
+
+uv_multinom_c<- svy_vglm(
+    formula = union_vote ~ HDTreatment +
+      age + male + main_job + tenure_fac +
+      nonwhite + fulltime + college, #hourly removed b/c perfect sep
+    design = THD_comp, 
+    family = multinomial(refLevel = "Not sure"))
+
+out.tab<-summary(uv_multinom_c)
+
+rownames(out.tab$coeftable) <- c("(Intercept):For", "(Intercept):Against",
+                       "TRT:txt:For", "TRT:txt:Against",
+                       "TRT:vid:For", "TRT:vid:Against",
+                       "age:For", "age:Against", "male:For", "male:Against",
+                       "main job:For", "main job:Against",
+                       "tenure: 6-12mos:For", "tenure: 6-12mos:Against",
+                       "1-2 yrs.:For","1-2 yrs.:Against", "2-3 yrs.:For", "2-3 yrs.:Against",
+                       "3+ yrs.:For","3+ yrs.:Against",
+                       "nonwhite:For", "nonwhite:Against",
+                       "fulltime:For", "fulltime:Against",
+                       #"hourly:For", "hourly:Against",
+                       "college:For", "college:Against")
+                               
+# Checking estimates by comparing For union vs DK
+#uv_fornot<- svy_vglm(
+#    formula = I(union_vote=="For the union") ~ HDTreatment,
+#    design = subset(THD_comp, union_vote != "Against the union"),
+#   family=binomialff)
+```
+
+```{r tab-uv, echo=FALSE, results='asis'}
+
+stargazer(out.tab$coeftable,
+          digits = 2,
+          title = "Multinomial logistic regression on support for unionization",
+          notes = "Reference category is DK.",
+          header=FALSE,
+          no.space = TRUE,
+          notes.align = "l",
+          notes.append=TRUE,
+          label = "tab:tab-uv"
+          )
+```
+
+```{r tab-ui,eval=TRUE, echo = FALSE, results='asis'}
+#OLS
+ui_reg_b<-svyglm(as.numeric(gov_ui) ~
+                    HDTreatment, 
+                  design = THD_comp)
+
+ui_reg_c<-svyglm(as.numeric(gov_ui) ~
+                    HDTreatment +age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college , 
+                  design = THD_comp)
+#ordered logit
+ui_reg_polr<-svy_vglm(gov_ui ~
+                    HDTreatment +age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_comp,
+                  family=propodds())
+
+stargazer(ui_reg_b, ui_reg_c,
+          title = "Weighted OLS regression on support for UI",
+          covariate.labels = c("TRT: text", "TRT: vid", "age", "male", "main job",
+                               "tenure: 6-12mos", "  1-2 yrs.", 
+                               "  2-3 yrs.", "  3+ yrs.",
+                               "nonwhite", "full-time", "hourly",
+                               "BA/BS+"),
+          dep.var.caption = "",
+          dep.var.labels = "support for UI (1-4)",
+          model.numbers = F,
+          no.space = T,
+          digits = 2,
+         # column.labels = c("OLS", "OLS", "Ordered logit"),
+          header = FALSE,
+         label = "tab:tab-ui"
+         #notes = c("All results use raking weights to the Facebook-reported gender/age distribution for the recuitment target population.")
+          )
+
+
+pension_reg_b<-svyglm(as.numeric(gov_pension) ~
+                    HDTreatment, 
+                  design = THD_comp)
+
+pension_reg_c<-svyglm(as.numeric(gov_pension) ~
+                    HDTreatment +age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college , 
+                  design = THD_comp)
+
+cc_reg_b<-svyglm(as.numeric(gov_childcare) ~
+                    HDTreatment, 
+                  design = THD_comp)
+
+cc_reg_c<-svyglm(as.numeric(gov_childcare) ~
+                    HDTreatment +age + male +
+                    main_job +
+                    tenure_fac +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college , 
+                  design = THD_comp)
+```
+
+Both tables confirm the findings visible in the graphical displays.  The video treatment produces a noticeable shift into "don't know" for the unionization question while also making workers more supportive of UI. Both sets of findings in this section are inconsistent with the idea that private welfare will substitute for public or collective action.  If anything, the video treatment effects could be interpreted as reinforcing perceived vulnerability and the need to take action.  The fact that the video treatment shows consistent effects while there is no response to the textual stimulus implies that (i) worker knowledge or opinions here may be thin; (ii) there is likely an emotional reaction at play here and (iii) future research will need to develop survey experimental stimuli carefully.
+
+One may wonder whether unemployment insurance is the appropriate policy to link with the EHF to examine the government substitution hypothesis.  After all, the EHF is designed to provide benefits while having a job with this employer whereas UI is designed to help when a job is lost.  There are two pieces of evidence that UI is a reasonable policy domain to link with EHF benefits.  First, although EHF benefits are available to someone who loses her job with an employer, benefits are available when someone in the worker's immediate family loses a job.  As such, EHFs do have a UI-like quality.  Second, on an empirical basis, the UI question was asked as part of a battery of questions asking about UI was well as two other policy areas: policies supporting the living standards of the elderly and the provision of childcare for working parents.  These two questions can constitute "placebos" since EHFs have no connection with either policy area.  In the event, I indeed find no evidence for a relationship between the EHF treatments and support for government involvement in either policy area. UI appears special in this regard.
+
+### Heterogeneous effects by "pre-exposure" status
+
+I found "broad-but-thin" levels of pre-existing EHF awareness before the survey treatment.  It stands to reason that that those already aware of the program ("pre-exposed") might display smaller effects from the text and video treatments in the survey itself.  To the extent we are interested in the effect of informing a previously uniformed worker about the EHF, the average treatment effects reported above could be subject to "pre-exposure bias" [@ferrariMethodologicalApproachCausal2023].  Alternatively, we can view the ATEs above as the expected shift in opinion, averaged across all workers, a meaningful quantity in itself.  But effects among other groups, notably the un-exposed, are also relevant here for understanding how EHFs might affect workers across work sites and employers.  
+
+Fortunately, by measuring pre-exposure, as we have in this sample, we can estimate the treatment effect among the various subgroups defined by their level of pre-exposure and treatment.  The assumption needed to sustain a causal interpretation is that pre-exposure to information about the EHF is independent of potential outcomes, conditional on treatment and relevant pre-treatment covariates [@ferrariMethodologicalApproachCausal2023].  For ease of direct comparison In the main text, I report unweighted differences in proportions among treatment and control groups, looking only at the unexposed respondents, comparing those quantities to the ATEs reported above.  In the appendix, I report full regression-based estimates that include tenure at the firm as the only additional covariate. 
+
+```{r fig-HTE-unexposed, echo=FALSE, fig.cap="Subjective financial security"}
+
+ee.out.bin<-THD_comp_uw %>% 
+  group_by(EHF_aware_list, HDTreatment) %>%
+  summarise(finsec = mean(emergency_expense_bin, na.rm=T),
+            wrkl = mean(as.numeric(wrk_loyal), na.rm=T),
+            empl = mean(as.numeric(emp_loyal), na.rm=T),
+            empr = mean(as.numeric(emp_reco), na.rm=T))
+            ,
+            #uv = mean(union_vote, na.rm=T),
+            #ui = mean(gov_ui, na.rm=T))
+            
+ee.out.bin$emergency_expense_num<-as.numeric(ee.out.bin$emergency_expense_bin)
+
+unionvote.out.hte<-THD_comp %>% 
+  group_by(HDTreatment, EHF_aware_list, union_vote) %>%
+  summarise(union = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+
+uv_plot_hte <- ggplot(data = filter(unionvote.out.hte, EHF_aware_list == F),
+            mapping = aes(x = union_vote, y = union,
+                          ymin = union_low,
+                          ymax = union_upp,
+                          fill = HDTreatment,
+                          color = HDTreatment,
+                          group = HDTreatment))
+
+uv_plot_hte <- uv_plot_hte + geom_col(position = dodge, alpha = 0.2) +
+    geom_errorbar(position = dodge, width = 0.2) +
+    #scale_x_continuous(name=NULL, 
+    #                 breaks = 1:4,
+    #                 labels = c("1" ="none at all",
+    #                            "2"="", "3" = "",
+    #                            "4"="a lot")) +
+  labs(title = "Support for unionization by EHF treatment",
+       x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c("cntrl", "txt", "vid"),
+                      labels=c("Control", "Text", "Video")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Control", "Text", "Video")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "top",
+        panel.grid = element_blank())
+
+```
+
+
+# Conclusion
+This paper reports on the results of a survey of workers at a major American retailer with an old and relatively generous EHF program.  Respondents were recruited through Facebook advertising campaigns.  I find that workers are generally aware of their employer's EHF, but this awareness is somewhat thin and correlated with tenure and full-time status.  Using a survey experiment, I find that neither exposure to simple textual statements about the EHF nor watching a more involved, emotional corporate propaganda video about the EHF affects self-reported financial security.  I do find that the video treatment increases worker positive affect toward co-workers and the employer.  The video treatment also makes workers more uncertain about unionization and _supportive_ of government UI programs, contrary to expectations derived from existing studies of welfare state support in the presence of "private" alternatives.
+
+The lack of response to the text treatment compared to the strong treatment effects from the video stimulus implies that findings here could be fragile, short-lived, or specific to this particular firm.  Additional research with workers from other firms will be needed to provide full context.
+
+# References
+
+\newpage
+
+# Appendix
+
+## Regression analysis acccounting for pre-exposure to the EHF 
+In  language of Ferrari [@ferrariMethodologicalApproachCausal2023], interpreting the average treatment effects reported above as estimates of the effect of the informational interventions on previously uniformed people risks "pre-exposure bias"    
+
+For outcome $j$, the relevant heterogeneous effects can be estimated using the following approach: 
+
+E[Y_{ij}] = f(\alpha + \beta_1 T_i + \beta_2 V_i + \beta_3 P_i + \beta_4 T_iP_i + \beta_5 V_iP_i + \beta_6 X_i)
+
+where $T_i$ and $V_i$ denote text and video treatments, respectively, and $P_i$ denotes whether $i$ is coded as aware of her employer's EHF. If $f(x) = x$, then we can estimate () using OLS, in which case $\beta_1$ and $\beta_2$ are the "average information effects" (cite), i.e., the effects of the text and video treatments, respectively, among those who were previously unexposed.  The quantities $(\beta_1+\beta_4)$ and $(\beta_1+\beta_5)$ represent the text and video treatment effects among the pre-exposed.

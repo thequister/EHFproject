@@ -1,0 +1,1403 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Author template for Operations Reseacrh (opre) for articles with no e-companion (EC)
+%% Mirko Janc, Ph.D., INFORMS, mirko.janc@informs.org
+%% ver. 0.95, December 2010
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[fleqn,orsc,blindrev]{informs4}
+%%\documentclass[opre,nonblindrev]{informs3_modified} % current default for manuscript submission
+
+\OneAndAHalfSpacedXI % current default line spacing
+%\OneAndAHalfSpacedXII
+%\DoubleSpacedXII
+%%\DoubleSpacedXI
+
+% If hyperref is used, dvi-to-ps driver of choice must be declared as
+%   an additional option to the \documentclass. For example
+%\documentclass[dvips,opre]{informs3}      % if dvips is used
+%\documentclass[dvipsone,opre]{informs3}   % if dvipsone is used, etc.
+
+%%% OPRE uses endnotes. If you do not use them, put a percent sign before
+%%% the \theendnotes command. This template does show how to use them.
+\usepackage{endnotes}
+\let\footnote=\endnote
+\let\enotesize=\normalsize
+\def\notesname{Endnotes}%
+\def\makeenmark{$^{\theenmark}$}
+\def\enoteformat{\rightskip0pt\leftskip0pt\parindent=1.75em
+	\leavevmode\llap{\theenmark.\enskip}}
+
+% Private macros here (check that there is no clash with the style)
+% figure packages
+\usepackage{graphicx}
+\usepackage{eqndefns-left}
+\usepackage{multirow}
+\usepackage{hhline}
+
+% caption package
+\usepackage[small, margin=1cm]{caption}
+
+% appendix package
+\usepackage{appendix}
+% color packages
+\usepackage{color}
+\definecolor{strcolor}{rgb}{0.6, 0.2, 0.6}
+\definecolor{commentcolor}{rgb}{0.3125, 0.5, 0.3125}
+\definecolor{keycol}{rgb}{0, 0, 1}
+
+
+% revision
+\newcommand{\rev}[1]{{\color{red} #1}}
+
+% math packages
+%\usepackage{amssymb}
+%\usepackage{amsmath}
+\usepackage{bbm}
+
+% Code package
+\usepackage{listings}
+\lstset{
+	emph={ROVar, ROUn, ROVarDR, ROExpr, RONormInf, RONorm1, RONorm2,ROConstraint,ROExpect, ROSq, ROConstraintSet,ROIntVar,ROBinVar, ROInfinity,ROModel,ROVarDRArray, ROVarArray, ROMinimize,ROUnArray, ROAbs, ROPos, ROSum, int},emphstyle={\color{strcolor}\bfseries},
+	keywordstyle={\color{blue}\bfseries},
+	commentstyle={\color{commentcolor}},
+	stringstyle={\color{strcolor}\bfseries},
+	language=C++,                % choose the language of the code
+	basicstyle={\ttfamily\footnotesize}, % the size of the fonts that are used for the code
+	numbers=left,                   % where to put the line-numbers
+	numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+	stepnumber=1,                   % the step between two line-numbers. If it's 1 each line will be numbered
+	numbersep=5pt,                  % how far the line-numbers are from the code
+	backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+	showspaces=false,               % show spaces adding particular underscores
+	showstringspaces=false,         % underline spaces within strings
+	showtabs=false,                 % show tabs within strings adding particular underscores
+	frame=single,	                	% adds a frame around the code
+	tabsize=2,	                		% sets default tabsize to 2 spaces
+	captionpos=b,                   % sets the caption-position to bottom
+	breaklines=true,                % sets automatic line breaking
+	breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+	escapeinside={\%*}{*)},         % if you want to add a comment within your code
+	keywords=[1]{for, break, if, else, function}
+}
+\renewcommand{\lstlistingname}{Code Segment}
+
+% hyperlinks packages
+%\usepackage{hyperref}
+\usepackage{url}
+
+% numbering
+%\numberwithin{equation}{section}
+%\numberwithin{table}{section}
+%\numberwithin{figure}{section}
+
+% Equation environments
+\newcommand {\bea}{\begin{eqnarray}}
+	\newcommand {\eea}{\end{eqnarray}}
+\newcommand {\E}[1]{\mathrm{E}\left( #1 \right)}
+\newcommand {\Ep}[2]{{\mathrm{E}_{\mathbb{P}_{#1}} \left( #2 \right)}}
+\newcommand {\supEp}[1]{\displaystyle \sup_{\mathbb{P} \in \mathbb{F}} \Ep{}{#1}}
+\newcommand {\supEpf}[2]{\displaystyle \sup_{\mathbb{P} \in \mathbb{F}_{#1}} \Ep{}{#2}}
+\newcommand {\pos}[1]{\paren{#1}^+}
+\renewcommand {\neg}[1]{\paren{#1}^-}
+\newcommand {\pibound}[1]{\ensuremath{\pi^{#1}\paren{r^0, \mb{r}}}}
+\newcommand {\etabound}[1]{\ensuremath{\eta^{#1}\paren{r^0, \mb{r}}}}
+\newcommand \conv {\mathrm{conv}}
+\newcommand {\p}{{\rm P}}
+% mb
+\newcommand{\mb}[1]{\mbox{\boldmath \ensuremath{#1}}}
+\newcommand{\mbt}[1]{\mb{\tilde{#1}}}
+\newcommand{\mbb}[1]{\mb{\bar{#1}}}
+\newcommand{\mbbs}[1]{\mbb{\scriptstyle{#1}}}
+\newcommand{\mbh}[1]{\mb{\hat{#1}}}
+\newcommand{\mbth}[1]{\mbt{\hat{#1}}}
+\newcommand{\mbc}[1]{\mb{\check{#1}}}
+\newcommand{\mbtc}[1]{\mbt{\check{#1}}}
+\newcommand{\mbs}[1]{\mb{\scriptstyle{#1}}}
+\newcommand{\mbst}[1]{\mbs{\tilde{#1}}}
+\newcommand{\mbsh}[1]{\mbs{\hat{#1}}}
+% mc
+%\newcommand{\mc}[1]{\mbox{\ensuremath{\mathcal{#1}}}}
+\newcommand{\mch}[1]{\hat{\mc{#1}}}
+\newcommand{\mcs}[1]{\mc{\scriptstyle{#1}}}
+\newcommand{\mcss}[1]{\mc{\scriptscriptstyle{#1}}}
+\newcommand{\mcsh}[1]{\hat{\mcs{#1}}}
+\newcommand{\mbss}[1]{{\mbox{\boldmath \tiny{$#1$}}}}
+\newcommand{\eucnorm}[1]{\left\| #1 \right\|_2}
+\newcommand{\dpv}{\displaystyle \vspace{3pt}}
+\newcommand{\diag}[1]{\textbf{diag}\paren{#1}}
+\newcommand{\yldrk}{\mb{y}^k\paren{\mbt{z}}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\DeclareMathOperator{\CVaR}{CVaR}
+\DeclareMathOperator{\VaR}{VaR}
+%\DeclareMathOperator{\argmin}{\arg\min}
+% combinations
+\renewcommand{\mbc}[1]{\mb{\mc{#1}}}
+%misc
+\newcommand{\ceil}[1]{\left\lceil #1  \right\rceil}
+
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conj}{Conjecture}
+\newtheorem{coro}{Corollary}
+%\newtheorem{claim}{Claim}
+\newtheorem{Defi}{Definition}
+\newtheorem{algorithm}{Algorithm}
+%\newtheorem{assumption}{Assumption}
+
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\ie}{\textit{i.e.}}
+\renewcommand{\Re}{\mathbb{R}}
+
+%\renewcommand{\bigtimes}{\mathop{\rm \text{\Large{$\times$}}}}
+
+\def\blot{\quad \mbox{$\vcenter{ \vbox{ \hrule height.4pt
+				\hbox{\vrule width.4pt height.9ex \kern.9ex \vrule width.4pt}
+				\hrule height.4pt}}$}}
+
+% Natbib setup for author-year style
+\usepackage{natbib}
+\bibpunct[, ]{(}{)}{,}{a}{}{,}%
+\def\bibfont{\fontsize{8}{9.5}\selectfont}%
+\def\bibsep{0pt}%
+\def\bibhang{16pt}%
+\def\newblock{\ }%
+\def\BIBand{and}%
+
+%% Setup of theorem styles. Outcomment only one.
+%% Preferred default is the first option.
+\TheoremsNumberedThrough     % Preferred (Theorem 1, Lemma 1, Theorem 2)
+%\TheoremsNumberedByChapter  % (Theorem 1.1, Lema 1.1, Theorem 1.2)
+\ECRepeatTheorems
+
+%% Setup of the equation numbering system. Outcomment only one.
+%% Preferred default is the first option.
+\EquationsNumberedThrough    % Default: (1), (2), ...
+%\EquationsNumberedBySection % (1.1), (1.2), ...
+
+% In the reviewing and copyediting stage enter the manuscript number.
+%\MANUSCRIPTNO{} % When the article is logged in and DOI assigned to it,
+%   this manuscript number is no longer necessary
+
+%\newdimen\setvrulersecondcolumnheightdimen%
+%\newbox\setvrulersecondcolumnheightdimenbox%
+%%%%%%%%%%%%%%%%%
+\gdef\AQ#1{}
+\gdef\CQ#1{}
+%\setvruler [][1][1][1][1][5pt][5pt][0pt][\textheight]
+\begin{document}
+	%%%%%%%%%%%%%%%%
+	
+%	\AIA
+% \setcounter{page}{1} %
+% \VOL{00}%
+% \NO{0}%
+% \MONTH{Xxxxx}%
+% \YEAR{2017}%
+% \FIRSTPAGE{1}%
+% \LASTPAGE{16}%
+% \FIRSTPAGEAIA{1}%
+% \LASTPAGEAIA{16}%
+\def\COPYRIGHTHOLDER{INFORMS}%
+\def\COPYRIGHTYEAR{2017}%
+\def\DOI{\fontsize{7.5}{9.5}\selectfont\sf\bfseries\noindent https://doi.org/10.1287/opre.2017.1714\CQ{Word count = 9740}}
+%\def\RECEIVED{November 1, 2016}
+%\def\REVISED{June 22, 2017; October 6, 2017}
+%\def\ACCEPTED{November 15, 2017}
+% \PUBONLINEAIA{}
+
+	\RUNAUTHOR{Zhen et~al.} %
+
+	\RUNTITLE{Adjustable Robust Optimization via Fourier-Motzkin Elimination}
+
+\TITLE{Adjustable Robust Optimization via Fourier-Motzkin Elimination}
+
+	
+	% Block of authors and their affiliations starts here:
+	% NOTE: Authors with same affiliation, if the order of authors allows,
+	%   should be entered in ONE field, separated by a comma.
+	%   \EMAIL field can be repeated if more than one author
+
+	\ARTICLEAUTHORS{
+%		\AUTHOR{Jianzhe Zhen,\textsuperscript{a,*} Dick den
+%		Hertog,\textsuperscript{a} Melvyn Sim\textsuperscript{b}} 
+%\AFF{$^{a}$Department of Econometrics and Operations Research,
+%Tilburg University; $^{b}$NUS Business School, National University of
+%Singapore}
+
+\AUTHOR{Jianzhe Zhen, Dick den Hertog}
+\AFF{Department of Econometrics and Operations Research,
+Tilburg University}
+
+\AUTHOR{Melvyn Sim}
+\AFF{NUS Business School, National University of
+Singapore}
+
+%\AUEXTRA{$^{*}$Corresponding author}
+
+%\AFFmail{{\bf Contact:} j.zhen@tilburguniversity.edu,
+%d.denhertog@tilburguniversity.edu,\\			melvynsim@nus.edu.sg}%
+}
+	 % end of the block
+	
+%\ARTICLEINFO{\textbf{Received:} November 1, 2016\\ \textbf{Revised:} June 22, 2017; October 6, 2017\\ \textbf{Accepted:} November 15, 2017\\ \textbf{Published Online in Articles in Advance:}}
+
+	\ABSTRACT{We demonstrate how adjustable robust optimization (ARO) problems with fixed recourse can be {cast} as static robust optimization problems via Fourier-Motzkin elimination (FME). Through the lens of FME, we characterize the structures of the optimal decision rules for a broad class of ARO problems. A scheme based on a blending of classical FME and a simple Linear Programming technique that can efficiently remove redundant constraints, is developed to reformulate ARO problems. This generic reformulation technique enhances the classical approximation scheme via decision rules, and enables us to solve adjustable optimization problems to optimality. We show via numerical experiments that, for small-size ARO problems our novel approach finds the optimal solution. For moderate or large-size instances, we eliminate a subset of the adjustable variables, which improves the solutions obtained from linear decision rules.}
+
+
+%\FUNDING{The research of the first author is supported by NWO Grant 613.001.208. The third author acknowledges the funding support from the Singapore Ministry of Education Social Science Research Thematic Grant MOE2016-SSRTG-059.}
+
+\SUBJECTCLASS{\AQ{Please confirm subject classifications.}Fourier-Motzkin elimination; adjustable robust optimization; linear decision rules; redundant constraint identification.}
+
+\AREAOFREVIEW{Optimization.}
+
+\KEYWORDS{}%{\CQ{Kindly provide the keywords.}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	% Samples of sectioning (and labeling) in OPRE
+	% NOTE: (1) \section and \subsection do NOT end with a period
+	%       (2) \subsubsection and lower need end punctuation
+	%       (3) capitalization is as shown (title style).
+	%
+	%\section{Introduction.}\label{intro} %%1.
+	%\subsection{Duality and the Classical EOQ Problem.}\label{class-EOQ} %% 1.1.
+	%\subsection{Outline.}\label{outline1} %% 1.2.
+	%\subsubsection{Cyclic Schedules for the General Deterministic SMDP.}
+	%  \label{cyclic-schedules} %% 1.2.1
+	%\section{Problem Description.}\label{problemdescription} %% 2.
+	% Text of your paper here
+	
+\maketitle
+	
+\section{Introduction}
+\noindent In recent years, robust optimization has been experiencing an explosive growth and has now become one of the dominant approaches to address decision making under uncertainty. In robust optimization, uncertainty is described by a distribution free uncertainty set, which is typically a conic representable bounded convex set (see, for instance, \cite{gl97,gol98,bn98,bn99,bn00,bs04,bb09,bbc11}). Among other benefits, robust optimization offers a computationally viable methodology for immunizing mathematical optimization models against parameter uncertainty by\vadjust{\pagebreak} replacing probability distributions with uncertainty sets as fundamental primitives. It has been successful in providing computationally scalable methods for a wide variety of optimization problems. 
+	
+	The seminal work \cite{bggn04} extends classical robust optimization to encompass adjustable decisions.  {Adjustable robust optimization (ARO) is a methodology to help decision makers make robust and resilient decisions that extend well into the future. In contrast to robust optimization, some of the decisions in ARO problems can be adjusted at a later moment in time after (part of) the uncertain parameter has been revealed. ARO yields less conservative decisions than robust optimization, but ARO problems} are in general computationally intractable. To circumvent the intractability, \cite{bggn04} restrict the adjustable decisions to be affinely dependent on the uncertain parameters, an approach known as linear decision rules (LDRs). 
+	
+	\cite{bip10,iss13} and \cite{bg12} establish the optimality of LDRs for some important classes of ARO problems. \cite{cz09} further improve LDRs by extending the affine dependency to the auxiliary variables that are used in describing the uncertainty set. Henceforth, variants of piecewise affine decision rules have been proposed to improve the approximation while maintaining the tractability of the adjustable distributionally robust optimization (ADRO) models. Such approaches include the deflected and segregated LDRs of \cite{cssz08}, the truncated LDRs of \cite{ss09}, and the bideflected and (generalized) segregated LDRs of \cite{gs10}. In fact, LDRs were discussed in the early literature of stochastic programming but the technique had been abandoned due to suboptimality (see Garstka and Wets 1974). Interestingly, there is also a revival of using LDRs for solving multistage stochastic optimization problems (\cite{kwg11}). Other nonlinear decision rules in the recent literature include, e.g., quadratic decision rules in \cite{ben09}, polynomial decision rules in \cite{bip11}.
+	
+	Another approach for ARO problems is finite adaptability in which the uncertainty set is split into a number of smaller subsets, each with its own set of recourse decisions. The number of these subsets can be either fixed a priori or decided by the optimization model (\cite{vkr11}, \cite{bc10}, \cite{hkw14}, \cite{pd16}, \cite{bd16a}).
+	
+	It has been observed that robust optimization models can lead to an underspecification of uncertainty because they do not exploit distributional knowledge that may be available. In such cases, (adjustable) robust optimization may propose overly conservative decisions. In the era of modern business analytics, one of the biggest challenges in Operations Research concerns the development of highly scalable optimization problems that can accommodate vast amounts of noisy and incomplete data, whilst at the same time, truthfully capturing the decision maker's attitude toward risk (exposure to uncertain outcomes whose probability distribution is known) and ambiguity (exposure to uncertainty about the probability distribution of the outcomes). One way of dealing with risk is via stochastic programming. These methods assume that the underlying distribution of the uncertain parameter is known but they do not incorporate ambiguity in their decision criteria for optimization. For references on these techniques we refer to \cite{bl97} and \cite{kw95}. In evaluating preferences over risk and ambiguity, \cite{scarf58} is the first to study a single-product Newsvendor problem where the precise demand distribution is unknown but is only characterized by its mean and variance. Subsequently, such models have been extended to minimax stochastic optimization models (see, for instance, \cite{z66,be95,sk02,sa04}), and recently to distributionally robust optimization models (see, for instance, \cite{css07,cs09,p07,dy10,xm12}). In terms of tractable formulations for a wide variety of static robust convex optimization problems, \cite{wks14} propose a broad class of ambiguity  {sets} where the family of probability distributions are characterized by conic representable expectation constraints and nested conic representable confidence sets. \cite{css07} adopt LDRs to provide tractable formulations for solving ADRO problems. \cite{bsz17} incorporate the primary and auxiliary random variables of the lifted ambiguity set in the LDRs for ADRO problems, which significantly improves the solutions.
+	
+	In this paper, we propose a high level generic approach for ARO problems with fixed recourse via Fourier-Motzkin elimination (FME), which can be naturally integrated with existing approaches, e.g., decision rules, finite adaptability, to improve the quality of obtained solutions. FME was first introduce in \cite{f26}, and was rediscovered in \cite{m36}. Via FME, we reformulate the ARO problems into their equivalent counterparts with  {a} reduced number of adjustable variables at the expense of an increasing number of constraints. Theoretically, every ARO problem admits an equivalent static reformulation, however, one major obstacle in practice is that FME often leads to too many redundant constraints. In order to keep the resulting equivalent counterpart at its minimal size, after eliminating an adjustable variable via FME, we execute an LP-based procedure to detect and remove  the redundant constraints. This redundant constraint identification (RCI) procedure is inspired by \cite{cmp89}. We propose to apply FME and RCI alternately to eliminate some of the adjustable variables and redundant constraints  {until} the size of the reformulation reaches a prescribed computational limit, and then for the remaining adjustable variable we impose LDRs to obtain an approximated solution. \cite{zd17b} apply FME to compute the maximum volume inscribed ellipsoid of a polytopic projection.
+	
+	Through the lens of FME, we investigate two-stage ARO problems theoretically, and prove that there exist piecewise affine functions that are optimal decision rules (ODRs) for the adjustable variables. By applying FME to the dual formulation of \cite{bd16}, we further characterize the structures of the ODRs for a broad class of two-stage ARO problems: a) we establish the optimality of LDRs for two-stage ARO problems with simplex uncertainty sets; b) for two-stage ARO problems with box uncertainty sets, we show that there exist two-piecewise affine functions that are ODRs for the adjustable variables in the dual formulation, and these problems can be  {cast} as sum-of-max problems. We further note that, despite the equivalence of primal and dual formulations, they may have significantly different  {numbers} of adjustable variables. We evaluate the efficiency of our approach on both  formulations numerically. By using our FME approach, we extend the approach of \cite{bsz17} for ADRO problems. Via numerical experiments,  we show that our approach improves the obtained solutions in \cite{bsz17}.
+	
+	Our main contributions are as follows:
+	\begin{enumerate}
+		\item  We present a high level generic FME approach for ARO problems.  {We show that the FME approach is not necessarily a substitution of all existing methods, but can also be used before the existing methods are applied.}
+		\item  We investigate two-stage ARO problems via FME, which enables us to characterize the structures of the ODRs for a broad class of two-stage ARO problems. 
+		\item  We adapt an LP-based RCI procedure for ARO problems, which effectively removes the redundant constraints, and improves the computability of the FME approach.
+		\item  We show that our FME approach can be used to extend the approach of \cite{bsz17} for ADRO problems. 
+		\item Via numerical experiments, we show that our approach can significantly improve the  {approximated solutions obtained from LDRs}. Our approach is particularly effective for the formulations with few adjustable variables.
+	\end{enumerate}
+	
+	This paper is organized as follows. In \textsection \ref{sec:FME}, we introduce FME for two-stage ARO problems. \textsection \ref{sec:ODR} investigates the primal and dual formulations of two-stage ARO problems, and presents some new results on the structures of the ODRs for several classes of two-stage ARO problems. In \textsection \ref{sec:RCI}, we propose an LP-based RCI procedure to remove the redundant constraints.  \textsection \ref{sec:ADRO} uses our FME approach to extend the approach of \cite{bsz17} for ADRO problems. We generalize our approach to the multistage case in \textsection \ref{sec:multi}. \textsection \ref{sec:NE} evaluates our approach numerically via lot-sizing on a network and appointment scheduling problems. \textsection \ref{sec:con} presents conclusions and future research.
+	
+	
+	\mbox{}\\
+	\noindent {\bf Notations. }
+	We use $[N]$, $N \in \mathbb{N}$ to denote the set of running indices, $\{1,\dots,N\}$. We generally use bold faced characters such as $\mb{x} \in \Re^N$ and  $\mb{A} \in \Re^{M \times N}$  to represent  vectors and matrices, respectively, and $\mb{x}_{\mathcal{S}} \in \Re^{|\mathcal{S}|}$ to denote a vector that contains a subset  $\mathcal{S} \subseteq [N]$ of components in $\mb{x}$, e.g., $x_i \in \Re$ denotes the {\em i}-th element of $\mb{x}$. We use $(x)^+$ and $|x|$ to denote $\max\{x,0\}$ and the absolute value of $x \in \mathbb{R}$, and $|\mathcal{S}|$ to denote the cardinality of a finite set $\mathcal{S}\subseteq [N]$. Special vectors include $\mb{0}$, $\mb{1}$ and $\mb{e}_i$ which are respectively the vector of zeros, the  vector of ones and the standard unit basis vector.  We denote $\mathcal{R}^{N,M}$ as the space of all measurable functions from $\Re^N$ to $\Re^M$ that are bounded on compact sets. We use tilde to denote a random variable without associating it with a particular probability distribution. We use  $\mbt{z} \in \Re^{I}$ to represent an $I$ dimensional random variable and it  can be associated with a probability  distribution $\mathbb{P} \in \mathcal{P}_0(\Re^{I})$, where $\mathcal{P}_0(\Re^{I})$ represents the set of all probability distributions on $\Re^{I}$.
+	We denote  $\mathbb{E}_{\mathbb{P}}(\cdot)$  as the expectation over the probability distribution $\mathbb{P}$. For a support set $\mathcal{W} \subseteq  \Re^{I}$,  $\mathbb{P}(  \mbt{z}  \in \mathcal{W})$ represents the probability  of $\mbt{z}$ being in $\mathcal{W}$ evaluated on the distribution $\mathbb{P}$.
+	
+\section{Two-stage robust optimization via Fourier-Motzkin elimination} \label{sec:FME}
+	
+We first focus on a two-stage ARO problem where the first stage or {\em here-and-now} decisions  $\mb{x} \in \Re^{N_1}$ are decided before the realization of the uncertain parameters $\mb{z}$,  {and} the second stage or {\em wait-and-see} decisions $\mb{y}$ are determined after the value of $\mb{z}$ is revealed, and $\mb{z}$ resides in a set $\mathcal{W} \subset \mathbb{R}^{I_1}$. Let us call $\mb{y}$ {\em adjustable variables}. With this setting, a two-stage ARO problem can be written as follows:
+\begin{equation}
+\label{mod:2stage}
+\mathcal{X} = \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt}  \exists \mb{y} \in \mathcal{R}^{I_1,N_2}: \mb{A}(\mb{z})\mb{x}+\mb{B}\mb{y}(\mb{z}) \geq\mb{d}(\mb{z})  \quad  \forall \mb{z} \in \mathcal{W} \right\},
+\end{equation}
+where the {\em feasible set} $\mathcal{X}$ is the set of all feasible here-and-now decisions:
+\begin{equation}\label{set:X}
+\mathcal{X} = \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt}  \exists \mb{y} \in \mathcal{R}^{I_1,N_2}: \mb{A}(\mb{z})\mb{x}+\mb{B}\mb{y}(\mb{z}) \geq\mb{d}(\mb{z})  \quad  \forall \mb{z} \in \mathcal{W} \right\},
+\end{equation}
+for a given domain $X\subseteq \mathbb{R}^{N_1}$, e.g., $X= \mathbb{R}^{N_1}_+$  {or $X= \mathbb{Z}^{N_1}$}. Here,  $\mb{A} \in \mathcal{R}^{I_1,M \times N_1}$,  $\mb{d} \in \mathcal{R}^{I_1,M}$ are functions that map from the vector $\mb{z}$ to the input parameters of the linear optimization problem. Adopting the common assumptions in the robust optimization literature, these functions are affinely dependent on $\mb{z}$ and are given by
+\begin{equation*}
+\mb{A}(\mb{z}) = \mb{A}^0% + \sum_{k\in[I_1]} \mb{A}^k z_k,\quad \mb{d}(\mb{z}) = \mb{d}^0 + \sum_{k\in [I_1]} \mb{d}^k z_k,
+\end{equation*}
+	with $\mb{A}^0, \mb{A}^1,..., \mb{A}^{I_1} \in \Re^{M \times N_1}$ and $\mb{d}^0, \mb{d}^1,..., \mb{d}^{I_1} \in \Re^{M}$. The matrix $\mb{B} \in \Re^{M \times N_2}$, also known in stochastic programming as the {\em recourse matrix} is constant, which corresponds to the stochastic programming format known as {\em fixed recourse}. For the case where the objective also includes the worst case second stage costs, it is well known that there is an equivalent epigraph reformulation that is in the form of Problem (\ref{mod:2stage}). Although Problem (\ref{mod:2stage}) may seem conservative as it does not exploit distributional knowledge of the uncertainties that may be available, \cite{bsz17} show that it is capable of modeling adjustable distributionally robust optimization (ADRO) problems. In \textsection \ref{sec:ADRO}, we show how to apply our approach to solve ADRO problems.  {We then generalize our approach to the multistage case in \textsection \ref{sec:multi}.} Problem (\ref{mod:2stage}) is generally intractable, even if there are only right hand side uncertainties (see \cite{m11}), because the adjustable variables $\mb{y}$ are decision rules instead of finite vectors of decision variables.
+	
+\begin{floatalgorigthm}[t]		
+	\noindent
+	\fbox{%
+		\parbox{.988\textwidth}{%
+			\begin{algorithm}{Fourier-Motzkin Elimination for two-stage problems.} \label{alg:FME}
+				\begin{enumerate}
+					\item  For some $l\in [N_2]$, rewrite each constraint in $ \mathcal{X} $ in the form: there exists $\mb{y} \in \mathcal{R}^{I_1,N_2}$,
+\begin{equation*}
+b_{il}y_{l}(\mb{z}) \ge d_i(\mb{z}) -\sum_{j\in [N_1]} a_{ij}(\mb{z})x_j - \sum_{j\in [N_2] \setminus \{l\}} b_{ij}y_j(\mb{z})  \quad \forall \mb{z} \in \mathcal{W} \quad \forall i\in [M];
+\end{equation*}
+					if $b_{il} \ne 0$, divide both sides by $b_{il}$. We obtain an equivalent representation of $\mathcal{X}$ involving the following constraints:   there exists $\mb{y} \in \mathcal{R}^{I_1,N_2}$,
+\begin{align}
+y_{l}(\mb{z}) & \ge f_i(\mb{z}) + \mb{g}'_i(\mb{z})\mb{x} + \mb{h}'_i \mb{y}_{ \setminus \{l\}}(\mb{z})  &\forall \mb{z} \in \mathcal{W} \quad  &\text{if $b_{il}  >0$,} \label{eq:FME1}\\
+						f_j(\mb{z}) + \mb{g}'_j(\mb{z})\mb{x} + \mb{h}'_j \mb{y}_{ \setminus \{l\}}(\mb{z})   &\ge y_{l}(\mb{z}) &\forall \mb{z} \in \mathcal{W} \quad   &\text{if $b_{jl}  <0$,} \label{eq:FME2}\\
+						0 & \ge 	f_k(\mb{z}) + \mb{g}'_k(\mb{z})\mb{x} + \mb{h}'_k\mb{y}_{ \setminus \{l\}}(\mb{z})  &\forall \mb{z} \in \mathcal{W} \quad   &\text{if $b_{kl}  =0$.} \label{eq:FME3}
+\end{align}
+Here, each $\mb{h}_i, \mb{h}_j, \mb{h}_k$ is a vector in $\mathbb{R}^{N_2-1}$, for a given $\mb{z}$, each $f_i$, $f_j$, $f_k$ is a scalar, and each $\mb{g}_i, \mb{g}_j, \mb{g}_k$ is a vector in $\mathbb{R}^{N_1}$.\\
+					\item Let $\mathcal{X}_{\setminus \{l\}}$ be the feasible set after the adjustable variable $y_{l}$ is eliminated, and it is defined by the following constraints:   there exists $\mb{y}_{ \setminus \{l\}} \in \mathcal{R}^{I_1,N_2-1}$,
+\begin{align}
+						f_j(\mb{z}) + \mb{g}'_j(\mb{z})\mb{x} + \mb{h}'_j \mb{y}_{ \setminus \{l\}}(\mb{z})  & \ge f_i(\mb{z}) + \mb{g}_i'(\mb{z})\mb{x} + \mb{h}'_i \mb{y}_{ \setminus \{l\}}(\mb{z})   &\forall \mb{z} \in \mathcal{W} \quad   & \text{if $b_{jl}  <0$ and $b_{il}  >0$}, \label{eq:FME4}	\\		
+						0 & \ge	f_k(\mb{z}) + \mb{g}'_k(\mb{z})\mb{x} + \mb{h}'_k\mb{y}_{ \setminus \{l\}}(\mb{z})  & \forall \mb{z} \in \mathcal{W} \quad  & \text{if $b_{kl} =0$}\label{eq:FME5}.
+\end{align}
+				\end{enumerate}
+			\end{algorithm}
+		}%
+	}
+%	\vspace{5mm}
+\end{floatalgorigthm}	
+	
+	We propose to derive an equivalent representation of $\mathcal{X}$ by eliminating the adjustable variables $\mb{y}$  via Fourier-Motzkin elimination (FME). Algorithm \ref{alg:FME} describes the FME procedure to eliminate an adjustable variable $y_{l}$, where $l\in [N_2]$. Here, we assume the feasible region of $y_{l}$ is bounded for any $\mb{x} \in \mathcal{X}$. This algorithm is adapted from \cite[page 72]{bt97} for polyhedral projections. 
+
+{Note that the number of extra constraints after eliminating $y_l$ equals $mn - m-n$, where $m = |\{ i \, | \, b_{il} > 0 \,\,  \forall i\in [M] \}|$ and  $n = |\{ i \, | \, b_{il} < 0  \,\, \forall i\in [M] \}|$, which can be determined before the elimination.  Since Algorithm \ref{alg:FME} does not affect the objective function or the uncertainty set $\mathcal{W}$ of Problem (\ref{mod:2stage}), Theorem \ref{thm:equivalence} holds for ARO problems with general objective functions and uncertainty sets.	}
+
+	\begin{theorem} \label{thm:equivalence}
+		$\mathcal{X} =\mathcal{X}_{\setminus \{l\}}$.
+	\end{theorem}
+	\textbf{Proof.}
+	This proof is adapted from \cite[page 73]{bt97}. If $\mb{x} \in \mathcal{X}$, there exists some vector functions $\mb{y}(\mb{z})$, such that $(\mb{x}, \mb{y}(\mb{z}))$ satisfies  (\ref{eq:FME1})--(\ref{eq:FME3}). It follows immediately that $(\mb{x}, \mb{y}_{\setminus \{l\}}(\mb{z}))$ satisfies (\ref{eq:FME4})--(\ref{eq:FME5}), and $\mb{x} \in \mathcal{X}_{  \setminus \{l\}}$. This shows $\mathcal{X}  \subset \mathcal{X}_{ \setminus \{l\}}$.
+
+	We prove $\mathcal{X}_{ \setminus\{l\}}  \subset \mathcal{X}$. Let $\mb{x} \in \mathcal{X}_{ \setminus\{l\}}$. It follows from (\ref{eq:FME4}) that there exists some $\mb{y}_{\setminus \{l\}}(\mb{z})$,
+\begin{equation*}
+	\min_{\{j | b_{jl} < 0 \}}  	f_j(\mb{z}) + \mb{g}'_j(\mb{z})\mb{x} + \mb{h}'_j \mb{y}_{\setminus \{l\}}(\mb{z})  \ge \max_{\{i | b_{il} > 0\}}  f_i(\mb{z}) + \mb{g}'_i(\mb{z})\mb{x} + \mb{h}'_i \mb{y}_{ \setminus \{l\}}(\mb{z}), \quad \forall \mb{z}\in \mathcal{W}.
+\end{equation*}
+	Let 
+\begin{equation*}
+	y_{l}(\mb{z}) = \theta \min_{\{j | b_{jl} < 0 \}} \left\{ 	f_j(\mb{z}) + \mb{g}'_j(\mb{z})\mb{x} + \mb{h}'_j \mb{y}_{\setminus \{l\}}(\mb{z})\right\} + (1-\theta) \max_{\{i | b_{il} > 0\}} \left\{f_i(\mb{z}) + \mb{g}'_i(\mb{z})\mb{x} + \mb{h}'_i \mb{y}_{ \setminus \{l\}}(\mb{z})\right\} 
+\end{equation*}
+	for any $\theta \in [0,1]$. It then follows that $(\mb{x}, \mb{y}(\mb{z}))$ satisfies  (\ref{eq:FME1})--(\ref{eq:FME3}). Therefore, $\mb{x} \in \mathcal{X}$.
+	 \hfill \Halmos \\
+	 
+	
+	From Theorem \ref{thm:equivalence}, one can repeatedly apply Algorithm \ref{alg:FME} to eliminate all the linear adjustable variables $\mb{y}$ in (\ref{set:X}), which results in an equivalent set $\mathcal{X}_{\setminus [N_2]}$. The two-stage  problem (\ref{mod:2stage}) can now be equivalently represented as a static robust optimization problem:
+\begin{equation}
+		\label{mod:2stageFME}
+		\min_{\boldsymbol{x} \in \mathcal{X}} \mb{c}'\mb{x} = \min_{\boldsymbol{x} \in \mathcal{X}_{\setminus [N_2]}} \mb{c}'\mb{x}.
+\end{equation}
+	If the uncertainty set $\mathcal{W}$ is convex,  Problem (\ref{mod:2stageFME}) can be solved to optimality via the techniques from robust optimization (see, e.g., \cite{mb09,bdv15,gbbd14}).  However, in Step 2 of Algorithm \ref{alg:FME}, the number of constraints may increase quadratically after each elimination. The complexity of eliminating $N_2$ adjustable variables from $M$ constraints via Algorithm \ref{alg:FME} is $\mathcal{O}(M^{2^{N_2}})$, which is an unfortunate inheritance of FME. In \textsection \ref{sec:RCI}, we introduce an efficient LP-based procedure to detect and remove redundant constraints.
+	
+	\begin{example} [Lot-sizing on a network] \label{exmp:lson}
+		In lot-sizing on a network we have to determine the stock allocation $x_i$ for $i\in [N]$ stores prior to knowing the realization of the demand at each location. The capacity of the stores is incorporated in $X$. The demand $\mb{z}$ is uncertain and assumed to be in an uncertainty set $\mathcal{W}$. After we observe the realization of the demand we can transport stock $y_{ij}$ from store $i$ to store $j$ at unit cost $t_{ij}$ in order to meet all demand. The aim is to minimize the worst case storage costs (with unit costs $c_i$) and the cost arising from shifting the products from one store to another. The network flow model can now be written as a two-stage ARO problem:
+\begin{equation*}
+\begin{aligned} 
+				\min_{ \boldsymbol{x} \in X, y_{ij}, \tau} \quad &  \mb{c}'\mb{x} + \tau \\
+				{\rm s.t.}  \quad & \sum_{i,j\in [N]} t_{ij}y_{ij}(\mb{z}) \le \tau & \forall \mb{z} \in \mathcal{W} \\
+				\quad & \sum_{j \in [N]} y_{ji}(\mb{z}) - \sum_{j \in [N]} y_{ij}(\mb{z}) \ge z_i - x_i   & \forall \mb{z} \in \mathcal{W}, \quad i \in [N]\\
+				\quad & y_{ij}(\mb{z}) \ge 0, \,\,\,  y_{ij} \in \mathcal{R}^{N,1} & \forall \mb{z} \in \mathcal{W}, \quad i,j \in [N].
+			\end{aligned} \qquad \qquad (P)
+\end{equation*}
+The transportation cost $t_{ij}= 0$, if $i= j$; $t_{ij} \ge 0$,  otherwise. For $N=2$, there are $4$ adjustable variables, i.e.,  $y_{11},  y_{12}, y_{21}$  and $y_{22}$. We apply Algorithm \ref{alg:FME} iteratively, which leads to the following equivalent reformulation:
+\begin{minipage}{\textwidth}
+\begin{align*}
+			\min_{ \boldsymbol{x} \in X, \tau} \quad &  \mb{c}'\mb{x} + \tau \\
+			{\rm s.t.}  \quad & t_{21}z_1 - t_{21}x_1 \le \tau & \forall \mb{z} \in \mathcal{W} \\
+			\quad & t_{12}z_2 - t_{12}x_2 \le \tau & \forall \mb{z} \in \mathcal{W} \\
+			\quad & z_1 + z_2 - x_1 - x_2  \le 0 & \forall \mb{z} \in \mathcal{W} \\
+			\quad & (t_{12} + t_{21})(z_1-x_1) + t_{12}(x_2 - z_2) \le \tau & \forall \mb{z} \in \mathcal{W}.\\
+\end{align*}
+		\end{minipage}		
+		Note that we omit $\tau \ge 0$, because it is clearly a redundant constraint, which can be easily detected in the elimination procedure. This is a static robust linear optimization problem. We show in \textsection \ref{sec:lsonproblem} that imposing linear decision rules on $ y_{ij}$ in $(P)$ can lead to a suboptimal solution, whereas this equivalent reformulation produces the optimal solution.   \hfill \Halmos
+	\end{example}
+	
+	
+	As a result of Algorithm \ref{alg:FME}, there may be many constraints in $\mathcal{X}_{\setminus [N_2]}$.  We can first (iteratively) eliminate a subset $\mathcal{S}\subseteq [N_2]$ of the adjustable variables in $\mathcal{X}$ till the size of the resulting description $\mathcal{X}_{\setminus \mathcal{S}}$ reaches the prescribed computational limit, and then impose some simple functions (i.e.,  decision rules)  $\mathcal{F}^{I_1,1} \subset \mathcal{R}^{I_1,1}$ on the remaining $y_i$, for all $i \in [N_2]\setminus \mathcal{S}$. The feasible set becomes:
+\begin{equation*}
+	\widehat{\mathcal{X}}_{\setminus \mathcal{S}} = \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt} \exists  \mb{y}_{\setminus \mathcal{S}} \in \mathcal{F}^{I_1,N_2-|\mathcal{S}|}: \mb{G}(\mb{z})\mb{x}+\mb{H}\mb{y}(\mb{z}) \geq \mb{f}(\mb{z}) \quad \forall \mb{z} \in \mathcal{W} \right\},
+\end{equation*}
+	where $\mb{G}(\mb{z})$ and $\mb{H}$ are the resulting coefficient matrices of $\mb{x}$ and $\mb{y}$, respectively, and $\mb{f}(\mb{z})$ is the corresponding right-hand side vector after elimination. Since $\mb{y} \in \mathcal{F}^{I_1,N_2} \subset \mathcal{R}^{I_1,N_2}$, it follows that $\widehat{\mathcal{X}}_{\setminus \mathcal{S}} $ is a conservative (inner) approximation of $\mathcal{X}_{\setminus \mathcal{S}}$, i.e., $\widehat{\mathcal{X}}_{\setminus \mathcal{S}} \subseteq \mathcal{X}_{\setminus \mathcal{S}}$. We simply use $\widehat{\mathcal{X}}$ to denote $\widehat{\mathcal{X}}_{\setminus \emptyset}$. The following theorem shows that the more adjustable variables are eliminated, the tighter the approximation becomes; if all the adjustable variables are eliminated, the set representation is exact, i.e., $\widehat{\mathcal{X}}_{\setminus [N_2]} = \mathcal{X}_{\setminus [N_2]}= \mathcal{X}$. 
+	\begin{theorem} \label{thm:subset}
+		$\widehat{\mathcal{X}}\subseteq\widehat{\mathcal{X}}_{\setminus \mathcal{S}_1} \subseteq \widehat{\mathcal{X}}_{\setminus \mathcal{S}_2} \subseteq \mathcal{X}$, for all $\mathcal{S}_1 \subseteq \mathcal{S}_2 \subseteq [N_2]$.
+	\end{theorem} 
+	\noindent{\bf Proof}. Let $\mathcal{S} \subseteq [N_2]$. After eliminating $y_i$, $i \in \mathcal{S}$, in $\mathcal{X}$ via Algorithm \ref{alg:FME}, we have 
+\begin{align*}
+		\mathcal{X}_{\setminus \mathcal{S}} & = \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt} \exists \mb{y}_{\setminus \mathcal{S}} \in \mathcal{R}^{I_1,N_2-|\mathcal{S}|}: \mb{G}(\mb{z})\mb{x}+\mb{H}\mb{y}_{\setminus \mathcal{S}}(\mb{z}) \geq \mb{f}(\mb{z})  \quad \forall \mb{z} \in \mathcal{W}  \right\},
+\end{align*}
+	where $\mb{G}(\mb{z})$ and $\mb{H}$ are the resulting coefficient matrices of $\mb{x}$ and $\mb{y}$, respectively, and $\mb{f}(\mb{z})$ is the corresponding right-hand side vector after elimination. From Theorem \ref{thm:equivalence}, we know $\mathcal{X}_{\setminus \mathcal{S}} = \mathcal{X}$. By imposing decision rules  $\mathcal{F}^{I_1,1}\subset \mathcal{R}^{I_1,1}$ to the remaining $y_i$, for all $i \in [N_2]\setminus \mathcal{S}$, by definition, we have
+\begin{align*}
+		\widehat{\mathcal{X}}_{\setminus \mathcal{S}} & = \left\{ \mb{x}\in X \hspace{3pt} | \hspace{3pt}  \exists  \mb{y}_{\setminus \mathcal{S}} \in \mathcal{F}^{I_1,N_2-|\mathcal{S}|}: \mb{G}(\mb{z})\mb{x}+\mb{H}\mb{y}_{\setminus \mathcal{S}}(\mb{z}) \geq \mb{f}(\mb{z}) \quad \forall \mb{z} \in \mathcal{W}\right\}\\
+		& = \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt}  \exists   \mb{y}_{\setminus \mathcal{S}} \in \mathcal{F}^{I_1,N_2-|\mathcal{S}|}, \hspace{3pt} \mb{y}_{\mathcal{S}} \in \mathcal{R}^{I_1,|\mathcal{S}|}: \mb{A}(\mb{z})\mb{x}+\mb{B}\mb{y}(\mb{z}) \geq \mb{d}(\mb{z}) \quad  \forall \mb{z} \in \mathcal{W} \right\}, 
+\end{align*}
+	where $\mb{A}, \mb{B}$ and $\mb{d}$ are the same as in (\ref{set:X}). Hence, it follows that $\widehat{\mathcal{X}} \subseteq  \widehat{\mathcal{X}}_{\setminus \mathcal{S}} \subseteq \mathcal{X}_{\setminus \mathcal{S}} = \mathcal{X}$. Now, suppose $\mathcal{S}_1 \subseteq \mathcal{S}_2 \subseteq [N_2]$, we have  $\widehat{\mathcal{X}}_{\setminus \mathcal{S}_1}  \subseteq  \widehat{\mathcal{X}}_{\setminus \mathcal{S}_2} \subseteq \mathcal{X}_{\setminus \mathcal{S}_1}= \mathcal{X}_{\setminus \mathcal{S}_2}  = \mathcal{X}$.  \hfill \Halmos \\
+	
+ {Theorem \ref{thm:subset} shows that Algorithm \ref{alg:FME} can be used to improve the solutions of all existing methods, which includes linear decision rules (see \cite{bggn04,cz09}),  quadratic decision rules (see \cite{ben09}), piecewise linear decision rules (see \cite{cssz08,cz09,bg15}),  polynomial decision rules (see \cite{bip11}), and finite adaptability approaches, see \cite{bd16a,pd16}. 
+
+Algorithm \ref{alg:FME} can also be applied to nonlinear ARO problems with a subset of adjustable variables appear linearly in the constraints. E.g., one can use Algorithm \ref{alg:FME} to eliminate $y_l$ in 
+\begin{equation*}
+	\mathcal{X}^{ge} = \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt}  \exists \mb{y} \in \mathcal{R}^{I_1,N_2}: \mb{f}(\mb{x}, \mb{y}_{\setminus \{l\}}, \mb{z}) + \mb{b} y_l \geq \mb{0}  \quad  \forall \mb{z} \in \mathcal{W} \right\},
+\end{equation*}
+where $\mb{f} \in \mathcal{R}^{N_1\times (N_2-1)\times I_1, M}$ is a vector of general functions, and  $\mb{b} \in \mathbb{R}^{M}$. Note that the constraints in $\mathcal{X}^{ge}$ are convex or concave in $\mb{x}$ and/or $\mb{y}$ and/or $\mb{z}$, the constraints in $\mathcal{X}^{ge}_{\setminus \{l\}}$ remain convex or concave in $\mb{x}$ and/or $\mb{y}_{\setminus \{l\}}$, and/or $\mb{z}$, $l\in [N_2]$.  
+
+ {It is worth noting that, for ARO problems without \textit{(relatively) complete recourse}, imposing simple decision rules may lead to infeasibility. For those ARO problems, one can first eliminate some of the adjustable variables to ``enlarge" the feasible region (see Theorem \ref{thm:subset}), then solve them via decision rules or finite adaptability approaches.} We emphasize that our approach is not necessarily a substitution of all existing methods, but can also be used before the existing methods are applied as a kind of preprocessing.}   For the rest of this paper, we mainly focus on the two-stage robust linear optimization model (\ref{mod:2stage}), and illustrate the effectiveness of our approach by complementing the most conventional method, i.e., linear decision rule (LDR), $\mb{y} \in \mathcal{F}^{I_1,N_2} = \mathcal{L}^{I_1,N_2}$, where
+\begin{equation*}
+\mathcal{L}^{I_1,N_2} =\left\{
+\mb{y} \in \mathcal{R}^{I_1, N_2} \enskip \vline \enskip  \begin{array}{l}
+\exists \mb{y}^0, \mb{y}^{i} \in \mathbb{R}^{N_2}, ~ i\in [I_1] :  \vspace{3pt}\\
+\mb{y}(\mb{z}) = \mb{y}^0 + \displaystyle \sum_{i\in [I_1]}\mb{y}^{i} z_i \vspace{3pt}
+\end{array}
+\right\},
+\end{equation*}
+and $\mb{y}^i \in \Re^{N_2}$, $i\in [I_1]\cup \{0\}$, are decision variables. We show that for small-size ARO problems our approach gives a static tractable counterpart of the ARO problems and finds the optimal solution. For moderate or large-size instances, we eliminate a subset of the adjustable variables and then impose LDR on the remaining adjustable variables. This yields provably better solutions than imposing LDR on all adjustable variables.
+	
+
+		
+	\section{Optimality of decision rules: a primal-dual perspective} \label{sec:ODR}
+	In this section, we investigate the primal and dual formulations of two-stage ARO problems through the lens of FME, which enables us to derive some new results on the optimality of certain decision rule structures for several classes of problems.
+	
+\subsection{A primal perspective}
+As an immediate consequence of Algorithm \ref{alg:FME}, one can prove the following result for two-stage ARO problems. 
+
+\begin{theorem} \label{thm:piecewiseaffineopt}
+There exist ODRs for Problem (\ref{mod:2stage}) such that $y_l$, $l\in [N_2]$, is a convex piecewise affine function or a concave piecewise affine function, and the remaining components of $\mb{y}$ are general piecewise affine functions.
+\end{theorem}
+\noindent{\bf Proof}. Let us denote $\mb{x}^*$ as the optimal here-and-now decisions, and eliminate all but one adjustable variable $y_{l}$ in $\mathcal{X}$ defined in (\ref{set:X}) via Algorithm \ref{alg:FME}.  Let $\mathcal{S}_l=[N_2]\setminus \{l\}$. From Theorem \ref{thm:equivalence}, we know $\mathcal{X}=\mathcal{X}_{\setminus\mathcal{S}_l}$. The adjustable variable  $y_{l}$ is upper (lower) bounded by a finite number of minimum (maximum) of affine functions in $\mb{z}$, i.e.,
+\begin{equation}
+\label{eq:bounds}
+\check{f}_l(\mb{z}) \leq y_{l}(\mb{z}) \leq \hat{f}_l(\mb{z}) \qquad \forall \mb{z} \in \mathcal{W},
+\end{equation}
+where $\check{f}_l(\mb{z})$ and $\hat{f}_l(\mb{z})$ are respectively, convex piecewise affine and concave piecewise affine functions of $\mb{z} \in \mathcal{W}$. If Problem (\ref{mod:2stage}) is feasible, then the constraint
+\begin{equation*}
+\check{f}_l(\mb{z}) \leq \hat{f}_l(\mb{z}) \qquad \forall \mb{z} \in \mathcal{W}
+\end{equation*}
+must hold and hence $y_{l}(\mb{z}) = \check{f}_l(\mb{z})$ and $y_{l}(\mb{z}) = \hat{f}_l(\mb{z})$ would be ODRs for the adjustable variable $y_l$ in Problem (\ref{mod:2stage}) for all $l \in [N_2]$. Once the ODR of $y_l$ is determined, one can then determine the ODR of the last eliminated adjustable variable from its upper and lower bounding functions as in (\ref{eq:bounds}).  {The ODR of the second last eliminated adjustable variable can be determined analogously. The ODRs of the adjustable variables can be determined iteratively by reversing Algorithm \ref{alg:FME} in the exact reversed order of the eliminations.} It follows that there exist piecewise affine functions (not necessarily concave or convex) that are ODRs for the adjustable variables $y_i$, $i\in [N_2]\setminus \{l\}$, in Problem (\ref{mod:2stage}). \hfill \Halmos  \\
+
+Since we do not impose any assumption on the uncertainty set $\mathcal{W}$ in Problem (\ref{mod:2stage}), Theorem \ref{thm:piecewiseaffineopt} holds for Problem (\ref{mod:2stage}) with general uncertainty sets.  {\cite{bbm03} show a similar result for Problem (\ref{mod:2stage}) with right hand side polyhedral uncertainties. Motivated by the result of \cite{bbm03}, in \cite{bg15} and \cite{beg16}, the authors construct piecewise linear decision rules for ARO problems with right hand side polyhedral uncertainties. Theorem \ref{thm:piecewiseaffineopt} stimulates a generalization of the existing methods for ARO problems with uncertainties that a) reside in general convex sets, or b) appear on both sides of the constraints. }
+
+
+\iffalse
+
+ {  One can further extends Theorem \ref{thm:piecewiseaffineopt} to determine the structures of ODRs for ARO problems with non-fixed recourse.  For instance, it can be shown that the ODRs of Problem (\ref{mod:2stage}) with the feasible set $\mathcal{X}^{ge}$, where $\mb{f} \in \mathcal{L}^{N_1 \times (N_2-1) \times I_1, M}$ and  $\mb{b} \in \mathcal{L}^{I_1,M}$ are affine functions, are piecewise polynomials of (at most) degree $N_2+1$. } 
+
+
+Let us now consider the following class of problems for which we prove in Proposition \ref{prop:2piecewiseaffineopt} that two-piecewise affine functions (with a specific structure) are ODRs.
+
+	\begin{example} [Production Planning]
+		A factory has $N_1$ machines that produce $M$ types of goods. A manager would like to make a production plan today to satisfy the demands for tomorrow. The uncertainties in the demands and during the manufacturing process are captured by affine functions $\mb{d}(\mb{z}) \in \mathcal{L}^{I_1,M}$ and $\mb{A}(\mb{z}) \in \mathcal{L}^{I_1, M\times N_1}$, respectively, i.e., the machine $j$ can produce $a_{ij}(\mb{z})$ unit of product $i$ per hour for all $i\in [M]$, $j\in [N_1]$, where $\mb{z} \in \mathcal{W}$. The hourly cost of having machine $j$ turned on is $c_j$. The machine $j$ is scheduled to be in production for $x_j$ hours today. The availability/capacity of the machines is incorporated in $X$, i.e., $\mb{x}\in X$.  In case the demand of good $i$ is not fulfilled from the production, the manager have to purchase $y_i$ unit of product $i$ from a competitor at a price $v_{i} \ge 0$ per unit to fulfill the excess demands. The  matrix $\mb{P} \in \mathbb{R}^{K\times M}_+$ and  vector $\mb{\rho}\in \mathbb{R}^{K}_+$ can model the budget constraints, e.g., the total shortage of products cannot exceed a prescribed limit. To minimize the cost while satisfying all the demand, the manager can solve the following two-stage ARO problem:
+\begin{equation}\label{p:production}
+			\begin{aligned} 
+				\min_{ \boldsymbol{x} \in X,  \boldsymbol{y}}  &  \mb{c}'\mb{x} +  \enskip \max_{ \boldsymbol{z} \in \mathcal{W}} \mb{v}'\mb{y}(\mb{z}) \\
+				{\rm s.t.} \quad  &   \mb{P}\mb{y}(\mb{z}) \le \mb{\rho} \qquad & \forall \mb{z} \in \mathcal{W} \\
+				& \mb{A}(\mb{z})\mb{x} + \mb{y}(\mb{z}) \ge \mb{d}(\mb{z}) \qquad & \forall \mb{z} \in \mathcal{W} \\
+				& \mb{y}(\mb{z}) \ge \mb{0}, \,\,\,  \mb{y} \in \mathcal{R}^{I_1,M} & \forall \mb{z} \in \mathcal{W}. 
+			\end{aligned}
+\end{equation}
+		 \hfill \Halmos
+		
+        As mentioned in \textsection \ref{sec:FME}, the worst-case second stage cost $ \max_{ \boldsymbol{z} \in \mathcal{W} } \mb{v}'\mb{y}(\mb{z})$ in the objective can be modelled by Problem (\ref{mod:2stage}) using an epigraph formulation. 
+	\end{example} 
+	
+	\begin{proposition} \label{prop:2piecewiseaffineopt}
+		The convex two-piecewise affine functions in the form of $(d_i(\mb{z})-\mb{a}'_i(\mb{z})\mb{x})^+$ are ODRs for the adjustable variables $y_i$, $i\in [N_2]$, in Problem (\ref{p:production}).
+	\end{proposition}
+	
+	 {Major comment: Proposition 1 is a straightforward result and doesn’t need (FME) in the proof. In fact, in this special case where $B = I$ either the set of solutions is empty or you conclude directly that $(d(z)- A(z)x^*)^+$ is optimal. --- Dear Dick, I remembered that you had a nice argument. Could you remind me what it was? Thank you.}
+	
+	\noindent{\bf Proof}. This proof is similar to the proof of Theorem \ref{thm:piecewiseaffineopt}. Let us consider the equivalent epigraph formulation of Problem (9):
+\begin{equation} \label{p:epiproduction}
+		\begin{aligned} 
+		\min_{ \boldsymbol{x} \in X,  \boldsymbol{y}, \tau}  &  \mb{c}'\mb{x} +  \tau \\
+		{\rm s.t.} \quad  &    \mb{v}'\mb{y}(\mb{z}) \le  \tau \qquad & \forall \mb{z} \in \mathcal{W}\\
+		&\mb{P}\mb{y}(\mb{z}) \le \mb{\rho} \qquad & \forall \mb{z} \in \mathcal{W} \\
+		& \mb{A}(\mb{z})\mb{x} + \mb{y}(\mb{z}) \ge \mb{d}(\mb{z}) \qquad & \forall \mb{z} \in \mathcal{W} \\
+		& \mb{y}(\mb{z}) \ge \mb{0}, \,\,\,  \mb{y} \in \mathcal{R}^{I_1,M} & \forall \mb{z} \in \mathcal{W}.
+		\end{aligned}
+\end{equation}
+	Let us eliminate all the adjustable variables except for $y_{l}$, $l \in [N_2]$, in (\ref{p:epiproduction}) via Algorithm \ref{alg:FME}.  Since $\mb{P}$ and $\mb{v}$ are nonnegative, the adjustable variable $y_{l}$ is only lower bounded by a two-piecewise affine function in $\mb{z}$, i.e.,
+\begin{equation*}
+	 y_{l}(\mb{z}) \ge \left(d_l(\mb{z})-\mb{a}'_l(\mb{z})\mb{x} \right)^+  \qquad \forall \mb{z} \in \mathcal{W},
+\end{equation*}
+	where $\mb{a}_l$ are the $l$-th row vectors of matrix $\mb{A}$, and $d_l$ is the $l$-th component of $\mb{d}$ for $l \in [M]$. Hence, if Problem (\ref{p:epiproduction}) is feasible, $y_{l}(\mb{z}) = \left( d_l(\mb{z})-\mb{a}'_l(\mb{z})\mb{x}\right)^+$ would be an ODR for the adjustable variable $y_l$. Analogously, it follows that, there exist ODRs in the form of  $y_{i}(\mb{z})=\left( d_i(\mb{z})-\mb{a}'_i(\mb{z})\mb{x}\right)^+$ for all $i\in [N_2]$. 	 \hfill \Halmos\\
+
+
+
+ { \begin{theorem} \label{thm:finite}
+		\textbf{Suppose $\mathcal{W}$ is convex.} There exists a finite subset $\widehat{\mathcal{W}} =\{\mb{z}_1, ..., \mb{z}_{|\widehat{\mathcal{W}}|}\} \subseteq \mathcal{W}$, $|\widehat{\mathcal{W}}| \le N_1$, such that
+\begin{equation} \label{mod:finite}
+		\min_{\boldsymbol{x} \in \mathcal{X}} \mb{c}'\mb{x} = \min_{\boldsymbol{x} \in \mathcal{X}^{\dagger}} \mb{c}'\mb{x},
+\end{equation}
+		where $\mathcal{X}^{\dagger} = \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt}  \exists \mb{y} \in \mathcal{R}^{I_1,N_2}: \mb{A}(\mb{z}) \mb{x}+\mb{B}\mb{y}(\mb{z}) \geq\mb{d}(\mb{z})  \quad  \forall \mb{z} \in  \widehat{\mathcal{W}} \right\} $.
+	\end{theorem}	
+	\noindent{\bf Proof}. See Appendix \ref{proof:finitewcs}. \hfill \Halmos\\
+		
+	Theorem \ref{thm:finite} shows that there are only few worst-case scenarios are needed to characterize the best lower bounds for ARO problems. This result generalizes the finding in \cite[Theorem 4.4]{hgk11} for ARO problems with right hand side uncertainties. 	Theorem \ref{thm:finite}  motivates further research on designing an efficient procedure to determine high quality lower bounds for ARO problems. Note that the solution obtained by only considering a set of finite scenarios may not be feasible for Problem (\ref{mod:2stage}), although the optimal objective value of both problems in (\ref{mod:finite}) are the same. For robust optimization problems with ellipsoidal uncertainty sets, one may need infinitely many scenarios to characterize a feasible solution. This may be the reason that reformulation methods are better than cutting-planes for solving such problems (see \cite{bdl15}).
+
+}	\fi 
+	
+	
+	
+	\subsection{A dual perspective for polyhedral uncertainty sets}
+	\noindent Given a polyhedral uncertainty set
+\begin{equation*}
+	\mathcal{W}_{poly} = \left\{\mb{z}\in \mathbb{R}^{I_1} \enskip |\enskip \exists \mb{v} \in \mathbb{R}^{I_2}: \mb{P}'\mb{z} + \mb{Q}'\mb{v} \le \mb{\rho} \right\},
+\end{equation*}
+	where $\mb{P}\in \mathbb{R}^{ I_1 \times K }$, $\mb{Q}\in \mathbb{R}^{ I_2 \times K }$  and  $\mb{\rho}\in \mathbb{R}^{K}$, \cite{bd16} derive an equivalent dual formulation of Problem (\ref{mod:2stage}) (see the proof in Appendix \ref{proof:primaldual}):
+\begin{equation}
+		\label{mod:2stagedual}
+		\min_{\boldsymbol{x} \in \mathcal{X}^D} \mb{c}'\mb{x}, 
+\end{equation}
+	where the equivalent {\em dual feasible set} $\mathcal{X}^D$, i.e., $\mathcal{X}^D=\mathcal{X}$, is defined as follows:
+\begin{equation}
+		\label{set:XD}
+		\mathcal{X}^D=  \left\{ \mb{x} \in X \enskip \vline \enskip
+		\exists \mb{\lambda} \in \mathcal{R}^{M,K}:	\begin{array}{lll}
+			&  \mb{\omega}' (\mb{A}^0\mb{x}-\mb{d}^0) - \mb{\rho}'\mb{\lambda}(\mb{\omega}) \ge \mb{0} & \quad  \forall \mb{\omega} \in \mathcal{U}\\
+			&\mb{p}_i'\mb{\lambda}(\mb{\omega}) = (\mb{d}^i- \mb{A}^i\mb{x})'\mb{\omega} & \quad  \forall \mb{\omega} \in \mathcal{U}, \enskip \forall i\in [I_1]\\
+			&\displaystyle  \mb{Q}\mb{\lambda}(\mb{\omega}) = \mb{0}, \quad  \mb{\lambda}(\mb{\omega}) \ge \mb{0} & \quad \forall \mb{\omega} \in \mathcal{U}
+		\end{array}
+		\right\}
+\end{equation}
+	with the {\it dual uncertainty set}:
+\begin{equation*}\label{set:U}
+	\mathcal{U} = \left\{\mb{\omega}\in \mathbb{R}^{M}_+ \enskip |\enskip \mb{B}'\mb{\omega} = \mb{0} \right\},
+\end{equation*}
+	where $\mb{p}_i\in \mathbb{R}^{I_1}$ are the $i$-th row vectors of matrix $\mb{P}$ for $i\in [I_1]$.  There exist auxiliary variables $\mb{v}$ in $\mathcal{W}_{poly}$. For the decision rules of Problem (\ref{mod:2stage}), the adjustable variables $\mb{y}$ should depend on both $\mb{z}$ and $\mb{v}$. \cite{bd16} show that primal and dual formulations with LDRs are also equivalent, and optimal LDRs for one formulation can be easily constructed from the solution of the other formulation by solving a system of linear equations. The equalities in (\ref{set:XD}) can be used to eliminate some of the adjustable variables $\mb{\lambda}$ via Gaussian elimination.  {\cite{zd17b} show that eliminating adjustable variables in the equalities of a two-stage ARO problem is equivalent to imposing LDRs.}
+	
+	One can apply Algorithm \ref{alg:FME} to eliminate adjustable variables in the dual formulation (\ref{mod:2stagedual}). Note that the structure of the uncertainty set in the primal formulation (\ref{mod:2stage}) becomes part of the constraints in the dual formulation (\ref{mod:2stagedual}). From Theorem \ref{thm:piecewiseaffineopt}, there exist piecewise affine functions that are ODRs for the adjustable variables $\mb{\lambda}$ in the dual formulation (\ref{mod:2stagedual}). Let us consider two special classes of $\mathcal{W}_{poly}$, i.e., a standard simplex and a box.
+	
+	\begin{theorem} \label{thm:optsimplex}
+		Suppose the uncertainty set $\mathcal{W}_{poly}$ is a standard simplex. Then, there exist LDRs that are ODRs for the adjustable variables $\mb{y}$ in Problem (\ref{mod:2stage}).
+	\end{theorem}
+	\textbf{Proof}. Suppose $\mb{z}$ reside in a standard simplex:
+\begin{equation*}
+	\mathcal{W}_{simplex} = \left\{ \mb{z}\in \mathbb{R}^{I_1}_+ \enskip \vline  \enskip \mb{1}'\mb{z} \le 1 \right\}. 
+\end{equation*}
+	From (\ref{set:XD}), we have the following reformulation:
+\begin{equation*}
+		\mathcal{X}^D=  \left\{ \mb{x} \in X \enskip \vline \enskip
+		\enskip  \exists  \lambda \in \mathcal{R}^{M,1}: \begin{array}{lll}
+			&  \mb{\omega}' (\mb{A}^0\mb{x}-\mb{d}^0) - \lambda(\mb{\omega}) \ge \mb{0}  & \quad \forall \mb{\omega} \in \mathcal{U} \\
+			&\lambda(\mb{\omega}) \ge \left( (\mb{d}^i- \mb{A}^i\mb{x})'\mb{\omega}\right)^+   & \quad\forall \mb{\omega} \in \mathcal{U},  \enskip \forall i\in [I_1]
+		\end{array}
+		\right\}.
+\end{equation*}
+		Observe that the dual adjustable variable $\lambda(\mb{w})$ is feasible in $\mathcal{X}^D$ if and only if 
+\begin{equation*}		\mb{\omega}' (\mb{A}^0\mb{x}-\mb{d}^0) \ge \lambda(\mb{\omega}) \geq \left(\max_{i \in[I_1]}\{(\mb{d}^i- \mb{A}^i\mb{x})'\mb{\omega}\}\right)^+ \qquad \forall \mb{\omega} \in \mathcal{U}.
+\end{equation*}
+		Hence, there exists an ODR in the form of $\lambda(\mb{\omega}) =  \mb{\omega}' (\mb{A}^0\mb{x}-\mb{d}^0)$, which is affine in $\mb{\omega}$. Using the techniques of \cite[Theorem 2]{bd16}, we can construct optimal LDRs for the adjustable variables $\mb{y}$ in the primal formulation (\ref{mod:2stage}).
+	 \hfill \Halmos\\
+	
+	 {Theorem \ref{thm:optsimplex} coincides with the recent finding in \cite[Corollary 2]{bwoz16}}, which is a generalization of the result of \cite[Theorem 1]{bg12} where authors prove there exist  LDRs that are optimal for two-stage ARO problems with only right hand side uncertainties that reside in a simplex set.  {\cite{zd17b} use Theorem \ref{thm:optsimplex} to prove that there exist polynomials of (at most) degree $I_1$ and linear in each $z_i$, $\forall i \in [I_1]$, that are ODRs for $\mb{y}$ in Problem (\ref{mod:2stage}) with general convex uncertainty sets.}
+	
+	
+	\begin{theorem} \label{thm:optbox}
+		Suppose the uncertainty set $\mathcal{W}_{poly}$ is a box. Then, the convex two-piecewise affine functions in the form of $\left((\mb{d}^i- \mb{A}^i\mb{x})'\mb{\omega}\right)^+$ are ODRs for the adjustable variables $\lambda_i$, $i\in [I_1]$ in Problem (\ref{mod:2stagedual}).
+	\end{theorem}
+	\textbf{Proof}. Suppose $\mb{z}$ resides in the box:
+\begin{equation*}
+	\mathcal{W}_{box} = \left\{ \mb{z}\in \mathbb{R}^{I_1} \enskip \vline  \enskip -\mb{\rho} \le \mb{z} \le \mb{\rho} \right\},  
+\end{equation*}
+	where $\mb{\rho} \in \mathbb{R}^{I_1}_{+}$.  After eliminating the equalities in (\ref{set:XD}) via Gaussian elimination, we have the following reformulation:
+\begin{equation}\label{set:Xbox}
+		\mathcal{X}^D=  \left\{ \mb{x} \in X \,\, \vline \,\,
+		\exists \mb{\lambda} \in \mathcal{R}^{I_1,I_1}: \begin{array}{lll}
+			&  \mb{\omega}' (\mb{A}^0\mb{x}-\mb{d}^0) + \sum_{i\in [I_1]} \rho_i (\mb{A}^i\mb{x}-\mb{d}^i)'\mb{\omega}- 2\mb{\rho}'\mb{\lambda}(\mb{\omega}) \ge \mb{0}  \quad & \forall \mb{\omega} \in \mathcal{U} \\
+			&\lambda_i(\mb{\omega}) \ge \left((\mb{A}^i\mb{x}- \mb{d}^i)'\mb{\omega}\right)^+   \qquad   \qquad  \qquad \forall \mb{\omega} \in \mathcal{U},  \enskip &\forall i\in [I_1] 
+		\end{array}
+		\right\}.
+\end{equation}
+	After eliminating all but one adjustable variable $\lambda_l$ in $\mathcal{X}^D$ via Algorithm \ref{alg:FME}, $l \in [I_1]$,  the dual adjustable variable $\lambda_l(\mb{\omega})$ is feasible in $\mathcal{X}^D$ if and only if 
+\begin{align*}
+		 \frac{1}{2\rho_l} \left[\mb{\omega}' (\mb{A}^0\mb{x}-\mb{d}^0) + \sum_{i\in [I_1]} \rho_i (\mb{A}^i\mb{x}-\mb{d}^i )'\mb{\omega} - \sum_{i \in [I_1]\setminus\{l\}}  2\rho_i\left((\mb{A}^i\mb{x}- \mb{d}^i)'\mb{\omega}\right)^+ \right] &\ge  \lambda_l(\mb{\omega}) \qquad  \forall \mb{\omega} \in \mathcal{U}\\
+		   \left((\mb{A}^i\mb{x}- \mb{d}^i)'\mb{\omega}\right)^+ &\le \lambda_l(\mb{\omega}) \qquad  \forall \mb{\omega} \in \mathcal{U}.
+\end{align*}
+	One can observe that $\lambda_l$ is upper bounded by a $2^{|I_1-1|}$-piecewise affine function, and lower bounded by $\left((\mb{d}^l- \mb{A}^l\mb{x})'\mb{\omega}\right)^+$. Hence, there exists an ODR in the form of $\lambda_l(\mb{\omega})=\left((\mb{d}^l- \mb{A}^l\mb{x})'\mb{\omega}\right)^+$, i.e., a two-piecewise affine function. Analogously, it follows that, there exist ODRs in the form of  $\lambda_i(\mb{\omega})=\left((\mb{d}^i- \mb{A}^i\mb{x})'\mb{\omega}\right)^+$ for all $i\in [I_1]$.   \hfill \Halmos
+	
+	An immediate observation from Theorem \ref{thm:optbox} is that, if we eliminate all the adjustable variables in (\ref{set:Xbox}) via Algorithm \ref{alg:FME}, it results in a sum-of-max representation:
+\begin{equation*}
+		\mathcal{X}^D_{\setminus [I_1]}=  \left\{ \mb{x} \in X \enskip \vline \enskip \forall \mb{\omega} \in \mathcal{U}:  \mb{\omega}' (\mb{A}^0\mb{x}-\mb{d}^0)  \ge 	 \sum_{i \in [I_1]}  \rho_i|(\mb{d}^i- \mb{A}^i\mb{x})'\mb{\omega}| 		\right\}.
+\end{equation*}
+	Note that there is only one constraint. One can use the techniques proposed in \cite{gd13} and \cite{ad16b} to solve Problem (\ref{mod:2stage}) with box uncertainties approximately. 
+
+	 {Note that the number of the uncertain parameters $\mb{\omega}\in \mathcal{U}$ in the dual formulation (\ref{mod:2stagedual}) equals the number of constraints in the primal formulation (\ref{mod:2stage}). Therefore, reducing the number of adjustable variables in the primal (via Algorithm \ref{alg:FME}), which leads to more constraints, is equivalent to lifting the uncertainty set of the dual formulation into higher dimensions. In other words, Algorithm \ref{alg:FME} can also be interpreted as a lifting operation that lifts the polyhedral uncertainty sets of ARO problems into higher dimensions to enhance the decision rules. A related method is proposed by \cite{cz09}, where the authors improve LDR-based approximations for ARO problems with fixed recourse by lifting the norm-based uncertainty sets into higher dimensions. 
+		
+    One could also use FME sequentially for the primal and dual formulation. Step 1. eliminate (a subset of) the adjustable variables $\mb{y}$ in the primal (\ref{mod:2stage}); Step 2. derive the corresponding dual formulation; Step 3.  eliminate some adjustable variables in the obtained dual formulation; Step 4. solve the resulting problem via decision rules (if not all of the adjustable variables are eliminated). Since in \textsection \ref{sec:lsonproblem} we will see that the dual formulation is far more effective than the primal, we do not consider this sequential procedure in our numerical experiments.}
+	
+	
+	
+	\section{Redundant constraint identification} \label{sec:RCI}
+	
+	It is well-known that Fourier-Motzkin elimination often leads to many redundant constraints. In this section, we present a simple, yet effective LP-based procedure to remove those redundant constraints. Firstly, we give a formal definition of redundant constraints for ARO problems. 
+	\begin{definition} \label{def:RC1}
+		We say the $l$-th constraint, $l\in [M]$, in the feasible set (\ref{set:X})  is redundant if and only if  for all $\mb{x} \in X$ and $\mb{y}\in \mathcal{R}^{I_1,N_2}$ such that
+\begin{equation}\label{con:RCI}
+				\begin{array}{rcll}
+					\mb{a}'_i(\mb{\zeta})\mb{x}+\mb{b}'_i \mb{y}(\mb{\zeta}) \geq d_i(\mb{\zeta}) \qquad \forall \mb{\zeta} \in  \mathcal{W}, \quad \forall i  \in [M] \backslash \{l\} 
+				\end{array},
+\end{equation}
+			then 
+\begin{equation}  \label{con:RCI2}
+				\mb{a}'_l(\mb{z})\mb{x}+\mb{b}'_l \mb{y}(\mb{z}) \geq d_l(\mb{z})  \qquad \forall \mb{z}  \in \mathcal{W},
+\end{equation}
+			where $\mb{a}_i$ and $\mb{b}_i$ are the $i$-th row vectors of matrices $\mb{A}$ and $\mb{B}$, respectively, and $d_i$ is the $i$-th component of $\mb{d}$ for $i\in [M]$.
+		\end{definition}
+		
+		Hence, a redundant constraint is implied by the other constraints in (\ref{set:X}), and it does not define the feasible region of $\mb{x}$. The redundant constraint identification (RCI) procedure in Theorem \ref{thm:RCIExact} is inspired by \cite{cmp89}.
+		
+		\begin{theorem} \label{thm:RCIExact}
+			The $l$-th constraint, $l \in [M]$  in the feasible set (\ref{set:X}) is redundant if and only if
+\begin{equation} \label{mod:RCIopt}
+				\begin{aligned} 
+					Z^*_l=	\min_{ \boldsymbol{x}  , \boldsymbol{y}, \boldsymbol{z}} \quad & \mb{a}'_l(\mb{z})\mb{x}+\mb{b}'_l \mb{y}(\mb{z}) - d_l(\mb{z}) \\
+					{\rm s.t.}  \quad &\mb{a}'_i(\mb{\zeta})\mb{x}+\mb{b}'_i \mb{y}(\mb{\zeta}) \geq d_i(\mb{\zeta}) &  \forall  \mb{\zeta} \in  \mathcal{W}, \quad \forall i  \in [M] \backslash \{l\} \\
+					\quad & \boldsymbol{x} \in X, \boldsymbol{y} \in   \mathcal{R}^{I_1,N_2},  \mb{z} \in \mathcal{W}
+				\end{aligned}
+\end{equation}
+			has nonnegative optimal objective, i.e.,  $Z^*_l\geq 0$. 
+		\end{theorem}
+		\noindent{\bf Proof}. 
+		Indeed if  $Z^*_l\geq 0$, then for  all $\mb{x} \in X$ and $\mb{y}\in \mathcal{R}^{I_1,N_2}$ that are feasible in (\ref{con:RCI}), we also have
+\begin{equation*}
+		0 \le  Z^*_l  \le  \min_{\mbs{z} \in \mathcal{W}}  \left\{  \mb{a}'_l(\mb{z})\mb{x}+\mb{b}'_l \mb{y}(\mb{z}) - d_l(\mb{z})  \right\},
+\end{equation*}
+		which implies feasibility in (\ref{con:RCI2}). Conversely, if $Z^*_l <0$, from the optimum solution of  Problem (\ref{mod:RCIopt}), there exists  a solution  $\mb{x} \in X$ and $\mb{y} \in \mathcal{R}^{I_1,N_2}$ that would be feasible in (\ref{con:RCI}), but\vadjust{\pagebreak}
+\begin{equation*}
+		\min_{\mbs{z} \in \mathcal{W}} \left\{  \mb{a}'_l(\mb{z})\mb{x}+\mb{b}'_l \mb{y}(\mb{z}) - d_l(\mb{z}) \right\} < 0, 
+\end{equation*}
+		which would be infeasible in (\ref{con:RCI2}).
+		 \hfill \Halmos\\
+		
+		
+		Unfortunately, identifying a redundant constraint could be as hard as solving the ARO problem.  Moreover, not all redundant constraints have to be eliminated,  since only the constraints with adjustable variables are potentially ``malignant''  and could lead to proliferations of redundant constraints after  Algorithm \ref{alg:FME}. Therefore, we propose the following heuristic for identifying a potential malignant redundant constraint, i.e, one that has adjustable variables.
+		\begin{theorem} \label{thm:RCI}
+     	Let $\mathcal{M}_1$ and $\mathcal{M}_2$  be two  disjoint subsets of $[M]$ such that 
+\begin{equation*}
+			\begin{array}{cl}
+			\mb{a}_i(\mb{z}) = \mb{a}_i,  \mb{b}_i \neq \mb{0} &\qquad \forall i \in \mathcal{M}_1,\\
+			\mb{b}_i = \mb{0} & \qquad \forall i \in \mathcal{M}_2.
+			\end{array}
+\end{equation*}
+			Then the $l$-th constraint, $l \in \mathcal{M}_1$  in the feasible set (\ref{set:X}) is redundant if  the following tractable static RO problem:
+\begin{equation} \label{mol:RCI}
+				\begin{aligned} 
+					Z^\dag_l =	\min_{ \boldsymbol{x} , \boldsymbol{y}, \boldsymbol{z}} \quad & \mb{a}'_l\mb{x}+\mb{b}'_l \mb{y} - d_l(\mb{z})  \\
+					{\rm s.t.}  \quad &  \mb{a}'_i(\mb{\zeta})\mb{x} \geq d_i(\mb{\zeta}) &  \forall  \mb{\zeta} \in  \mathcal{W}, \quad \forall i  \in \mathcal{M}_2  \\
+					\quad & \mb{a}'_i\mb{x}+\mb{b}'_i \mb{y} \geq d_i(\mb{z})  &  \forall i  \in \mathcal{M}_1 \backslash \{l\} \\
+					\quad & \mb{x} \in X , \mb{y} \in \Re^{N_2}, \mb{z} \in \mathcal{W}
+				\end{aligned}
+\end{equation}
+			has a nonnegative optimal objective value, i.e., $ Z^\dag_l\ge 0$.	
+		\end{theorem}
+		\noindent{\bf Proof}. 
+		Observe that for  any $l \in \mathcal{M}_1$,
+\begin{equation*}
+			\begin{aligned} 
+				Z^*_l \geq	\min_{ \boldsymbol{x} , \boldsymbol{y}, \boldsymbol{z}} \quad & \mb{a}'_l\mb{x}+\mb{b}'_l \mb{y}(\mb{z}) - d_l(\mb{z})  \\
+				{\rm s.t.}  \quad &  \mb{a}'_i(\mb{\zeta})\mb{x} \geq d_i(\mb{\zeta}) &  \forall  \mb{\zeta} \in  \mathcal{W}, \quad \forall i  \in \mathcal{M}_2 \\
+				\quad & \mb{a}'_i\mb{x}+ \mb{b}'_i \mb{y}(\mb{\zeta}) \geq d_i(\mb{\zeta})  &  \forall  \mb{\zeta} \in  \mathcal{W},  \quad \forall i  \in \mathcal{M}_1 \backslash \{l\} \\
+				\quad &\mb{x} \in X, \mb{y} \in \mathcal{R}^{I_1,N_2},  \mb{z} \in \mathcal{W}\\
+				\geq \min_{ \boldsymbol{x} , \boldsymbol{y}, \boldsymbol{z}} \quad & \mb{a}'_l\mb{x}+\mb{b}'_l \mb{y}(\mb{z}) - d_l(\mb{z})  \\
+				{\rm s.t.}  \quad &  \mb{a}'_i(\mb{\zeta})\mb{x} \geq d_i(\mb{\zeta}) &  \forall  \mb{\zeta} \in  \mathcal{W}, \quad \forall i  \in \mathcal{M}_2   \\
+				\quad & \mb{a}'_i\mb{x}+ \mb{b}'_i \mb{y}(\mb{z}) \geq d_i(\mb{z})  &  \forall i  \in \mathcal{M}_1 \backslash \{l\} \\
+				\quad &\mb{x} \in X, \mb{y} \in \mathcal{R}^{I_1,N_2},  \mb{z} \in \mathcal{W} \\
+				= \min_{ \boldsymbol{x} , \boldsymbol{y}, \boldsymbol{z}} \quad & \mb{a}'_l\mb{x}+\mb{b}'_l \mb{y} - d_l(\mb{z})  \\
+				{\rm s.t.}  \quad &  \mb{a}'_i(\mb{\zeta})\mb{x} \geq d_i(\mb{\zeta}) &  \forall  \mb{\zeta} \in  \mathcal{W}, \quad \forall i  \in \mathcal{M}_2\\
+				\quad & \mb{a}'_i\mb{x}+ \mb{b}'_i \mb{y} \geq d_i(\mb{z})  &  \forall i  \in \mathcal{M}_1 \backslash \{l\} \\
+				\quad & \mb{x} \in X, \mb{y} \in \mathbb{R}^{N_2},  \mb{z} \in \mathcal{W} \\
+				= Z^\dag_l. \enskip \quad
+			\end{aligned} 
+\end{equation*}
+		Hence, whenever $Z^\dag_l \geq 0$, we have $Z^*_l \geq 0$, implying the $l$-th constraint is redundant.  \hfill \Halmos \\
+		
+		Note that in Theorem \ref{thm:RCI}, to avoid intractability, only a subset of constraints in the feasible set (\ref{set:X}) is considered, i.e.,  $\mathcal{M}_1 \cup \mathcal{M}_2  \ne [M]$. We can extend the subset $\mathcal{M}_1 \subseteq[M]$ if the uncertainties affecting the constraints in $\mathcal{M}_1$ are column-wise.
+		Specifically let $\{ \mb{z}^0,...,\mb{z}^{N_1}\}$, $\mb{z}^j\in \Re^{I_1^j}$, $j \in [N_1]\cup\{0\}$ be a partition of the vector $\mb{z} \in \mathbb{R}^{I_1}$ into $N_1+1$ vectors  (including empty ones) such that 
+\begin{equation} \label{set:UScw} 
+			\mathcal{W} = \left\{ (\mb{z}^0,...,\mb{z}^{N_1}) \hspace{3pt} | \hspace{3pt} \mb{z}^j \in \mathcal{W}_j, \hspace{3pt} \forall j \in [N_1]\cup \{0\} \right\}.
+\end{equation}
+		Note that if $\mb{z}^j$, $j \in [N_1]$ are empty vectors, then we would have $\mathcal{W} = \mathcal{W}_0$.  
+		Let $\mathcal{S} \subseteq [N_1]$ and $\bar{\mathcal{S}} =[N_1] \backslash \mathcal{S}$ such that $x_j \geq 0$ for all $j \in \mathcal{S}$ is implied by the set $X$.  
+		We redefine the subset $\mathcal{M}_1 \subseteq [M]$  such that for all $i \in  \mathcal{M}_1$, $\mb{b}_i \neq \mb{0}$ and  the functions $a_{ij}\in \mathcal{L}^{I_1^j, 1}$  and $d_i \in \mathcal{L}^{I_1^0, 1}$ are affine in  $\mb{z}^j$, for all $j \in [N_2]\cup \{0\}$, specifically, 
+\begin{equation*}
+		\begin{array}{lll}
+		a_{ij}(\mb{z}) &= a_{ij}(\mb{z}^j) & \qquad\forall j \in \mathcal{S}\\
+		a_{ij}(\mb{z}) &= a_{ij} & \qquad\forall j \in \bar{\mathcal{S}}\\
+		d_i(\mb{z}) &= d_i(\mb{z}^0).
+		\end{array}
+\end{equation*}
+		Note that since $\mathcal{S}$ or $\mb{z}^j$, $j \in [N_1]$ can be empty sets, the conditions to select $\mathcal{M}_1$ is more general than in Theorem \ref{thm:RCI}.  From Theorem \ref{thm:RCI}, one can check whether the $l$-th inequality, $l \in \mathcal{M}_1$  is redundant by solving the following problem:
+\begin{equation}\label{mol:RCIcw}
+			\begin{aligned} 
+				Z^\dag_l =	\min_{ \boldsymbol{x} \in X , \boldsymbol{y}, \boldsymbol{z}} \quad &  \sum_{j\in \mathcal{S}} a_{lj}(\mb{z}^j) x_j + \sum_{j\in \bar{\mathcal{S} }} a_{lj} x_j  + \mb{b}'_l \mb{y} - d_l\left(\mb{z}^0\right)  \\
+				{\rm s.t.}  \quad &  \mb{a}'_i(\mb{\zeta})\mb{x} \geq d_i(\mb{\zeta}) &  \forall  \mb{\zeta} \in  \mathcal{W}, \quad \forall i  \in \mathcal{M}_2 \\
+				\quad &  \sum_{j\in \mathcal{S}} a_{ij}(\mb{z}^j) x_j + \sum_{j\in \bar{\mathcal{S} }} a_{ij} x_j  +\mb{b}'_i \mb{y} \geq d_i\left(\mb{z}^0\right)  &  \forall i  \in \mathcal{M}_1 \backslash \{l\} \\
+				\quad & \mb{z}^j \in \mathcal{W}_j  &  \forall j  \in \mathcal{S} \cup \{0\}.
+			\end{aligned}
+\end{equation}
+		The  $l$-th inequality is redundant if the optimal objective value is nonnegative. Due to the presence of products of variables (e.g., $\mb{z}^j x_j$), Problem (\ref{mol:RCIcw}) is nonconvex in $\mb{x}$ and $\mb{z}$. An equivalent convex representation of (\ref{mol:RCIcw}) can be obtained by substituting $\mb{w}^j= \mb{z}^j x_j$, $j \in \mathcal{S}$,
+\begin{equation} \label{mol:RCIcwconv}
+			\begin{aligned} 
+				Z^\ddag_l =	\min_{ \boldsymbol{x} \in X , \boldsymbol{y}, \boldsymbol{z}} \quad &  \sum_{j\in \mathcal{S}} a_{lj}(\mb{w}^j/x_j)  x_j + \sum_{j\in \bar{\mathcal{S} }} a_{lj} x_j  + \mb{b}'_l \mb{y} - d_l\left(\mb{z}^0\right)  \\
+				{\rm s.t.}  \quad &  \mb{a}'_i(\mb{\zeta})\mb{x} \geq d_i(\mb{\zeta}) &  \forall  \mb{\zeta} \in  \mathcal{W}, \quad \forall i  \in \mathcal{M}_2  \\
+				\quad &  \sum_{j\in \mathcal{S}} a_{ij}(\mb{w}^j/x_j) x_j + \sum_{j\in \bar{\mathcal{S} }} a_{ij} x_j  +\mb{b}'_i \mb{y} \geq d_i\left(\mb{z}^0\right) &  \forall i  \in \mathcal{M}_1 \backslash \{l\} \\
+				\quad & (\mb{w}^j,x_j) \in \mathcal{K}_j & \forall   j \in \mathcal{S}\\
+				\quad & \mb{z}^0 \in \mathcal{W}_0,
+			\end{aligned}
+\end{equation}
+		where $a_{ij}\left(\mb{w}^j/x_j\right)x_j$ is linear in  $(\mb{w}^j,x_j)$ and the set $\mathcal{K}_j $ is a convex cone defined as 
+\begin{equation*}
+		\mathcal{K}_j  = {\rm cl}\left\{ (\mb{u},t) \in \mathbb{R}^{I^j_1+1}~|~ \mb{u}/t \in \mathcal{W}_j, \enskip t>0\right\}. 
+\end{equation*}
+		Hence, (\ref{mol:RCIcwconv}) is a convex optimization problem. This transformation technique is first proposed in \cite{d63} to solve Generalized LPs. \cite{gbbd14} use this technique to derive tractable robust counterparts of a linear conic optimization problem. \cite{zd17} apply this technique to derive a convex representation of the feasible set for systems of uncertain linear equations.
+		
+		Algorithm \ref{alg:FME} does not destroy the column-wise uncertainties,  {and the resulting reformulations from Algorithm \ref{alg:FME} and RCI procedure are independent from the objective function of ARO problems. Therefore, the reformulation can be pre-computed offline and used to evaluate different objectives.} Two-stage ARO problems with column-wise uncertainties are considered in, e.g.,  \cite{m11}, \cite{ad16a}, \cite{xb16}. 
+		
+		\begin{example}[removing redundant constraints for lot-sizing on a network] \label{exp:rrc}
+			Let us again consider $(P)$ in Example \ref{exmp:lson}. The uncertain demand $\boldsymbol{z}$ is assumed to be in a budget uncertainty set: 
+\begin{equation}\label{set:bus}
+				\mathcal{W}=\left\{ \boldsymbol{z} \in \mathbb{R}^{N}_+ \enskip| \enskip \boldsymbol{z} \le \boldsymbol{20}, \boldsymbol{1}'\boldsymbol{z} \le 20\sqrt{N} \right\}.
+\end{equation}
+			We pick the $N$ store locations uniformly at random from $[0,10]^2$. Let the unit cost $t_{ij}$ to transport demand from location $i$ to $j$ be the Euclidean distance if $i\ne j$, and $t_{ii}=0$, $i,j\in [N]$. The storage cost per unit is $c_i=20$, $i\in [N]$, and the capacity of each store is $20$, i.e., $X=\left\{ \mb{x} \in \mathbb{R}^{N_1}_+ \,\, |\,\,  \mb{x} \le \mb{20} \right\}$. The numerical settings here are adopted from \cite{bd16}. In Table \ref{tab:LSONP}, we illustrate the effectiveness of our procedure introduced above. To utilize the effectiveness of redundant constraints identification (RCI) procedure, we repeatedly perform the following procedure: after eliminating an adjustable variable via Algorithm \ref{alg:FME}, we solve (\ref{mol:RCIcwconv}) for each constraint, and remove the constraint from the system if it is redundant. The computations reported in Table \ref{tab:LSONP} were carried out with Gurobi 6.5 (Gurobi Optimization 2015) on an Intel i5-2400 3.10GHz Windows 7 computer with 4GB of RAM. The modeling was done using the modeling language CVX within Matlab 2015b.
+\begin{table*}[t]
+\centering
+\caption{Removing redundant constraints for lot-sizing on a network. Here, ``--" stands for not applicable, and ``$*$" means out of memory for the current computer. We use \#Elim. to denote the number of eliminated adjustable variables; FME denotes the number of constraints from Algorithm \ref{alg:FME}; Before and After are the number of constraints from applying Fourier-Motzkin elimination and RCI alternately; Time records the total time (in seconds) needed to detect and remove the redundant constraints thus far. All numbers reported in this table are the average of 10 replications.}
+\def\arraystretch{1.3}\begin{tabular}{rc|cccccccccc}
+\cline{2-12}
+& \#Elim. & 0     & 5     & 7     & 9     & 12    &  13     & 16    & 19    & 22    & 25 \\ \cline{2-12}
+& FME   & 13    & 10    & 21  & 126 & --     & --      &  --      &  --      &  --      &  --  \\  
+\multirow{2}{*}{N=3}	   & Before & 13    & 10    & 14    & 17   & --     & --      &  --      &  --      &  --      &  --  \\
+& After & 13    & 9     & 11    & 11   & --     & --      &  --      &  --      &  --      &  --  \\
+& Time(s)  & 0   & 0.8   & 1.7   & 2.9  & --     & --      &  --      &  --      &  --      &  --  \\ \cline{2-12}
+& FME   & 21    & 17    & 20    & 60    & 43594 & *   & *  & --      &  --      &  --  \\ 
+\multirow{2}{*}{N=4} & Before & 21    & 17    & 18    & 26    & 75    & 92    & 102   & --      &  --      &  -- \\ 
+					& After & 21    & 17    & 18    & 23    & 31    & 33    & 36    & --      &  --      &  --  \\
+					&  Time(s) & 0     & 0.6    & 1.9   &   3.6   & 10.2   & 13.5  & 24.3  & --     & --     & -- \\ \cline{2-12}
+					& FME   & 31    & 26    & 26    & 37    & 1096  & 12521 & *   & *   & *   & * \\ 
+					\multirow{2}{*}{N=5} & Before & 31    & 26    & 26    & 31    & 76    &    108   & 486   & 697   & 869   & 750 \\ 
+					& After & 31    & 26    & 25    & 27    & 46    &    54   & 82    & 101   & 116   & 127 \\
+					& Time(s) & 0     & 0     & 1.0   & 3.1     & 9.0   & 13.0  & 54.0  & 137.3 & 247.8 & 346.7 \\	\cline{2-12}
+					& FME   & 111   & 106   & 104   & 102   & 101   & 104   & 165   & 31560 & *   & * \\  
+					\multirow{2}{*}{N=10}  & Before & 111   & 106   & 104   & 102   & 101   & 102   & 125   & 398   & 1359  & * \\
+					& After & 111   & 106   & 104   & 102   & 100   & 102   & 116   & 180   & 343   & * \\
+					&  Time(s)  & 0     & 0  & 0  & 0  & 3.6   & 3.7   & 4.7   & 24.3  & 624.3 & * \\ 	 \cline{2-12}
+				\end{tabular}%
+				\label{tab:LSONP}
+			\end{table*}%
+			Table \ref{tab:LSONP} shows that the RCI procedure is very effective in removing redundant constraints for the lot-sizing problem. For instance, when $N=4$, on average, after 12 adjustable variables are eliminated, our proposed procedure leads to merely 31 constraints, whereas only using Algorithm \ref{alg:FME} without RCI would result in 43,594 constraints, and the total time needed for detecting and removing the redundant constraints thus far is 10.2 seconds. Note that Time is 0, if \#Elim. $\le N$. This is because we first eliminate the adjustable variables that have transport costs $t_{ii}=0$, $i\in [N]$.
+			 
+			 \hfill \Halmos 
+		\end{example}
+		
+		
+		\section{Extension to adjustable distributionally robust optimization} \label{sec:ADRO}
+Problem (\ref{mod:2stage}) may seem conservative as it does not exploit distributional knowledge of the uncertainties that may be available. It has recently been shown  in \cite{bsz17} that by adopting the lifted conic representable ambiguity set of  \cite{wks14},  Problem (\ref{mod:2stage}) is also capable of modeling an adjustable distributionally robust optimization (ADRO) problem,    
+\begin{equation} \label{mod:d2stage}
+			\begin{aligned}
+				\min_{\boldsymbol{x}, \boldsymbol{y}} \quad & \mb{c}' \mb{x} + \supEp{  \mb{v}'\mb{y}(\mbt{z} )} \\
+				{\rm s.t.}\quad &   \mb{A}(\mb{z})\mb{x}+\mb{B}\mb{y}(\mb{z}) \ge \mb{d}(\mb{z}) & \forall \mb{z} \in \mathcal{W}\\
+				&\mb{x} \in X, \mb{y}\in \mathcal{R}^{I_1,N_2},
+			\end{aligned}
+\end{equation}
+		where $\mbt{z}$ is now a random variable with a conic representable support set $\mathcal{W}$ and its probability distribution is an element from the ambiguity set, $\mathbb{F}$ given by 
+\begin{equation*}
+			\mathbb{F}=\left\{
+			\begin{array}{lll}
+				\mathbb{P}\in\mathcal{P}_{0}\left(\Re^{I_{1}}\right) \enskip & $\vline$ & \enskip
+				\begin{array}{l}
+					\mathbb{E}_{\mathbb{P}}(\mb{G}\mbt{z}) \leq \mb{\mu} \vspace{3pt}\\
+					\mathbb{P}(\mbt{z}\in\mathcal{W})=1 \vspace{3pt}
+				\end{array}
+			\end{array}
+			\right\},
+\end{equation*}
+		with  parameters $\mb{G} \in \Re^{L_1 \times I_1}$ and $\mb{\mu} \in \Re^{L_1}$. 
+		For convenience and without loss of generality, we have incorporated the auxiliary random variable defined in  \cite{bsz17,wks14} as part of  $\mbt{z}$ and we refer interested readers to their papers regarding the modeling capabilities of such an  ambiguity set. Under the Slater's condition, i.e., the relative interior of $\{ \mb{z} \in \mathcal{W}~:~ \mb{G}\mb{z} \leq \mb{\mu}\}$ is non-empty, 
+		by introducing new here-and-now decision variables $r$ and $\mb{s}$, \cite{bsz17} reformulate (\ref{mod:d2stage}) into the following equivalent two-stage ARO problem,
+\begin{equation*}
+		\min_{(\boldsymbol{x}, r, \boldsymbol{s})  \in \bar{\mathcal{X}}}  \mb{c}'\mb{x} +  r+\mb{s}{'}\mb{\mu}
+\end{equation*}
+		where
+\begin{equation*}
+			\overline{\mathcal{X}} = \left\{ (\mb{x},r,\mb{s}) \in X \times \mathbb{R} \times  \mathbb{R}^{L_1}_+ \ \hspace{3pt} \left|  
+			\hspace{3pt} 
+			\begin{array}{ll}
+				\exists \mb{y} \in \mathcal{R}^{I_1,N_2}: \\
+				r+\mb{s}{'}(\mb{G}\mb{z}) \geq \mb{v}'\mb{y}(\mb{z}) &  \forall \mb{z} \in \mathcal{W} \\
+				\mb{A}(\mb{z})\mb{x}+\mb{B}\mb{y}(\mb{z}) \geq\mb{d}(\mb{z}) &   \forall \mb{z} \in \mathcal{W} 
+			\end{array} \right.
+			\right\}.
+\end{equation*}
+		We can now apply our approach to solve the above problem.  In \textsection \ref{sec:asproblem},  we show that our approach significantly improves the obtained solutions in \cite{bsz17}.
+		
+\section{Generalization to multistage problems} \label{sec:multi}	
+	The order of events in multistage ARO problems is as follows: The here-and-now decisions $\mb{x}$ are made before any uncertainty is realized, and then the uncertain parameters $\mb{z}_{\mathcal{S}^i}$ are revealed in the later stages, where $i\in [N_2]$ and $\mathcal{S}^i\subseteq [I_1]$. We make the decision $y_i \in \mathcal{R}^{|\mathcal{S}^i|,1}$ with the benefit of knowing $\mb{z}_{\mathcal{S}^i}$, but with no other knowledge of the uncertain parameters $\mb{z}_{\setminus \mathcal{S}^i}$ to be revealed later. We assume the {\em information sets} $\mathcal{S}^i\subseteq [I_1]$, $i\in [N_2]$, satisfy the following nesting condition: 
+	\begin{definition}
+		For all $i,j \in [N_2]$, we have either $\mathcal{S}^i \subseteq \mathcal{S}^j$, $\mathcal{S}^j \subseteq \mathcal{S}^i$ or $\mathcal{S}^i \cap \mathcal{S}^j = \emptyset$.
+	\end{definition}
+	This nesting condition is a natural assumption in multistage problems, which simply ensures our knowledge about uncertain parameters is nondecreasing over time. For example, the information sets $\mathcal{S}^1 \subseteq \mathcal{S}^2 \cdots \subseteq \mathcal{S}^{N_2}\subseteq [I_1]$ satisfy this condition.	Dependencies between uncertain parameters both within and across stages can be modelled in the uncertainty set $\mathcal{W}$. The feasible set of a multistage ARO problem is as follows:
+\begin{equation} \label{set:Xm}
+	\mathcal{X} = \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt}  \exists y_i \in \mathcal{R}^{|\mathcal{S}^i|,1}, \forall i\in [N_2]: \mb{A}(\mb{z})\mb{x}+\mb{B}\mb{y}(\mb{z}) \geq\mb{d}(\mb{z})  \quad  \forall \mb{z} \in \mathcal{W} \right\},
+\end{equation}
+	where $y_i$ is the $i$-th element of $\mb{y}$, and $\mb{y}(\mb{z}) = [y_1(\mb{z}_{\mathcal{S}^1}), \cdots, y_{N_2} (\mb{z}_{\mathcal{S}^{N_2}})]' \in \mathcal{R}^{|\mathcal{S}^{N_2}|,N_2}$. While this process of decision making across stage is simple enough to state, modeling these \textit{nonanticipativity restrictions}, i.e., a decision made now cannot be made by using exact knowledge of the later stages, is the primary complication that we address in this section as we extend our approach to the multistage case. 
+	
+		\begin{table*}[t]
+			\centering
+			\caption{Lot-sizing on a Network for $N\in \{5,10 \}$.  We use \#Elim. to denote the number of eliminated adjustable variables;  RCI is the number of resulting constraints from first applying Algorithm \ref{alg:FME} and then RCI procedure; FME denotes the number of constraints from Algorithm \ref{alg:FME};  Gap\% denotes the average optimality gap (in \%)  of 10 replications, i.e., for a candidate solution $sol.$, the gap is $\frac{sol. - OPT}{OPT}$,  {where $OPT$ denotes the optimal objective value}; Time records time (in seconds) needed to solve the corresponding optimization problem; TTime reports the total time (in seconds) needed to remove the redundant constraints and solve the optimization problem.}
+\def\arraystretch{1.3}\begin{tabular}{ccc|rrrrrrr}
+	\cline{2-10}
+\multirow{8}{*}{N=5} &\multirow{4}{*}{P} & \#Elim. & 1     & 11    & 15    & 19    & 22    & 25 & --\\ \cline{3-10}
+	&	&  RCI & 30 & 37& 75 & 101 &  116 &    127  & -- \\  
+	&& Gap\% & 3.3   & 2.9   & 1.7   & 0.7   & 0.1   & 0 & --\\
+	&& TTime(s)  & 0.1   & 12.9   & 58.3   & 223.2   & 394.3  &   550.3  & -- \\ \cline{3-10}
+	&  \multirow{4}{*}{D} & \#Elim. & 1     & 2     & 3     & 4     & 5     & 6 & --\\  \cline{3-10}
+	&& FME & 11 & 10 & 13 &19 &  33 &  272 & -- \\ 
+	&& Gap\% & 3.3   & 2.8   & 2.3   & 1     & 0.2   & 0  & --\\  
+	&& Time(s) & 0.1   & 0.1   & 0.1   & 0.1   & 0.1   &    0.1 & -- \\ \cline{2-10}
+\multirow{8}{*}{N=10} &\multirow{4}{*}{P} & \#Elim. &   1     & 12    & 17    & 19    & 21    & 22    & 100 \\ \cline{3-10}
+	&	& RCI   & 110 & 100 & 133& 180 & 276 &  343 & * \\ 
+	&& Gap\% & 6.0   & 6.0   & 6.0   & 5.9   & 5.8   &  5.7 & * \\
+	&& TTime(s)  &  0.1   & 14.8  & 52.6   & 100.7   & 987.7  &   1639.8 & * \\ \cline{3-10}
+	&\multirow{4}{*}{D}& \#Elim. & 1     & 5     & 7     & 8     & 9     & 10    & 11 \\ \cline{3-10}
+	&& FME  & 21 & 43 &135 & 261 &  515 &  1025 & 149424 \\ 
+	&& Gap\% & 6     & 4.6   & 2.6   & 1.8   & 0.8   &  0.2   & * \\
+	&& Time(s) & 0.1   & 0.2   & 0.4   & 0.9   & 1.9   &   4.6    & * \\ \cline{2-10}
+\end{tabular}%
+			\label{tab:lsons}%
+		\end{table*}
+
+	We propose a straightforward modification of Algorithm \ref{alg:FME} to incorporate the nonanticipativity restrictions. Suppose the nesting condition is satisfied, we first eliminate $y_l$ in (\ref{set:Xm}) via FME, where\break $l =\argmax_{i \in [N_2]} |\mathcal{S}^i|$. Similarly as in Step 2 of Algorithm \ref{alg:FME}, we have the following constraints: there exists $y_i \in \mathcal{R}^{|\mathcal{S}^i|,1}$ for all $i\in [N_2]\setminus \{l\}$,
+\begin{align}
+	f_j(\overline{\mb{z}}) + \mb{g}'_j(\overline{\mb{z}})\mb{x} + \mb{h}'_j \mb{y}_{ \setminus \{l\}}(\mb{z})  & \ge f_i(\mb{z}) + \mb{g}_i'(\mb{z})\mb{x} + \mb{h}'_i \mb{y}_{ \setminus \{l\}}(\mb{z})   & \forall (\mb{z},\overline{\mb{z}}) \in \overline{\mathcal{W}} \quad  &\text{if $b_{il}  >0$ and $b_{jl}  <0 $}, \label{eq:FMEmulti}\\
+   	0 & \ge	f_k(\mb{z}) + \mb{g}'_k(\mb{z})\mb{x} + \mb{h}'_k\mb{y}_{ \setminus \{l\}}(\mb{z})  & \forall \mb{z} \in \mathcal{W} \quad  &\text{if $b_{kl} =0$},
+\end{align}
+   	where $\overline{\mathcal{W}} = \left\{ (\mb{z}, \overline{\mb{z}}) \in \mathbb{R}^{2I_1} \hspace{3pt} | \hspace{3pt}  \mb{z} \in \mathcal{W}, \hspace{3pt}  \overline{\mb{z}} \in \mathcal{W}, \hspace{3pt}  \mb{z}_{\mathcal{S}^l}= \overline{\mb{z}}_{\mathcal{S}^l} \right\}$ is an \textit{augmented uncertainty set}. Due to the nonanticipitivity restrictions, the adjustable variable $y_l$ only depends on $\mb{z}_{\mathcal{S}^l}$. The augmented uncertainty set $\overline{\mathcal{W}} $ enforces  the constraints containing $y_l$ to share the same information $\mb{z}_{\mathcal{S}^l}$, but the unrevealed $\mb{z}_{\setminus \mathcal{S}^l}$ are not necessarily the same across constraints. One simple yet crucial observation is that the nesting condition implies $\mb{y}_{ \setminus \{l\}}(\overline{\mb{z}}) = \mb{y}_{ \setminus \{l\}}(\mb{z})$ for all $(\mb{z},\overline{\mb{z}}) \in \overline{\mathcal{W}}$. Hence, on the left hand side of the inequalities (\ref{eq:FMEmulti}), we have $\mb{y}_{ \setminus \{l\}}(\mb{z})$ instead of $\mb{y}_{ \setminus \{l\}}(\overline{\mb{z}})$. One can now update $[N_2]$ to $[N_2]\setminus\{l\}$, and further eliminate the remaining adjustable variables analogously. 
+
+
+	\section{Numerical experiments} \label{sec:NE}
+		 {In this section, we evaluate the performance of our FME approach on an ARO problem and an ADRO problem. Firstly, we further investigate the lot-sizing problem discussed in Example \ref{exmp:lson} \& \ref{exp:rrc}. Then, we consider a medical appointment scheduling problem where the distributional knowledge of the uncertain consultation time of the patients is partially known.}
+		\subsection{Lot-sizing on a network} \label{sec:lsonproblem}
+		
+		Let us again consider $(P)$ in Example \ref{exmp:lson} with the same parameter setting as in Example \ref{exp:rrc}. From (\ref{set:XD}), one can write the equivalent dual formulation:
+\begin{equation*}% \label{p:lsond}
+			\begin{aligned} 
+				\min_{ \boldsymbol{x} ,\boldsymbol{\lambda}, \tau} \quad &  \mb{c}'\mb{x} + \tau \\
+				{\rm s.t.}  \quad & \omega_0\tau - 20\sqrt{N}\lambda_0(\mb{\omega}) + \sum_{i\in [N]}  \left(  \omega_i x_i - 20\lambda_i(\mb{\omega})  \right)  \ge 0   & \forall \mb{\omega} \in \mathcal{U} \\
+				\quad & \lambda_0(\mb{\omega}) + \lambda_i (\mb{\omega})\ge \omega_i & \forall \mb{\omega} \in \mathcal{U}, \quad i \in [N]\\
+				\quad &   \mb{0}\le \mb{x} \le \mb{20}\\
+				\quad & \boldsymbol{\lambda}(\mb{\omega}) \ge \mb{0}	\quad  \mb{\lambda} \in \mathcal{R}^{N+1,N+1},
+			\end{aligned} \qquad \qquad (D)
+\end{equation*}
+		with the dual uncertainty set:
+\begin{equation*}
+		\mathcal{U}=\left\{ \mb{\omega} \in \mathbb{R}^{N+1}_+| -t_{ij}\omega_0 + \omega_i + \omega_j \le 0, \,\,\, \boldsymbol{1}'\boldsymbol{\omega} = 1 \,\,\, \forall i,j \in [N]: i\ne j \,\,\, \right\}.
+\end{equation*}
+		Note that due to the existence of  $\sum_{i\in [N]} \omega_i x_i$ in the first constraint of $(D)$, the uncertainties are not column-wise. The RCI procedure proposed in \textsection \ref{sec:RCI} does not detect any redundant constraint. Hence, we only apply Algorithm \ref{alg:FME} (without RCI) for (D). Here, the dimensions of adjustable variables in primal and dual formulations are significantly different, i.e., the number of adjustable variables in the dual formulation $(D)$ is $N+1$, whereas in the primal formulation $(P)$, it is $N^2$. One may expect that it is more effective to eliminate adjustable variables via Algorithm \ref{alg:FME} in $(D)$ than in  $(P)$. We show via the following numerical experiments that it is indeed the case.
+		
+		\subsection*{Numerical study}
+	
+		
+		Table \ref{tab:lsons} shows that, throughout all the experiments, solutions converge to optimality faster for $(D)$ than for $(P)$. Hence, in Table \ref{tab:lsonb}, we focus on the formulation $(D)$ for larger instances, e.g., $N\in \{15, 20,30 \}$. It shows that eliminating a subset of adjustable variables first (taking into account the computational limitation), and then solve the reformulation with LDRs leads to better solutions.
+		
+ {	Note that the optimal objective values (OPT) used in Table \ref{tab:lsons} are computed by enumerating all the vertices of the budget uncertainty set (\ref{set:bus}). For $N \le10 $, the problems can be solved in 5 seconds on average. We also investigate the effect of the sequence in which to eliminate the adjustable variables. We observe no clear effect on the results of $(P)$ if a different eliminating sequence is used. However, if we first eliminate $\lambda_0$ in $(D)$, the number of resulting constraints increases much faster than first eliminating  $\lambda_i$, $i\in [N]$. Hence, if $\lambda_0$ is eliminated first, we can only eliminate fewer adjustable variables before our computational limit is reached, which results in poorer approximations than the ones that are reported in Table \ref{tab:lsons}. We suggest to first eliminate the adjustable variables that produce the smallest number of constraints (which can be easily computed before the elimination, see \textsection \ref{sec:FME}), such that we eliminate as many adjustable variables as possible while keeping the problem size at its minimal size. }
+		
+\begin{table*}[t]
+			\centering
+			\caption{Lot-sizing on a Network for $N\in \{15,20,30\}$. Here, ``$*$" indicates the average computation time exceeded the 10 min. threshold. We use \#Elim. to denote the number of eliminated adjustable variables; FME denotes the number of constraints from Algorithm \ref{alg:FME}; Red.\% denotes the average cost reduction (in \%) of the approximated solution via LDRs (without constraint elimination) of 10 replications , i.e., for a candidate solution $sol.$, the Red.\% is $\frac{sol. - LDR}{LDR}$; Time records the time (in seconds) needed to solve the corresponding optimization problem.}
+\def\arraystretch{1.3}			\begin{tabular}{cc|rrrrrrrrrrr}
+				\cline{2-13}
+				& \#Elim. & 1     & 2     & 3     & 4     & 5     & 6     & 7     & 8     & 9     & 10    & 11 \\ \cline{2-13}
+				\multirow{3}{*}{N=15} &  FME  & 31     & 31  & 33     & 39     & 53     & 83     & 145     & 271     & 525     & 1035    & 2057   \\ 
+				 & Red.\% & 0     & -0.1  & -0.4  & -0.5  & -0.7  & -0.9  & -1.6  & -1.9  & -2.2  & -2.8  & -3.4 \\
+				& Time(s)  & 0.3   & 0.3   & 0.3   & 0.4   & 0.5   & 1     & 1.5   & 3.6   & 8.9   & 25.2  & 125.1 \\ \cline{2-13}
+			\multirow{3}{*}{N=20} &  FME  & 41     & 41  & 43     & 49     & 63     & 93     & 155     & 281     & 535     & 1045    & 2067   \\ 
+				 & Red.\% & 0     & -0.1  & -0.2  & -0.3  & -0.4  & -0.5  & -0.9  & -1    & -1.2  & -1.5  & -1.8 \\
+				& Time(s)  & 0.6   & 0.5   & 0.6   & 0.8   & 1.3   & 2.5   & 3.5   & 10.1  & 36.1  & 67.7  & 206.2 \\ \cline{2-13}
+			\multirow{3}{*}{N=30} &  FME  & 61     & 61  & 63     & 69     & 83     & 113     & 175     & 301     & 555     & 1065    & 2087   \\
+				 & Red.\% & 0     & 0     & -0.1  & -0.2  & -0.2  & -0.3  & -0.4  & -0.5  & -0.6  & -0.8  & * \\
+				& Time(s)  & 2.2   & 2.2   & 2.6   & 3.4   & 5.8   & 15.0  & 54.6  & 55.7  & 214.5 & 522.2   & * \\ \cline{2-13}
+			\end{tabular}%
+			\label{tab:lsonb}%
+		\end{table*}%
+		
+		
+		\subsection{Medical appointment scheduling} \label{sec:asproblem}
+		
+		For the second application, we consider a medical appointment scheduling problem where patients arrive at their stipulated schedule and may have to wait in a queue to be served by a physician.  The patients' consultation times are uncertain and their arrival schedules are determined at the first stage, which can influence the waiting times of the patients and the overtime of the physician. This problem is studied in \cite{kltz13, mrz14, bsz17}.
+		
+		The problem setting here is adopted from \cite{bsz17}. We consider $N$ patients arriving in sequence with their indices $j \in [N]$ and the uncertain consultation times are denoted by $\tilde{z}_j$, $j \in [N]$.
+		We let the first stage decision variable, $x_j$ to represent the  inter-arrival time between patient $j$ to the adjacent patient $j+1$ for $j\in [N-1]$ and $x_{N}$ to denote the time between the arrival of the last patient   and the scheduled completion time for the physician before overtime commences. The first patient will be scheduled to arrive at the starting time of zero and  subsequent patients  $i$, $i \in [N], i\geq 2$ will be scheduled to arrive at  $\sum_{j \in[i-1]}x_j$. Let $T$ denote the scheduled completion time for the physician before overtime commences. In describing the uncertain consultation times, we consider the following partial cross moment ambiguity set:
+\begin{equation*}
+		\mathbb{F} = \left\{ \ \mathbb{P}\in\mathcal{P}_0(\Re^{N}\times \Re^{N+1}) \enskip \vline \enskip
+		\begin{array}{ll}
+		\mathbb{E}_{\mathbb{P}}(\mbt{z}) = \mb{\mu} \vspace{3pt}\\
+		\mathbb{E}_{\mathbb{P}}(\tilde{u}_i) \leq  \phi_i & \forall i \in [N+1] \vspace{3pt}\\
+		\mathbb{P}( (\mbt{z}, \mbt{u})\in \mathcal{W}) = 1 \vspace{3pt}
+		\end{array}
+		\right\},
+\end{equation*}
+		where
+\begin{equation*}
+			\label{eq:W3set}
+			\mathcal{W} = \left\{ (\mb{z}, \mb{u})\in \Re^{N}\times\Re^{N+1} \enskip \vline \enskip
+			\begin{array}{ll}
+				\mb{z} \geq \mb{0}  \vspace{3pt}\\
+				(z_i-\mu_i)^2 \leq u_i& \forall i \in [N]  \vspace{3pt}\\
+				\displaystyle  \left(\sum_{i\in [N]}(z_i - \mu_i)\right)^2 \leq u_{N+1} \vspace{3pt}
+			\end{array}
+			\right\}.
+\end{equation*}
+		Note that the introduction of the axillary random variable $\mbt{u}$ in the ambiguity set is first introduced in \cite{wks14} to obtain tractable formulations. Subsequently, \cite{bsz17} show that by incorporating it in LDRs, we could greatly improve the solutions to the adjustable distributionally robust optimization  problem. 
+		A common decision criterion in the medical appointment schedule is to minimize the expected total cost of patients waiting and physician overtime, where the cost of a patient waiting is normalized to one per unit delay and the physician's overtime cost is $\gamma$ per unit delay. The optimal arrival schedule $\mb{x}$ can be determined by solving the following two-stage adjustable distributionally robust optimization problem:
+\begin{equation}\label{mol:ApptScheduleELDRS}
+			\begin{aligned}
+				\min_{\boldsymbol{x}, \boldsymbol{y}} \quad & \sup_{\mathbb{P}\in \mathbb{F}}\mathbb{E}_\mathbb{P} \left(\sum_{i \in [N]}y_i(\mbt{z}, \mbt{u}) + \gamma y_{N+1}(\mbt{z}, \mbt{u})\right)  \\
+				{\rm {\rm s.t.}}  \quad  & y_i(\mb{z}, \mb{u}) - y_{i-1}(\mb{z}, \mb{u}) + x_{i-1} \geq  {z}_{i-1} & \forall (\mb{z}, \mb{u})\in \mathcal{W} & \quad \forall i \in \{2,\dots ,N+1\} \\
+				& \mb{y}(\mb{z}, \mb{u}) \geq \mb{0} &  \forall (\mb{z}, \mb{u})\in \mathcal{W}\\
+				& \sum_{i \in [N]} x_i \leq T  \\
+				& \mb{x} \in  \mathbb{R}^{N}_+, \mb{y} \in \mathcal{R}^{I_1+I_2, N+1},
+			\end{aligned}
+\end{equation}
+		where $y_i$ denotes the waiting time of patient $i, i \in [N]$, and $y_{N+1}$ represents the overtime of the physician. Since $\mathcal{W}$ is clearly not polyhedral, the reformulation technique of \cite{bd16} cannot be applied here. As in \cite{bsz17}, we use ROC to formulate the problem via LDRs, where the adjustable variables $\mb{y}$ are affinely in both $\mb{z}$ and $\mb{u}$, and solve it using CPLEX 12.6. ROC is a software package that is developed in C++ programming language and we refer readers to \texttt{http://www.meilinzhang.com/software}  for more information.
+		
+		\subsection*{Numerical study}
+		The numerical settings of our computational experiments are similar to \cite{bsz17}.
+		We have $N=8$ jobs and the unit overtime cost is  $\gamma=2$.
+		For each job $i\in[N]$, we  randomly select $\mu_{i}$ based on uniform distribution over $[30,60]$
+		and $\sigma_i = \mu_i \cdot \epsilon$ where $\epsilon$ is randomly selected based on uniform distribution over $[0, 0.3]$.
+		The uncertain job completion times are independently distributed and hence we have $ \phi^2 = \sum_{i=1}^{N} {\sigma_i}^2$.
+		The evaluation period, $T$  depends on instance parameters as follows,
+\begin{equation*}
+		T = \sum_{i=1}^{N} \mu_i + 0.5 \sqrt{\sum_{i=1}^{N} {\sigma_i}^2}.
+\end{equation*}
+		
+We consider 9 reformulations of Problem (\ref{mol:ApptScheduleELDRS}), in which $1$ to $9$ adjustable variables are eliminated, with $10$ randomly generated uncertainty sets.  As shown in Table \ref{tab:AS}, the RCI procedure effectively removes the redundant constraints in the reformulations. After 92.3 seconds of preprocessing, all 9 adjustable variables are eliminated, which ends up with only 255 constraints, whereas only using Algorithm \ref{alg:FME} without RCI leads to so many constraints that our computer is out-of-memory. Although computing the reformulations can be time consuming, we only need to compute the reformulations once, because our reformulation procedure via Algorithm \ref{alg:FME} and RCI is independent from the uncertainty set of Problem (\ref{mol:ApptScheduleELDRS}). For the 10 randomly generated uncertainty sets, the average optimality gap of the solutions obtained in \cite{bsz17} is $12.8\%$. Our approach reduces the optimality gap to zero when more adjustable variables are eliminated. Since the size of this problem is relatively small, the computational times for all the instances in Table \ref{tab:AS} are less than 2 seconds.  {Lastly, same as for the primal formulation of the lot-sizing problem, we observe no clear effect on the obtained results if different eliminating sequences are considered. Furthermore, the number of constraints after the eliminations and the RCI procedures remains unchanged for Problem (\ref{mol:ApptScheduleELDRS}) if different eliminating sequences are used.}
+
+		\begin{table*}[t]
+			\centering
+			\caption{Appointment scheduling for $N=8$. Here, ``$*$" means out of memory for the current computer. We use \#Elim. to denote the number of eliminated adjustable variables; FME denotes the number of constraints from Algorithm \ref{alg:FME}; Before and After are the number of constraints from applying Algorithm \ref{alg:FME} and RCI alternately; Time records the total time (in seconds) needed to detect and remove the redundant constraints thus far; Obj. denotes the average objective value obtained from solving (\ref{mol:ApptScheduleELDRS}) via LDRs; Min. Gap\%, Max. Gap\% and Gap\% records the minimum, maximum and average optimality gap (in \%) of 10 replications, respectively, i.e., for a candidate solution $sol.$, the gap is $\frac{sol. - OPT}{OPT}$,  {where $OPT$ denotes the optimal objective value}. All numbers reported in the last four rows are the average of 10 replications.}
+\def\arraystretch{1.3}			\begin{tabular}{rc|rrrrrrrrrr}
+				\cline{2-12}
+				& \# Elim. & 0     & 1     & 2     & 3     & 4     & 5     & 6     & 7     & 8     & 9 \\ \cline{2-12}
+			 & FME   & 18    & 17    & 17    & 20    & 37    & 132   & 731   & 5050  & 40329 & * \\ 
+				& Before & 18    & 17    & 17    & 20    & 29    & 52    & 107   & 234   & 521   & 1152 \\
+				& After & 18    & 17    & 17    & 18    & 21    & 28    & 43    & 74    & 137   & 255 \\
+				& Time(s)  & 0    & 0.7   & 1.0   & 1.1   & 1.5   & 2.8   & 5.8   & 12.9    & 30.7  & 74.9 \\ \cline{3-12}
+				& Obj.  & 155   & 155   & 155   & 155   & 155   & 152   & 148   & 145   & 142   & 138 \\
+				& Gap\% & 12.8  & 12.8  & 12.8  & 12.7  & 12.5  & 10.5  & 7.6   & 5.6   & 3.3   & 0 \\
+				& Min. Gap\% & 10.4  & 10.4  & 10.4  & 10.4  & 10.3  & 9.7   & 6.4   & 4.8   & 2.5   & 0 \\
+				& Max. Gap\% & 14.6  & 14.6  & 14.6  & 14.5  & 13.5  & 11.5  & 8.1   & 6.2   & 3.6   & 0 \\ \cline{2-12}
+			\end{tabular}%
+			\label{tab:AS}\vspace*{18pt}%
+		\end{table*}%
+
+\section{Footnotes and Endnotes}\label{footsection1}
+INFORMS journals do not support the use of footnotes within the article text. Any footnoted material must be converted to endnotes. Endnotes should be written as complete sentences. Endnotes are numbered sequentially according to their appearance in the article text using superscript Arabic numerals. Endnote numbers should generally be placed at the end of a sentence and should be placed outside all punctuation.
+
+
+
+		
+%		\vspace*{12pt}
+		\section{Conclusions} \label{sec:con}
+		We propose a generic FME approach for solving ARO problems with fixed recourse to optimality. Through the lens of FME, we characterize the structures of the ODRs for a broad class of ARO problems. We extend the approach of \cite{bsz17} for ADRO problems. Via numerical experiments, we show that for small-size ARO problems our approach finds the optimal solution, and for moderate to large-size instances, we successively improve the approximated solutions obtained from LDRs. 
+				
+	     On a theoretical level, one immediate future research direction would be to characterize the structures of the ODRs for multistage problems, e.g., see \cite{bip10,iss13}.  {Another potential direction would be to extend our FME approach to ARO problems with integer adjustable variables or non-fixed recourse.}
+		
+		On a numerical level, we would like to investigate the performance of Algorithm \ref{alg:FME} with finite adaptability approaches or other decision rules on solving ARO problems.  Moreover, many researchers have proposed alternative approaches for computing polytopic projections and identifying redundant constraints in linear programming problems. For instance, \cite{hll92} discusses the efficiency of three alternative procedures for computing polytopic projections, and introduces a new RCI method; \cite{ps10} compares the efficiency of five RCI methods. Another potential direction would be to adapt and combine the existing alternative procedures to further improve the efficiency of our proposed approach.
+		
+		
+		
+		% References here (outcomment the appropriate case)
+\begin{appendices}
+	
+	
+ { \iffalse
+	
+\section{Proof of Theorem \ref{thm:finite} \label{proof:finitewcs} }
+Let us eliminate all the adjustable variables in $\mathcal{X}$ via Algorithm \ref{alg:FME}, and we have 
+\begin{equation*}
+\mathcal{X}_{\setminus [N_2]} =  \left\{ \mb{x} \in X \hspace{3pt} | \hspace{3pt} \mb{G}(\mb{z}) \mb{x}  \geq\mb{h}(\mb{z})  \quad  \forall \mb{z} \in \mathcal{W} \right\},
+\end{equation*}
+
+	where $\mb{G}\in \mathcal{L}^{I_1,M_G}$ and $M_G \in \mathbb{Z}_+$ denotes the number of constraints. Suppose the semi-infinite constrained set $\mathcal{X}_{\setminus [N_2]}$ admits the following tractable counterpart (see, e.g., \cite{bdv15,gbbd14}):
+\begin{equation*}
+	\mathcal{X}^{c}_{\setminus [N_2]} =\left\{ \mb{x} \in X \enskip | \enskip \exists \mb{\omega} \ge \mb{0}: \enskip f_i(\mb{x}, \mb{\omega}) \le 0 \enskip \forall i\in [M_c] \right\}
+\end{equation*}
+	where the functions $f_i$, $\forall i\in [M_c]$, that are affine in $\mb{x}$ and convex in the dual (auxiliary) variables $\mb{\omega}$. The set $\mathcal{X}^{c}_{\setminus [N_2]}$ is an equivalent convex representation of $\mathcal{X}_{\setminus [N_2]}$, and
+\begin{equation} \label{eq:convexref}
+	\min_{\boldsymbol{x} \in \mathcal{X}} \mb{c}'\mb{x} =\min_{\boldsymbol{x} \in \mathcal{X}_{\setminus [N_2]}} \mb{c}'\mb{x} = \min_{\boldsymbol{x} \in \mathcal{X}^{c}_{\setminus [N_2]}} \mb{c}'\mb{x}.
+\end{equation}
+   
+    Let us denote $(\mb{x}^*,\mb{\omega}^*)$ as an optimal solution of the convex optimization problem in $(\ref{eq:convexref})$, and partition the constraints in $\mathcal{X}^{c}_{\setminus [N_2]}$ into two subsets: 
+\begin{equation*}
+	f_i^b(\mb{x}^*,\mb{\omega}^*) = 0  \quad \forall i\in [M^b_c], \quad f_i^n(\mb{x}^*,\mb{\omega}^*) <0  \quad \forall i\in [M^n_c].
+\end{equation*}
+	Note that $f_i^b(\mb{x},\mb{\omega}^*), \forall i\in [M^b_c]$, and $f_i^n(\mb{x},\mb{\omega}^*)$,  $\forall i\in [M^n_c]$,  are affine in $\mb{x}$. Since $\mb{x} \in \mathbb{R}^{N_1}$, there are at most $N_1$ linearly independent equalities among $f_i^b(\mb{x},\mb{\omega}^*) = 0$, $\forall i\in [M^b_c]$.  Let us represent the (at most $N_1$) linearly independent equalities as a linear system $A\mb{x} = \mb{b}$, for some matrices $A$ and vectors $\mb{b}$. Since $\mb{x}^* \in \left\{ \mb{x} \,| \, A\mb{x} = \mb{b} \right\}$,  we have $\min_{\boldsymbol{x} : A\boldsymbol{x} = \boldsymbol{b} } \mb{c}'\mb{x} \le \mb{c}'\mb{x}^*$. We now show that $\min_{\boldsymbol{x} : A\boldsymbol{x} = \boldsymbol{b} } \mb{c}'\mb{x} = \mb{c}'\mb{x}^*$ by contradiction.	Suppose there exists a $\overline{\mb{x}} \in \left\{ \mb{x} \,| \, A\mb{x} = \mb{b} \right\}$, such that $\mb{c}'\overline{\mb{x}} < \mb{c}'\mb{x}^*$. Then, there exists a $\mb{x}^{\dagger} = \theta \overline{\mb{x}} +(1- \theta)\mb{x}^* \in \left\{ \mb{x} \,| \, A\mb{x} = \mb{b} \right\}$, $\theta\in (0,1]$, such that the non-binding constraints remain non-binding, i.e., $f_i^n(\mb{x}^{\dagger},\mb{\omega}^*) <0 , \forall i\in [M^n_c]$, and $ \mb{c}'\mb{x}^{\dagger} < \mb{c}'\mb{x}^*$, which contradicts with the optimality of $\mb{x}^*$.  Hence, $\min_{\boldsymbol{x} : A\boldsymbol{x} = \boldsymbol{b} } \mb{c}'\mb{x} = \mb{c}'\mb{x}^*$. 
+	
+	Each linearly independent equality in $A\mb{x}^* = \mb{b}$ corresponds to (at least) one worst-case scenario in $\mathcal{X}_{\setminus [N_2]}$, and each worst-case scenario is the dual variable of $\mb{w}^*$, which can be easily determined from the KKT conditions. Let $\widehat{\mathcal{W}}$ be a set that contains one worst-case scenario from each equality of $A\mb{x}^* = \mb{b}$, i.e., $|\widehat{\mathcal{W}}| \le N_1$, we have
+\begin{equation} \label{set:finitewcs}
+	\begin{aligned}
+	\left\{ \mb{x} \, | \,  A\mb{x} = \mb{b} \right\}   \supseteq& \left\{ \mb{x} \in X  \enskip | \enskip  \boldsymbol{G}(\boldsymbol{z}) \boldsymbol{x}  \ge \boldsymbol{f} (\boldsymbol{z}) \enskip \forall \boldsymbol{z} \in  \widehat{\mathcal{W}} \right\}\\
+	=&  \left\{ \mb{x} \in X  \enskip |  \enskip \exists \mb{y} \in \mathcal{R}^{I_1,N_2}: \mb{A}(\mb{z}) \mb{x}+\mb{B}\mb{y}(\mb{z}) \geq\mb{d}(\mb{z})  \enskip \forall \mb{z} \in  \widehat{\mathcal{W}} \right\}\\
+	=&  \mathcal{X}^{\dagger}.
+	\end{aligned}
+\end{equation}
+	The first line of (\ref{set:finitewcs}) holds because the worst-case scenarios $\mb{z} \in \widehat{\mathcal{W}}$ ensure that the equalities $A\mb{x} = \mb{b}$ are satisfied; the set equality (the second line of (\ref{set:finitewcs})) holds due to Theorem \ref{thm:equivalence}. Since  $\mb{x}^* \in \mathcal{X}^{\dagger}$, we have
+	$
+	\mb{c}'\mb{x}^* = \min_{\boldsymbol{x} : A \boldsymbol{x} = \boldsymbol{b}} \mb{c}'\mb{x} = \min_{\boldsymbol{x} \in \mathcal{X}^{\dagger}} \mb{c}'\mb{x}.
+	$ \hfill \Halmos
+\fi
+
+}\newpage
+	
+	\section{Proof of the dual formulation (\ref{mod:2stagedual}) for  Problem (\ref{mod:2stage})  \label{proof:primaldual}} 
+	We first represent Problem (\ref{mod:2stage}) in the equivalent form:
+\begin{equation*}
+		\min_{\boldsymbol{x} \in X} \max_{\boldsymbol{z} \in \mathcal{W}} \min_{\boldsymbol{y}}\left\{ \enskip \mb{c}'\mb{x} \enskip | \enskip  \mb{A}(\mb{z})\mb{x}+\mb{B}\mb{y} \geq\mb{d}(\mb{z}) \right\}.
+\end{equation*}
+	Due to strong duality, we obtain the following reformulation by dualizing $\mb{y}$:
+\begin{equation*}
+	\min_{\boldsymbol{x} \in X} \max_{\boldsymbol{z} \in \mathcal{W}, \boldsymbol{\omega} \in \mathbb{R}^{M}_+} \left\{ \enskip\mb{c}'\mb{x}  \enskip | \enskip  \mb{\omega}'(\mb{d}(\mb{z}) -\mb{A}(\mb{z})\mb{x}) \le 0, \enskip \mb{B}'\mb{\omega} =\mb{0} \enskip \right\}.
+\end{equation*}
+	Similarly, by further dualizing $\boldsymbol{z}\in \mathcal{W}_{poly} = \left\{\mb{z}\in \mathbb{R}^{I_1} \enskip |\enskip \exists \mb{v} \in \mathbb{R}^{I_2}: \mb{P}'\mb{z} + \mb{Q}'\mb{v} \le \mb{\rho} \right\}$, we have:
+\begin{equation*}
+	\min_{\boldsymbol{x} \in X} \max_{ \boldsymbol{\omega} \in \mathbb{R}^{M}_+} \min_{\boldsymbol{\lambda} \ge \boldsymbol{0}} \left\{ \enskip\mb{c}'\mb{x} \enskip \vline \enskip \begin{array}{lll}
+	&  \mb{\omega}' (\mb{d}^0 -\mb{A}^0\mb{x}) + \mb{\rho}'\mb{\lambda} \le \mb{0} \\
+	&\mb{p}_i'\mb{\lambda} = (\mb{d}^i- \mb{A}^i\mb{x})'\mb{\omega} &  \enskip \forall i\in [I_1]\\
+	&\displaystyle  \mb{Q}\mb{\lambda} = \mb{0}, \quad  \mb{B}'\mb{\omega} =\mb{0} \\
+	\end{array}
+	\right\},
+\end{equation*}
+where $\mb{p}_i\in \mathbb{R}^{I_1}$, $i\in [I_1]$, is the $i$-th row vector of matrix $\mb{P}$, which can be represented equivalently as:
+
+\begin{equation*}
+	\min_{\boldsymbol{x} \in X } \left\{ \enskip\mb{c}'\mb{x} \enskip \vline \enskip 	\exists \mb{\lambda} \in \mathcal{R}^{M,K}:	\begin{array}{lll}
+	&  \mb{\omega}' (\mb{A}^0\mb{x}-\mb{d}^0) - \mb{\rho}'\mb{\lambda}(\mb{\omega}) \ge \mb{0} & \quad  \forall \mb{\omega} \in \mathcal{U}\\
+	&\mb{p}_i'\mb{\lambda}(\mb{\omega}) = (\mb{d}^i- \mb{A}^i\mb{x})'\mb{\omega} & \quad  \forall \mb{\omega} \in \mathcal{U}, \enskip \forall i\in [I_1]\\
+	&\displaystyle  \mb{Q}\mb{\lambda}(\mb{\omega}) = \mb{0}, \quad  \mb{\lambda}(\mb{\omega}) \ge \mb{0} & \quad \forall \mb{\omega} \in \mathcal{U}
+	\end{array}
+	\right\},
+\end{equation*}
+	where $	\mathcal{U} = \left\{\mb{\omega}\in \mathbb{R}^{M}_+ \enskip |\enskip \mb{B}'\mb{\omega} = \mb{0} \right\}.$ \hfill \Halmos	
+\end{appendices}	
+
+
+% Acknowledgments here
+\ACKNOWLEDGMENT{The authors are grateful to the associate editor and two anonymous referees for valuable comments on an earlier version of the paper. The research of the first author is supported by NWO Grant 613.001.208. The third author acknowledges the funding support from the Singapore Ministry of Education Social Science Research Thematic Grant MOE2016-SSRTG-059. Disclaimer: Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not reflect the views of the Singapore Ministry of Education or the Singapore Government.}	
+		% CASE 1: BiBTeX used to constantly update the references
+		%   (while the paper is being written).
+		%\bibliographystyle{ormsv080} % outcomment this and next line in Case 1
+		%\bibliography{<your bib file(s)>} % if more than one, comma separated
+		
+		% CASE 2: BiBTeX used to generate mypaper.bbl (to be further fine tuned)
+		%\input{mypaper.bbl} % outcomment this line in Case 2
+		
+		%If you don't use BiBTex, you can manually itemize references as shown below.
+
+%\newpage
+
+\begin{thebibliography}{}%
+			\bibitem[{Ardestani-Jaafari and Delage(2016a)}]{ad16a}
+			Ardestani-Jaafari, A., E. Delage (2016a)
+			Linearized robust counterparts of two-stage robust optimization problems with applications in operations management. Available at: { \url{optimization-online.org/DB_FILE/2016/03/5388.pdf}}.
+						
+			\bibitem[{Ardestani-Jaafari and Delage(2016b)}]{ad16b}
+			Ardestani-Jaafari, A., E. Delage (2016b)
+			Robust optimization of sums of piecewise linear functions with application to inventory problems.  {\it Operations Research} 64(2):474--494.
+
+			\bibitem[{Bemporad et~al.(2003)}]{bbm03}
+			Bemporad, A., F. Borrelli, M. Morari (2003)
+			Min-max control of constrained uncertain discrete-time linear systems.
+			{\it IEEE Transactions Automatic Control} 48(9):1600--1606.	
+			
+			\bibitem[{Ben-Ameur et~al.(2016)}]{bwoz16}
+			Ben-Ameur, W., G. Wang, A. Ouorou, M. Zotkiewicz  (2016)
+			Multipolar Robust Optimization. Available at: { \url{arxiv.org/pdf/1604.01813.pdf}}.	
+			
+						
+			\bibitem[{Ben-Tal et~al.(2009)}]{ben09}
+			Ben-Tal, A., L. El Ghaoui,   A. Nemirovski (2009)
+			{\it Robust Optimization}.
+			Princeton Series in Applied Mathematics (Princeton University Press, Princeton, NJ).
+
+			\bibitem[{Ben-Tal et~al.(2015)}]{bdv15}
+			Ben-Tal, A., D. den Hertog, J.P. Vial (2015)
+			Deriving robust counterparts of nonlinear uncertain inequalities.
+			{\it Mathematical Programming} 149(1):265--299.
+			
+
+			\bibitem[{Ben-Tal et~al.(2016)}]{beg16}
+			Ben-Tal, A., O. El Housni, V. Goyal (2016)
+			A tractable approach for designing piecewise affine policies in dynamic robust optimization. Available at: \url{optimization-online.org/DB_FILE/2016/07/5557.pdf}.
+			
+						
+			\bibitem[{Ben-Tal et~al.(2004)}]{bggn04}
+			Ben-Tal, A., A. Goryashko, E. Guslitzer, A. Nemirovski (2004)
+			Ajustable robust solutions of uncertain linear programs. {\it Mathematical Programming} 99:351--376.
+			
+			\bibitem[{Ben-Tal and Nemirovski(1998)}]{bn98}
+			Ben-Tal, A., A. Nemirovski (1998)
+			Robust convex optimization. {\it Mathematics of Operations Research} 23(4):769--805.
+			
+			\bibitem[{Ben-Tal and Nemirovski(1999)}]{bn99}
+			Ben-Tal, A., A. Nemirovski (1999)
+			Robust solutions of uncertain linear programs. {\it Operations Research Letters} 25:1--13.
+			
+			\bibitem[{Ben-Tal and Nemirovski(2000)}]{bn00}
+			Ben-Tal, A., A. Nemirovski (2000)
+			Robust solutions of linear programming problems contaminated with uncertain data. {\it Mathematical Programming} 88(3):411--424.
+			
+			
+			\bibitem[Bertsimas and Brown(2009)]{bb09}
+			Bertsimas, D., D. Brown (2009)
+			Constructing uncertainty sets for robust linear optimization. {\it Operations Research} 57(6):1483--1495.
+			
+			\bibitem[Bertsimas et~al.(2011)]{bbc11}
+			Bertsimas, D.,  D. Brown,  C. Caramanis (2011).
+			Theory and applications of robust optimization. {\it SIAM Review}, 53(3):464--501.
+			
+			
+			\bibitem[Bertsimas and Caramanis(2010)]{bc10}
+			Bertsimas, D.,   C. Caramanis (2010).
+			Finite adaptability for linear optimization. {\it IEEE Transactions on Automatic Control}, 55(12):1751--2766.
+			
+			\bibitem[{Bertsimas and Dunning(2016)}]{bd16a}
+			Bertsimas, D., I. Dunning (2016)
+			Multistage robust mixed integer optimization with adaptive partitions.  {\it Operations Research} 64(4):980--998.
+
+			\bibitem[{Bertsimas et~al.(2015)}]{bdl15}
+			Bertsimas, D., I. Dunning, M. Lubin (2015)
+			Reformulation versus cutting-planes for robust optimization.  {\it Computational Management Science} 13(2):195--217.
+			
+			
+			\bibitem[{Bertsimas and Georghiou(2015)}]{bg15}
+			Bertsimas, D., A. Georghiou (2015)
+			Design of near optimal decision rules in multistage adaptive mixed-integer
+			optimization. {\it Operations Research} 63(3):610--627.		
+			
+			\bibitem[{Bertsimas and Goyal(2012)}]{bg12}
+			Bertsimas, D., V. Goyal (2012)
+			On the power and limitations of affine policies in two-stage adaptive optimization. {\it   Mathematical Programming} 134(2):491--531.
+			
+			\bibitem[Bertsimas et~al.(2010)]{bip10}
+			Bertsimas, D., D. Iancu, P. Parrilo (2010)
+			Optimality of affine policies in multistage robust optimization.  {\it Mathematics of Operations Research} 35(2):363--394.
+			
+			\bibitem[Bertsimas et~al.(2011)]{bip11}
+			Bertsimas, D., D. Iancu, P. Parrilo (2011)
+			A hierarchy of near-optimal policies for multistage adaptive optimization. {\it IEEE Transactions on Automatic Control} 56(12):2809--2824.
+			
+			
+			\bibitem[{Bertsimas and de Ruiter(2016)}]{bd16}
+			Bertsimas, D.,  F. de Ruiter (2016)
+			Duality in two-stage adaptive linear optimization: faster computation and stronger bounds. {\it  INFORMS Journal on Computing} 28(3):500--511.
+			
+			\bibitem[{Bertsimas and Sim(2004)}]{bs04}
+			Bertsimas, D., M. Sim (2004)
+			The price of robustness. {\it Operations Research} 52(1):35--53.
+			
+			\bibitem[{Bertsimas et~al.(2017)}]{bsz17}
+			Bertsimas, D., M. Sim,  M. Zhang  (2017)
+			A practically efficient approach for solving adaptive distributionally robust linear optimization problems. {\it Management Science}, to appear (available at: { \url{optimization-online.org/DB_FILE/2016/03/5353.pdf}}).
+			
+			\bibitem[{Bertsimas and Tsitsiklis(1997)}]{bt97}
+			Bertsimas, D.,  J. Tsitsiklis (1997)
+			{\it Introduction to Linear Optimization}. Athena Scientific.
+			
+			\bibitem[Birge and Louveaux(1997)]{bl97}
+			Birge, J. R., F. Louveaux (1997)
+			{\it Introduction to Stochastic Programming.} Springer, New York.
+			
+			\bibitem[Breton and El Hachem(1995)]{be95}
+			Breton, M., S. El Hachem (1995)
+			Algorithms for the solution of stochastic dynamic minimax problems. {\it Computational Optimization and Applications} 4:317--345.
+			
+			
+			\bibitem[Caron et~al.(1989)]{cmp89}
+			Caron, R., J. McDonald, C. Ponic (1989)
+			A degenerate extreme point strategy for the classification of linear constraints as redundant or necessary. {\it Journal of Optimization Theory} 62(2):225--237.
+			
+			
+			
+			\bibitem[Chen and Sim(2009)]{cs09}
+			Chen, W., M. Sim (2009)
+			Goal-driven optimization.
+			{\it Operations Research} 57(2):342--357.
+			
+			\bibitem[Chen et~al.(2007)]{css07}
+			Chen, X., M. Sim,  P. Sun (2007)
+			A robust optimization perspective on stochastic programming.
+			{\it Operations Research}, 55(6):1058--1071.
+			
+			\bibitem[Chen et~al.(2008)]{cssz08}
+			Chen, X., M. Sim, P. Sun, J. Zhang (2008)
+			A linear decision-based approximation approach to stochastic programming. {\it Operations Research} 56(2):344--357.
+			
+			\bibitem[Chen and Zhang(2009)]{cz09}
+			Chen, X., Y. Zhang (2009)
+			Uncertain linear programs: extended affinely adjustable robust counterparts. {\it Operations Research} 57(6):1469--1482.
+			
+			\bibitem[Dantzig(1963)]{d63}
+			Dantzig, G. (1963)
+			{\it  Linear Programming and Extensions.} Princeton University Press, Princeton, NJ.
+			
+
+			\bibitem[Delage and Ye(2010)]{dy10}
+			Delage, E., Y. Ye (2010)
+			Distributionally robust optimization under moment uncertainty with application to data-driven problems. {\it Operations Research} 58(3):596--612.
+			
+			\bibitem[Dupacova(1987)]{d87}
+			Dupacova, J. (1987)
+			The minimax approach to stochastic programming and an illustrative application. {\it Stochastics} 20(1):73--88.
+			
+			\bibitem[El Ghaoui and Lebret(1997)]{gl97}
+			El Ghaoui, L., H. Lebret (1997)
+			Robust solutions to least-squares problems with uncertain data. {\it SIAM Journal on Matrix Analysis and Applications} 18(4):1035--1064.
+			
+			\bibitem[El Ghaoui et~al.(1998)]{gol98}
+			El Ghaoui, L., F. Oustry, H. Lebret (1998)
+			Robust solutions to uncertain semidefinite programs. {\it SIAM Journal on Optimization} 9:33--53.
+
+
+			\bibitem[Hadjiyiannis et~al.(2011)]{hgk11}
+			Hadjiyiannis, M., P. Goulart, D. Kuhn (2011)
+			A scenario approach for estimating the suboptimality of linear decision rules in two-stage robust optimization.
+			{\it 50th IEEE Conference on Decision and Control and European Control Conference (CDC-ECC)}, Orlando, USA (IEEE, Piscataway, NJ), 7386--7391.			
+			
+			\bibitem[Hanasusanto et~al.(2014)]{hkw14}
+			Hanasusanto, G., D. Kuhn, W. Wiesemann (2014)
+			{\it K}-adaptability in two-stage robust binary programming.
+			{\it Operations Research} 63(4):877--891.
+			
+			\bibitem[Huynh et~al.(1992)]{hll92}
+			Huynh, T., C. Lassez, J.-L. Lassez (1992)
+			Practical issues on the projection of polyhedral sets.
+			{\it Annals of Mathematics and Artificial Intelligence} 6:295--316.
+			
+			
+			
+			\bibitem[Fourier(1826)]{f26}
+			J. Fourier (1826)
+			{R}eported in: {A}nalyse des travaux de l{'}{A}cad\'emie {R}oyale des {S}ciences, pendant l{'}ann\'ee 1824, {P}artie math\'ematique. {\it {{H}istoire de l{'}{A}cademie {R}oyale des {S}ciences de l{'}Institut de {F}rance}} 7:47--55.
+			
+			
+			
+			\bibitem[Goh and Sim(2009)]{gs09}
+			Goh, J., M. Sim (2009)
+			Robust optimization made easy with ROME. {\it Operations Research} 59(4):973--985.
+			
+			\bibitem[Goh and Sim(2010)]{gs10}
+			Goh, J., M. Sim (2010)
+			Distributionally robust optimization and its tractable approximations. {\it Operations Research} 58(4):902--917.
+			
+			\bibitem[Gorissen et~al.(2014)]{gbbd14}
+			Gorissen, B., A. Ben-Tal, H. Blanc, D. den Hertog (2014)
+			Deriving robust and globalized robust solutions of uncertain linear programs with general convex uncertainty sets. {\it Operations Research} 62(3):672--679.
+			
+			\bibitem[Gorissen and den Hertog(2013)]{gd13}
+			Gorissen, B., D. den Hertog (2013)
+			Robust counterparts of inequalities containing sums of maxima of linear functions. {\it European Journal of Operational Research} 227(1):30--43.
+	
+			\bibitem[Iancu et~al.(2013)]{iss13}
+	         Iancu, D., M. Sharma, M. Sviridenko (2013)
+         	Supermodularity and affine policies in dynamic robust optimization. {\it Operations Research} 61(4):941--956.		
+			
+			
+			\bibitem[Kali and Wallace(1995)]{kw95}
+			Kali, P., S. Wallace (1995)
+			{\it Stochastic Programming}.  John Wiley \& Sons.
+			
+			\bibitem[Kong et~al.(2013)]{kltz13}
+			Kong, Q., C. Lee, C. Teo, Z. Zheng (2013)
+			Scheduling arrivals to a stochastic service delivery system using copositive cones. {\it Operations Research} 61(3):711--726.
+			
+			
+			\bibitem[Kuhn et~al.(2011)]{kwg11}
+			Kuhn, D., W. Wiesemann, A. Georghiou (2011)
+			Primal and dual linear decision rules in stochastic and robust optimization. {\it Mathematical Programming} 130(1):177--209.
+			
+			
+			\bibitem[Mak et~al.(2014)]{mrz14}
+			Mak, H., Y. Rong, J.  Zhang (2014)
+			Appointment scheduling with limited distributional information. {\it Management Science} 61(2): 316--334.
+			
+			\bibitem[Minoux(2011)]{m11}
+			M. Minoux (2011)
+			On 2-stage robust LP with RHS uncertainty: complexity results and applications. {\it Journal of Global Optimization} 49:521–-537.
+
+			
+			\bibitem[Motzkin(1936)]{m36}
+			T. Motzkin (1936)
+			{\it Beitr\"age zur Theorie der linearen Ungleichungen}, University Basel Dissertation. Jerusalem, Israel.
+
+			\bibitem[Mutapcic and Boyd(2009)]{mb09}
+			Mutapcic, A., S. Boyd (2009)
+			Cutting-set methods for robust convex optimization with pessimizing oracles. {\it Optimization Methods and Software} 24(3):381--406.	
+
+			
+			\bibitem[{Paulraj and Sumathi(2010)}]{ps10}
+			Paulraj, S., P. Sumathi  (2010)
+			A comparative study of redundant constraints identification methods in linear programming Problems. {\it Mathematical Problems in Engineering}, vol. 2010. 
+			
+			
+			\bibitem[Popescu(2007)]{p07}
+			Popescu, I. (2007)
+			Robust mean-covariance solutions for stochastic optimization. {\it Operations Research} 55(4):98--112.
+			
+			\bibitem[Postek and den Hertog(2016)]{pd16}
+			Postek, K., D. den Hertog (2016)
+			Multi-stage adjustable robust mixed-integer optimization via iterative splitting of the uncertainty set, {\it INFORMS Journal on Computing} 28(3):553--574.
+			
+			
+			\bibitem[Shapiro and Ahmed(2004)]{sa04}
+			Shapiro, A., S. Ahmed (2004)
+			On a class of minimax stochastic programs. {\it SIAM Journal on Optimization} 14(4):1237--1249.
+			
+			\bibitem[Shapiro and Kleywegt(2002)]{sk02}
+			Shapiro, A.,  A. Kleywegt (2002)
+			Minimax analysis of stochastic programs.
+			{\it Optimization Methods and Software} 17(3):523--542.
+			
+			
+			\bibitem[Scarf(1958)]{scarf58}
+			Scarf, H. (1958)
+			A min-max solution of an inventory problem. K. Arrow, ed. {\it Studies in the Mathematical Theory of Inventory and Production.} Stanford University Press, Stanford, CA, 201--209.
+			
+			\bibitem[See and Sim(2009)]{ss09}
+			See, C.-T., M. Sim (2009)
+			Robust approximation of multiperiod inventory management.  {\it Operations Research} 58(3):583--594.
+			
+			
+			\bibitem[Vayanos et~al.(2012)]{vkr11}
+			Vayanos, P., D. Kuhn, B. Rustem (2011)
+			Decision rules for information discovery in multi-stage stochastic programming. {\it Proceedings of the 50th IEEE Conference on Decision and Control and European Control Conference} 7368--7373.
+			
+			\bibitem[Wiesemann et~al.(2014)]{wks14}
+			Wiesemann, W., D. Kuhn, M. Sim (2014)
+			Distributionally robust convex optimization. {\it Operations Research} 62(6):1358--1376.
+			
+			\bibitem[{Xu and Burer(2016)}]{xb16}
+			Xu, G., S. Burer  (2016)
+			A copositive approach for two-stage adjustable robust optimization with uncertain right-hand sides. Available at: { \url{arxiv.org/pdf/1609.07402v1.pdf}}.			
+			
+			\bibitem[Xu and Mannor(2012)]{xm12}
+			Xu, H., S. Mannor (2012)
+			Distributionally robust Markov decision processes. {\it Mathematics of Operations Research} 37(2):288--300.
+			
+			\bibitem[{\v Z}{\'a}{\v c}kov{\'a}(1966)]{z66}
+			{\v Z}{\'a}{\v c}kov{\'a}, J. (1966)
+			On minimax solution of stochastic linear programming problems.
+			{\it {\v C}asopis pro P{\v e}sto\'{v}an\'{i} Matematiky},
+			91:423--430.
+			
+			\bibitem[Zhen and den Hertog(2017)]{zd17b}
+			Zhen, J. and D. den Hertog (2017)
+			Computing the maximum volume inscribed ellipsoid of a polytopic projection. {\it INFORMS Journal on Computing}, 30(1):31-42.
+			
+			
+			\bibitem[Zhen and den Hertog(2017)]{zd17}
+			Zhen, J. and D. den Hertog (2017)
+			Centered solutions for uncertain linear equations. {\it Computational Management Science}, 14(4):585--610.
+
+		
+			
+		\end{thebibliography}
+	
+
+\newpage
+		\textbf{Jianzhe Zhen} is a final year PhD student at the Department of Econometrics and Operations Research at Tilburg University. His research is focused on robust optimization. He won the Student Best Paper Prize for this paper at the Computational Management Science 2017 conference in Bergamo. \\
+		
+		\textbf{Dick den Hertog} is professor of Business Analytics \& Operations Research at Tilburg University.
+		His research interests cover various fields in prescriptive analytics, in particular linear and nonlinear optimization. In recent years his main focus has been on robust optimization and simulation-based optimization. He is also active in applying the theory in real-life applications. In particular, he is interested in applications that contribute to a better society. For many years he has been involved in research to optimize water safety, he is doing research to develop better optimization models and techniques for cancer treatment, and recently he got involved in research to optimize the food supply chain for World Food Programme. In 2000 he received the EURO Best Applied Paper Award, together with Peter Stehouwer (CQM). In 2013 he was a member of the team that received the INFORMS Franz Edelman Award.\\
+		
+		\textbf{Melvyn Sim} is a professor at the Department of Analytics \& Operations, NUS Business school. His research interests fall broadly under the categories of decision making and optimization under uncertainty with applications ranging from finance, supply chain management, healthcare to engineered systems.
+		
+		
+		%----------------------------------------------------------------------------------------
+		
+	\end{document} 
