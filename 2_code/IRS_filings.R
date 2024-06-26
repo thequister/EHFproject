@@ -1,9 +1,12 @@
 #install.packages("devtools")
 #devtools::install_github("UrbanInstitute/nccsdata")
-devtools::install_github( 'ultinomics/xmltools' )
-devtools::install_github( 'nonprofit-open-data-collective/irs990efile' )
+#devtools::install_github( 'ultinomics/xmltools' )
+#devtools::install_github( 'nonprofit-open-data-collective/irs990efile' )
 library(nccsdata)
 library(irs990efile)
+library(curl)
+library(here)
+
 #NTEE codes
 #M20 Disaster Preparedness and Relief Service
 #P60
@@ -17,6 +20,27 @@ library(irs990efile)
 # EAF: 45-1813056
 # Walmart/ACNT: 71-0858484
 # SEIU home health: 13-4129368  Y43
+
+#BMF download
+#update URL and filename if downloaded again
+bmfurl <- "https://nccsdata.s3.amazonaws.com/harmonized/bmf/unified/BMF_UNIFIED_V1.1.csv"
+destination <- here::here("0_raw_data", "IRS", "bmf_unified_v1_1_062624.csv")
+
+# Download the data file
+curl_download(bmfurl, 
+  destfile = destination)
+
+#Download data dictionary
+bmfurl<- "https://nccsdata.s3.amazonaws.com/harmonized/harmonized_data_dictionary.xlsx"
+destination <- here::here("0_raw_data", "IRS", "bmf_datadictionary_062624.xlsx")
+curl_download(bmfurl, 
+  destfile = destination)
+
+
+# need to redo by pulling multiple years from NCCS
+# subsetting by common TEXPER year
+# finding unique EIN and then comparing that
+# list to the EIN list from irs990efile pz
 
 test <- nccsdata::get_data(
   dsname = "core",
