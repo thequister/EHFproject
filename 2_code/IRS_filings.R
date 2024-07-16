@@ -180,9 +180,16 @@ n_compare_pz_2017 <- length(compare_pz_ein_2017)
 index_2017 <- irs990efile::build_index( tax.years=2017 )
 
 n_index_2017 <- nrow(index_2017)
-n_index_2017_pz <- nrow(index_2017[index_2017$FormType %in% c("990", "990EZ"),])
+
+index_2017_pz <- index_2017 |> 
+  filter(FormType %in% c("990", "990EZ") & TaxStatus == "501c3")
+n_index_2017_pz <-nrow(index_2017_pz)
+
+#n_index_2017_pz <- nrow(index_2017[index_2017$FormType %in% c("990", "990EZ"),])
+
 index_2017_uein <- unique(index_2017$EIN)
-index_2017_pz_uein <- unique(index_2017$EIN[index_2017$FormType %in% c("990", "990EZ")])
+#index_2017_pz_uein <- unique(index_2017$EIN[index_2017$FormType %in% c("990", "990EZ")])
+index_2017_pz_uein<- unique(index_2017_pz$EIN)
 norg_index_2017<- length(index_2017_uein)
 norg_index_2017_pz<-length(index_2017_pz_uein)
 
