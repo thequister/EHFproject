@@ -5,8 +5,9 @@
 library(nccsdata)
 library(irs990efile)
 library(curl)
+library(tidyverse)
+library(ggplot2)
 library(here)
-
 
 set.seed(1976)
 
@@ -19,6 +20,30 @@ first_4_digits <- function(x) {
   first_4 <- as.numeric(substr(x_str, 1, 4))
   return(first_4)
 }
+
+## Walmart and THD 990 data for plots
+
+irs990_data <-  readr::read_csv(
+  here::here("1_secondary_data", "EHFCompanyInfo", "990_EHF.csv")
+)
+
+net_assets_plot <-ggplot(irs990_data, aes(x = year, y = assets_net/1000000, color = ehf)) +
+  geom_line() +                       # Add lines to the plot
+  labs(title = "Net assets for Home Depot and WalMart EHFs",
+       x = "Year",
+       y = "Net Assets ($MM)",
+       color = "EHF") +               # Add labels and legend title
+  theme_minimal()                   # Use a minimal theme
+  #scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) # Improve x-axis readability
+
+grants_plot <-ggplot(irs990_data, aes(x = year, y = indiv_grants/1000000, color = ehf)) +
+  geom_line() +                       # Add lines to the plot
+  labs(title = "Home Depot and WalMart EHF grants to individuals",
+       x = "Year",
+       y = "Total grants ($MM)",
+       color = "EHF") +               # Add labels and legend title
+  theme_minimal()                   # Use a minimal theme
+
 
 ###
 
