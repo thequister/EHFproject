@@ -27,22 +27,53 @@ irs990_data <-  readr::read_csv(
   here::here("1_secondary_data", "EHFCompanyInfo", "990_EHF.csv")
 )
 
-net_assets_plot <-ggplot(irs990_data, aes(x = year, y = assets_net/1000000, color = ehf)) +
-  geom_line() +                       # Add lines to the plot
-  labs(title = "Net assets for Home Depot and WalMart EHFs",
+net_assets_plot <-ggplot(irs990_data, 
+                     aes(x = year, y = assets_net/1000000, color = ehf,
+                         linetype = ehf)) +
+  geom_line(linewidth=1.2) +                      # Add lines to the plot
+  labs(title = "Home Depot and Walmart Foundation Net Assets",
        x = "Year",
-       y = "Net Assets ($MM)",
-       color = "EHF") +               # Add labels and legend title
-  theme_minimal()                   # Use a minimal theme
-  #scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) # Improve x-axis readability
+       y = "Net Assets ($MM)") +               # Add labels and legend title
+  theme_minimal() + 
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    axis.title.x = element_text(size = 12),
+    axis.title.y = element_text(size = 12),
+    legend.title = element_blank()
+  )
 
-grants_plot <-ggplot(irs990_data, aes(x = year, y = indiv_grants/1000000, color = ehf)) +
-  geom_line() +                       # Add lines to the plot
-  labs(title = "Home Depot and WalMart EHF grants to individuals",
+ggsave(
+  filename = "thd_wmt_assets.png",
+  plot = net_assets_plot,
+  path = here("4_output", "plots"),
+  width =6,
+  height =4,
+  units ="in"
+  )
+
+grants_plot <-ggplot(irs990_data, 
+                     aes(x = year, y = indiv_grants/1000000, color = ehf,
+                         linetype = ehf)) +
+  geom_line(linewidth=1.2) +                      # Add lines to the plot
+  labs(title = "Home Depot and Walmart EHF grants to individuals",
        x = "Year",
-       y = "Total grants ($MM)",
-       color = "EHF") +               # Add labels and legend title
-  theme_minimal()                   # Use a minimal theme
+       y = "Total grants ($MM)") +               # Add labels and legend title
+  theme_minimal() + 
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    axis.title.x = element_text(size = 12),
+    axis.title.y = element_text(size = 12),
+    legend.title = element_blank()
+  )
+
+ggsave(
+  filename = "thd_wmt_grants.png",
+  plot = grants_plot,
+  path = here("4_output", "plots"),
+  width =6,
+  height =4,
+  units ="in"
+)
 
 
 ###
