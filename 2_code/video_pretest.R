@@ -14,7 +14,10 @@ vid <- vid %>%
   mutate(age = as.numeric(age), duration = as.numeric(duration), RealVid = case_match(RealVid, "0" ~ "Home Depot", "1" ~ "Walmart"))
 
 vid %>% group_by(RealVid) %>%
-  summarize(mean_dur = mean(duration), mean_age = mean(age), 
+  summarize(mean_dur = mean(duration), mean_age = mean(age), sd_age = sd(age), sd_dur = sd(duration),
             median_dur = median(duration), median_age = median(age))
+
+vid %>% group_by(RealVid) %>%
+  summarize(mean_age = mean(age), sd_age = sd(age), median_age = median(age), min_age = min(age), max_age = max(age))
 
 print(vid[order(vid$RealVid), ])

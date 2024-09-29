@@ -7,7 +7,6 @@ library(readr)
 
 pretest <- read_csv(here("0_raw_data", "Pretesting/EHF+Survey+-+Walmart+-+Pretest_September+23,+2024_10.23", "EHF Survey - Walmart - Pretest_September 23, 2024_10.23.csv"))
 
-
 # Generalized treatment
 pretest %>%
   rename(duration = `Duration (in seconds)`, treatment = HDTreatment) %>%
