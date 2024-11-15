@@ -91,8 +91,10 @@ ggsave(
 # EAF: 45-1813056
 # Walmart/ACNT: 71-0858484
 # SEIU home health: 13-4129368  Y43
+# America's Charities: 54-1517707
 
-#BMF download
+# BMF download
+# most updated from NCCS
 ## downloaded 6/26/24
 ##update URL and filename if downloaded again
 #bmfurl <- "https://nccsdata.s3.amazonaws.com/harmonized/bmf/unified/BMF_UNIFIED_V1.1.csv"
@@ -109,6 +111,36 @@ ggsave(
 #curl_download(bmfurl, 
 #  destfile = destination)
 
+# BMF
+
+# 1st 10k records in BMF data
+
+bmf_10k<-data.table::fread(
+  file =here::here("0_raw_data", "IRS", "bmf_unified_v1_1_062624.csv"),
+  nrows = 10000
+)
+
+PZ_h_2017_10k<-data.table::fread(
+  file ="/Users/thequist/Library/CloudStorage/Dropbox/EHF_cloud/EHFproject/0_raw_data/IRS/CORE-2017-501C3-CHARITIES-PZ-HRMN.csv",
+  #file =here::here("0_raw_data", "IRS", "CORE-2017-501C3-CHARITIES-PZ-HRMN.csv"),
+  nrows = 10000
+)
+
+bmf_all<-data.table::fread(
+  file =here::here("0_raw_data", "IRS", "bmf_unified_v1_1_062624.csv"),
+  nThread = 4
+)
+
+
+
+PC_h_2019_200k <- data.table::fread(
+  file = "https://nccsdata.s3.amazonaws.com/harmonized/core/501c3-pc/CORE-2019-501C3-CHARITIES-PC-HRMN.csv",
+  nrows=200000,
+  nThread = 4
+)
+  
+
+############## using older API ##################
 
 # need to redo by pulling multiple years from NCCS
 # subsetting by common TEXPER year
@@ -254,10 +286,3 @@ sum(index_2017_pz_uein %in% compare_pz_ein_2017)/norg_index_2017_pz #70%
 
 length(intersect(index_2017_pz_uein,compare_pz_ein_2017)) #272482
 
-# BMF
-
-# 1st 10k records in BMF data
-bmf_10k<-data.table::fread(
-  file =here::here("0_raw_data", "IRS", "bmf_unified_v1_1_062624.csv"),
-  nrows = 10000
-  )
