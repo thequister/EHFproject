@@ -60,8 +60,13 @@ qual_dedupe <- qual_raw[!duplicated(qual_raw$email, incomparables = NA), ] %>% #
 Walmart <- mutate(qual_dedupe, age = 2024 - birthyear) %>%
   filter(completion_subgroup %in% c(5, 6)) %>% # Take only completed surveys
   filter(age>17) %>% # Filter out minors
-  mutate(quality = ifelse((age %in% c(18:80)) & attention == "A little of the time", "high", "low")) # set quality, sensible age responses + correct attention check
+  mutate(quality = ifelse((age %in% c(18:80)) & attention == "A little of the time", "high", "low")) %>% # set quality, sensible age responses + correct attention check
+  select(-StartDate:-Progress, -RecipientLastName:-UserLanguage, -`Q182_First Click`:-`Q182_Click Count`,
+         -EmployerName, -EHFName, -charity_treat:-EHFNameAbbr, -ExtendText, -ExtendTextFinal)
 
+write.csv(Walmart, 
+          file = here("0_raw_data", "ACNT", "ACNT_clean.csv"),
+          row.names = FALSE)  #dataset purged of all PII, irrelevant info
 
 
 
