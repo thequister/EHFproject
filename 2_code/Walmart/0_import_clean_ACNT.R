@@ -61,3 +61,28 @@ Walmart <- mutate(qual_dedupe, age = 2024 - birthyear) %>%
   filter(completion_subgroup %in% c(5, 6)) %>% # Take only completed surveys
   filter(age>17) %>% # Filter out minors
   mutate(quality = ifelse((age %in% c(18:80)) & attention == "A little of the time", "high", "low")) # set quality, sensible age responses + correct attention check
+
+
+
+
+# Summary statistics plots and numbers
+mean(qual_dedupe$duration)
+median(qual_dedupe$duration)
+sd(qual_dedupe$duration)
+
+ggplot(qual_dedupe) +
+  geom_boxplot(aes(x = as.factor(completion_subgroup), y = duration), outlier.shape = NA) +
+  coord_cartesian(xlim =NULL, ylim = c(0, 2500), expand = TRUE, default = FALSE, clip = "on")
+
+sum(qual_dedupe$completion_subgroup %in% c(5, 6))
+
+ggplot(Walmart) +
+  geom_bar(aes(x = quality, fill = treatment_full))
+
+ggplot(Walmart) +
+  geom_boxplot(aes(x = quality, y = duration), outlier.shape = NA) +
+  coord_cartesian(xlim =NULL, ylim = c(0, 2500), expand = TRUE, default = FALSE, clip = "on")
+
+ggplot(Walmart) +
+  geom_boxplot(aes(x = as.factor(treatment_full), y = duration), outlier.shape = NA) +
+  coord_cartesian(xlim =NULL, ylim = c(0, 2500), expand = TRUE, default = FALSE, clip = "on")
