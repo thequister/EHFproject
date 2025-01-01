@@ -68,7 +68,57 @@ write.csv(Walmart,
           file = here("0_raw_data", "ACNT", "ACNT_clean.csv"),
           row.names = FALSE)  #dataset purged of all PII, irrelevant info
 
+# creating raking weights for ~completed surveys
+Walmart$rk_age <- Walmart$age  #creating age variable for use in survey weight calcs
+Walmart$rk_age[Walmart$age >80]<-NA #Removing erroneous age values
 
+Walmart$rk_gender <- NA   #creating gender variable for use in survey weight calcs
+Walmart$rk_gender[Walmart$gender=="Man"]<-0
+Walmart$rk_gender[Walmart$gender=="Woman"]<-1
+
+Walmart$rk_educ <- case_when(Walmart$educ %in% c("Associate's degree", "Advanced degree (JD, Masters, PhD, etc)", "Bachelor's degree", "Some college") ~ 1, 
+                              Walmart$educ %in% c("No degree or diploma earned", "High school diploma/GED") ~ 0)
+
+# imputing missing age and gender variables for weight calcs
+Walmart_impute<-impute_vars(Walmart[Walmart$completion_subgroup>=5,], 
+                        to_impute = c("rk_age", "rk_gender"),
+                        seed = 76)
+
+Walmart_complete <- mutate(Walmart_impute, 
+                       rk_age_cat = cut(rk_age, 
+                                        breaks=c(-Inf, 45, Inf),
+                                        labels=c("18-45","45-65+")
+                       )
+) %>%
+  mutate(rk_gender = case_when(
+    rk_gender==0 ~ "male",
+    rk_gender==1 ~ "female")) %>%
+  mutate(rk_educ = case_when(
+    rk_educ==0 ~ "NC",
+    rk_educ==1 ~ "C")) %>%
+  mutate(rk_gender_age_educ = interaction(rk_gender, rk_age_cat, rk_educ, sep = ":")) %>%
+  droplevels()
+
+## target distribution from to FB marginals 
+fb_Walmart_dems <- read_csv(here("0_raw_data", "ACNT", "Walmart_audience.csv")) %>%
+  mutate(targeting = NULL, location = NULL, min_audience = NULL) %>%
+  rename(educ = "education")
+Walmart_tr = sum(fb_Walmart_dems$max_audience)
+fb_Walmart_dems <- mutate(fb_Walmart_dems, 
+                      Freq = max_audience/Walmart_tr*100,
+                      rk_gender_age_educ = as.factor(paste(gender,age,educ, sep=":")))
+rk_targets<-list(tibble(rk_gender_age_educ = fb_Walmart_dems$rk_gender_age_educ, 
+                        Freq = fb_Walmart_dems$Freq))
+
+Walmart_complete <- Walmart_complete %>%
+  mutate(rk_wgt_og = rake_survey(Walmart_complete, pop_margins = rk_targets)) %>% # original produced weights
+  mutate(rk_wgt_trim = case_when(rk_wgt_og <= 0.5 ~ 0.5, 
+                                 rk_wgt_og >= 2 ~ 2, 
+                                 .default = rk_wgt_og)) # Weights trimmed according to PAP
+
+write.csv(Walmart_complete,   # dataset of survey (near-)completers with raking weights  
+          file = here("0_raw_data", "ACNT", "THD_completed.csv"),
+          row.names = FALSE)
 
 # Summary statistics plots and numbers
 mean(qual_dedupe$duration)
