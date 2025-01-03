@@ -22,7 +22,7 @@ THD_comp_uw<-read_csv(here("0_data", "THD", "THD_completed.csv")) %>%
          bills = factor(Q6.15),
          EHF_aware_list = grepl("Cash", Q2.15, fixed=T), #asked of all respondents
          EHF_aware_simp = as.factor(Q3.10),  #asked only of control group
-         HF_know = factor(Q3.12),
+         HF_know = factor(Q3.12), # VARNAMES HERE DIFFERENT FROM ACNT
          HF_applied = factor(Q3.13),
          HF_mgr = factor(Q3.16),
          HF_received = factor(Q3.19),
