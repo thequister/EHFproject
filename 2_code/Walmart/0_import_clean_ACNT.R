@@ -57,12 +57,41 @@ qual_dedupe <- qual_raw[!duplicated(qual_raw$email, incomparables = NA), ] %>% #
   ) %>%
   rename(duration = `Duration (in seconds)`)
 
-Walmart <- mutate(qual_dedupe, age = 2024 - birthyear) %>%
+Walmart <- qual_dedupe %>%
+  mutate(qual_dedupe, age = 2025 - birthyear) %>%
   filter(completion_subgroup %in% c(5, 6)) %>% # Take only completed surveys
   filter(age>17) %>% # Filter out minors
   mutate(quality = ifelse((age %in% c(18:80)) & attention == "A little of the time", "high", "low")) %>% # set quality, sensible age responses + correct attention check
+  mutate(quality = ifelse(IPAddress %in% c("38.70.124.159", "76.188.231.153", "172.8.136.70"), "low", "high")) %>%
+  filter(!(IPAddress %in% c("35.139.10.198", "174.82.115.233", "66.212.43.57"))) %>%
   select(-StartDate:-Progress, -RecipientLastName:-UserLanguage, -`Q182_First Click`:-`Q182_Click Count`,
          -EmployerName, -EHFName, -charity_treat:-EHFNameAbbr, -ExtendText, -ExtendTextFinal)
+
+Walmart <- Walmart %>% # correct age values
+  mutate(age_corrected = case_match(birthyear, 
+                                10 ~ 1,
+                                54 ~ 1,
+                                59 ~ 1,
+                                66 ~ 1,
+                                78 ~ 1,
+                                79 ~ 1,
+                                94 ~ 1,
+                                1900 ~ 1,
+                                .default = 0)) %>%
+  mutate(age_clean = case_match(birthyear, 
+                                10 ~ NA,
+                                54 ~ 54,
+                                59 ~ 59,
+                                66 ~ 66,
+                                78 ~ 47,
+                                79 ~ 46,
+                                94 ~ 31,
+                                1900 ~ NA,
+                                .default = age))
+
+Walmart <- Walmart %>% # correct pph values
+  mutate(pph_corrected = ifelse(pph >= 100, 1, 0)) %>%
+  mutate(pph_clean = ifelse(pph >= 100, NA, pph))
 
 write.csv(Walmart, 
           file = here("0_raw_data", "ACNT", "ACNT_clean.csv"),
