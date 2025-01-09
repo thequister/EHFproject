@@ -57,6 +57,16 @@ qual_dedupe <- qual_raw[!duplicated(qual_raw$email, incomparables = NA), ] %>% #
   ) %>%
   rename(duration = `Duration (in seconds)`)
 
+Walmart <- qual_dedupe %>%
+  mutate(qual_dedupe, age = 2025 - birthyear) %>%
+  filter(completion_subgroup %in% c(5, 6)) %>% # Take only completed surveys
+  filter(age>17) %>% # Filter out minors
+  mutate(quality = ifelse((age %in% c(18:80)) & attention == "A little of the time", "high", "low")) %>% # set quality, sensible age responses + correct attention check
+  mutate(quality = ifelse(IPAddress %in% c("38.70.124.159", "76.188.231.153", "172.8.136.70"), "low", quality)) %>%
+  filter(!(IPAddress %in% c("35.139.10.198", "174.82.115.233", "66.212.43.57"))) %>%
+  select(-StartDate:-Progress, -RecipientLastName:-UserLanguage, -`Q182_First Click`:-`Q182_Click Count`,
+         -EmployerName, -EHFName, -charity_treat:-EHFNameAbbr, -ExtendText, -ExtendTextFinal)
+
 Walmart <- Walmart %>% # correct age values
   mutate(age_corrected = case_match(birthyear, 
                                     10 ~ 1,
@@ -79,22 +89,12 @@ Walmart <- Walmart %>% # correct age values
                                 1900 ~ NA,
                                 .default = age))
 
-Walmart <- qual_dedupe %>%
-  mutate(qual_dedupe, age = 2025 - birthyear) %>%
-  filter(completion_subgroup %in% c(5, 6)) %>% # Take only completed surveys
-  filter(age>17) %>% # Filter out minors
-  mutate(quality = ifelse((age %in% c(18:80)) & attention == "A little of the time", "high", "low")) %>% # set quality, sensible age responses + correct attention check
-  mutate(quality = ifelse(IPAddress %in% c("38.70.124.159", "76.188.231.153", "172.8.136.70"), "low", quality)) %>%
-  filter(!(IPAddress %in% c("35.139.10.198", "174.82.115.233", "66.212.43.57"))) %>%
-  select(-StartDate:-Progress, -RecipientLastName:-UserLanguage, -`Q182_First Click`:-`Q182_Click Count`,
-         -EmployerName, -EHFName, -charity_treat:-EHFNameAbbr, -ExtendText, -ExtendTextFinal)
-
 Walmart <- Walmart %>% # correct pph values
   mutate(pph_corrected = ifelse(pph >= 100, 1, 0)) %>%
   mutate(pph_clean = ifelse(pph >= 100, NA, pph))
 
 write.csv(Walmart, 
-          file = here("0_raw_data", "ACNT", "ACNT_clean.csv"),
+          file = here("0_raw_data", "ACNT", "ACNT_purged.csv"),
           row.names = FALSE)  #dataset purged of all PII, irrelevant info
 
 # creating raking weights for ~completed surveys
@@ -146,7 +146,7 @@ Walmart_complete <- Walmart_complete %>%
                                  .default = rk_wgt_og)) # Weights trimmed according to PAP
 
 write.csv(Walmart_complete,   # dataset of survey (near-)completers with raking weights  
-          file = here("0_raw_data", "ACNT", "THD_completed.csv"),
+          file = here("0_raw_data", "ACNT", "ACNT_full.csv"),
           row.names = FALSE)
 
 # Summary statistics plots and numbers

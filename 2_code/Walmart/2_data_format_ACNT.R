@@ -2,7 +2,7 @@ library(here)
 source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
 here::i_am("2_code/Walmart/2_data_format_ACNT.R")
 
-ACNT_uw <- read_csv(here("0_raw_data", "ACNT", "ACNT_clean.csv"))
+ACNT_uw <- read_csv(here("0_raw_data", "ACNT", "ACNT_full.csv"))
 
 # bin_vars <- c("main_job", "manager", "ehf_received", "ehf_donation", 
 #               "unemp_benefits")
@@ -256,5 +256,7 @@ ACNT_uw <- ACNT_uw %>%
                           "At least $15,000 but less than $25,000 per year" ~ 15,
                           "Less than $15,000 per year"~ 0, .default = NA),
   )
+
+write_csv(ACNT_uw, here("3_cleaned_data", "ACNT_clean_draft.csv"))
   
 
