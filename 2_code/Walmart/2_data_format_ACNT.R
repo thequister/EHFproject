@@ -161,7 +161,100 @@ ACNT_uw <- ACNT_uw %>%
                             "2 to 6 hours" ~ 2,
                             "6 to 12 hours" ~ 6,
                             "More than 12 hours" ~ 12),
-  
+  delay = factor(delay, levels = 
+                       c("Claim was rejected/never got money",
+                         "Between 2 and 5 days",
+                         "Between 5 days and a week",
+                         "Between 1 and 2 weeks",
+                         "More than 2 weeks"),
+                     ordered = T),
+  delay_num = case_match(delay, "Between 2 and 5 days" ~ 2,
+                         "Between 5 days and a week" ~ 5,
+                             "Between 1 and 2 weeks" ~ 7,
+                             "More than 2 weeks" ~ 14)) %>%
+  mutate(across(c(hire_benefits_pto:hire_benefits_tuition), ~case_match(., 
+                                                                        "Not seriously" ~ 0,
+                                                                        "Somewhat seriously" ~ 1,
+                                                                        "Very seriously" ~ 2),
+                .names = "{.col}_num")) %>%
+  mutate(ehf_hire_bin = (hire_benefits_emerg != "Not seriously"),
+  ehf_hire_relative = 
+    hire_benefits_emerg_num/rowSums(across(hire_benefits_pto_num:hire_benefits_tuition_num)), #what percentage of overall score
+  ideology_answered = ifelse(ideology == "Haven’t thought much about this", NA, ideology),
+  ideology_conlib = factor(ideology_answered, 
+                           levels = 
+                             c("Extremely liberal",
+                               "Liberal",
+                               "Moderate",
+                               "Conservative",
+                               "Extremely conservative"),
+                           ordered = T),
+  ideology_conlib_num = ifelse(is.na(ideology_conlib), NA,
+    (as.numeric(ideology_conlib) - min(as.numeric(ideology_conlib), na.rm = T))/
+    (max(as.numeric(ideology_conlib), na.rm = T)- min(as.numeric(ideology_conlib), na.rm = T))), 
+  ideology = factor(ideology),
+  vote_lik_fac = factor(vote_lik_post_elec),
+  vote_lik_fix_flag = (vote_lik_post_elec %in% c("4", "5")),
+  voted = (vote_lik_post_elec == "I'm sure I voted"),
+  across(c(govt_responsib_elder:govt_responsib_hardship),
+                ~factor(., levels = c(
+                  "A lot of responsibility",
+                  "Some responsibility",
+                  "A little responsibility",
+                  "No responsibility"
+                ), ordered = T)),
+  across(c(govt_responsib_elder:govt_responsib_hardship), 
+         ~(as.numeric(.) - min(as.numeric(.)))/
+           (max(as.numeric(.))- min(as.numeric(.))),
+         .names = "{.col}_num"),
+  across(c(govt_responsib_elder:govt_responsib_hardship), ~(. != "No responsibility"),
+         .names = "{.col}_bin"), # coded binary T if assigned at least some responsibility
+  ed = factor(educ, levels = 
+                c("No degree or diploma earned",
+                  "High school diploma/GED",
+                  "Some college",
+                  "Associate's degree",
+                  "Bachelor's degree",
+                  "Advanced degree (JD, Masters, PhD, etc)")),
+  ed_h = C(ordered(ed), contr.helmert),
+  college = ed %in% c(
+    "Bachelor's degree",
+    "Master's degree/Advanced degree"),
+  male = gender == "Male",
+  nonwhite = ethn_race != "White",
+  practice_religion = factor(practice_religion, levels =
+                               c("At least once per week",
+                                 "Once a week",
+                                 "Once or twice a month",
+                                 "A few times a year",
+                                 "Never"),
+                             ordered = T),
+  practice_religion_num = 
+    (as.numeric(practice_religion) - min(as.numeric(practice_religion)))/
+    (max(as.numeric(practice_religion))- min(as.numeric(practice_religion))),
+  practice_religion_bin = practice_religion != "Never", # binary, T if practice religion at all
+  identify_religion_bin = religion != "Nothing in particular", # binary T if identifies with any religion
+  home_ownership = factor(rent),
+  healthcare = (health_ins == "Yes"),
+  income = factor(income, levels = 
+                    c("Prefer not to state", "$150,000 or more per year",
+                      "At least $100,000 but less than $150,000 per year",
+                      "At least 75,000 but less than $100,000 per year",
+                      "At least $50,000 but less than $75,000 per year",
+                      "At least $35,000 but less than $50,000 per year",
+                      "At least $25,000 but less than $35,000 per year",
+                      "At least $15,000 but less than $25,000 per year",
+                      "Less than $15,000 per year"),
+                  ordered = T),
+  income_num = case_match(income,
+                          "$150,000 or more per year" ~ 150,
+                          "At least $100,000 but less than $150,000 per year" ~ 100,
+                          "At least 75,000 but less than $100,000 per year" ~ 75,
+                          "At least $50,000 but less than $75,000 per year" ~ 50,
+                          "At least $35,000 but less than $50,000 per year" ~ 35,
+                          "At least $25,000 but less than $35,000 per year" ~ 25,
+                          "At least $15,000 but less than $25,000 per year" ~ 15,
+                          "Less than $15,000 per year"~ 0, .default = NA),
   )
   
 
