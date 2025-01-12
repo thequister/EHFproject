@@ -63,10 +63,10 @@ ACNT_uw <- ACNT_uw %>%
                        "No loyalty at all"),
                    ordered= TRUE), 
   wrk_loyal_num = 
-    (as.numeric(loyal_workers) - min(as.numeric(loyal_workers)))/
-    (max(as.numeric(loyal_workers))- min(as.numeric(loyal_workers))), 
+    (as.numeric(wrk_loyal) - min(as.numeric(wrk_loyal)))/
+    (max(as.numeric(wrk_loyal))- min(as.numeric(wrk_loyal))), 
   wrk_loyal_bin = ifelse(  #binary variable; T if some/a lot 
-    loyal_workers %in% c("A lot of loyalty", "Some loyalty"),
+    wrk_loyal %in% c("A lot of loyalty", "Some loyalty"),
     FALSE,
     TRUE),
   emp_loyal = factor(loyal_comp, levels = 
@@ -76,10 +76,10 @@ ACNT_uw <- ACNT_uw %>%
                              "No loyalty at all"),
                          ordered= TRUE), 
   emp_loyal_num = 
-    (as.numeric(loyal_comp) - min(as.numeric(loyal_comp)))/
-    (max(as.numeric(loyal_comp))- min(as.numeric(loyal_comp))), 
+    (as.numeric(emp_loyal) - min(as.numeric(emp_loyal)))/
+    (max(as.numeric(emp_loyal))- min(as.numeric(emp_loyal))), 
   emp_loyal_bin = ifelse(  #binary variable; T if some/a lot 
-    loyal_comp %in% c("A lot of loyalty", "Some loyalty"),
+    emp_loyal %in% c("A lot of loyalty", "Some loyalty"),
     FALSE,
     TRUE),
   union_vote_agg = ifelse(union_elec == "Not sure", union_unsure, union_elec),
@@ -105,10 +105,10 @@ ACNT_uw <- ACNT_uw %>%
                               "Definitely would not recommend"),
                           ordered= TRUE), 
   emp_reco_num = 
-    (as.numeric(recommend) - min(as.numeric(recommend)))/
-    (max(as.numeric(recommend))- min(as.numeric(recommend))), 
+    (as.numeric(emp_reco) - min(as.numeric(emp_reco)))/
+    (max(as.numeric(emp_reco))- min(as.numeric(emp_reco))), 
   emp_reco_bin = ifelse(  #binary variable; T if leans recommending
-    recommend %in% c("Certainly would recommend", "Might recommend"),
+    emp_reco %in% c("Certainly would recommend", "Might recommend"),
     FALSE,
     TRUE),
   ehf_reason_bin = ifelse(is.na(ehf_reason), 0, 1),
