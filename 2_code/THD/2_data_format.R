@@ -81,7 +81,7 @@ THD_comp_uw<-read_csv(here("0_data", "THD", "THD_completed.csv")) %>%
                            c("No responsibility", "A little responsibility",
                              "Some responsibility", "A lot of responsibility"),
                          ordered=TRUE),
-         gov_pension_num = (as.numeric(gov_pension) - min(as.numeric(gov_pension), na.rm=T))/
+         gov_pension_num = (as.numeric(gov_pension) - min(as.numeric(gov_pension), na.rm=T))/ # different from ACNT
            (max(as.numeric(gov_pension), na.rm=T)- min(as.numeric(gov_pension), na.rm=T)),
          gov_ui = factor(Q3.9_2, levels =
                            c("No responsibility", "A little responsibility",

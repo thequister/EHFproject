@@ -56,58 +56,58 @@ ACNT_uw <- ACNT_uw %>%
     grepl("Not ", new_job),
     FALSE,
     TRUE),
-  loyal_workers = factor(loyal_workers, levels = 
+  wrk_loyal = factor(loyal_workers, levels = 
                      c("A lot of loyalty",
                        "Some loyalty",
                        "Only a little loyalty",
                        "No loyalty at all"),
                    ordered= TRUE), 
-  loyal_workers_num = 
+  wrk_loyal_num = 
     (as.numeric(loyal_workers) - min(as.numeric(loyal_workers)))/
     (max(as.numeric(loyal_workers))- min(as.numeric(loyal_workers))), 
-  loyal_workers_bin = ifelse(  #binary variable; T if some/a lot 
+  wrk_loyal_bin = ifelse(  #binary variable; T if some/a lot 
     loyal_workers %in% c("A lot of loyalty", "Some loyalty"),
     FALSE,
     TRUE),
-  loyal_comp = factor(loyal_comp, levels = 
+  emp_loyal = factor(loyal_comp, levels = 
                            c("A lot of loyalty",
                              "Some loyalty",
                              "Only a little loyalty",
                              "No loyalty at all"),
                          ordered= TRUE), 
-  loyal_comp_num = 
+  emp_loyal_num = 
     (as.numeric(loyal_comp) - min(as.numeric(loyal_comp)))/
     (max(as.numeric(loyal_comp))- min(as.numeric(loyal_comp))), 
-  loyal_comp_bin = ifelse(  #binary variable; T if some/a lot 
+  emp_loyal_bin = ifelse(  #binary variable; T if some/a lot 
     loyal_comp %in% c("A lot of loyalty", "Some loyalty"),
     FALSE,
     TRUE),
   union_vote_agg = ifelse(union_elec == "Not sure", union_unsure, union_elec),
-  union_vote_agg = factor(union_vote_agg, levels = 
+  union_vote = factor(union_vote_agg, levels = 
                      c("For the union",
                        "Leaning toward voting for the union",
                        "Not sure",
                        "Leaning against voting for the union", 
                        "Against the union"),
                    ordered= TRUE), 
-  union_vote_agg_num = 
-    (as.numeric(union_vote_agg) - min(as.numeric(union_vote_agg)))/
-    (max(as.numeric(union_vote_agg))- min(as.numeric(union_vote_agg))), 
-  union_vote_agg_bin = ifelse(  #binary variable; T if leans towards union 
-    union_vote_agg %in% c("For the union", "Leaning toward voting for the union"),
+  union_vote_num = 
+    (as.numeric(union_vote) - min(as.numeric(union_vote)))/
+    (max(as.numeric(union_vote))- min(as.numeric(union_vote))), 
+  union_vote_bin = ifelse(  #binary variable; T if leans towards union 
+    union_vote %in% c("For the union", "Leaning toward voting for the union"),
     FALSE,
     TRUE),
-  recommend = factor(recommend, levels = 
+  emp_reco = factor(recommend, levels = 
                             c("Certainly would recommend",
                               "Might recommend",
                               "Not sure",
                               "Might not recommend", 
                               "Definitely would not recommend"),
                           ordered= TRUE), 
-  recommend_num = 
+  emp_reco_num = 
     (as.numeric(recommend) - min(as.numeric(recommend)))/
     (max(as.numeric(recommend))- min(as.numeric(recommend))), 
-  recommend_bin = ifelse(  #binary variable; T if leans recommending
+  emp_reco_bin = ifelse(  #binary variable; T if leans recommending
     recommend %in% c("Certainly would recommend", "Might recommend"),
     FALSE,
     TRUE),
@@ -215,11 +215,11 @@ ACNT_uw <- ACNT_uw %>%
                   "Some college",
                   "Associate's degree",
                   "Bachelor's degree",
-                  "Advanced degree (JD, Masters, PhD, etc)")),
+                  "Advanced degree (JD, Masters, PhD, etc)")), # included as ed due to THD code
   ed_h = C(ordered(ed), contr.helmert),
   college = ed %in% c(
     "Bachelor's degree",
-    "Master's degree/Advanced degree"),
+    "Advanced degree (JD, Masters, PhD, etc)"),
   male = gender == "Male",
   nonwhite = ethn_race != "White",
   practice_religion = factor(practice_religion, levels =
