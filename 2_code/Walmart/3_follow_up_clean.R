@@ -1,6 +1,6 @@
 library(here)
 source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
-here::i_am("2_code/Walmart/3_follow_up.R")
+here::i_am("2_code/Walmart/3_follow_up_clean.R")
 
 fup <- read_survey(here("0_raw_data", "ACNT", "ACNT_followup_qualtrics_raw_120125.csv"))
 ACNT_clean <- read_csv(here("3_cleaned_data", "ACNT_clean_draft.csv"))

@@ -123,6 +123,16 @@ ACNT_uw <- ACNT_uw %>%
                         "2 to 6 hours" ~ 2,
                         "6 to 12 hours" ~ 6,
                         "More than 12 hours" ~ 12),
+  emergency_bank = grepl("Borrowed money from a bank", emergency_aid),
+  emergency_cc = grepl("Used a credit card", emergency_aid),
+  emergency_pawn = grepl("Borrowed money using a pawnshop, payday lender, or title lender", emergency_aid),
+  emergency_public = grepl("Public assistance (SNAP, food stamps, cash welfare)", emergency_aid),
+  emergency_unemp = grepl("Unemployment insurance", emergency_aid),
+  emergency_disab = grepl("Disability insurance or worker’s compensation", emergency_aid),
+  emergency_fam = grepl("Family or friends", emergency_aid),
+  emergency_church = grepl("Church, synagogue, mosque or other religious community", emergency_aid),
+  emergency_other = grepl("Other", emergency_aid),
+  emergency_sum = rowSums(across(emergency_bank:emergency_other)),
   ehf_coverage = factor(ehf_coverage, levels = 
                        c("It covered all my emergency needs",
                          "It covered more than ½ but not all of my emergency needs",
@@ -194,9 +204,11 @@ ACNT_uw <- ACNT_uw %>%
     (as.numeric(ideology_conlib) - min(as.numeric(ideology_conlib), na.rm = T))/
     (max(as.numeric(ideology_conlib), na.rm = T)- min(as.numeric(ideology_conlib), na.rm = T))), 
   ideology = factor(ideology),
-  vote_lik_fac = factor(vote_lik_post_elec),
-  vote_lik_fix_flag = (vote_lik_post_elec %in% c("4", "5")),
-  voted = (vote_lik_post_elec == "I'm sure I voted"),
+  vote_lik_fix_flag = (RecordedDate <= "2024-11-13 09:22:16"),
+  vote_lik_fix = case_when(RecordedDate > "2024-11-13 09:22:16" ~ vote_lik_post_elec,
+                           !is.na(vote_pres_post_elec) ~ "I'm sure I voted", 
+                           .default = "I did not vote (in the election this November)"),
+  voted = (vote_lik_fix == "I'm sure I voted"),
   across(c(govt_responsib_elder:govt_responsib_hardship),
                 ~factor(., levels = c(
                   "A lot of responsibility",
@@ -257,6 +269,27 @@ ACNT_uw <- ACNT_uw %>%
                           "At least $15,000 but less than $25,000 per year" ~ 15,
                           "Less than $15,000 per year"~ 0, .default = NA),
   )
+
+## Create the attachment index
+pca_att_dt <- ACNT_uw %>%
+  select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%
+  mutate(across(emp_loyal_num:emp_reco_num, ~ (1 - .)))
+
+pca_res <- prcomp(pca_att_dt)
+pca_res$rotation <- -1*pca_res$rotation
+
+pca_res$rotation
+biplot(pca_res, scale = 0)
+
+var_explained = pca_res$sdev^2 / sum(pca_res$sdev^2)
+
+#create scree plot
+qplot(c(1:4), var_explained) + 
+  geom_line() + 
+  xlab("Principal Component") + 
+  ylab("Variance Explained") +
+  ggtitle("Scree Plot") +
+  ylim(0, 1)
 
 write_csv(ACNT_uw, here("3_cleaned_data", "ACNT_clean_draft.csv"))
   
