@@ -111,11 +111,22 @@ fup <- fup %>%
            FALSE,
            TRUE))
 
-# Save as clean follow-up
-write_csv(fup, here("3_cleaned_data", "ACNT_followup_clean_draft.csv"))
-
 # Join onto main survey and save
 fup_j <- left_join(ACNT_clean, fup, by = c("email" = "RecipientEmail")) 
 # Joined by email because Login ID has non-unique values
 
+# ## Add comparisons to joined data
+# fup_j <- fup_j %>%
+#   mutate(age_match = age == age_f, 
+#          ed_match = ed == ed_f, 
+#          male_match = male == male_f, 
+#          tot_match = (age_match + ed_match + male_match)/3)
+# 
+# non_match <- fup_j %>%
+#   filter(tot_match < 1) %>%
+#   select(email, birthyear, birthyear_f, ed, ed_f, male, male_f, tot_match, quality)
+
+
+# Save as clean follow-up
+write_csv(fup, here("3_cleaned_data", "ACNT_followup_clean_draft.csv"))
 write_csv(fup, here("3_cleaned_data", "ACNT_followup_joined_draft.csv"))
