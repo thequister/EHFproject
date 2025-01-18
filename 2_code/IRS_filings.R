@@ -2,8 +2,8 @@
 #devtools::install_github("UrbanInstitute/nccsdata")
 #devtools::install_github( 'ultinomics/xmltools' )
 #devtools::install_github( 'nonprofit-open-data-collective/irs990efile' )
-library(nccsdata)
-library(irs990efile)
+#library(nccsdata)
+#library(irs990efile)
 library(curl)
 library(tidyverse)
 library(ggplot2)
@@ -148,40 +148,40 @@ PC_h_2019_200k <- data.table::fread(
 # list to the EIN list from irs990efile pz
 
 #comparing coverage over datasets for 2019
-test <- nccsdata::get_data(
-  dsname = "core",
-  scope.orgtype = "CHARITIES",
-  scope.formtype = "PZ",
-  time = "2019",
-  ntee.code = c("M20", "P60")
-)
-
-compare_pc <- nccsdata::get_data(
-  dsname = "core",
-  scope.orgtype = "CHARITIES",
-  scope.formtype = "PC",
-  time = "2019"#,
-  #ntee.code = c("M20", "P60")
-)
+# test <- nccsdata::get_data(
+#   dsname = "core",
+#   scope.orgtype = "CHARITIES",
+#   scope.formtype = "PZ",
+#   time = "2019",
+#   ntee.code = c("M20", "P60")
+# )
+# 
+# compare_pc <- nccsdata::get_data(
+#   dsname = "core",
+#   scope.orgtype = "CHARITIES",
+#   scope.formtype = "PC",
+#   time = "2019"#,
+#   #ntee.code = c("M20", "P60")
+# )
 
 n_compare_pc<-nrow(compare_pc)
 compare_pc_uein<-unique(compare_pc$EIN)
 norg_compare_pc<-length(compare_pc_uein)
 
-compare_pz <- nccsdata::get_data(
-  dsname = "core",
-  scope.orgtype = "CHARITIES",
-  scope.formtype = "PZ",
-  time = "2019"#,
-  #ntee.code = c("M20", "P60")
-)
+# compare_pz <- nccsdata::get_data(
+#   dsname = "core",
+#   scope.orgtype = "CHARITIES",
+#   scope.formtype = "PZ",
+#   time = "2019"#,
+#   #ntee.code = c("M20", "P60")
+# )
 
 n_compare_pz <- nrow(compare_pz)
 compare_pz_uein<-unique(compare_pz$EIN)
 norg_compare_pz<-length(compare_pz_uein)
 
 
-index <- irs990efile::build_index( tax.years=2019 )
+# index <- irs990efile::build_index( tax.years=2019 )
 
 n_index <- nrow(index)
 n_index_pz <- nrow(index[index$FormType %in% c("990", "990EZ"),])
@@ -205,34 +205,34 @@ length(intersect(index_pz_uein,compare_pz_uein)) #323846
 ## doing this sequentially, as downloading one big file
 ## caused problems
 
-compare_pz_15 <- nccsdata::get_data(
-  dsname = "core",
-  scope.orgtype = "CHARITIES",
-  scope.formtype = "PZ",
-  time = c("2015")
-)
-
-compare_pz_16 <- nccsdata::get_data(
-  dsname = "core",
-  scope.orgtype = "CHARITIES",
-  scope.formtype = "PZ",
-  time = c("2016")
-)
-
-
-compare_pz_17 <- nccsdata::get_data(
-  dsname = "core",
-  scope.orgtype = "CHARITIES",
-  scope.formtype = "PZ",
-  time = c("2017")
-)
-
-compare_pz_18 <- nccsdata::get_data(
-  dsname = "core",
-  scope.orgtype = "CHARITIES",
-  scope.formtype = "PZ",
-  time = c("2018")
-)
+# compare_pz_15 <- nccsdata::get_data(
+#   dsname = "core",
+#   scope.orgtype = "CHARITIES",
+#   scope.formtype = "PZ",
+#   time = c("2015")
+# )
+# 
+# compare_pz_16 <- nccsdata::get_data(
+#   dsname = "core",
+#   scope.orgtype = "CHARITIES",
+#   scope.formtype = "PZ",
+#   time = c("2016")
+# )
+# 
+# 
+# compare_pz_17 <- nccsdata::get_data(
+#   dsname = "core",
+#   scope.orgtype = "CHARITIES",
+#   scope.formtype = "PZ",
+#   time = c("2017")
+# )
+# 
+# compare_pz_18 <- nccsdata::get_data(
+#   dsname = "core",
+#   scope.orgtype = "CHARITIES",
+#   scope.formtype = "PZ",
+#   time = c("2018")
+# )
 
 
 compare_pz_15 <- compare_pz_15 |> 
@@ -265,7 +265,7 @@ compare_pz_ein_2017 <- unique(
 
 n_compare_pz_2017 <- length(compare_pz_ein_2017)
 
-index_2017 <- irs990efile::build_index( tax.years=2017 )
+# index_2017 <- irs990efile::build_index( tax.years=2017 )
 
 n_index_2017 <- nrow(index_2017)
 
