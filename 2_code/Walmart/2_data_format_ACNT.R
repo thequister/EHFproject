@@ -233,7 +233,7 @@ ACNT_uw <- ACNT_uw %>%
   college = ed %in% c(
     "Bachelor's degree",
     "Advanced degree (JD, Masters, PhD, etc)"),
-  male = gender == "Male",
+  male = gender == "Man",
   nonwhite = ethn_race != "White",
   practice_religion = factor(practice_religion, levels =
                                c("At least once per week",
