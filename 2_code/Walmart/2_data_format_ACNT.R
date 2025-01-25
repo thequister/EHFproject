@@ -276,20 +276,23 @@ pca_att_dt <- ACNT_uw %>%
   mutate(across(emp_loyal_num:emp_reco_num, ~ (1 - .)))
 
 pca_res <- prcomp(pca_att_dt)
-pca_res$rotation <- -1*pca_res$rotation
 
-pca_res$rotation
-biplot(pca_res, scale = 0)
+ACNT_uw$attachment_index <- predict(pca_res, ACNT_uw)[,1] #mark the fist PC as the attachment index
 
-var_explained = pca_res$sdev^2 / sum(pca_res$sdev^2)
-
-#create scree plot
-qplot(c(1:4), var_explained) + 
-  geom_line() + 
-  xlab("Principal Component") + 
-  ylab("Variance Explained") +
-  ggtitle("Scree Plot") +
-  ylim(0, 1)
+# pca_res$rotation <- -1*pca_res$rotation
+# 
+# pca_res$rotation
+# biplot(pca_res, scale = 0)
+# 
+# var_explained = pca_res$sdev^2 / sum(pca_res$sdev^2)
+# 
+# #create scree plot
+# qplot(c(1:4), var_explained) + 
+#   geom_line() + 
+#   xlab("Principal Component") + 
+#   ylab("Variance Explained") +
+#   ggtitle("Scree Plot") +
+#   ylim(0, 1)
 
 write_csv(ACNT_uw, here("3_cleaned_data", "ACNT_clean_draft.csv"))
   

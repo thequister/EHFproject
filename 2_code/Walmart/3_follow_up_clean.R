@@ -116,12 +116,20 @@ fup_j <- left_join(ACNT_clean, fup, by = c("email" = "RecipientEmail"))
 # Joined by email because Login ID has non-unique values
 
 # # ## Add comparisons to joined data
-# fup_j <- fup_j %>%
-#   mutate(age_match = age == age_f,
-#          ed_match = ed == ed_f,
-#          male_match = male == male_f,
-#          tot_match = (age_match + ed_match + male_match)/3)
-# 
+fup_j <- fup_j %>%
+  mutate(age_match = age == age_f,
+         ed_match = ed == ed_f,
+         male_match = male == male_f,
+         tot_match = (age_match + ed_match + male_match)/3)
+
+# Filter out those with a match under 2/3 from the non-joined set
+verified_emails <- na.rm(fup_j$email[fup_j$tot_match >= .5])
+
+fup <- fup %>%
+  filter(RecipientEmail %in% verified_emails)
+
+fup_j <- left_join(ACNT_clean, fup, by = c("email" = "RecipientEmail")) 
+ 
 # non_match <- fup_j %>%
 #   filter(tot_match < 1) %>%
 #   select(email, birthyear, birthyear_f, ed, ed_f, male, male_f, tot_match, quality)

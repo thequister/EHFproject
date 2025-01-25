@@ -110,11 +110,15 @@ Walmart$rk_educ <- case_when(Walmart$educ %in% c("Associate's degree", "Advanced
 
 # imputing missing age and gender variables for weight calcs
 Walmart_complete <- mutate(Walmart[Walmart$completion_subgroup>=5,], 
+                      rk_age_dei = cut(rk_age, 
+                                                   breaks=c(-Inf, 19, 24, 29, 34, 39, 44, 49, 54, 59, 64, Inf),
+                                                   labels=c("18-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65+")),
                        rk_age = cut(rk_age, 
                                         breaks=c(-Inf, 45, Inf),
                                         labels=c("18-45","45-65+")))
                        
 Walmart_complete$rk_age[is.na(Walmart_complete$rk_age)] <- "18-45"
+Walmart_complete$rk_age_dei[is.na(Walmart_complete$rk_age_dei)] <- "35-39"
                        
 Walmart_complete <- Walmart_complete %>%
   mutate(
@@ -130,7 +134,7 @@ Walmart_complete <- Walmart_complete %>%
   mutate(across(c(rk_gender:rk_age_educ), factor)) %>%
   droplevels()
 
-## target distribution from to FB marginals 
+## Raking from FB audience
 fb_Walmart_dems <- read_csv(here("0_raw_data", "ACNT", "Walmart_audience.csv")) %>%
   mutate(targeting = NULL, location = NULL, min_audience = NULL) %>%
   rename(educ = "education") %>%
@@ -157,6 +161,18 @@ Walmart_complete <- Walmart_complete %>%
   mutate(rk_wgt_trim = case_when(rk_wgt_og <= 0.5 ~ 0.5, 
                                  rk_wgt_og >= 2 ~ 2, 
                                  .default = rk_wgt_og)) # Weights trimmed according to PAP
+
+## Raking from Walmart DEI file
+
+rk_targets <- list(tibble(rk_gender = factor(c("female", "male")), Freq = c(47.59, 52.41)), 
+                   tibble(rk_age_dei = factor(c("18-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65+")),
+                          Freq = c(12.16, 16.73, 10.49, 9.51, 8.38, 7.84, 6.98, 7.33, 7.44, 6.6, 6.54)))
+
+Walmart_complete <- Walmart_complete %>%
+  mutate(rk_dei_og = rake_survey(Walmart_complete, pop_margins = rk_targets)) %>% # original produced weights
+  mutate(rk_dei_trim = case_when(rk_dei_og <= 0.5 ~ 0.5, 
+                                 rk_dei_og >= 2 ~ 2, 
+                                 .default = rk_dei_og)) # Weights trimmed according to PAP
 
 write.csv(Walmart_complete,   # dataset of survey (near-)completers with raking weights  
           file = here("0_raw_data", "ACNT", "ACNT_full.csv"),
@@ -188,3 +204,9 @@ write.csv(Walmart_complete,   # dataset of survey (near-)completers with raking 
 #   geom_histogram(binwidth = 0.05)
 # 
 # wgt_og_df <- unique(data.frame(Walmart_complete$rk_age, Walmart_complete$rk_educ, Walmart_complete$rk_gender, Walmart_complete$rk_wgt_og))
+# 
+# 
+# ggplot(Walmart_complete, aes(x = rk_dei_og)) +
+#   geom_histogram(binwidth = 0.05)
+# 
+# wgt_og_df <- unique(data.frame(Walmart_complete$rk_age_dei, Walmart_complete$rk_gender, Walmart_complete$rk_dei_og))
