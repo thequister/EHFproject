@@ -111,14 +111,14 @@ Walmart$rk_educ <- case_when(Walmart$educ %in% c("Associate's degree", "Advanced
 # imputing missing age and gender variables for weight calcs
 Walmart_complete <- mutate(Walmart[Walmart$completion_subgroup>=5,], 
                       rk_age_dei = cut(rk_age, 
-                                                   breaks=c(-Inf, 19, 24, 29, 34, 39, 44, 49, 54, 59, 64, Inf),
-                                                   labels=c("18-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65+")),
+                                                   breaks=c(-Inf, 24, 34, 44, 54, 64, Inf),
+                                                   labels=c("18-24", "25-34", "35-44", "45-54", "55-64", "65+")),
                        rk_age = cut(rk_age, 
                                         breaks=c(-Inf, 45, Inf),
                                         labels=c("18-45","45-65+")))
                        
 Walmart_complete$rk_age[is.na(Walmart_complete$rk_age)] <- "18-45"
-Walmart_complete$rk_age_dei[is.na(Walmart_complete$rk_age_dei)] <- "35-39"
+Walmart_complete$rk_age_dei[is.na(Walmart_complete$rk_age_dei)] <- "35-44"
                        
 Walmart_complete <- Walmart_complete %>%
   mutate(
@@ -165,8 +165,8 @@ Walmart_complete <- Walmart_complete %>%
 ## Raking from Walmart DEI file
 
 rk_targets <- list(tibble(rk_gender = factor(c("female", "male")), Freq = c(47.59, 52.41)), 
-                   tibble(rk_age_dei = factor(c("18-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65+")),
-                          Freq = c(12.16, 16.73, 10.49, 9.51, 8.38, 7.84, 6.98, 7.33, 7.44, 6.6, 6.54)))
+                   tibble(rk_age_dei = factor(c("18-24", "25-34", "35-44", "45-54", "55-64", "65+")),
+                          Freq = c(28.89, 20, 16.22, 14.31, 14, 6.54)))
 
 Walmart_complete <- Walmart_complete %>%
   mutate(rk_dei_og = rake_survey(Walmart_complete, pop_margins = rk_targets)) %>% # original produced weights
@@ -206,7 +206,7 @@ write.csv(Walmart_complete,   # dataset of survey (near-)completers with raking 
 # wgt_og_df <- unique(data.frame(Walmart_complete$rk_age, Walmart_complete$rk_educ, Walmart_complete$rk_gender, Walmart_complete$rk_wgt_og))
 # 
 # 
-# ggplot(Walmart_complete, aes(x = rk_dei_og)) +
-#   geom_histogram(binwidth = 0.05)
-# 
-# wgt_og_df <- unique(data.frame(Walmart_complete$rk_age_dei, Walmart_complete$rk_gender, Walmart_complete$rk_dei_og))
+ggplot(Walmart_complete, aes(x = rk_dei_trim)) +
+  geom_histogram(binwidth = 0.05)
+
+wgt_og_df <- unique(data.frame(Walmart_complete$rk_age_dei, Walmart_complete$rk_gender, Walmart_complete$rk_dei_og))
