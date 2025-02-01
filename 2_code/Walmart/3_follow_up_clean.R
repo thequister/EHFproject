@@ -145,4 +145,4 @@ fup_j <- left_join(ACNT_clean, fup, by = c("email" = "RecipientEmail"))
 
 # Save as clean follow-up
 write_csv(fup, here("3_cleaned_data", "ACNT_followup_clean_draft.csv"))
-write_csv(fup, here("3_cleaned_data", "ACNT_followup_joined_draft.csv"))
+write_csv(fup_j, here("3_cleaned_data", "ACNT_followup_joined_draft.csv"))

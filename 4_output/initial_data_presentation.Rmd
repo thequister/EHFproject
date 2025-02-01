@@ -1,0 +1,127 @@
+---
+title: "Initial Data Report"
+output: html_document
+date: "2025-02-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
+dt <- read_csv(here("3_cleaned_data", "ACNT_followup_joined_draft.csv"))
+
+var_cont <- function(v, a1, a2, b1, b2) {
+  a <- ggplot(dt, aes(x =  !!sym(v))) +
+    geom_histogram() +
+    geom_vline(xintercept = median(dt[, v][[1]], na.rm = T)) +
+    annotate("text", label = paste("med", median(dt[, v][[1]], na.rm = T)), x = a1, y = b1) +
+    annotate("text", label = paste("mean", mean(dt[, v][[1]], na.rm = T)), x = a2, y = b2)
+  
+  a
+}
+```
+
+## Survey roll-off item non-response, attention, attrition, and weighting
+
+```{r cars}
+# Emails available
+sum(!is.na(dt$email))
+# past work is equal to length?
+summary(as.factor(dt$past_work))
+```
+
+## Item non-response and outlier data
+
+```{r}
+# How many age and hourly wage values have been changed/set to NA?
+sum(is.na(dt$pph_clean))
+sum(dt$pph_corrected, na.rm = T)
+
+sum(is.na(dt$age))
+sum(is.na(dt$age_clean))
+sum(dt$age_corrected)
+
+# Plots for the above
+var_cont("age_clean", 50, 50, 10, 20)
+var_cont("pph_clean", 5, 5, 100, 150)
+```
+
+## Quality and attention checks
+
+```{r}
+sum(dt$quality == "high")
+```
+## Weighting
+
+```{r}
+ggplot(dt, aes(x = rk_wgt_trim)) +
+  geom_histogram(binwidth = 0.05)
+
+unique(data.frame(dt$rk_age, dt$rk_educ, dt$rk_gender, dt$rk_wgt_og))
+
+ggplot(dt, aes(x = rk_dei_trim)) +
+  geom_histogram(binwidth = 0.05)
+
+unique(data.frame(dt$rk_age_dei, dt$rk_gender, dt$rk_dei_og))
+```
+
+## Measurement
+
+```{r ehf_hire}
+summary(as.factor(dt$hire_benefits_emerg))
+mean(dt$hire_benefits_emerg_num)
+median(dt$hire_benefits_emerg_num)
+
+mean(dt$ehf_hire_bin)
+
+# Relative to other factors for getting a different job. num/sum(num)
+var_cont("ehf_hire_relative", 1, 1, 10, 30)
+```
+```{r ehf_exist}
+summary(as.factor(dt$ehf_exist)) # Post-treatment
+
+ggplot(dt, aes(x = ehf_exist, fill = treatment_vid)) + #treatment and post-treatment ehf existance
+  geom_bar()
+```
+
+```{r ehf_prior_knowledge}
+summary(as.factor(dt$ehf_aware_pretr))
+
+ggplot(dt, aes(x = ehf_aware_pretr, fill = ehf_exist)) + #pre-treatment and post-treatment ehf existance
+  geom_bar()
+```
+```{r qualifying emergency}
+summary(as.factor(dt$emergency))
+```
+```{r known recipient}
+summary(as.factor(dt$ehf_other_recip))
+```
+```{r applied themselves}
+summary(as.factor(dt$ehf_applied))
+```
+```{r received money}
+summary(as.factor(dt$ehf_received))
+
+var_cont("ehf_rec_amount", 200, 200, 10, 15)
+```
+```{r ehf donations}
+summary(as.factor(dt$ehf_donation))
+
+var_cont("ehf_don_amount", 2000, 2000, 10, 15)
+```
+```{r loyalty to workers and company}
+summary(as.factor(dt$wrk_loyal))
+mean(dt$wrk_loyal_num) # 0 is max loyalty
+median(dt$wrk_loyal_num)
+mean(dt$wrk_loyal_bin) # 1 is loyal
+
+summary(as.factor(dt$emp_loyal))
+mean(dt$emp_loyal_num) # 0 is max loyalty
+median(dt$emp_loyal_num)
+mean(dt$emp_loyal_bin) # 1 is loyal
+```
+```{r recommend}
+
+```
+
+
