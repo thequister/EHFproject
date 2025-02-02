@@ -6,8 +6,10 @@ date: "2025-02-01"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 library(here)
-source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
+library(tidyverse)
+
 dt <- read_csv(here("3_cleaned_data", "ACNT_followup_joined_draft.csv"))
 
 var_cont <- function(v, a1, a2, b1, b2) {
@@ -23,16 +25,23 @@ var_cont <- function(v, a1, a2, b1, b2) {
 
 ## Survey roll-off item non-response, attention, attrition, and weighting
 
-```{r cars}
+```{r emails}
 # Emails available
 sum(!is.na(dt$email))
 # past work is equal to length?
 summary(as.factor(dt$past_work))
 ```
+```{r treatment vars}
+summary(as.factor(dt$treatment_full.x))
+mean(dt$treatment_vid == 1) # how many shown a video
+summary(as.factor(dt$treatment_vid_type)) # only those shown video, which one?
+```
+
+
 
 ## Item non-response and outlier data
 
-```{r}
+```{r age and pph}
 # How many age and hourly wage values have been changed/set to NA?
 sum(is.na(dt$pph_clean))
 sum(dt$pph_corrected, na.rm = T)
@@ -89,15 +98,21 @@ summary(as.factor(dt$ehf_aware_pretr))
 
 ggplot(dt, aes(x = ehf_aware_pretr, fill = ehf_exist)) + #pre-treatment and post-treatment ehf existance
   geom_bar()
+
+cor(as.numeric(dt$ehf_aware_pretr), (dt$ehf_exist == "Yes")) # what is the correlation between knowing pre-treatment and post-treatment?
 ```
 ```{r qualifying emergency}
 summary(as.factor(dt$emergency))
 ```
 ```{r known recipient}
 summary(as.factor(dt$ehf_other_recip))
+mean(dt$ehf_other_recip == "Yes", na.rm = T) # over those shown question
+sum(dt$ehf_other_recip == "Yes", na.rm = T)/1078 # over total respondents
 ```
 ```{r applied themselves}
 summary(as.factor(dt$ehf_applied))
+mean(dt$ehf_applied == "Yes", na.rm = T) # over those shown question
+sum(dt$ehf_applied == "Yes", na.rm = T)/1078 # over total respondents
 ```
 ```{r received money}
 summary(as.factor(dt$ehf_received))
@@ -106,6 +121,7 @@ var_cont("ehf_rec_amount", 200, 200, 10, 15)
 ```
 ```{r ehf donations}
 summary(as.factor(dt$ehf_donation))
+sum(dt$ehf_donation == "Yes", na.rm = T)/1078 # percentage over all respondents
 
 var_cont("ehf_don_amount", 2000, 2000, 10, 15)
 ```
@@ -120,8 +136,115 @@ mean(dt$emp_loyal_num) # 0 is max loyalty
 median(dt$emp_loyal_num)
 mean(dt$emp_loyal_bin) # 1 is loyal
 ```
-```{r recommend}
+```{r recommend and new job search}
+summary(as.factor(dt$emp_reco))
+mean(dt$emp_reco_num) # 0 is max recommend
+median(dt$emp_reco_num)
+mean(dt$emp_reco_bin) # 1 is recommend
 
+summary(dt$new_job)
+mean(dt$new_job_num)
+mean(dt$new_job_bin) # Somewhat or more likely
+```
+```{r unionization}
+summary(as.factor(dt$union_vote))
+mean(dt$union_vote_num) # 0 is max for the union
+median(dt$union_vote_num)
+mean(dt$union_vote_bin) # 1 is at least leaning towards union
+
+var_cont("union_coworkers_6", 10, 10, 100, 120) # coworker lean for or against union
+
+cor(dt$union_coworkers_6, dt$union_vote_num) # Negative correlation makes sense, since 0 is max for the union
+```
+```{r experience with social assistance}
+mean(dt$unemp_benefits == "Yes")
+
+summary(as.factor(dt$app_time))
+mean(dt$app_time_num, na.rm = T)
+median(dt$app_time_num, na.rm = T)
+
+summary(as.factor(dt$delay))
+mean(dt$delay_num, na.rm = T)
+median(dt$delay_num, na.rm = T)
+
+summary(as.factor(dt$other_welfare))
+```
+```{r social assistance attitudes}
+dt %>%
+  select(govt_responsib_elder_num:govt_responsib_hardship_num) %>%
+  colMeans() # with 0 being maximum responsibility
+
+dt %>%
+  select(govt_responsib_elder_bin:govt_responsib_hardship_bin) %>%
+  colMeans() # with 1 being at least some responsibility
+
+```
+
+```{r expense DV}
+summary(as.factor(dt$emergency_expense))
+mean(dt$emergency_expense_num) # 0 is certainly not
+median(dt$emergency_expense_num)
+mean(dt$emergency_expense_bin) # 1 is more likely than not
+```
+```{r willingness to donate at end of survey}
+summary(as.factor(dt$donate))
+```
+```{r attachment index}
+var_cont("attachment_index", .5, .5, 10, 20)
+```
+## Covariates
+
+```{r race and gender}
+mean(dt$nonwhite == 1)
+mean(dt$male == 1)
+```
+```{r educ}
+summary(as.factor(dt$ed))
+mean(dt$college == T) # "some college" is assumed to not be completed college
+```
+```{r tenure}
+mean(dt$tenure_num, na.rm = T)
+median(dt$tenure_num, na.rm = T)
+```
+```{r pay type}
+mean(dt$hourly == 1)
+```
+```{r employment status}
+mean(dt$employ_status == "Regular full-time")
+```
+## Variables not in PAP
+
+```{r elections, ideology, registration}
+mean(dt$registered == "Yes") # registered to vote?
+
+summary(as.factor(dt$ideology))
+summary(as.factor(dt$ideology_answered)) # coded "haven't thought about it" as NA
+mean(dt$ideology_conlib_num, na.rm = T) # using the above, conlib on a numerical scale. From 0 lib to 1 con
+
+summary(as.factor(dt$vote_lik_post_elec)) # problematic factor
+summary(as.factor(dt$vote_lik_fix)) # fixed factor
+summary(dt$vote_lik_fix_flag) # vote likelihood fixed for these obs
+
+# Reminder: if a person states who they voted for, then they are assigned that they definitely voted.
+# If that is NA, then that they definitely did not.
+
+summary(as.factor(dt$vote_pres_post_elec))
+sum(!is.na(dt$vote_pres_post_elec) & dt$vote_pres_post_elec != "Did not vote for President")/1078 # turnout
+```
+```{r healthcare}
+mean(dt$healthcare == T) # do they get healthcare through their jobs?
+```
+```{r other demographics}
+mean(dt$rent == "Rent") # do they rent or own
+
+mean(dt$practice_religion_bin) # percent practicing at all
+mean(dt$practice_religion_num) # numerical, where 1 is never, 0 is once a week
+
+mean(dt$income_num, na.rm = T) # NAs could be "don't want to answer" answers.
+```
+```{r where did they see the add}
+summary(as.factor(dt$utm_campaign))
+summary(as.factor(dt$utm_medium))
 ```
 
 
