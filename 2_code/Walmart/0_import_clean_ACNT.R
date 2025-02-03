@@ -40,6 +40,7 @@ qual_dedupe <- qual_raw[!duplicated(qual_raw$email, incomparables = NA), ] %>% #
                                     HDTreatment==1 ~ "vidChar",
                                     HDTreatment==2 ~ "vidSolid", 
                                     HDTreatment==3 ~ "ctrl")) %>%
+  mutate(treatment_bin = treatment_full %in% c("vidChar", "vidSolid")) %>%
   mutate(treatment_vid = treatment_full!="ctrl") %>% #were the respondents shown a video
   mutate(treatment_vid_type = case_when(HDTreatment==0 ~ "vid0",
                                         HDTreatment==1 ~ "vidChar",

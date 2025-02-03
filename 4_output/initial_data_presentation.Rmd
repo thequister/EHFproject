@@ -36,6 +36,19 @@ summary(as.factor(dt$treatment_full.x))
 mean(dt$treatment_vid == 1) # how many shown a video
 summary(as.factor(dt$treatment_vid_type)) # only those shown video, which one?
 ```
+```{r treatment regressions}
+mod1 <- lm(ehf_exist == "Yes" ~ treatment_bin, data = dt)
+summary(mod1)
+
+mod2 <- lm(ehf_exist != "No" ~ treatment_bin, data = dt)
+summary(mod2)
+
+mod3 <- lm(ehf_exist == "Yes" ~ treatment_bin*ehf_aware_pretr, data = dt)
+summary(mod3)
+
+mod4 <- lm(ehf_exist != "No" ~ treatment_bin*ehf_aware_pretr, data = dt)
+summary(mod4)
+```
 
 
 
@@ -78,6 +91,16 @@ ggplot(dt, aes(x = rk_dei_trim)) +
 summary(as.factor(dt$hire_benefits_emerg))
 mean(dt$hire_benefits_emerg_num)
 median(dt$hire_benefits_emerg_num)
+
+dt %>%
+  select(hire_benefits_pto_num:hire_benefits_tuition_num) %>%
+  as.matrix %>%
+  cor %>%
+  as.data.frame %>%
+  rownames_to_column(var = 'var1') %>%
+  gather(var2, value, -var1) %>%
+  filter(var1 == "hire_benefits_emerg_num")
+
 
 mean(dt$ehf_hire_bin)
 
