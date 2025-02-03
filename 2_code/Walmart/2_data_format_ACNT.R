@@ -42,13 +42,13 @@ ACNT_uw <- ACNT_uw %>%
     grepl(" not ", expense),
     FALSE,
     TRUE),
-  new_job = factor(new_job, levels = 
+  new_job = fct_rev(factor(new_job, levels = 
                          c("Extremely likely",
                          "Very likely",
                          "Somewhat likely",
                          "Not very likely", 
                          "Not at all likely"),
-                     ordered= TRUE), 
+                     ordered= TRUE)), 
   new_job_num = 
     (as.numeric(new_job) - min(as.numeric(new_job)))/
     (max(as.numeric(new_job))- min(as.numeric(new_job))), 
@@ -56,27 +56,27 @@ ACNT_uw <- ACNT_uw %>%
     grepl("Not ", new_job),
     FALSE,
     TRUE),
-  wrk_loyal = factor(loyal_workers, levels = 
+  wrk_loyal = fct_rev(factor(loyal_workers, levels = 
                      c("A lot of loyalty",
                        "Some loyalty",
                        "Only a little loyalty",
                        "No loyalty at all"),
-                   ordered= TRUE), 
+                   ordered= TRUE)), 
   wrk_loyal_num = 
-    (as.numeric(wrk_loyal) - min(as.numeric(wrk_loyal)))/
+    1-(as.numeric(wrk_loyal) - min(as.numeric(wrk_loyal)))/
     (max(as.numeric(wrk_loyal))- min(as.numeric(wrk_loyal))), 
   wrk_loyal_bin = ifelse(  #binary variable; T if some/a lot 
     wrk_loyal %in% c("A lot of loyalty", "Some loyalty"),
     FALSE,
     TRUE),
-  emp_loyal = factor(loyal_comp, levels = 
+  emp_loyal = fct_rev(factor(loyal_comp, levels = 
                            c("A lot of loyalty",
                              "Some loyalty",
                              "Only a little loyalty",
                              "No loyalty at all"),
-                         ordered= TRUE), 
+                         ordered= TRUE)), 
   emp_loyal_num = 
-    (as.numeric(emp_loyal) - min(as.numeric(emp_loyal)))/
+    1-(as.numeric(emp_loyal) - min(as.numeric(emp_loyal)))/
     (max(as.numeric(emp_loyal))- min(as.numeric(emp_loyal))), 
   emp_loyal_bin = ifelse(  #binary variable; T if some/a lot 
     emp_loyal %in% c("A lot of loyalty", "Some loyalty"),
@@ -97,13 +97,13 @@ ACNT_uw <- ACNT_uw %>%
     union_vote %in% c("For the union", "Leaning toward voting for the union"),
     FALSE,
     TRUE),
-  emp_reco = factor(recommend, levels = 
+  emp_reco = fct_rev(factor(recommend, levels = 
                             c("Certainly would recommend",
                               "Might recommend",
                               "Not sure",
                               "Might not recommend", 
                               "Definitely would not recommend"),
-                          ordered= TRUE), 
+                          ordered= TRUE)), 
   emp_reco_num = 
     (as.numeric(emp_reco) - min(as.numeric(emp_reco)))/
     (max(as.numeric(emp_reco))- min(as.numeric(emp_reco))), 
@@ -133,13 +133,13 @@ ACNT_uw <- ACNT_uw %>%
   emergency_church = grepl("Church, synagogue, mosque or other religious community", emergency_aid),
   emergency_other = grepl("Other", emergency_aid),
   emergency_sum = rowSums(across(emergency_bank:emergency_other)),
-  ehf_coverage = factor(ehf_coverage, levels = 
+  ehf_coverage = fct_rev(factor(ehf_coverage, levels = 
                        c("It covered all my emergency needs",
                          "It covered more than ½ but not all of my emergency needs",
                          "It covered about ½ of my emergency needs",
                          "It made some difference but covered less than ½ of my emergency needs",
                          "It did not make much difference for my emergency needs"),
-                     ordered = T),
+                     ordered = T)),
   ehf_coverage_num = 
     (as.numeric(ehf_coverage) - min(as.numeric(ehf_coverage)))/
     (max(as.numeric(ehf_coverage))- min(as.numeric(ehf_coverage))), 
@@ -159,7 +159,7 @@ ACNT_uw <- ACNT_uw %>%
                          "Between 2 and 7 days" ~ 2,
                          "Between 1 and 2 weeks" ~ 7,
                          "More than 2 weeks" ~ 14),
-  app_time = factor(app_time, levels = 
+  app_time_unemp = factor(app_time, levels = 
                       c("I did not fill out the paperwork for the claim",
                         "Don’t know",
                         "Less than 2 hours",
@@ -167,39 +167,39 @@ ACNT_uw <- ACNT_uw %>%
                         "6 to 12 hours",
                         "More than 12 hours"),
                     ordered = T),
-  app_time_num = case_match(app_time, "Less than 2 hours" ~ 0,
+  app_time_unemp_num = case_match(app_time_unemp, "Less than 2 hours" ~ 0,
                             "2 to 6 hours" ~ 2,
                             "6 to 12 hours" ~ 6,
                             "More than 12 hours" ~ 12),
-  delay = factor(delay, levels = 
+  delay_unemp = factor(delay, levels = 
                        c("Claim was rejected/never got money",
                          "Between 2 and 5 days",
                          "Between 5 days and a week",
                          "Between 1 and 2 weeks",
                          "More than 2 weeks"),
                      ordered = T),
-  delay_num = case_match(delay, "Between 2 and 5 days" ~ 2,
+  delay_unemp_num = case_match(delay_unemp, "Between 2 and 5 days" ~ 2,
                          "Between 5 days and a week" ~ 5,
                              "Between 1 and 2 weeks" ~ 7,
                              "More than 2 weeks" ~ 14)) %>%
   mutate(across(c(hire_benefits_pto:hire_benefits_tuition), ~case_match(., 
                                                                         "Not seriously" ~ 0,
-                                                                        "Somewhat seriously" ~ 1,
-                                                                        "Very seriously" ~ 2),
+                                                                        "Somewhat seriously" ~ 0.5,
+                                                                        "Very seriously" ~ 1),
                 .names = "{.col}_num")) %>%
   mutate(ehf_hire_bin = (hire_benefits_emerg != "Not seriously"),
   ehf_hire_relative = 
     hire_benefits_emerg_num/rowSums(across(hire_benefits_pto_num:hire_benefits_tuition_num)), #what percentage of overall score
   ehf_hire_relative = ifelse(is.na(ehf_hire_relative), 0, ehf_hire_relative), 
   ideology_answered = ifelse(ideology == "Haven’t thought much about this", NA, ideology),
-  ideology_conlib = factor(ideology_answered, 
+  ideology_conlib = fct_rev(factor(ideology_answered, 
                            levels = 
                              c("Extremely liberal",
                                "Liberal",
                                "Moderate",
                                "Conservative",
                                "Extremely conservative"),
-                           ordered = T),
+                           ordered = T)),
   ideology_conlib_num = ifelse(is.na(ideology_conlib), NA,
     (as.numeric(ideology_conlib) - min(as.numeric(ideology_conlib), na.rm = T))/
     (max(as.numeric(ideology_conlib), na.rm = T)- min(as.numeric(ideology_conlib), na.rm = T))), 
@@ -210,12 +210,12 @@ ACNT_uw <- ACNT_uw %>%
                            .default = "I did not vote (in the election this November)"),
   voted = (vote_lik_fix == "I'm sure I voted"),
   across(c(govt_responsib_elder:govt_responsib_hardship),
-                ~factor(., levels = c(
+                ~fct_rev(factor(., levels = c(
                   "A lot of responsibility",
                   "Some responsibility",
                   "A little responsibility",
                   "No responsibility"
-                ), ordered = T)),
+                ), ordered = T))),
   across(c(govt_responsib_elder:govt_responsib_hardship), 
          ~(as.numeric(.) - min(as.numeric(.)))/
            (max(as.numeric(.))- min(as.numeric(.))),
@@ -235,13 +235,13 @@ ACNT_uw <- ACNT_uw %>%
     "Advanced degree (JD, Masters, PhD, etc)"),
   male = gender == "Man",
   nonwhite = ethn_race != "White",
-  practice_religion = factor(practice_religion, levels =
+  practice_religion = fct_rev(factor(practice_religion, levels =
                                c("At least once per week",
                                  "Once a week",
                                  "Once or twice a month",
                                  "A few times a year",
                                  "Never"),
-                             ordered = T),
+                             ordered = T)),
   practice_religion_num = 
     (as.numeric(practice_religion) - min(as.numeric(practice_religion)))/
     (max(as.numeric(practice_religion))- min(as.numeric(practice_religion))),

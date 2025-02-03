@@ -70,8 +70,6 @@ unique(data.frame(dt$rk_age, dt$rk_educ, dt$rk_gender, dt$rk_wgt_og))
 
 ggplot(dt, aes(x = rk_dei_trim)) +
   geom_histogram(binwidth = 0.05)
-
-unique(data.frame(dt$rk_age_dei, dt$rk_gender, dt$rk_dei_og))
 ```
 
 ## Measurement
@@ -109,10 +107,14 @@ summary(as.factor(dt$ehf_other_recip))
 mean(dt$ehf_other_recip == "Yes", na.rm = T) # over those shown question
 sum(dt$ehf_other_recip == "Yes", na.rm = T)/1078 # over total respondents
 ```
-```{r applied themselves}
+```{r applied themselves and delay}
 summary(as.factor(dt$ehf_applied))
 mean(dt$ehf_applied == "Yes", na.rm = T) # over those shown question
 sum(dt$ehf_applied == "Yes", na.rm = T)/1078 # over total respondents
+
+summary(as.factor(dt$ehf_delay))
+mean(dt$ehf_delay_num, na.rm = T)
+median(dt$ehf_delay_num, na.rm = T)
 ```
 ```{r received money}
 summary(as.factor(dt$ehf_received))
@@ -127,18 +129,18 @@ var_cont("ehf_don_amount", 2000, 2000, 10, 15)
 ```
 ```{r loyalty to workers and company}
 summary(as.factor(dt$wrk_loyal))
-mean(dt$wrk_loyal_num) # 0 is max loyalty
+mean(dt$wrk_loyal_num) # 1 is max loyalty
 median(dt$wrk_loyal_num)
 mean(dt$wrk_loyal_bin) # 1 is loyal
 
 summary(as.factor(dt$emp_loyal))
-mean(dt$emp_loyal_num) # 0 is max loyalty
+mean(dt$emp_loyal_num) # 1 is max loyalty
 median(dt$emp_loyal_num)
 mean(dt$emp_loyal_bin) # 1 is loyal
 ```
 ```{r recommend and new job search}
 summary(as.factor(dt$emp_reco))
-mean(dt$emp_reco_num) # 0 is max recommend
+mean(dt$emp_reco_num) # 1 is max recommend
 median(dt$emp_reco_num)
 mean(dt$emp_reco_bin) # 1 is recommend
 
@@ -148,7 +150,7 @@ mean(dt$new_job_bin) # Somewhat or more likely
 ```
 ```{r unionization}
 summary(as.factor(dt$union_vote))
-mean(dt$union_vote_num) # 0 is max for the union
+mean(dt$union_vote_num) # 1 is max for the union
 median(dt$union_vote_num)
 mean(dt$union_vote_bin) # 1 is at least leaning towards union
 
@@ -159,20 +161,20 @@ cor(dt$union_coworkers_6, dt$union_vote_num) # Negative correlation makes sense,
 ```{r experience with social assistance}
 mean(dt$unemp_benefits == "Yes")
 
-summary(as.factor(dt$app_time))
-mean(dt$app_time_num, na.rm = T)
-median(dt$app_time_num, na.rm = T)
+summary(as.factor(dt$app_time_unemp))
+mean(dt$app_time_unemp_num, na.rm = T)
+median(dt$app_time_unemp_num, na.rm = T)
 
-summary(as.factor(dt$delay))
-mean(dt$delay_num, na.rm = T)
-median(dt$delay_num, na.rm = T)
+summary(as.factor(dt$delay_unemp))
+mean(dt$delay_unemp_num, na.rm = T)
+median(dt$delay_unemp_num, na.rm = T)
 
 summary(as.factor(dt$other_welfare))
 ```
 ```{r social assistance attitudes}
 dt %>%
   select(govt_responsib_elder_num:govt_responsib_hardship_num) %>%
-  colMeans() # with 0 being maximum responsibility
+  colMeans() # with 1 being maximum responsibility
 
 dt %>%
   select(govt_responsib_elder_bin:govt_responsib_hardship_bin) %>%
@@ -238,7 +240,7 @@ mean(dt$healthcare == T) # do they get healthcare through their jobs?
 mean(dt$rent == "Rent") # do they rent or own
 
 mean(dt$practice_religion_bin) # percent practicing at all
-mean(dt$practice_religion_num) # numerical, where 1 is never, 0 is once a week
+mean(dt$practice_religion_num) # numerical, where 0 is never, 1 is once a week
 
 mean(dt$income_num, na.rm = T) # NAs could be "don't want to answer" answers.
 ```
