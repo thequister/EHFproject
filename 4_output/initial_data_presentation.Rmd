@@ -48,6 +48,19 @@ summary(mod3)
 
 mod4 <- lm(ehf_exist != "No" ~ treatment_bin*ehf_aware_pretr, data = dt)
 summary(mod4)
+
+mod5 <- lm(ehf_exist == "Yes" ~ treatment_bin, data = filter(dt, treatment_full.x != "vid0"))
+summary(mod5)
+
+mod6 <- lm(ehf_exist != "No" ~ treatment_bin, data = filter(dt, treatment_full.x != "vid0"))
+summary(mod6)
+
+mod7 <- lm(ehf_exist == "Yes" ~ treatment_bin, data = filter(dt, treatment_full.x != "ctrl"))
+summary(mod7)
+
+mod8 <- lm(ehf_exist != "No" ~ treatment_bin, data = filter(dt, treatment_full.x != "ctrl"))
+summary(mod8)
+
 ```
 
 

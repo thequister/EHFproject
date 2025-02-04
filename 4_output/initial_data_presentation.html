@@ -459,6 +459,90 @@ summary(mod4)</code></pre>
 ## Residual standard error: 0.433 on 1074 degrees of freedom
 ## Multiple R-squared:  0.03716,    Adjusted R-squared:  0.03447 
 ## F-statistic: 13.81 on 3 and 1074 DF,  p-value: 7.631e-09</code></pre>
+<pre class="r"><code>mod5 &lt;- lm(ehf_exist == &quot;Yes&quot; ~ treatment_bin, data = filter(dt, treatment_full.x != &quot;vid0&quot;))
+summary(mod5)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = ehf_exist == &quot;Yes&quot; ~ treatment_bin, data = filter(dt, 
+##     treatment_full.x != &quot;vid0&quot;))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.3444 -0.3444 -0.2500  0.6556  0.7500 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        0.25000    0.02736   9.136   &lt;2e-16 ***
+## treatment_binTRUE  0.09442    0.03413   2.766   0.0058 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4611 on 793 degrees of freedom
+## Multiple R-squared:  0.009559,   Adjusted R-squared:  0.00831 
+## F-statistic: 7.653 on 1 and 793 DF,  p-value: 0.005798</code></pre>
+<pre class="r"><code>mod6 &lt;- lm(ehf_exist != &quot;No&quot; ~ treatment_bin, data = filter(dt, treatment_full.x != &quot;vid0&quot;))
+summary(mod6)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = ehf_exist != &quot;No&quot; ~ treatment_bin, data = filter(dt, 
+##     treatment_full.x != &quot;vid0&quot;))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.7926 -0.6655  0.2074  0.2074  0.3345 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        0.66549    0.02557  26.028  &lt; 2e-16 ***
+## treatment_binTRUE  0.12707    0.03189   3.984 7.39e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4309 on 793 degrees of freedom
+## Multiple R-squared:  0.01963,    Adjusted R-squared:  0.01839 
+## F-statistic: 15.88 on 1 and 793 DF,  p-value: 7.388e-05</code></pre>
+<pre class="r"><code>mod7 &lt;- lm(ehf_exist == &quot;Yes&quot; ~ treatment_bin, data = filter(dt, treatment_full.x != &quot;ctrl&quot;))
+summary(mod7)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = ehf_exist == &quot;Yes&quot; ~ treatment_bin, data = filter(dt, 
+##     treatment_full.x != &quot;ctrl&quot;))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.3444 -0.3444 -0.2085  0.6556  0.7915 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        0.20848    0.02689   7.753 2.76e-14 ***
+## treatment_binTRUE  0.13594    0.03352   4.055 5.50e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4524 on 792 degrees of freedom
+## Multiple R-squared:  0.02034,    Adjusted R-squared:  0.01911 
+## F-statistic: 16.45 on 1 and 792 DF,  p-value: 5.498e-05</code></pre>
+<pre class="r"><code>mod8 &lt;- lm(ehf_exist != &quot;No&quot; ~ treatment_bin, data = filter(dt, treatment_full.x != &quot;ctrl&quot;))
+summary(mod8)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = ehf_exist != &quot;No&quot; ~ treatment_bin, data = filter(dt, 
+##     treatment_full.x != &quot;ctrl&quot;))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.7926  0.2074  0.2074  0.2933  0.2933 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        0.70671    0.02523   28.01  &lt; 2e-16 ***
+## treatment_binTRUE  0.08585    0.03145    2.73  0.00648 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4244 on 792 degrees of freedom
+## Multiple R-squared:  0.009321,   Adjusted R-squared:  0.00807 
+## F-statistic: 7.452 on 1 and 792 DF,  p-value: 0.006478</code></pre>
 </div>
 <div id="item-non-response-and-outlier-data" class="section level2">
 <h2>Item non-response and outlier data</h2>
