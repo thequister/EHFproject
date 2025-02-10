@@ -3,7 +3,7 @@ source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
 here::i_am("2_code/Walmart/3_follow_up_clean.R")
 
 fup <- read_survey(here("0_raw_data", "ACNT", "ACNT_followup_qualtrics_raw_120125.csv"))
-ACNT_clean <- read_csv(here("3_cleaned_data", "ACNT_clean_draft.csv"))
+ACNT_clean <- read_csv(here("0_raw_data", "ACNT", "ACNT_clean_main.csv"))
 
 # Remove preview obs, set treatment, remove unnecessary data, remove values not in clean set
 fup <- fup %>%
@@ -144,5 +144,5 @@ fup_j <- left_join(ACNT_clean, fup, by = c("email" = "RecipientEmail"))
 # write_csv(email_list, here("3_cleaned_data", "ACNT_award_email_list.csv"))
 
 # Save as clean follow-up
-write_csv(fup, here("3_cleaned_data", "ACNT_followup_clean_draft.csv"))
-write_csv(fup_j, here("3_cleaned_data", "ACNT_followup_joined_draft.csv"))
+# write_csv(fup, here("3_cleaned_data", "ACNT_followup_clean_draft.csv"))
+write_csv(fup_j, here("3_cleaned_data", "ACNT_clean.csv"))

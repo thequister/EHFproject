@@ -207,7 +207,7 @@ write.csv(Walmart_complete,   # dataset of survey (near-)completers with raking 
 # wgt_og_df <- unique(data.frame(Walmart_complete$rk_age, Walmart_complete$rk_educ, Walmart_complete$rk_gender, Walmart_complete$rk_wgt_og))
 # 
 # 
-ggplot(Walmart_complete, aes(x = rk_dei_trim)) +
-  geom_histogram(binwidth = 0.05)
-
-wgt_og_df <- unique(data.frame(Walmart_complete$rk_age_dei, Walmart_complete$rk_gender, Walmart_complete$rk_dei_og))
+# ggplot(Walmart_complete, aes(x = rk_dei_trim)) +
+#   geom_histogram(binwidth = 0.05)
+# 
+# wgt_og_df <- unique(data.frame(Walmart_complete$rk_age_dei, Walmart_complete$rk_gender, Walmart_complete$rk_dei_og))

@@ -294,6 +294,6 @@ ACNT_uw$attachment_index <- predict(pca_res, ACNT_uw)[,1] #mark the fist PC as t
 #   ggtitle("Scree Plot") +
 #   ylim(0, 1)
 
-write_csv(ACNT_uw, here("3_cleaned_data", "ACNT_clean_draft.csv"))
+write_csv(ACNT_uw, here("0_raw_data", "ACNT", "ACNT_clean_main.csv"))
   
 
