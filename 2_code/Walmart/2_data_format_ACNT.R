@@ -278,7 +278,7 @@ pca_att_dt <- ACNT_uw %>%
 pca_res <- prcomp(pca_att_dt)
 
 ACNT_uw$attachment_index <- predict(pca_res, ACNT_uw)[,1] #mark the fist PC as the attachment index
-
+# 
 # pca_res$rotation <- -1*pca_res$rotation
 # 
 # pca_res$rotation
@@ -287,9 +287,9 @@ ACNT_uw$attachment_index <- predict(pca_res, ACNT_uw)[,1] #mark the fist PC as t
 # var_explained = pca_res$sdev^2 / sum(pca_res$sdev^2)
 # 
 # #create scree plot
-# qplot(c(1:4), var_explained) + 
-#   geom_line() + 
-#   xlab("Principal Component") + 
+# qplot(c(1:4), var_explained) +
+#   geom_line() +
+#   xlab("Principal Component") +
 #   ylab("Variance Explained") +
 #   ggtitle("Scree Plot") +
 #   ylim(0, 1)

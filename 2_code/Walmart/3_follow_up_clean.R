@@ -145,4 +145,12 @@ fup_j <- left_join(ACNT_clean, fup, by = c("email" = "RecipientEmail"))
 
 # Save as clean follow-up
 # write_csv(fup, here("3_cleaned_data", "ACNT_followup_clean_draft.csv"))
+
+# Remove unnecessary columns
+fup_j <- fup_j %>%
+  select(-Finished.x:-ResponseId.x, -Finished.y:-ResponseId.y, -email, -`Login ID.x`, -`Login ID.y`, 
+         -utm_source, -dupe_IPlatlong, -union_vote_agg, -ideology_answered, -treatment_full.y) %>%
+  rename(HDTreatment = "HDTreatment.x", 
+         treatment_full = "treatment_full.x")
+
 write_csv(fup_j, here("3_cleaned_data", "ACNT_clean.csv"))
