@@ -47,13 +47,13 @@ fup <- fup %>%
            grepl(" not ", expense_f),
            FALSE,
            TRUE),
-         new_job_f = factor(new_job_f, levels = 
+         new_job_f = fct_rev(factor(new_job_f, levels = 
                             c("Extremely likely",
                               "Very likely",
                               "Somewhat likely",
                               "Not very likely", 
                               "Not at all likely"),
-                          ordered= TRUE), 
+                          ordered= TRUE)), 
          new_job_num_f = 
            (as.numeric(new_job_f) - min(as.numeric(new_job_f)))/
            (max(as.numeric(new_job_f))- min(as.numeric(new_job_f))), 
@@ -61,19 +61,19 @@ fup <- fup %>%
            grepl("Not ", new_job_f),
            FALSE,
            TRUE),
-         wrk_loyal_f = factor(loyal_workers_f, levels = 
+         wrk_loyal_f = fct_rev(factor(loyal_workers_f, levels = 
                               c("A lot of loyalty",
                                 "Some loyalty",
                                 "Only a little loyalty",
                                 "No loyalty at all"),
-                            ordered= TRUE), 
+                            ordered= TRUE)), 
          wrk_loyal_num_f = 
            (as.numeric(wrk_loyal_f) - min(as.numeric(wrk_loyal_f)))/
            (max(as.numeric(wrk_loyal_f))- min(as.numeric(wrk_loyal_f))), 
          wrk_loyal_bin_f = ifelse(  #binary variable; T if some/a lot 
            wrk_loyal_f %in% c("A lot of loyalty", "Some loyalty"),
-           FALSE,
-           TRUE),
+           TRUE,
+           FALSE),
          emp_loyal_f = factor(loyal_comp_f, levels = 
                               c("A lot of loyalty",
                                 "Some loyalty",
@@ -85,31 +85,31 @@ fup <- fup %>%
            (max(as.numeric(emp_loyal_f))- min(as.numeric(emp_loyal_f))), 
          emp_loyal_bin_f = ifelse(  #binary variable; T if some/a lot 
            emp_loyal_f %in% c("A lot of loyalty", "Some loyalty"),
-           FALSE,
-           TRUE),
-         union_vote_f = factor(union_elec_f, levels = 
+           TRUE,
+           FALSE),
+         union_vote_f = fct_rev(factor(union_elec_f, levels = 
                                c("For the union",
                                  "Not sure", 
                                  "Against the union"),
-                             ordered= TRUE), 
+                             ordered= TRUE)), 
          union_vote_bin_f = ifelse(  #binary variable; T if leans towards union 
            union_vote_f == "For the union",
-           FALSE,
-           TRUE),
-         emp_reco_f = factor(recommend_f, levels = 
+           TRUE,
+           FALSE),
+         emp_reco_f = fct_rev(factor(recommend_f, levels = 
                              c("Certainly would recommend",
                                "Might recommend",
                                "Not sure",
                                "Might not recommend", 
                                "Definitely would not recommend"),
-                           ordered= TRUE), 
+                           ordered= TRUE)), 
          emp_reco_num_f = 
            (as.numeric(emp_reco_f) - min(as.numeric(emp_reco_f)))/
            (max(as.numeric(emp_reco_f))- min(as.numeric(emp_reco_f))), 
          emp_reco_bin_f = ifelse(  #binary variable; T if leans recommending
            emp_reco_f %in% c("Certainly would recommend", "Might recommend"),
-           FALSE,
-           TRUE))
+           TRUE,
+           FALSE))
 
 # Join onto main survey and save
 fup_j <- left_join(ACNT_clean, fup, by = c("email" = "RecipientEmail")) 

@@ -63,12 +63,12 @@ ACNT_uw <- ACNT_uw %>%
                        "No loyalty at all"),
                    ordered= TRUE)), 
   wrk_loyal_num = 
-    1-(as.numeric(wrk_loyal) - min(as.numeric(wrk_loyal)))/
+    (as.numeric(wrk_loyal) - min(as.numeric(wrk_loyal)))/
     (max(as.numeric(wrk_loyal))- min(as.numeric(wrk_loyal))), 
   wrk_loyal_bin = ifelse(  #binary variable; T if some/a lot 
     wrk_loyal %in% c("A lot of loyalty", "Some loyalty"),
-    FALSE,
-    TRUE),
+    TRUE,
+    FALSE),
   emp_loyal = fct_rev(factor(loyal_comp, levels = 
                            c("A lot of loyalty",
                              "Some loyalty",
@@ -76,27 +76,27 @@ ACNT_uw <- ACNT_uw %>%
                              "No loyalty at all"),
                          ordered= TRUE)), 
   emp_loyal_num = 
-    1-(as.numeric(emp_loyal) - min(as.numeric(emp_loyal)))/
+    (as.numeric(emp_loyal) - min(as.numeric(emp_loyal)))/
     (max(as.numeric(emp_loyal))- min(as.numeric(emp_loyal))), 
   emp_loyal_bin = ifelse(  #binary variable; T if some/a lot 
     emp_loyal %in% c("A lot of loyalty", "Some loyalty"),
-    FALSE,
-    TRUE),
+    TRUE,
+    FALSE),
   union_vote_agg = ifelse(union_elec == "Not sure", union_unsure, union_elec),
-  union_vote = factor(union_vote_agg, levels = 
+  union_vote = fct_rev(factor(union_vote_agg, levels = 
                      c("For the union",
                        "Leaning toward voting for the union",
                        "Not sure",
                        "Leaning against voting for the union", 
                        "Against the union"),
-                   ordered= TRUE), 
+                   ordered= TRUE)), 
   union_vote_num = 
     (as.numeric(union_vote) - min(as.numeric(union_vote)))/
     (max(as.numeric(union_vote))- min(as.numeric(union_vote))), 
   union_vote_bin = ifelse(  #binary variable; T if leans towards union 
     union_vote %in% c("For the union", "Leaning toward voting for the union"),
-    FALSE,
-    TRUE),
+    TRUE,
+    FALSE),
   emp_reco = fct_rev(factor(recommend, levels = 
                             c("Certainly would recommend",
                               "Might recommend",
@@ -109,8 +109,8 @@ ACNT_uw <- ACNT_uw %>%
     (max(as.numeric(emp_reco))- min(as.numeric(emp_reco))), 
   emp_reco_bin = ifelse(  #binary variable; T if leans recommending
     emp_reco %in% c("Certainly would recommend", "Might recommend"),
-    FALSE,
-    TRUE),
+    TRUE,
+    FALSE),
   ehf_reason_bin = ifelse(is.na(ehf_reason), 0, 1),
   ehf_time = factor(ehf_time, levels = 
                       c("Don’t know",
@@ -147,8 +147,8 @@ ACNT_uw <- ACNT_uw %>%
     recommend %in% c("It covered all my emergency needs",
                      "It covered more than ½ but not all of my emergency needs",
                      "It covered about ½ of my emergency needs"),
-    FALSE,
-    TRUE),
+    TRUE,
+    FALSE),
   ehf_delay = factor(ehf_delay, levels = 
                       c("Less than 48 hours",
                         "Between 2 and 7 days",
@@ -285,7 +285,7 @@ ACNT_uw$attachment_index <- predict(pca_res, ACNT_uw)[,1] #mark the fist PC as t
 # biplot(pca_res, scale = 0)
 # 
 # var_explained = pca_res$sdev^2 / sum(pca_res$sdev^2)
-# 
+
 # #create scree plot
 # qplot(c(1:4), var_explained) +
 #   geom_line() +
