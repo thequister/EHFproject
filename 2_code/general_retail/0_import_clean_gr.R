@@ -51,6 +51,11 @@ qual_dedupe <- qual_raw %>% #removing duplicate email addresses
 flagged_aid <- data.frame(aid = unique(qual_raw$aid)[!(unique(qual_raw$aid) %in% unique(qual_dedupe$aid))],
                           reason = "IP outside US")
 
+irreg_emp <- c("Crockpot burial", "your retail employer", "i want too proceed with it", "I worked at  retail store packing stuff.", "It was not retail.  It was a private contractor.",  
+               "etc etc", "F-ur-life", "SALES COMPANY", "None", 
+               "Walmart was all about making money for the managers and for corporate. The most of the employees were not treated good. I was told that it was a better place to work when Sam Walton was alive and ran the company.", 
+               "I sell things online as a hobby on Mercari's Android app", "Completed")
+
 gr <- qual_dedupe %>%
   mutate(qual_dedupe, age = 2025 - birthyear) %>%
   filter(completion_subgroup == 5) %>% # Take only completed surveys
@@ -58,18 +63,13 @@ gr <- qual_dedupe %>%
   mutate(quality = ifelse((age %in% c(18:85)), "high", "low")) %>% # set quality, sensible age responses + sensible pph responses
   select(-StartDate:-Progress, -RecipientLastName:-UserLanguage)
 
-flagged_aid <- rbind(flagged_aid, data.frame(aid = gr$aid[gr$birthyear %in% c(42, 71, 1002, 1083)], reason = "Erroneous age values"))
-flagged_aid <- rbind(flagged_aid, data.frame(aid = gr$aid[gr$pph %in% c(75, 560, 580, 9000)], reason = "Erroneous pph values"))
-flagged_aid <- rbind(flagged_aid, data_frame(aid = gr$aid[gr$comp_name %in% c("i want too proceed with it", "I worked at  retail store packing stuff.", "It was not retail.  It was a private contractor.",  
-                                            "etc etc", "F-ur-life", "SALES COMPANY", "None", 
-                                            "Walmart was all about making money for the managers and for corporate. The most of the employees were not treated good. I was told that it was a better place to work when Sam Walton was alive and ran the company.", 
-                                            "I sell things online as a hobby on Mercari's Android app")], 
-           reason = c("i want too proceed with it", "I worked at  retail store packing stuff.", "It was not retail.  It was a private contractor.",  
-                      "etc etc", "F-ur-life", "SALES COMPANY", "None", 
-                      "Walmart was all about making money for the managers and for corporate. The most of the employees were not treated good. I was told that it was a better place to work when Sam Walton was alive and ran the company.", 
-                      "I sell things online as a hobby on Mercari's Android app")))
+flagged_aid <- rbind(flagged_aid, data.frame(aid = gr$aid[gr$duration > 1980 | gr$duration < 270], reason = "Irregular time to completion."))
+flagged_aid <- rbind(flagged_aid, data_frame(aid = gr$aid[gr$comp_name %in% irreg_emp], 
+           reason = "One or more non-sensical/disqualifying responses."))
 
-gr <- gr %>% # correct age values
+gr <- gr %>% # correct age, duration, emp_name values
+  filter(duration <= 1980 & duration >= 270) %>%
+  filter(!(comp_name %in% irreg_emp)) %>%
   mutate(age_corrected = case_match(birthyear, 
                                     42 ~ 1,
                                     71 ~ 1,
