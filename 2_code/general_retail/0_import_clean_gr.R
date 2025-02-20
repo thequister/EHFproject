@@ -89,6 +89,11 @@ gr <- gr %>% # correct pph values
   mutate(pph_corrected = ifelse(pph >= 100, 1, 0)) %>%
   mutate(pph_clean = ifelse(pph >= 100, NA, pph))
 
+accepted_aids <- gr$aid
+
+# mean(gr$gender == "Man")
+# c(mean(gr$age %in% c(18:37)), mean(gr$age %in% c(38:57)), mean(gr$age %in% c(58:100)))
+
 write.csv(gr, 
           file = here("0_raw_data", "general_retail", "general_retail_purged.csv"),
           row.names = FALSE)  #dataset purged of all PII, irrelevant info
