@@ -1,13 +1,13 @@
 library(here)
-source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
-here::i_am("2_code/Walmart/2_data_format_ACNT.R")
+source(here::here('2_code', 'general_retail', '1_libraries_and_settings_gr.R'))
+here::i_am("2_code/general_retail/2_data_format_gr.R")
 
-ACNT_uw <- read_csv(here("0_raw_data", "ACNT", "ACNT_full.csv"))
+gr <- read_csv(here("0_raw_data", "general_retail", "general_retail_purged.csv"))
 
 # bin_vars <- c("main_job", "manager", "ehf_received", "ehf_donation", 
 #               "unemp_benefits")
 
-ACNT_uw <- ACNT_uw %>%
+gr <- gr %>%
 #  mutate_at(bin_vars, ~case_match(., "Yes" ~ 1, "No" ~ 0)) %>%
   mutate(tenure_fac = factor(employ_period, levels = 
                           c("Less than 6 months", "At least 6 months but less than 1 year",
@@ -27,7 +27,7 @@ ACNT_uw <- ACNT_uw %>%
   fulltime = employ_status == "Regular full-time",
   hourly = pay_type == "Hourly wage",
   pph = ifelse(pph > 151, NA, pph), #remove values that are over 151 hourly
-  ehf_aware_pretr = emerg_assist_benefits == "Yes", #binary of whether they knew about emergency cash pre-treatment
+  ehf_aware_pretr = emerg_assist_benefits == "Yes", #binary of whether their employer offers EHF (pick from several) 
   health_job = health_job == "I get health coverage through my job at ${e://Field/EmployerName}", # health ins through job
   emergency_expense = factor(expense, levels = 
                          c("I am certain I could not come up with $400",
@@ -111,54 +111,6 @@ ACNT_uw <- ACNT_uw %>%
     emp_reco %in% c("Certainly would recommend", "Might recommend"),
     TRUE,
     FALSE),
-  ehf_reason_bin = ifelse(is.na(ehf_reason), 0, 1),
-  ehf_time = factor(ehf_time, levels = 
-                      c("Don’t know",
-                        "Less than 2 hours",
-                        "2 to 6 hours",
-                        "6 to 12 hours",
-                        "More than 12 hours"),
-                    ordered = T),
-  ehf_time_num = case_match(ehf_time, "Less than 2 hours" ~ 0,
-                        "2 to 6 hours" ~ 2,
-                        "6 to 12 hours" ~ 6,
-                        "More than 12 hours" ~ 12),
-  emergency_bank = grepl("Borrowed money from a bank", emergency_aid),
-  emergency_cc = grepl("Used a credit card", emergency_aid),
-  emergency_pawn = grepl("Borrowed money using a pawnshop, payday lender, or title lender", emergency_aid),
-  emergency_public = grepl("Public assistance (SNAP, food stamps, cash welfare)", emergency_aid),
-  emergency_unemp = grepl("Unemployment insurance", emergency_aid),
-  emergency_disab = grepl("Disability insurance or worker’s compensation", emergency_aid),
-  emergency_fam = grepl("Family or friends", emergency_aid),
-  emergency_church = grepl("Church, synagogue, mosque or other religious community", emergency_aid),
-  emergency_other = grepl("Other", emergency_aid),
-  emergency_sum = rowSums(across(emergency_bank:emergency_other)),
-  ehf_coverage = fct_rev(factor(ehf_coverage, levels = 
-                       c("It covered all my emergency needs",
-                         "It covered more than ½ but not all of my emergency needs",
-                         "It covered about ½ of my emergency needs",
-                         "It made some difference but covered less than ½ of my emergency needs",
-                         "It did not make much difference for my emergency needs"),
-                     ordered = T)),
-  ehf_coverage_num = 
-    (as.numeric(ehf_coverage) - min(as.numeric(ehf_coverage)))/
-    (max(as.numeric(ehf_coverage))- min(as.numeric(ehf_coverage))), 
-  ehf_coverage_bin = ifelse(  #binary variable; T if at least half covered
-    recommend %in% c("It covered all my emergency needs",
-                     "It covered more than ½ but not all of my emergency needs",
-                     "It covered about ½ of my emergency needs"),
-    TRUE,
-    FALSE),
-  ehf_delay = factor(ehf_delay, levels = 
-                      c("Less than 48 hours",
-                        "Between 2 and 7 days",
-                        "Between 1 and 2 weeks",
-                        "More than 2 weeks"),
-                    ordered = T),
-  ehf_delay_num = case_match(ehf_delay, "Less than 48 hours" ~ 0,
-                         "Between 2 and 7 days" ~ 2,
-                         "Between 1 and 2 weeks" ~ 7,
-                         "More than 2 weeks" ~ 14),
   app_time_unemp = factor(app_time, levels = 
                       c("I did not fill out the paperwork for the claim",
                         "Don’t know",
@@ -204,11 +156,7 @@ ACNT_uw <- ACNT_uw %>%
     (as.numeric(ideology_conlib) - min(as.numeric(ideology_conlib), na.rm = T))/
     (max(as.numeric(ideology_conlib), na.rm = T)- min(as.numeric(ideology_conlib), na.rm = T))), 
   ideology = factor(ideology),
-  vote_lik_fix_flag = (RecordedDate <= "2024-11-13 09:22:16"),
-  vote_lik_fix = case_when(RecordedDate > "2024-11-13 09:22:16" ~ vote_lik_post_elec,
-                           !is.na(vote_pres_post_elec) ~ "I'm sure I voted", 
-                           .default = "I did not vote (in the election this November)"),
-  voted = (vote_lik_fix == "I'm sure I voted"),
+  voted_bin = (voted == "Yes"),
   across(c(govt_responsib_elder:govt_responsib_hardship),
                 ~fct_rev(factor(., levels = c(
                   "A lot of responsibility",
@@ -268,20 +216,74 @@ ACNT_uw <- ACNT_uw %>%
                           "At least $25,000 but less than $35,000 per year" ~ 25,
                           "At least $15,000 but less than $25,000 per year" ~ 15,
                           "Less than $15,000 per year"~ 0, .default = NA),
+  across(c(ehf_offer_thd:ehf_offer_costco), ~(. == "Offers an EHF"),
+         .names = "{.col}_bin"),
+  ehf_support_new = factor(ehf_support_new, levels = 
+                               c("Not at all supportive",
+                                 "Moderately supportive",
+                                 "Extremely supportive"),
+                             ordered= TRUE), 
+  ehf_support_new_num = 
+    (as.numeric(ehf_support_new) - min(as.numeric(ehf_support_new), na.rm = T))/
+    (max(as.numeric(ehf_support_new), na.rm = T)- min(as.numeric(ehf_support_new), na.rm = T)), 
+  ehf_support_new_bin = ifelse(  #binary variable; T if moderate/extreme
+    ehf_support_new %in% c("Moderately supportive", "Extremely supportive"),
+    TRUE,
+    FALSE),
+  ehf_wrk_new = factor(ehf_type_new, levels = 
+                             c("Only management should control the fund",
+                               "Management should control the fund with worker input",
+                               "Workers and management should share control equally",
+                               "Workers should control the fund with management input",
+                               "Only workers should control the fund"),
+                           ordered= TRUE), 
+  ehf_wrk_new_num = 
+    (as.numeric(ehf_wrk_new) - min(as.numeric(ehf_wrk_new), na.rm = T))/
+    (max(as.numeric(ehf_wrk_new), na.rm = T)- min(as.numeric(ehf_wrk_new), na.rm = T)), 
+  ehf_wrk_new_bin = ifelse(  #binary variable; T if more worker than management
+    ehf_wrk_new %in% c("Workers should control the fund with management input", "Only workers should control the fund"),
+    TRUE,
+    FALSE),
+  ehf_support_exist = factor(ehf_support_exist, levels = 
+                             c("Not at all supportive",
+                               "Moderately supportive",
+                               "Extremely supportive"),
+                           ordered= TRUE), 
+  ehf_support_exist_num = 
+    (as.numeric(ehf_support_exist) - min(as.numeric(ehf_support_exist), na.rm = T))/
+    (max(as.numeric(ehf_support_exist), na.rm = T)- min(as.numeric(ehf_support_exist), na.rm = T)), 
+  ehf_support_exist_bin = ifelse(  #binary variable; T if moderate/extreme
+    ehf_support_exist %in% c("Moderately supportive", "Extremely supportive"),
+    TRUE,
+    FALSE),
+  ehf_wrk_exist = factor(ehf_type_exist, levels = 
+                         c("Only management controls the fund",
+                           "Management control the fund with worker input",
+                           "Workers and management share control equally",
+                           "Workers control the fund with management input",
+                           "Only workers control the fund"),
+                       ordered= TRUE), 
+  ehf_wrk_exist_num = 
+    (as.numeric(ehf_wrk_exist) - min(as.numeric(ehf_wrk_exist), na.rm = T))/
+    (max(as.numeric(ehf_wrk_exist), na.rm = T)- min(as.numeric(ehf_wrk_exist), na.rm = T)), 
+  ehf_wrk_exist_bin = ifelse(  #binary variable; T if more worker than management
+    ehf_wrk_exist %in% c("Workers control the fund with management input", "Only workers control the fund"),
+    TRUE,
+    FALSE),
   )
 
 ## Create the attachment index
-pca_att_dt <- ACNT_uw %>%
-  select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%
-  mutate(new_job_num = 1 - new_job_num)
+# pca_att_dt <- gr %>%
+#   select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%
+#   mutate(new_job_num = 1 - new_job_num)
+# 
+# pca_res <- principal(pca_att_dt, cor = "poly", nfactors = 1)
+# 
+# pca_res_old <- prcomp(pca_att_dt)
+# a <- predict(pca_res_old, pca_att_dt)[,1]
+# cor(a, gr$attachment_index)
+# 
+# gr$attachment_index <- pca_res$scores[, 1] #mark the fist PC as the attachment index
 
-pca_res <- principal(pca_att_dt, cor = "poly", nfactors = 1)
-
-pca_res_old <- prcomp(pca_att_dt)
-a <- predict(pca_res_old, pca_att_dt)[,1]
-cor(a, ACNT_uw$attachment_index)
-
-ACNT_uw$attachment_index <- pca_res$scores[, 1] #mark the fist PC as the attachment index
-
-write_csv(ACNT_uw, here("0_raw_data", "ACNT", "ACNT_clean_main.csv"))
+write_csv(gr, here("3_cleaned_data", "general_retail_clean.csv"))
 

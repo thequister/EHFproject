@@ -27,7 +27,7 @@ here()
 
 renv::restore()
 
-qual_raw <- read_survey(here("0_raw_data", "general_retail", "general_retail_qualtrics_raw_190225.csv"))
+qual_raw <- read_survey(here("0_raw_data", "general_retail", "general_retail_qualtrics_raw_210225.csv"))
 flagged_aid <- data.frame(aid = 0, reason = NA)
 
 qual_dedupe <- qual_raw %>% #removing duplicate email addresses
@@ -48,8 +48,8 @@ qual_dedupe <- qual_raw %>% #removing duplicate email addresses
   ) %>%
   rename(duration = `Duration (in seconds)`)
 
-flagged_aid <- data.frame(aid = unique(qual_raw$aid)[!(unique(qual_raw$aid) %in% unique(qual_dedupe$aid))],
-                          reason = "IP outside US")
+# flagged_aid <- data.frame(aid = unique(qual_raw$aid)[!(unique(qual_raw$aid) %in% unique(qual_dedupe$aid))],
+#                           reason = "IP outside US")
 
 irreg_emp <- c("Crockpot burial", "your retail employer", "i want too proceed with it", "I worked at  retail store packing stuff.", "It was not retail.  It was a private contractor.",  
                "etc etc", "F-ur-life", "SALES COMPANY", "None", 
@@ -63,9 +63,9 @@ gr <- qual_dedupe %>%
   mutate(quality = ifelse((age %in% c(18:85)), "high", "low")) %>% # set quality, sensible age responses + sensible pph responses
   select(-StartDate:-Progress, -RecipientLastName:-UserLanguage)
 
-flagged_aid <- rbind(flagged_aid, data.frame(aid = gr$aid[gr$duration > 1980 | gr$duration < 270], reason = "Irregular time to completion."))
-flagged_aid <- rbind(flagged_aid, data_frame(aid = gr$aid[gr$comp_name %in% irreg_emp], 
-           reason = "One or more non-sensical/disqualifying responses."))
+# flagged_aid <- rbind(flagged_aid, data.frame(aid = gr$aid[gr$duration > 1980 | gr$duration < 270], reason = "Irregular time to completion."))
+# flagged_aid <- rbind(flagged_aid, data_frame(aid = gr$aid[gr$comp_name %in% irreg_emp], 
+#            reason = "One or more non-sensical/disqualifying responses."))
 
 gr <- gr %>% # correct age, duration, emp_name values
   filter(duration <= 1980 & duration >= 270) %>%
@@ -75,6 +75,7 @@ gr <- gr %>% # correct age, duration, emp_name values
                                     71 ~ 1,
                                     72 ~ 1,
                                     1002 ~ 1,
+                                    1066 ~ 1,
                                     1083 ~ 1,
                                     .default = 0)) %>%
   mutate(age_clean = case_match(birthyear, 
@@ -82,6 +83,7 @@ gr <- gr %>% # correct age, duration, emp_name values
                                 71 ~ 54,
                                 72 ~ 53,
                                 1002 ~ 23,
+                                1066 ~ 59,
                                 1083 ~ 42,
                                 .default = age))
 
@@ -89,7 +91,28 @@ gr <- gr %>% # correct pph values
   mutate(pph_corrected = ifelse(pph >= 100, 1, 0)) %>%
   mutate(pph_clean = ifelse(pph >= 100, NA, pph))
 
-accepted_aids <- gr$aid
+gr <- gr %>%
+  rename(ehf_offer_thd = "ehf_comp_offer_1", 
+         ehf_offer_wal = "ehf_comp_offer_2", 
+         ehf_offer_stb = "ehf_comp_offer_3", 
+         ehf_offer_disn = "ehf_comp_offer_4", 
+         ehf_offer_kohls = "ehf_comp_offer_5", 
+         ehf_offer_costco = "ehf_comp_offer_6") %>%
+  select(-Finished:-ResponseId)
+
+# accepted_aids <- gr$aid
+
+#which(!(flagged_aid$aid %in% flagged_aid_old$aid))
+# flagged_aid$round <- rep(1, nrow(flagged_aid))
+# flagged_aid$round[c(34,  35,  36, 116, 117, 118, 119, 120, 121, 122, 123, 124)] <- 2
+# 
+# write.csv(flagged_aid, 
+#           file = here("0_raw_data", "general_retail", "flagged_aid.csv"),
+#           row.names = FALSE)  #dataset purged of all PII, irrelevant info
+# 
+# write.csv(accepted_aids, 
+#           file = here("0_raw_data", "general_retail", "accepted_aid.csv"),
+#           row.names = FALSE)  #dataset purged of all PII, irrelevant info
 
 # mean(gr$gender == "Man")
 # c(mean(gr$age %in% c(18:37)), mean(gr$age %in% c(38:57)), mean(gr$age %in% c(58:100)))
