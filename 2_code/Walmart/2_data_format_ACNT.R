@@ -275,13 +275,20 @@ pca_att_dt <- ACNT_uw %>%
   select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%
   mutate(new_job_num = 1 - new_job_num)
 
-pca_res <- principal(pca_att_dt, cor = "poly", nfactors = 1)
+#pca_res <- principal(pca_att_dt, cor = "poly", 
+#                     rotate = "none", nfactors = 4)
+#pca_att_dt2 <- pca_att_dt %>%
+#  mutate(new_job_num = 1+4*new_job_num,
+#         emp_reco_num = 1+4*emp_reco_num,
+#         wrk_loyal_num = 1+3*wrk_loyal_num,
+#         emp_loyal_num = 1+3*emp_loyal_num)
+#test<-ordPens::ordPCA(pca_att_dt2, p = 1, lambda = 0.5, maxit = 100,
+#             constr = rep(TRUE,ncol(pca_att_dt2)),
+#             CV = FALSE)  #produces results almost identical to prcomp
 
-pca_res_old <- prcomp(pca_att_dt)
-a <- predict(pca_res_old, pca_att_dt)[,1]
-cor(a, ACNT_uw$attachment_index)
+pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
 
-ACNT_uw$attachment_index <- pca_res$scores[, 1] #mark the fist PC as the attachment index
-
+ACNT_uw$attachment_index <- pca_pr$x[,1]
 write_csv(ACNT_uw, here("0_raw_data", "ACNT", "ACNT_clean_main.csv"))
+
 
