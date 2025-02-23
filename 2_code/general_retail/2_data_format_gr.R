@@ -272,18 +272,13 @@ gr <- gr %>%
     FALSE),
   )
 
-## Create the attachment index
-# pca_att_dt <- gr %>%
-#   select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%
-#   mutate(new_job_num = 1 - new_job_num)
-# 
-# pca_res <- principal(pca_att_dt, cor = "poly", nfactors = 1)
-# 
-# pca_res_old <- prcomp(pca_att_dt)
-# a <- predict(pca_res_old, pca_att_dt)[,1]
-# cor(a, gr$attachment_index)
-# 
-# gr$attachment_index <- pca_res$scores[, 1] #mark the fist PC as the attachment index
+pca_att_dt <- gr %>%
+  select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%
+  mutate(new_job_num = 1 - new_job_num)
+
+pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
+
+gr$attachment_index <- pca_pr$x[,1]
 
 write_csv(gr, here("3_cleaned_data", "general_retail_clean.csv"))
 
