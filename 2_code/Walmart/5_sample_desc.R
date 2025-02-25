@@ -19,6 +19,9 @@ here()
 wmt <- read_csv(here("3_cleaned_data", "ACNT_clean.csv"))
 wmt.hq<-wmt |> 
   filter(quality == "high")
+wmt.hqnp<-wmt |> 
+  filter(quality == "high", treatment_full != "vid0")  #appears that placebo failed
+
 wmt_wgt_f <- wmt %>%
   as_survey_design(ids = 1, weights = rk_wgt_trim)
 wmt_wgt_dei <- wmt %>%

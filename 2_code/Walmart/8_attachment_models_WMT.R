@@ -33,7 +33,7 @@ attach_lm_cfull_wmt <- lm(attachment_index ~
                         college, 
                       data = wmt)
 
-##HQ sample
+##HQ sample  #question about whether to include placebo
 
 attach_lm_wmt_hq<- update(attach_lm_wmt, .~., data = wmt.hq)
 attach_lm_int_wmt_hq <- update(attach_lm_int_wmt, .~., data = wmt.hq)
@@ -48,6 +48,7 @@ names(attachment.models) <- c("Base", "Pre-exposure", "Covariates", "Detailed")
 
 coef_maps <- c(
   "treatment_binTRUE" = "Treated",
+  "treatment_binTRUE:ehf_aware_pretrTRUE" = "Treated x pre-exposed",
   "treatment_fullvid0" = "Placebo",
   "treatment_fullvidChar" = "Charity treatment",
   "treatment_fullvidSolid" = "Solidarity treatment",
@@ -59,7 +60,7 @@ coef_maps <- c(
 rows<-tribble(
   ~"term", ~"Base", ~"Preexposure",  ~"Full", ~"Detailed",
   "Covariates?", "No", "No", "Yes", "Yes")
-attr(rows, 'position') <- c(17)
+attr(rows, 'position') <- c(19)
 
 note1 <- "Robust standard errors in parentheses. Covariates include age, gender, race, job tenure, hourly status, full time status, college degree, and main job.  High-quality respondents only."
 
