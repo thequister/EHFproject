@@ -4,9 +4,6 @@ here::i_am("2_code/Walmart/2_data_format_ACNT.R")
 
 ACNT_uw <- read_csv(here("0_raw_data", "ACNT", "ACNT_full.csv"))
 
-# bin_vars <- c("main_job", "manager", "ehf_received", "ehf_donation", 
-#               "unemp_benefits")
-
 ACNT_uw <- ACNT_uw %>%
 #  mutate_at(bin_vars, ~case_match(., "Yes" ~ 1, "No" ~ 0)) %>%
   mutate(tenure_fac = factor(employ_period, levels = 
@@ -159,6 +156,9 @@ ACNT_uw <- ACNT_uw %>%
                          "Between 2 and 7 days" ~ 2,
                          "Between 1 and 2 weeks" ~ 7,
                          "More than 2 weeks" ~ 14),
+  ehf_received_all = case_when(ehf_received == "Yes" ~ T, 
+                               ehf_exist != "No" & ehf_received != "Yes" ~ F,
+                               ehf_exist == "No" ~ NA),
   app_time_unemp = factor(app_time, levels = 
                       c("I did not fill out the paperwork for the claim",
                         "Don’t know",

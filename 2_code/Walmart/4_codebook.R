@@ -188,7 +188,7 @@ for(i in which(colnames(ACNT_clean) %in% fup_names)){
   attr(ACNT_clean[[i]], "description") <- "All variables with a `_f` suffix refer to the follow-up survey sent to respondents approximately a week after completion of the initial survey. Question codings are identical to those for the main survey. NA values indicate that the respondent did not complete the follow-up survey." 
 }
 
-output_codebook <- codebook(
+output_codebook <- codebookr::codebook(
   df = ACNT_clean,
   title = "EHF Project: Walmart Survey",
   subtitle = "Ahlquist, John S.",
