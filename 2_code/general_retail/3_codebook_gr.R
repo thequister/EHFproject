@@ -2,7 +2,7 @@ library(here)
 source(here::here('2_code', 'general_retail', '1_libraries_and_settings_gr.R'))
 here::i_am("2_code/general_retail/2_data_format_gr.R")
 
-gr_clean <- read_csv(here("3_cleaned_data", "general_retail_clean.csv"))
+gr_clean <- readxl::read_xlsx(here("3_cleaned_data", "general_retail_clean.xlsx"))
 
 # Create codebook
 attr(gr_clean$main_job, "description") <- "Is your ${e://Field/EmployerName} job your main paying job?" 

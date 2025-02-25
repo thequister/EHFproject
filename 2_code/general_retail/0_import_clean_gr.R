@@ -27,8 +27,8 @@ here()
 
 renv::restore()
 
-qual_raw <- read_survey(here("0_raw_data", "general_retail", "general_retail_qualtrics_raw_210225.csv"))
-flagged_aid <- data.frame(aid = 0, reason = NA)
+qual_raw <- read_survey(here("0_raw_data", "general_retail", "general_retail_qualtrics_raw_250225.csv"))
+# flagged_aid <- data.frame(aid = 0, reason = NA)
 
 qual_dedupe <- qual_raw %>% #removing duplicate email addresses
   exclude_location(include_na = TRUE) %>% #excluding IP addresses outside the USA
@@ -100,7 +100,7 @@ gr <- gr %>%
          ehf_offer_costco = "ehf_comp_offer_6") %>%
   select(-Finished:-ResponseId)
 
-# accepted_aids <- gr$aid
+accepted_aids <- gr$aid
 
 #which(!(flagged_aid$aid %in% flagged_aid_old$aid))
 # flagged_aid$round <- rep(1, nrow(flagged_aid))
@@ -110,7 +110,7 @@ gr <- gr %>%
 #           file = here("0_raw_data", "general_retail", "flagged_aid.csv"),
 #           row.names = FALSE)  #dataset purged of all PII, irrelevant info
 # 
-# write.csv(accepted_aids, 
+# write.csv(accepted_aids,
 #           file = here("0_raw_data", "general_retail", "accepted_aid.csv"),
 #           row.names = FALSE)  #dataset purged of all PII, irrelevant info
 

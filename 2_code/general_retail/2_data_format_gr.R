@@ -280,5 +280,5 @@ pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
 
 gr$attachment_index <- pca_pr$x[,1]
 
-write_csv(gr, here("3_cleaned_data", "general_retail_clean.csv"))
+write.xlsx(gr, here("3_cleaned_data", "general_retail_clean.xlsx"))
 
