@@ -15,11 +15,43 @@ library(here)
 library(estimatr)
 here()
 
+#datasets
 wmt <- read_csv(here("3_cleaned_data", "ACNT_clean.csv"))
+wmt.hq<-wmt |> 
+  filter(quality == "high")
 wmt_wgt_f <- wmt %>%
   as_survey_design(ids = 1, weights = rk_wgt_trim)
 wmt_wgt_dei <- wmt %>%
   as_survey_design(ids = 1, weights = rk_dei_trim)
+
+#duration and treatment
+
+duration.table <- wmt |> 
+  group_by(treatment_full) |>
+  summarize(
+    mean_duration = mean(duration),
+    median_duration = median(duration),
+    sd_duration = sd(duration),
+    attach_mean = mean(attachment_index),
+    uv_notno = sum(union_vote != "Against the union")/n(),
+    n = n()
+  )
+
+duration.table.hq <- wmt |>
+  filter(quality == "high") |> 
+  group_by(treatment_full) |> 
+  summarize(
+    mean_duration = mean(duration),
+    median_duration = median(duration),
+    sd_duration = sd(duration),
+    attach_mean = mean(attachment_index),
+    uv_notno = sum(union_vote != "Against the union")/n(),
+    n = n()
+  )
+
+
+
+summary(lm(log(duration)~ treatment_full, data=wmt))
 
 
 #correlate pre-treatment awareness with manipulation check
@@ -87,7 +119,7 @@ extra_row <- data.frame(
 )
   
 attr(extra_row, "position") <- 17
-model_print<- modelsummary( mc_all,
+model_print<- modelsummary::modelsummary( mc_all,
                             #shape = "rbind",
                             coef_map = coef_maps,
                             gof_map = gm,
@@ -98,3 +130,8 @@ model_print<- modelsummary( mc_all,
                             notes = list(note2),
                             stars = c('*' = .05, '**' = .01)
 )
+
+
+### Sample descriptives
+
+### Balance tests

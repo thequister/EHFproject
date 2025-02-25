@@ -1,4 +1,4 @@
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 #here::i_am("1_code/THD/1_libraries_and_settings.R")
 library(here)
 library(MASS)
