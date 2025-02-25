@@ -157,8 +157,8 @@ ACNT_uw <- ACNT_uw %>%
                          "Between 1 and 2 weeks" ~ 7,
                          "More than 2 weeks" ~ 14),
   ehf_received_all = case_when(ehf_received == "Yes" ~ T, 
-                               ehf_exist != "No" & ehf_received != "Yes" ~ F,
-                               ehf_exist == "No" ~ NA),
+                               ehf_exist == "No" ~ NA, 
+                               .default = F),
   app_time_unemp = factor(app_time, levels = 
                       c("I did not fill out the paperwork for the claim",
                         "Don’t know",

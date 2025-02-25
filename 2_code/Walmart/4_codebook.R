@@ -188,6 +188,8 @@ for(i in which(colnames(ACNT_clean) %in% fup_names)){
   attr(ACNT_clean[[i]], "description") <- "All variables with a `_f` suffix refer to the follow-up survey sent to respondents approximately a week after completion of the initial survey. Question codings are identical to those for the main survey. NA values indicate that the respondent did not complete the follow-up survey." 
 }
 
+attr(ACNT_clean$ehf_received_all, "description") <- "TRUE for everyone who responded YES to ehf_received, FALSE for everyone who did not answer NO to ehf_exist and did not answer YES to ehf_received, and NA for people who answered NO to ehf_exist"
+
 output_codebook <- codebookr::codebook(
   df = ACNT_clean,
   title = "EHF Project: Walmart Survey",
