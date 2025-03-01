@@ -1,19 +1,6 @@
 #Basic output for appendices descriptives and appendices
+#source("1_libraries_and_settings_ACNT.R")
 
-library(MASS)
-library(tidyverse)
-library(codebook)
-library(survey)
-library(srvyr)
-# devtools::install_github("pewresearch/pewmethods", build_vignettes = TRUE)
-library(pewmethods)
-library(qualtRics)
-library(excluder)
-library(naniar)
-ggplot2::theme_set(ggplot2::theme_bw())
-library(here)
-library(estimatr)
-here()
 
 #datasets
 wmt <- read_csv(here("3_cleaned_data", "ACNT_clean.csv"))
@@ -26,6 +13,14 @@ wmt_wgt_f <- wmt %>%
   as_survey_design(ids = 1, weights = rk_wgt_trim)
 wmt_wgt_dei <- wmt %>%
   as_survey_design(ids = 1, weights = rk_dei_trim)
+
+wmt_unwgt <- wmt %>%
+  as_survey_design(ids = 1) #unweighted data for ease of srvyr package
+
+wmt.hq_unwgt <- wmt |> 
+  filter(quality == "high") |> 
+  as_survey_design(ids = 1) #unweighted data for ease of srvyr package
+
 
 #duration and treatment
 

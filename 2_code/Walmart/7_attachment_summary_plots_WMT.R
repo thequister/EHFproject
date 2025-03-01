@@ -1,10 +1,88 @@
-#source("1_libraries_and_settings.R")
-#source("2_data_format.R")
+#source("1_libraries_and_settings_ACNT.R")
+#source("2_data_format_ACNT.R")
 
 
 
 #summary tables
-wrk.loyal.out<-THD_comp %>% 
+
+attach.index.out.tab<-wmt_unwgt %>% 
+  group_by(treatment_bin) %>%
+  summarise(attachment = survey_mean(attachment_index, vartype="ci"),
+            n = unweighted(n()))
+
+attach.index.full.out<-wmt_unwgt %>% 
+  group_by(treatment_full) %>%
+  summarise(attachment = survey_mean(attachment_index, vartype="ci"),
+            n = unweighted(n()))
+
+attach.index.hq.out<-wmt.hq_unwgt %>% 
+  group_by(treatment_bin) %>%
+  summarise(attachment = survey_mean(attachment_index, vartype="ci"),
+            n = unweighted(n()))
+
+attach.index.hq.full.out<-wmt.hq_unwgt %>% 
+  group_by(treatment_full) %>%
+  summarise(attachment = survey_mean(attachment_index, vartype="ci"),
+            n = unweighted(n()))
+
+
+attach.index.out<-data.frame(
+  with(wmt, 
+       rbind(
+         MeanDiffCI(attachment_index ~ treatment_bin),
+         MeanDiffCI(attachment_index ~ treatment_full,  subset = treatment_full %in% c("ctrl", "vid0")),
+         MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidChar")),
+         MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidSolid"))
+         )
+     )
+)
+attach.index.out$trt <- factor(
+  c("pooled", "placebo", "charity", "solidarity"),
+  levels = c("pooled", "placebo", "charity", "solidarity")
+)
+
+
+attach.index.hq.out<-data.frame(
+  rbind(
+    MeanDiffCI(attachment_index ~ treatment_bin, data = wmt.hq),
+    MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vid0")),
+    MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vidChar")),
+    MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vidSolid"))
+  )
+)
+
+attach.index.hq.out$trt <- factor(
+  c("pooled", "placebo", "charity", "solidarity"),
+  levels = c("pooled", "placebo", "charity", "solidarity")
+)
+
+
+p.ai_wmt_bin <- ggplot(attach.index.out, aes(x = trt, y = meandiff)) +
+  geom_point() +  # Plot the mean values as points
+  geom_errorbar(aes(ymin = lwr.ci, ymax = upr.ci), width = 0.2) +  # Add error bars for CI
+  labs(title = "ATE for Walmart attachment index",
+       x = "Treatment",
+       y = "Attachment Index") +
+  geom_hline(yintercept = 0, linetype = "dotted")
+
+
+p.ai_wmt_bin_hq <- ggplot(attach.index.hq.out, aes(x = trt, y = meandiff)) +
+  geom_point() +  # Plot the mean values as points
+  geom_errorbar(aes(ymin = lwr.ci, ymax = upr.ci), width = 0.2) +  # Add error bars for CI
+  labs(title = "ATE for Walmart attachment index",
+       x = "Treatment",
+       y = "Attachment Index") +
+  geom_hline(yintercept = 0, linetype = "dotted")
+
+
+
+
+#wrk.loyal.out
+wrk.loyal.out$loyal_num<-as.numeric(wrk.loyal.out$wrk_loyal)
+
+
+
+wrk.loyal.out<-wmt_unwgt %>% 
   group_by(HDTreatment, wrk_loyal) %>%
   summarise(loyal = survey_mean(proportion=TRUE, vartype="ci"),
             w_n = n(),

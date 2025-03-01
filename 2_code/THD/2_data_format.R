@@ -99,5 +99,24 @@ THD_comp_uw<-read_csv(here("0_data", "THD", "THD_completed.csv")) %>%
          healthcare = (Q2.16 == "Yes")
          ) 
 
+pca_att_dt <- THD_comp_uw  |> 
+  select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%
+  mutate(new_job_num = 1 - new_job_num)
+
+#pca_res <- principal(pca_att_dt, cor = "poly", 
+#                     rotate = "none", nfactors = 4)
+#pca_att_dt2 <- pca_att_dt %>%
+#  mutate(new_job_num = 1+4*new_job_num,
+#         emp_reco_num = 1+4*emp_reco_num,
+#         wrk_loyal_num = 1+3*wrk_loyal_num,
+#         emp_loyal_num = 1+3*emp_loyal_num)
+#test<-ordPens::ordPCA(pca_att_dt2, p = 1, lambda = 0.5, maxit = 100,
+#             constr = rep(TRUE,ncol(pca_att_dt2)),
+#             CV = FALSE)  #produces results almost identical to prcomp
+
+pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
+
+THD_comp_uw$attachment_index <- pca_pr$x[,1]
+
 THD_comp <- THD_comp_uw %>%
   as_survey_design(ids = 1, weights = rk_wgt)
