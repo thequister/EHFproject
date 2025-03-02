@@ -1,10 +1,10 @@
 #source("1_libraries_and_settings.R")
 #library(here)
-#source(here::here('1_code', 'THD', '1_libraries_and_settings.R'))
+#source(here::here('2_code', 'THD', '1_libraries_and_settings.R'))
 #here::i_am("1_code/THD/2_data_format.R")
 
 
-THD_comp_uw<-read_csv(here("0_data", "THD", "THD_completed.csv")) %>%
+THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
   mutate(emergency_expense = factor(Q3.4, levels = 
                                            c("I am certain I could not come up with $400",
                                              "I could probably not come up with $400",
@@ -99,24 +99,23 @@ THD_comp_uw<-read_csv(here("0_data", "THD", "THD_completed.csv")) %>%
          healthcare = (Q2.16 == "Yes")
          ) 
 
-pca_att_dt <- THD_comp_uw  |> 
-  select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%
-  mutate(new_job_num = 1 - new_job_num)
+pca_att_dt2 <- THD_comp_uw  |> 
+  select(emp_loyal_num, wrk_loyal_num, emp_reco_num)  
+  #mutate(across(where(is.numeric), ~replace_na(., mean(., na.rm = TRUE)))) #use this for mean imputation
+  
+library(tidymodels)  
+rec <- recipe(~ emp_loyal_num + wrk_loyal_num +emp_reco_num, 
+              data = pca_att_dt2)  |> 
+  step_impute_knn(all_predictors(), neighbors = 5) |> 
+  prep(data = pca_att_dt2)
 
-#pca_res <- principal(pca_att_dt, cor = "poly", 
-#                     rotate = "none", nfactors = 4)
-#pca_att_dt2 <- pca_att_dt %>%
-#  mutate(new_job_num = 1+4*new_job_num,
-#         emp_reco_num = 1+4*emp_reco_num,
-#         wrk_loyal_num = 1+3*wrk_loyal_num,
-#         emp_loyal_num = 1+3*emp_loyal_num)
-#test<-ordPens::ordPCA(pca_att_dt2, p = 1, lambda = 0.5, maxit = 100,
-#             constr = rep(TRUE,ncol(pca_att_dt2)),
-#             CV = FALSE)  #produces results almost identical to prcomp
+pca_att_dt_knn<-bake(rec, new_data = NULL)   
+  
 
 pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
+pca_pr_knn <- prcomp(pca_att_dt_knn, scale = T, center=T)
 
-THD_comp_uw$attachment_index <- pca_pr$x[,1]
+THD_comp_uw$attachment_index <- pca_pr_knn$x[,1]
 
 THD_comp <- THD_comp_uw %>%
   as_survey_design(ids = 1, weights = rk_wgt)
