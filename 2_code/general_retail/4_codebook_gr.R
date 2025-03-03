@@ -176,6 +176,8 @@ attr(gr_clean$ehf_wrk_exist_num, "description") <- "Numerical version of ehf_wrk
 attr(gr_clean$ehf_wrk_exist_bin, "description") <- "Binary version of ehf_wrk_exist. Is equal to 1 if EHF is more controlled by workers, rather than management."
 
 attr(gr_clean$acs_weight, "description") <- "Weights calculated as the PUMS weighted proportion of ACS respondents over the proportion of respondents in the survey, using education, gender, race, and age bins."
+attr(gr_clean$acs_weight_trim, "description") <- "Weights trimmed to [0.4, 2.5]."
+
 
 output_codebook <- codebook(
   df = gr_clean,

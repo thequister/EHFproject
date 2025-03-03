@@ -30,6 +30,9 @@ gr_table <- gr_clean %>%
 weight_table <- full_join(gr_acs, gr_table) %>%
   mutate(obs_prop = obs/sum(obs), acs_prop = total/sum(total)) %>%
   mutate(acs_weight = acs_prop/obs_prop) %>%
+  mutate(acs_weight_trim = case_when(acs_weight >= 2.5 ~ 2.5, 
+                                     acs_weight <= 0.4 ~ 0.4, 
+                                     .default = acs_weight)) %>%
   select(-c(total, obs, obs_prop, acs_prop))
 
 # Join to main survey
