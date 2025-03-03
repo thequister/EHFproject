@@ -29,10 +29,10 @@ attach.index.hq.full.out<-wmt.hq_unwgt %>%
 attach.index.out<-data.frame(
   with(wmt, 
        rbind(
-         MeanDiffCI(attachment_index ~ treatment_bin),
-         MeanDiffCI(attachment_index ~ treatment_full,  subset = treatment_full %in% c("ctrl", "vid0")),
-         MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidChar")),
-         MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidSolid"))
+         -MeanDiffCI(attachment_index ~ treatment_bin),  # - b/c order of difference.  care with upper, lower CI bounds
+         -MeanDiffCI(attachment_index ~ treatment_full,  subset = treatment_full %in% c("ctrl", "vid0")),
+         -MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidChar")),
+         -MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidSolid"))
          )
      )
 )
@@ -44,10 +44,10 @@ attach.index.out$trt <- factor(
 
 attach.index.hq.out<-data.frame(
   rbind(
-    MeanDiffCI(attachment_index ~ treatment_bin, data = wmt.hq),
-    MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vid0")),
-    MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vidChar")),
-    MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vidSolid"))
+    -MeanDiffCI(attachment_index ~ treatment_bin, data = wmt.hq),
+    -MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vid0")),
+    -MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vidChar")),
+    -MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vidSolid"))
   )
 )
 
@@ -62,7 +62,7 @@ p.ai_wmt_bin <- ggplot(attach.index.out, aes(x = trt, y = meandiff)) +
   geom_errorbar(aes(ymin = lwr.ci, ymax = upr.ci), width = 0.2) +  # Add error bars for CI
   labs(title = "ATE for Walmart attachment index (full sample)",
        x = "Treatment",
-       y = "Attachment Index") +
+       y = "Change in attachment Index") +
   geom_hline(yintercept = 0, linetype = "dotted")
 
 
@@ -71,7 +71,7 @@ p.ai_wmt_bin_hq <- ggplot(attach.index.hq.out, aes(x = trt, y = meandiff)) +
   geom_errorbar(aes(ymin = lwr.ci, ymax = upr.ci), width = 0.2) +  # Add error bars for CI
   labs(title = "ATE for Walmart attachment index (high quality sample)",
        x = "Treatment",
-       y = "Attachment Index") +
+       y = "Change in attachment Index") +
   geom_hline(yintercept = 0, linetype = "dotted")
 
 ggsave(filename = here::here("4_output", "plots", "attachment_wmt.pdf"),

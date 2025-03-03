@@ -3,6 +3,15 @@
 
 
 #unweighted models
+ai_thd_uw <- lm(attachment_index  ~ HDTreatment, 
+                     data = THD_comp_uw)
+ai_int_thd_uw <- lm(attachment_index  ~ HDTreatment*EHF_aware_list, 
+                         data = THD_comp_uw)
+ai_c_thd_uw <- lm(attachment_index  ~ 
+                         HDTreatment*EHF_aware_list + rk_age + male +
+                         main_job + tenure_num + nonwhite + fulltime +
+                         hourly+ college, data = THD_comp_uw)
+
 wrkloyal_lm_uw <- lm(wrk_loyal_num ~ HDTreatment, 
                data = THD_comp_uw)
 wrkloyal_lm_int_uw <- lm(wrk_loyal_num ~ HDTreatment*EHF_aware_list, 
@@ -69,6 +78,25 @@ panels <- list(
   "Outcome: employer loyalty" = el.models.uw,
   "Outcome: recommend employer" = el.models.uw
 )
+
+ai_mods <- list(
+  "Base" = ai_thd_uw, 
+  "Pre-exposure" = ai_int_thd_uw, 
+  "Covariates" = ai_c_thd_uw)
+
+model_print_thd_uw_attachment<- modelsummary( ai_mods,
+                                     shape = term + statistic ~ model,
+                                     coef_map = coef_maps,
+                                     gof_map = gm,
+                                     vcov = "robust",
+                                     #add_rows = rows,
+                                     title = "Home Depot attachment index, OLS regression \\label{tab:tab-aithd-models}",
+                                     output = "kableExtra",
+                                     notes = list(note1),
+                                     stars = c('*' = .05, '**' = .01),
+                                     threeparttable=FALSE
+)
+
 
 model_print_uw_loyal<- modelsummary( panels,
                                shape = "rbind",

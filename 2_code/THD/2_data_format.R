@@ -3,7 +3,7 @@
 #source(here::here('2_code', 'THD', '1_libraries_and_settings.R'))
 #here::i_am("1_code/THD/2_data_format.R")
 
-
+set.seed(123)
 THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
   mutate(emergency_expense = factor(Q3.4, levels = 
                                            c("I am certain I could not come up with $400",
@@ -110,12 +110,12 @@ rec <- recipe(~ emp_loyal_num + wrk_loyal_num +emp_reco_num,
   prep(data = pca_att_dt2)
 
 pca_att_dt_knn<-bake(rec, new_data = NULL)   
-  
 
 pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
 pca_pr_knn <- prcomp(pca_att_dt_knn, scale = T, center=T)
+#pca_pr_knn$rotation # 1PC is negatively loading on all items so reverse scaling
 
-THD_comp_uw$attachment_index <- pca_pr_knn$x[,1]
+THD_comp_uw$attachment_index <- -pca_pr_knn$x[,1]
 
 THD_comp <- THD_comp_uw %>%
   as_survey_design(ids = 1, weights = rk_wgt)

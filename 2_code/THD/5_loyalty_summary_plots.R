@@ -4,6 +4,33 @@
 
 
 #summary tables
+
+attach.index.out<-data.frame(
+  with(THD_comp_uw, 
+       rbind(
+         -MeanDiffCI(attachment_index ~ HDTreatment, subset = HDTreatment %in% c("cntrl", "txt")),
+         -MeanDiffCI(attachment_index ~ HDTreatment, subset = HDTreatment %in% c("cntrl", "vid"))
+       )
+  )
+)
+
+
+attach.index.out$trt <- factor(
+  c("text", "video"),
+  levels = c("text", "video")
+)
+
+p.ai_thd <- ggplot(attach.index.out, aes(x = trt, y = meandiff)) +
+  geom_point() +  # Plot the mean values as points
+  geom_errorbar(aes(ymin = lwr.ci, ymax = upr.ci), width = 0.2) +  # Add error bars for CI
+  labs(title = "ATE for Home Depot attachment index",
+       x = "Treatment",
+       y = "Change in Attachment Index") +
+  geom_hline(yintercept = 0, linetype = "dotted")
+
+ggsave(filename = here::here("4_output", "plots", "attachment_thd.pdf"),
+       plot = p.ai_thd)
+
 wrk.loyal.out<-THD_comp %>% 
   group_by(HDTreatment, wrk_loyal) %>%
   summarise(loyal = survey_mean(proportion=TRUE, vartype="ci"),
