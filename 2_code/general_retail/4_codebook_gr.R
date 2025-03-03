@@ -1,6 +1,6 @@
 library(here)
 source(here::here('2_code', 'general_retail', '1_libraries_and_settings_gr.R'))
-here::i_am("2_code/general_retail/2_data_format_gr.R")
+here::i_am("2_code/general_retail/4_codebook_gr.R")
 
 gr_clean <- readxl::read_xlsx(here("3_cleaned_data", "general_retail_clean.xlsx"))
 
@@ -175,6 +175,7 @@ attr(gr_clean$ehf_wrk_exist, "description") <- "Factorized version of ehf_type_e
 attr(gr_clean$ehf_wrk_exist_num, "description") <- "Numerical version of ehf_wrk_exist. Larger values indicate EHF is more controlled by workers."
 attr(gr_clean$ehf_wrk_exist_bin, "description") <- "Binary version of ehf_wrk_exist. Is equal to 1 if EHF is more controlled by workers, rather than management."
 
+attr(gr_clean$acs_weight, "description") <- "Weights calculated as the PUMS weighted proportion of ACS respondents over the proportion of respondents in the survey, using education, gender, race, and age bins."
 
 output_codebook <- codebook(
   df = gr_clean,
