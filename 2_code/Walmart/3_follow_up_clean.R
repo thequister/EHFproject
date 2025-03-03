@@ -11,9 +11,9 @@ fup <- fup %>%
                                     HDTreatment==1 ~ "vidChar",
                                     HDTreatment==2 ~ "vidSolid", 
                                     HDTreatment==3 ~ "ctrl")) %>%
-  select(-StartDate:-Progress, -RecipientFirstName, -RecipientLastName, -ExternalReference:-UserLanguage) %>%
   filter(`Login ID` %in% ACNT_clean$`Login ID`) %>%
-  filter(!is.na(HDTreatment))
+  filter(!is.na(HDTreatment)) %>%
+  select(-StartDate:-Progress, -RecipientFirstName, -RecipientLastName, -ExternalReference:-UserLanguage, -HDTreatment)
 
 # Make values equivalent to main survey
 fup <- fup %>%
@@ -150,7 +150,6 @@ fup_j <- left_join(ACNT_clean, fup, by = c("email" = "RecipientEmail"))
 fup_j <- fup_j %>%
   select(-Finished.x:-ResponseId.x, -Finished.y:-ResponseId.y, -email, -`Login ID.x`, -`Login ID.y`, 
          -utm_source, -dupe_IPlatlong, -union_vote_agg, -ideology_answered, -treatment_full.y) %>%
-  rename(HDTreatment = "HDTreatment.x", 
-         treatment_full = "treatment_full.x")
+  rename(treatment_full = "treatment_full.x")
 
 write_csv(fup_j, here("3_cleaned_data", "ACNT_clean.csv"))

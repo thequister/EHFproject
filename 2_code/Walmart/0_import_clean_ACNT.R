@@ -46,6 +46,10 @@ qual_dedupe <- qual_raw[!duplicated(qual_raw$email, incomparables = NA), ] %>% #
                                         HDTreatment==1 ~ "vidChar",
                                         HDTreatment==2 ~ "vidSolid", 
                                         HDTreatment==3 ~ NA)) %>%
+  mutate(treatment_placebo = case_when(HDTreatment==0 ~ "placebo",
+                                        HDTreatment==1 ~ "treatment",
+                                        HDTreatment==2 ~ "treatment", 
+                                        HDTreatment==3 ~ "control")) %>%
   mutate(completion_subgroup = case_when(  # encoding levels of survey completion
     (past_work != "Yes" | is.na(past_work)) ~ 1,  # 1: Haven't worked for Walmart
     ((Progress <= 25 & is.na(health_ins)) | wal_relation == "Exit survey") ~ 2, # 2: Quit before EHF treatment
@@ -66,7 +70,7 @@ Walmart <- qual_dedupe %>%
   mutate(quality = ifelse(IPAddress %in% c("38.70.124.159", "76.188.231.153", "172.8.136.70"), "low", quality)) %>%
   filter(!(IPAddress %in% c("35.139.10.198", "174.82.115.233", "66.212.43.57"))) %>%
   select(-StartDate:-Progress, -RecipientLastName:-UserLanguage, -`Q182_First Click`:-`Q182_Click Count`,
-         -EmployerName, -EHFName, -charity_treat:-EHFNameAbbr, -ExtendText, -ExtendTextFinal)
+         -EmployerName, -EHFName, -charity_treat:-EHFNameAbbr, -ExtendText, -ExtendTextFinal, -HDTreatment)
 
 Walmart <- Walmart %>% # correct age values
   mutate(age_corrected = case_match(birthyear, 

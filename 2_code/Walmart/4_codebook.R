@@ -71,6 +71,7 @@ attr(ACNT_clean$Loc_dupe, "description") <- "Flag for duplicate locations create
 
 # Below are all variables that have undergone any data wrangling
 attr(ACNT_clean$treatment_full, "description") <- "Treatment categories. Control (ctrl), control video unrelated to an EHF (vid0), charity treatment video (vidChar), solidarity treatment video (vidSolid)."
+attr(ACNT_clean$treatment_placebo, "description") <- "Treatment categories. Control (control), control video unrelated to an EHF (placebo), charity treatment video and solidarity treatment video (treatment)."
 attr(ACNT_clean$treatment_bin, "description") <- "Treatment (ctrl, vid0) or no treatment (vidChar, vidSolid) binary."
 attr(ACNT_clean$treatment_vid, "description") <- "Whether the respondent was exposed to a video (vid0, vidChar, vidSolid) or not (ctrl)."
 attr(ACNT_clean$completion_subgroup, "description") <- "Whether the respondent was in the subgroup that completed the survey without providing an email (5), or the subgroup that completed and provided an email (6). Groups 1-4 are excluded from the survey sample, for details please refer to the Pre-Analysis Plan."
