@@ -152,4 +152,4 @@ fup_j <- fup_j %>%
          -utm_source, -dupe_IPlatlong, -union_vote_agg, -ideology_answered, -treatment_full.y) %>%
   rename(treatment_full = "treatment_full.x")
 
-write.xlsx(fup_j, here("3_cleaned_data", "ACNT_clean.xlsx"))
+write_csv(fup_j, here("3_cleaned_data", "ACNT_clean.csv"))

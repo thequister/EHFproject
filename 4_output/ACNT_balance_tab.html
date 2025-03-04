@@ -1,0 +1,556 @@
+<!-- preamble start -->
+<!DOCTYPE html> 
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tinytable_cm52nf8fgesteemzrgsy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+<!-- preamble end -->
+
+    <script>
+
+      function styleCell_cm52nf8fgesteemzrgsy(i, j, css_id) {
+          var table = document.getElementById("tinytable_cm52nf8fgesteemzrgsy");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_cm52nf8fgesteemzrgsy');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_cm52nf8fgesteemzrgsy(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_cm52nf8fgesteemzrgsy");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 }, { i: 0, j: 6 },  ], css_id: 'tinytable_css_zzoggbbk05e5en1gscz2',}, 
+          { positions: [ { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 15, j: 2 }, { i: 7, j: 2 }, { i: 12, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 28, j: 2 }, { i: 16, j: 2 }, { i: 30, j: 2 }, { i: 18, j: 2 }, { i: 6, j: 2 }, { i: 20, j: 2 }, { i: 8, j: 2 }, { i: 22, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 25, j: 2 }, { i: 13, j: 2 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 7, j: 3 }, { i: 8, j: 3 }, { i: 9, j: 3 }, { i: 10, j: 3 }, { i: 11, j: 3 }, { i: 12, j: 3 }, { i: 13, j: 3 }, { i: 14, j: 3 }, { i: 15, j: 3 }, { i: 16, j: 3 }, { i: 17, j: 3 }, { i: 18, j: 3 }, { i: 19, j: 3 }, { i: 20, j: 3 }, { i: 21, j: 3 }, { i: 22, j: 3 }, { i: 23, j: 3 }, { i: 21, j: 2 }, { i: 25, j: 3 }, { i: 23, j: 2 }, { i: 24, j: 2 }, { i: 28, j: 3 }, { i: 26, j: 2 }, { i: 30, j: 3 }, { i: 31, j: 3 }, { i: 32, j: 3 }, { i: 33, j: 3 }, { i: 31, j: 2 }, { i: 32, j: 2 }, { i: 33, j: 2 }, { i: 34, j: 2 }, { i: 35, j: 2 }, { i: 9, j: 6 }, { i: 3, j: 4 }, { i: 4, j: 4 }, { i: 5, j: 4 }, { i: 6, j: 4 }, { i: 7, j: 4 }, { i: 8, j: 4 }, { i: 9, j: 4 }, { i: 10, j: 4 }, { i: 11, j: 4 }, { i: 12, j: 4 }, { i: 13, j: 4 }, { i: 14, j: 4 }, { i: 15, j: 4 }, { i: 16, j: 4 }, { i: 17, j: 4 }, { i: 18, j: 4 }, { i: 19, j: 4 }, { i: 20, j: 4 }, { i: 21, j: 4 }, { i: 22, j: 4 }, { i: 23, j: 4 }, { i: 24, j: 4 }, { i: 25, j: 4 }, { i: 26, j: 4 }, { i: 24, j: 3 }, { i: 28, j: 4 }, { i: 26, j: 3 }, { i: 30, j: 4 }, { i: 31, j: 4 }, { i: 32, j: 4 }, { i: 33, j: 4 }, { i: 34, j: 4 }, { i: 35, j: 4 }, { i: 9, j: 8 }, { i: 34, j: 3 }, { i: 35, j: 3 }, { i: 9, j: 7 }, { i: 3, j: 5 }, { i: 4, j: 5 }, { i: 5, j: 5 }, { i: 6, j: 5 }, { i: 7, j: 5 }, { i: 8, j: 5 }, { i: 9, j: 5 }, { i: 10, j: 5 }, { i: 11, j: 5 }, { i: 12, j: 5 }, { i: 13, j: 5 }, { i: 14, j: 5 }, { i: 15, j: 5 }, { i: 16, j: 5 }, { i: 17, j: 5 }, { i: 18, j: 5 }, { i: 19, j: 5 }, { i: 20, j: 5 }, { i: 21, j: 5 }, { i: 22, j: 5 }, { i: 23, j: 5 }, { i: 24, j: 5 }, { i: 25, j: 5 }, { i: 26, j: 5 }, { i: 17, j: 2 }, { i: 28, j: 5 }, { i: 19, j: 2 }, { i: 30, j: 5 }, { i: 31, j: 5 }, { i: 32, j: 5 }, { i: 33, j: 5 }, { i: 34, j: 5 }, { i: 35, j: 5 }, { i: 9, j: 9 }, { i: 27, j: 2 }, { i: 11, j: 9 }, { i: 29, j: 2 }, { i: 3, j: 6 }, { i: 4, j: 6 }, { i: 5, j: 6 }, { i: 6, j: 6 }, { i: 7, j: 6 }, { i: 8, j: 6 }, { i: 19, j: 9 }, { i: 10, j: 6 }, { i: 11, j: 6 }, { i: 12, j: 6 }, { i: 13, j: 6 }, { i: 14, j: 6 }, { i: 15, j: 6 }, { i: 16, j: 6 }, { i: 17, j: 6 }, { i: 18, j: 6 }, { i: 19, j: 6 }, { i: 20, j: 6 }, { i: 21, j: 6 }, { i: 22, j: 6 }, { i: 23, j: 6 }, { i: 24, j: 6 }, { i: 25, j: 6 }, { i: 26, j: 6 }, { i: 27, j: 6 }, { i: 28, j: 6 }, { i: 29, j: 6 }, { i: 30, j: 6 }, { i: 31, j: 6 }, { i: 32, j: 6 }, { i: 33, j: 6 }, { i: 34, j: 6 }, { i: 35, j: 6 }, { i: 29, j: 4 }, { i: 27, j: 3 }, { i: 4, j: 8 }, { i: 29, j: 3 }, { i: 3, j: 7 }, { i: 4, j: 7 }, { i: 5, j: 7 }, { i: 6, j: 7 }, { i: 7, j: 7 }, { i: 8, j: 7 }, { i: 12, j: 8 }, { i: 10, j: 7 }, { i: 11, j: 7 }, { i: 12, j: 7 }, { i: 13, j: 7 }, { i: 14, j: 7 }, { i: 15, j: 7 }, { i: 16, j: 7 }, { i: 17, j: 7 }, { i: 18, j: 7 }, { i: 19, j: 7 }, { i: 20, j: 7 }, { i: 21, j: 7 }, { i: 22, j: 7 }, { i: 23, j: 7 }, { i: 24, j: 7 }, { i: 25, j: 7 }, { i: 26, j: 7 }, { i: 27, j: 7 }, { i: 28, j: 7 }, { i: 29, j: 7 }, { i: 30, j: 7 }, { i: 31, j: 7 }, { i: 32, j: 7 }, { i: 33, j: 7 }, { i: 34, j: 7 }, { i: 35, j: 7 }, { i: 29, j: 5 }, { i: 27, j: 4 }, { i: 4, j: 9 }, { i: 5, j: 9 }, { i: 3, j: 8 }, { i: 7, j: 9 }, { i: 5, j: 8 }, { i: 6, j: 8 }, { i: 7, j: 8 }, { i: 8, j: 8 }, { i: 12, j: 9 }, { i: 10, j: 8 }, { i: 11, j: 8 }, { i: 15, j: 9 }, { i: 13, j: 8 }, { i: 14, j: 8 }, { i: 15, j: 8 }, { i: 16, j: 8 }, { i: 17, j: 8 }, { i: 18, j: 8 }, { i: 19, j: 8 }, { i: 20, j: 8 }, { i: 21, j: 8 }, { i: 22, j: 8 }, { i: 23, j: 8 }, { i: 24, j: 8 }, { i: 25, j: 8 }, { i: 26, j: 8 }, { i: 27, j: 8 }, { i: 28, j: 8 }, { i: 29, j: 8 }, { i: 30, j: 8 }, { i: 31, j: 8 }, { i: 32, j: 8 }, { i: 33, j: 8 }, { i: 34, j: 8 }, { i: 35, j: 8 }, { i: 25, j: 9 }, { i: 27, j: 5 }, { i: 14, j: 9 }, { i: 28, j: 9 }, { i: 3, j: 9 }, { i: 17, j: 9 }, { i: 18, j: 9 }, { i: 6, j: 9 }, { i: 20, j: 9 }, { i: 8, j: 9 }, { i: 22, j: 9 }, { i: 10, j: 9 }, { i: 24, j: 9 }, { i: 16, j: 9 }, { i: 13, j: 9 }, { i: 27, j: 9 }, { i: 32, j: 9 }, { i: 33, j: 9 }, { i: 30, j: 9 }, { i: 31, j: 9 }, { i: 23, j: 9 }, { i: 21, j: 9 }, { i: 35, j: 9 }, { i: 29, j: 9 }, { i: 26, j: 9 }, { i: 34, j: 9 },  ], css_id: 'tinytable_css_zgdqzp5p8pk1249cpnqg',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 1, j: 1 },  ], css_id: 'tinytable_css_xyxmjgh85dkyrl2jug75',}, 
+          { positions: [ { i: 2, j: 0 }, { i: 2, j: 1 },  ], css_id: 'tinytable_css_sxlhvnerd7y7yf6t3axn',}, 
+          { positions: [ { i: 36, j: 0 }, { i: 36, j: 1 },  ], css_id: 'tinytable_css_kwshehplvjbasru7dd4z',}, 
+          { positions: [ { i: 2, j: 6 }, { i: 2, j: 2 }, { i: 2, j: 5 }, { i: 2, j: 8 }, { i: 2, j: 9 }, { i: 2, j: 7 }, { i: 2, j: 3 }, { i: 2, j: 4 },  ], css_id: 'tinytable_css_d3o3nr7bngrb6aqgnywo',}, 
+          { positions: [ { i: 1, j: 2 }, { i: 1, j: 6 }, { i: 1, j: 7 }, { i: 1, j: 9 }, { i: 1, j: 5 }, { i: 1, j: 8 }, { i: 1, j: 4 }, { i: 1, j: 3 },  ], css_id: 'tinytable_css_av9cp3om812ug76eqt5v',}, 
+          { positions: [ { i: 36, j: 8 }, { i: 36, j: 7 }, { i: 36, j: 3 }, { i: 36, j: 6 }, { i: 36, j: 2 }, { i: 36, j: 4 }, { i: 36, j: 5 }, { i: 36, j: 9 },  ], css_id: 'tinytable_css_a5683c3hnpi9gi2ivfrt',}, 
+          { positions: [ { i: 0, j: 5 }, { i: 0, j: 2 }, { i: 0, j: 4 }, { i: 0, j: 3 },  ], css_id: 'tinytable_css_a0uzfwp0ei0gvsuktvlg',}, 
+          { positions: [ { i: 6, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 10, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 20, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 27, j: 0 }, { i: 28, j: 0 }, { i: 29, j: 0 }, { i: 30, j: 0 }, { i: 31, j: 0 }, { i: 32, j: 0 }, { i: 33, j: 0 }, { i: 34, j: 0 }, { i: 35, j: 0 }, { i: 12, j: 1 }, { i: 24, j: 0 }, { i: 25, j: 0 }, { i: 26, j: 0 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 25, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 20, j: 1 }, { i: 21, j: 1 }, { i: 22, j: 1 }, { i: 23, j: 1 }, { i: 24, j: 1 }, { i: 29, j: 1 }, { i: 26, j: 1 }, { i: 27, j: 1 }, { i: 28, j: 1 }, { i: 33, j: 1 }, { i: 30, j: 1 }, { i: 31, j: 1 }, { i: 32, j: 1 }, { i: 34, j: 1 }, { i: 35, j: 1 },  ], css_id: 'tinytable_css_322qgufjvuo5ng4qjnoe',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 },  ], css_id: 'tinytable_css_0j93zm5ulro0uy1ttggm',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_cm52nf8fgesteemzrgsy(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_zzoggbbk05e5en1gscz2, .table th.tinytable_css_zzoggbbk05e5en1gscz2 { text-align: right; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
+      .table td.tinytable_css_zgdqzp5p8pk1249cpnqg, .table th.tinytable_css_zgdqzp5p8pk1249cpnqg { text-align: right; }
+      .table td.tinytable_css_xyxmjgh85dkyrl2jug75, .table th.tinytable_css_xyxmjgh85dkyrl2jug75 { text-align: left; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_sxlhvnerd7y7yf6t3axn, .table th.tinytable_css_sxlhvnerd7y7yf6t3axn { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_kwshehplvjbasru7dd4z, .table th.tinytable_css_kwshehplvjbasru7dd4z { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_d3o3nr7bngrb6aqgnywo, .table th.tinytable_css_d3o3nr7bngrb6aqgnywo { text-align: right; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_av9cp3om812ug76eqt5v, .table th.tinytable_css_av9cp3om812ug76eqt5v { text-align: right; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_a5683c3hnpi9gi2ivfrt, .table th.tinytable_css_a5683c3hnpi9gi2ivfrt { text-align: right; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_a0uzfwp0ei0gvsuktvlg, .table th.tinytable_css_a0uzfwp0ei0gvsuktvlg { text-align: right; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_322qgufjvuo5ng4qjnoe, .table th.tinytable_css_322qgufjvuo5ng4qjnoe { text-align: left; }
+      .table td.tinytable_css_0j93zm5ulro0uy1ttggm, .table th.tinytable_css_0j93zm5ulro0uy1ttggm { text-align: left; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_cm52nf8fgesteemzrgsy" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+        <thead>
+<tr>
+<th scope="col" align="center" colspan=1> </th>
+<th scope="col" align="center" colspan=1> </th>
+<th scope="col" align="center" colspan=2>ctrl (N=284)</th>
+<th scope="col" align="center" colspan=2>vid0 (N=283)</th>
+<th scope="col" align="center" colspan=2>vidChar (N=260)</th>
+<th scope="col" align="center" colspan=2>vidSolid (N=251)</th>
+</tr>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">  </th>
+                <th scope="col">Mean</th>
+                <th scope="col">Std. Dev.</th>
+                <th scope="col">Mean</th>
+                <th scope="col">Std. Dev.</th>
+                <th scope="col">Mean</th>
+                <th scope="col">Std. Dev.</th>
+                <th scope="col">Mean</th>
+                <th scope="col">Std. Dev.</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>pph</td>
+                  <td></td>
+                  <td>16.4</td>
+                  <td>3.2</td>
+                  <td>17.3</td>
+                  <td>10.6</td>
+                  <td>16.9</td>
+                  <td>3.7</td>
+                  <td>17.3</td>
+                  <td>10.2</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>N</td>
+                  <td>Pct.</td>
+                  <td>N</td>
+                  <td>Pct.</td>
+                  <td>N</td>
+                  <td>Pct.</td>
+                  <td>N</td>
+                  <td>Pct.</td>
+                </tr>
+                <tr>
+                  <td>multiple_jobs</td>
+                  <td>FALSE</td>
+                  <td>241</td>
+                  <td>84.9</td>
+                  <td>235</td>
+                  <td>83.0</td>
+                  <td>224</td>
+                  <td>86.2</td>
+                  <td>212</td>
+                  <td>84.5</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>43</td>
+                  <td>15.1</td>
+                  <td>48</td>
+                  <td>17.0</td>
+                  <td>36</td>
+                  <td>13.8</td>
+                  <td>39</td>
+                  <td>15.5</td>
+                </tr>
+                <tr>
+                  <td>fulltime</td>
+                  <td>FALSE</td>
+                  <td>75</td>
+                  <td>26.4</td>
+                  <td>72</td>
+                  <td>25.4</td>
+                  <td>58</td>
+                  <td>22.3</td>
+                  <td>47</td>
+                  <td>18.7</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>209</td>
+                  <td>73.6</td>
+                  <td>211</td>
+                  <td>74.6</td>
+                  <td>202</td>
+                  <td>77.7</td>
+                  <td>204</td>
+                  <td>81.3</td>
+                </tr>
+                <tr>
+                  <td>hourly</td>
+                  <td>FALSE</td>
+                  <td>12</td>
+                  <td>4.2</td>
+                  <td>9</td>
+                  <td>3.2</td>
+                  <td>10</td>
+                  <td>3.8</td>
+                  <td>8</td>
+                  <td>3.2</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>272</td>
+                  <td>95.8</td>
+                  <td>274</td>
+                  <td>96.8</td>
+                  <td>250</td>
+                  <td>96.2</td>
+                  <td>243</td>
+                  <td>96.8</td>
+                </tr>
+                <tr>
+                  <td>ehf_aware_pretr</td>
+                  <td>FALSE</td>
+                  <td>159</td>
+                  <td>56.0</td>
+                  <td>173</td>
+                  <td>61.1</td>
+                  <td>155</td>
+                  <td>59.6</td>
+                  <td>163</td>
+                  <td>64.9</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>125</td>
+                  <td>44.0</td>
+                  <td>110</td>
+                  <td>38.9</td>
+                  <td>105</td>
+                  <td>40.4</td>
+                  <td>88</td>
+                  <td>35.1</td>
+                </tr>
+                <tr>
+                  <td>voted</td>
+                  <td>FALSE</td>
+                  <td>111</td>
+                  <td>39.1</td>
+                  <td>104</td>
+                  <td>36.7</td>
+                  <td>110</td>
+                  <td>42.3</td>
+                  <td>115</td>
+                  <td>45.8</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>173</td>
+                  <td>60.9</td>
+                  <td>179</td>
+                  <td>63.3</td>
+                  <td>150</td>
+                  <td>57.7</td>
+                  <td>136</td>
+                  <td>54.2</td>
+                </tr>
+                <tr>
+                  <td>college</td>
+                  <td>FALSE</td>
+                  <td>257</td>
+                  <td>90.5</td>
+                  <td>258</td>
+                  <td>91.2</td>
+                  <td>238</td>
+                  <td>91.5</td>
+                  <td>228</td>
+                  <td>90.8</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>27</td>
+                  <td>9.5</td>
+                  <td>25</td>
+                  <td>8.8</td>
+                  <td>22</td>
+                  <td>8.5</td>
+                  <td>23</td>
+                  <td>9.2</td>
+                </tr>
+                <tr>
+                  <td>male</td>
+                  <td>FALSE</td>
+                  <td>220</td>
+                  <td>77.5</td>
+                  <td>219</td>
+                  <td>77.4</td>
+                  <td>188</td>
+                  <td>72.3</td>
+                  <td>196</td>
+                  <td>78.1</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>64</td>
+                  <td>22.5</td>
+                  <td>64</td>
+                  <td>22.6</td>
+                  <td>72</td>
+                  <td>27.7</td>
+                  <td>55</td>
+                  <td>21.9</td>
+                </tr>
+                <tr>
+                  <td>nonwhite</td>
+                  <td>FALSE</td>
+                  <td>228</td>
+                  <td>80.3</td>
+                  <td>227</td>
+                  <td>80.2</td>
+                  <td>202</td>
+                  <td>77.7</td>
+                  <td>204</td>
+                  <td>81.3</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>56</td>
+                  <td>19.7</td>
+                  <td>56</td>
+                  <td>19.8</td>
+                  <td>58</td>
+                  <td>22.3</td>
+                  <td>47</td>
+                  <td>18.7</td>
+                </tr>
+                <tr>
+                  <td>practice_religion_bin</td>
+                  <td>FALSE</td>
+                  <td>153</td>
+                  <td>53.9</td>
+                  <td>150</td>
+                  <td>53.0</td>
+                  <td>112</td>
+                  <td>43.1</td>
+                  <td>113</td>
+                  <td>45.0</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>131</td>
+                  <td>46.1</td>
+                  <td>133</td>
+                  <td>47.0</td>
+                  <td>148</td>
+                  <td>56.9</td>
+                  <td>138</td>
+                  <td>55.0</td>
+                </tr>
+                <tr>
+                  <td>identify_religion_bin</td>
+                  <td>FALSE</td>
+                  <td>102</td>
+                  <td>35.9</td>
+                  <td>116</td>
+                  <td>41.0</td>
+                  <td>81</td>
+                  <td>31.2</td>
+                  <td>88</td>
+                  <td>35.1</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>182</td>
+                  <td>64.1</td>
+                  <td>167</td>
+                  <td>59.0</td>
+                  <td>179</td>
+                  <td>68.8</td>
+                  <td>163</td>
+                  <td>64.9</td>
+                </tr>
+                <tr>
+                  <td>healthcare</td>
+                  <td>FALSE</td>
+                  <td>58</td>
+                  <td>20.4</td>
+                  <td>63</td>
+                  <td>22.3</td>
+                  <td>50</td>
+                  <td>19.2</td>
+                  <td>58</td>
+                  <td>23.1</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>TRUE</td>
+                  <td>226</td>
+                  <td>79.6</td>
+                  <td>220</td>
+                  <td>77.7</td>
+                  <td>210</td>
+                  <td>80.8</td>
+                  <td>193</td>
+                  <td>76.9</td>
+                </tr>
+                <tr>
+                  <td>ideology_conlib</td>
+                  <td>Extremely conservative</td>
+                  <td>17</td>
+                  <td>6.0</td>
+                  <td>10</td>
+                  <td>3.5</td>
+                  <td>12</td>
+                  <td>4.6</td>
+                  <td>11</td>
+                  <td>4.4</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Conservative</td>
+                  <td>48</td>
+                  <td>16.9</td>
+                  <td>49</td>
+                  <td>17.3</td>
+                  <td>43</td>
+                  <td>16.5</td>
+                  <td>38</td>
+                  <td>15.1</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Moderate</td>
+                  <td>59</td>
+                  <td>20.8</td>
+                  <td>67</td>
+                  <td>23.7</td>
+                  <td>66</td>
+                  <td>25.4</td>
+                  <td>64</td>
+                  <td>25.5</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Liberal</td>
+                  <td>31</td>
+                  <td>10.9</td>
+                  <td>29</td>
+                  <td>10.2</td>
+                  <td>24</td>
+                  <td>9.2</td>
+                  <td>22</td>
+                  <td>8.8</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Extremely liberal</td>
+                  <td>17</td>
+                  <td>6.0</td>
+                  <td>10</td>
+                  <td>3.5</td>
+                  <td>17</td>
+                  <td>6.5</td>
+                  <td>8</td>
+                  <td>3.2</td>
+                </tr>
+                <tr>
+                  <td>home_ownership</td>
+                  <td>Own</td>
+                  <td>110</td>
+                  <td>38.7</td>
+                  <td>122</td>
+                  <td>43.1</td>
+                  <td>96</td>
+                  <td>36.9</td>
+                  <td>97</td>
+                  <td>38.6</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Rent</td>
+                  <td>174</td>
+                  <td>61.3</td>
+                  <td>161</td>
+                  <td>56.9</td>
+                  <td>164</td>
+                  <td>63.1</td>
+                  <td>154</td>
+                  <td>61.4</td>
+                </tr>
+                <tr>
+                  <td>manager</td>
+                  <td>No</td>
+                  <td>246</td>
+                  <td>86.6</td>
+                  <td>247</td>
+                  <td>87.3</td>
+                  <td>223</td>
+                  <td>85.8</td>
+                  <td>227</td>
+                  <td>90.4</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Yes</td>
+                  <td>30</td>
+                  <td>10.6</td>
+                  <td>30</td>
+                  <td>10.6</td>
+                  <td>31</td>
+                  <td>11.9</td>
+                  <td>17</td>
+                  <td>6.8</td>
+                </tr>
+                <tr>
+                  <td>member_union</td>
+                  <td>No</td>
+                  <td>242</td>
+                  <td>85.2</td>
+                  <td>231</td>
+                  <td>81.6</td>
+                  <td>215</td>
+                  <td>82.7</td>
+                  <td>203</td>
+                  <td>80.9</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>Yes</td>
+                  <td>27</td>
+                  <td>9.5</td>
+                  <td>39</td>
+                  <td>13.8</td>
+                  <td>33</td>
+                  <td>12.7</td>
+                  <td>31</td>
+                  <td>12.4</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- postamble start -->
+  </body>
+
+</html>
+<!-- postamble end -->
+<!-- hack to avoid NA insertion in last line -->

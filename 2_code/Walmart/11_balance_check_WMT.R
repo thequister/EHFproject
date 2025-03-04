@@ -4,18 +4,34 @@ here::i_am("2_code/Walmart/11_balance_check_WMT.R")
 
 ACNT_clean <- read_csv(here("3_cleaned_data", "ACNT_clean.csv"))
 
-
+# Create initial balance table
 demos <- ACNT_clean %>%
   select(multiple_jobs, fulltime, hourly, ehf_aware_pretr, 
          voted, college, male, nonwhite, practice_religion_bin, 
-         identify_religion_bin, healthcare, treatment_full) %>%
-  group_by(treatment_full) %>%
-  summarize(across(multiple_jobs:healthcare, mean))
+         identify_religion_bin, healthcare, ideology_conlib, home_ownership, pph, manager, member_union, treatment_full) %>%
+  mutate(across(c(multiple_jobs:home_ownership, manager, member_union), factor)) %>%
+  mutate(ideology_conlib = fct_rev(factor(ideology_conlib, 
+                                          levels = 
+                                            c("Extremely liberal",
+                                              "Liberal",
+                                              "Moderate",
+                                              "Conservative",
+                                              "Extremely conservative"),
+                                          ordered = T)))
 
-ACNT_clean %>%
-  select(ideology_conlib, home_ownership, treatment_full) %>%
-  mutate(n = 1) %>%
-  pivot_wider(names_from = ideology_conlib, values_from = n)
+datasummary_balance(~ treatment_full, demos, output = here("4_output", "ACNT_balance_tab.html"))
 
-# ideology_conlib,home_ownership, pph, 
-#   mutate(manager = manager == "Yes", member_union = member_union == "Yes") %>%
+# demos <- ACNT_clean %>%
+#   select(multiple_jobs, hourly, fulltime, ehf_aware_pretr, 
+#          voted, college, male, nonwhite, practice_religion_bin, 
+#          identify_religion_bin, healthcare, home_ownership, manager, member_union, treatment_full) %>%
+#   na.omit()
+# 
+# sparse <- polr(as.factor(treatment_full) ~ 1, demos)
+# full <- polr(as.factor(treatment_full) ~ ., demos)
+# 
+# summary(full)
+# 
+# anova(full, sparse)
+# 
+# a <- stepAIC(full)
