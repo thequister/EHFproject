@@ -289,6 +289,6 @@ pca_att_dt <- ACNT_uw %>%
 pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
 
 ACNT_uw$attachment_index <- pca_pr$x[,1]
-write_csv(ACNT_uw, here("0_raw_data", "ACNT", "ACNT_clean_main.csv"))
+write.xlsx(ACNT_uw, here("0_raw_data", "ACNT", "ACNT_clean_main.xlsx"))
 
 
