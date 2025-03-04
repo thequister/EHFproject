@@ -40,7 +40,7 @@ applied_reg_wmt <- svyglm(ehf_applied =="Yes" ~
                   family = quasibinomial)
 
 
-received_reg_wmt <- svyglm(ehf_received =="Yes" ~
+received_reg_wmt <- svyglm(ehf_received_all =="Yes" ~
                          age_clean +
                          male +
                          main_job +
@@ -50,6 +50,7 @@ received_reg_wmt <- svyglm(ehf_received =="Yes" ~
                          hourly+
                          college, 
                        design = wmt_wgt_f,
+                       maxit = 50,
                   family = quasibinomial)
 
 donate_reg_wmt <- svyglm(ehf_donation=="Yes" ~
@@ -153,7 +154,7 @@ applied_reg_wmt_dei <- svyglm(ehf_applied =="Yes" ~
                           family = quasibinomial)
 
 
-received_reg_wmt_dei <- svyglm(ehf_received =="Yes" ~
+received_reg_wmt_dei <- svyglm(ehf_received_all =="Yes" ~
                              age_clean +
                              male +
                              main_job +
@@ -163,6 +164,7 @@ received_reg_wmt_dei <- svyglm(ehf_received =="Yes" ~
                              hourly+
                              college, 
                            design = wmt_wgt_dei,
+                           maxit = 50,
                            family = quasibinomial)
 
 donate_reg_wmt_dei <- svyglm(ehf_donation=="Yes" ~

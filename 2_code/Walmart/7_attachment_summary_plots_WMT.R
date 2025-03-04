@@ -10,6 +10,12 @@ attach.index.out.tab<-wmt_unwgt %>%
   summarise(attachment = survey_mean(attachment_index, vartype="ci"),
             n = unweighted(n()))
 
+attach.index.out.tab.placebo<-wmt_unwgt %>% 
+  group_by(treatment_placebo) %>%
+  summarise(attachment = survey_mean(attachment_index, vartype="ci"),
+            n = unweighted(n()))
+
+
 attach.index.full.out<-wmt_unwgt %>% 
   group_by(treatment_full) %>%
   summarise(attachment = survey_mean(attachment_index, vartype="ci"),
@@ -30,31 +36,34 @@ attach.index.out<-data.frame(
   with(wmt, 
        rbind(
          -MeanDiffCI(attachment_index ~ treatment_bin),  # - b/c order of difference.  care with upper, lower CI bounds
-         -MeanDiffCI(attachment_index ~ treatment_full,  subset = treatment_full %in% c("ctrl", "vid0")),
+         -MeanDiffCI(attachment_index ~ treatment_placebo, subset = treatment_placebo %in% c("control", "placebo")),  # - b/c order of difference.  care with upper, lower CI bounds
+         -MeanDiffCI(attachment_index ~ treatment_placebo, subset = treatment_placebo %in% c("control", "treatment")),  
+         #-MeanDiffCI(attachment_index ~ treatment_full,  subset = treatment_full %in% c("ctrl", "vid0")),
          -MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidChar")),
          -MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidSolid"))
          )
      )
 )
 attach.index.out$trt <- factor(
-  c("pooled", "placebo", "charity", "solidarity"),
-  levels = c("pooled", "placebo", "charity", "solidarity")
+  c("pooled", "placebo-control", "treated-control", "charity-control", "solidarity-control"),
+  levels = c("pooled", "placebo-control", "treated-control", "charity-control", "solidarity-control")
 )
 
 
 attach.index.hq.out<-data.frame(
-  rbind(
-    -MeanDiffCI(attachment_index ~ treatment_bin, data = wmt.hq),
-    -MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vid0")),
-    -MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vidChar")),
-    -MeanDiffCI(attachment_index ~ treatment_full, data = wmt.hq, subset = treatment_full %in% c("ctrl", "vidSolid"))
+  with(wmt.hq, 
+       rbind(
+         -MeanDiffCI(attachment_index ~ treatment_bin),  # - b/c order of difference.  care with upper, lower CI bounds
+         -MeanDiffCI(attachment_index ~ treatment_placebo, subset = treatment_placebo %in% c("control", "placebo")),  # - b/c order of difference.  care with upper, lower CI bounds
+         -MeanDiffCI(attachment_index ~ treatment_placebo, subset = treatment_placebo %in% c("control", "treatment")),  
+         #-MeanDiffCI(attachment_index ~ treatment_full,  subset = treatment_full %in% c("ctrl", "vid0")),
+         -MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidChar")),
+         -MeanDiffCI(attachment_index ~ treatment_full, subset = treatment_full %in% c("ctrl", "vidSolid"))
+       )
   )
 )
 
-attach.index.hq.out$trt <- factor(
-  c("pooled", "placebo", "charity", "solidarity"),
-  levels = c("pooled", "placebo", "charity", "solidarity")
-)
+attach.index.hq.out$trt <- attach.index.out$trt
 
 
 p.ai_wmt_bin <- ggplot(attach.index.out, aes(x = trt, y = meandiff)) +
