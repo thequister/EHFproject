@@ -2,6 +2,13 @@
 #source("2_data_format.R")
 
 
+ee.out.placebo <-wmt_unwgt %>% 
+  group_by(treatment_placebo, emergency_expense_num) %>%
+  summarise(finsec = survey_mean(proportion=TRUE, vartype="ci"),
+            w_n = n(),
+            n = unweighted(n()))
+
+
 ee.out<-wmt_unwgt %>% 
   group_by(treatment_full, emergency_expense_num) %>%
   summarise(finsec = survey_mean(proportion=TRUE, vartype="ci"),
@@ -39,7 +46,7 @@ p.ord<- p.ord + geom_col(position = dodge, alpha = 0.2) +
                      labels = c("1" ="definitely can't cover $400",
                                 "2"="","3"="",
                                 "4"="can definitely cover $400")) +
-  labs(title = "Financial insecurity by EHF treatment",
+  labs(title = "Financial insecurity by EHF treatment, Walmart sample",
        x = NULL, y = "% treatment group") +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
   scale_fill_discrete(name="EHF treatment", 
@@ -71,7 +78,7 @@ p.bin<- p.bin + geom_col(position = dodge, alpha = 0.2) +
   scale_fill_discrete(name="EHF treatment", 
                       #breaks=c(0, 1),
                       labels=c("Control", "Treated")) +
-  scale_color_discrete(#name = "EHF treatment", 
+  scale_color_discrete(name = "EHF treatment", 
                        labels=c("Control", "Treated")) +
   theme(legend.position = "top",
         panel.grid = element_blank())
