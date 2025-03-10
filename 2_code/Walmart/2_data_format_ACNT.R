@@ -187,10 +187,15 @@ ACNT_uw <- ACNT_uw %>%
                                                                         "Somewhat seriously" ~ 0.5,
                                                                         "Very seriously" ~ 1),
                 .names = "{.col}_num")) %>%
-  mutate(ehf_hire_bin = (hire_benefits_emerg != "Not seriously"),
-  ehf_hire_relative = 
-    hire_benefits_emerg_num/rowSums(across(hire_benefits_pto_num:hire_benefits_tuition_num)), #what percentage of overall score
-  ehf_hire_relative = ifelse(is.na(ehf_hire_relative), 0, ehf_hire_relative), 
+  mutate(ehf_hire_bin = (hire_benefits_emerg != "Not seriously")) |>
+  rowwise() |>  # This ensures that the operations are performed row by row
+  mutate(ehf_hire_relative = hire_benefits_emerg_num - mean(
+    c_across(c(hire_benefits_pto_num, hire_benefits_health_num, 
+      hire_benefits_retire_num, hire_benefits_parent_num, 
+      hire_benefits_union_num,
+      hire_benefits_tuition_num)), na.rm=T)) |>
+  #ehf_hire_relative =   #old code; replaced by JSA
+   # hire_benefits_emerg_num/rowSums(across(hire_benefits_pto_num:hire_benefits_tuition_num)), #what percentage of overall score
   ideology_answered = ifelse(ideology == "Haven’t thought much about this", NA, ideology),
   ideology_conlib = fct_rev(factor(ideology_answered, 
                            levels = 
