@@ -128,6 +128,8 @@ for(i in which(colnames(gr_clean) %in% govt_bin_names)){
   attr(gr_clean[[i]], "description") <- "Binary version of responses to question: People have different views on the responsibilities of government. How much responsibility do you think the US government should have for ensuring  a reasonable standard of living for each of the following groups?"
 }
 
+attr(gr_clean$ehf_hire_relative, "description") <- "The difference between hire_benefits_emerg_num and the with-respondent average for all other hire_benefits variables (not including hire_benefits_emerg_num)."
+
 attr(gr_clean$college, "description") <- "Did the respondent report education of at least completed College degree."
 attr(gr_clean$male, "description") <- "Did the respondent identify as male."
 attr(gr_clean$nonwhite, "description") <- "Did the respondent identify as non-white."

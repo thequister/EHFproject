@@ -153,6 +153,8 @@ for(i in which(colnames(ACNT_clean) %in% hire_ben_names)){
   attr(ACNT_clean[[i]], "description") <- "Binary indicator of responses to the question: Imagine another retailer was hiring, paying the same wage you are earning at Walmart. The new job has a commute that is 10 minutes longer but has better benefits. How seriously would you consider this offer, if the better benefits were: [listed benefit in variable name]."
 }
 
+attr(ACNT_clean$ehf_hire_relative, "description") <- "The difference between hire_benefits_emerg_num and the with-respondent average for all other hire_benefits variables (not including hire_benefits_emerg_num)."
+
 attr(ACNT_clean$ideology_conlib, "description") <- "Responses to ideology question, among those who did not refuse to respond."
 attr(ACNT_clean$ideology_conlib_num, "description") <- "Numerical version of ideology_conlib variable, bound to [0, 1] from most conservative (0) to most liberal (1)."
 
