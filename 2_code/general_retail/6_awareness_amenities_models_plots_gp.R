@@ -1,7 +1,89 @@
-#source("1_libraries_and_settings.R")
+#source(here::here('2_code', 'general_retail', '1_libraries_and_settings_gr.R'))
 #source("2_data_format.R")
+# 
 
-#still need HQ sample analysis
+genpop <- read_csv(here("3_cleaned_data", "general_retail_clean.csv"))
+
+#Amenities
+
+genpop$hire_benefits_pto_num <- as.ordered(genpop$hire_benefits_pto_num)
+genpop$hire_benefits_health_num <- as.ordered(genpop$hire_benefits_health_num)
+genpop$hire_benefits_retire_num <- as.ordered(genpop$hire_benefits_retire_num)
+genpop$hire_benefits_parent_num <- as.ordered(genpop$hire_benefits_parent_num)
+genpop$hire_benefits_union_num <- as.ordered(genpop$hire_benefits_union_num)
+genpop$hire_benefits_emerg_num <- as.ordered(genpop$hire_benefits_emerg_num)
+genpop$hire_benefits_tuition_num <- as.ordered(genpop$hire_benefits_tuition_num)
+
+# Reshape the data
+long_df <- genpop %>%
+  pivot_longer(cols = c(hire_benefits_pto_num, hire_benefits_health_num, hire_benefits_retire_num,
+                        hire_benefits_parent_num, hire_benefits_union_num, hire_benefits_emerg_num, 
+                        hire_benefits_tuition_num),
+               names_to = "benefit_type", values_to = "level")
+
+# Calculate proportions of level "1" for each benefit_type
+proportions_uw <- long_df %>%
+  group_by(benefit_type) %>%
+  summarise(prop = mean(level == "1"), .groups = "drop") %>%
+  arrange(desc(prop))  # Sort by descending order of proportion
+
+proportions_w <- long_df %>%
+  group_by(benefit_type) %>%
+  summarise(prop = weighted.mean(level == "1", acs_weight_trim), .groups = "drop") %>%
+  arrange(desc(prop))  # Sort by descending order of proportion
+
+
+
+# Use the ordered proportions to sort the factor levels in the plot
+long_df$benefit_type <- factor(long_df$benefit_type, levels = proportions_uw$benefit_type)
+long_df$benefit_type_w <- factor(long_df$benefit_type, levels = proportions_w$benefit_type)
+
+# Custom labels for the x-axis
+labels <- c(hire_benefits_pto_num = "Paid Time Off",
+            hire_benefits_health_num = "Health Insurance",
+            hire_benefits_retire_num = "Retirement Plan",
+            hire_benefits_parent_num = "Paid Family Leave",
+            hire_benefits_union_num = "Union Representation",
+            hire_benefits_emerg_num = "Emergency Cash Support",
+            hire_benefits_tuition_num = "Tuition Assistance")
+legend_labels <- c('1' = 'Serious', '0.5' = 'Some', '0' = 'None') 
+colors <- RColorBrewer::brewer.pal(3, "Set2")
+
+# Plot
+amenity_plot_gp <- ggplot(long_df, aes(x = benefit_type, fill = level)) +
+  geom_bar(position = "stack") +
+  scale_x_discrete(labels = labels) +
+  #scale_fill_discrete(name = "", 
+  #                    labels = legend_labels)+
+  scale_fill_manual(values = colors, name = "", labels = legend_labels) +
+  labs(
+    title = "Level of interest in new job with longer commute but better amenities",
+    x = "Amenity",
+    y = "Count", 
+    fill = "Interest") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x labels for readability
+
+
+amenity_plot_w_gp <- ggplot(long_df, aes(x = benefit_type_w, fill = level)) +
+  geom_bar(aes(weight = acs_weight_trim), position = "stack") +
+  scale_x_discrete(labels = labels) +
+  #scale_fill_discrete(name = "", 
+  #                    labels = legend_labels)+
+  scale_fill_manual(values = colors, name = "", labels = legend_labels) +
+  labs(
+    title = "Level of interest in new job with longer commute but better amenities",
+    x = "Amenity",
+    y = "Count", 
+    fill = "Interest") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x labels for readability
+
+ggsave(filename = here::here("4_output", "plots", "amenities_gp.pdf"),
+       plot = amenity_plot_gp)
+ggsave(filename = here::here("4_output", "plots", "amenities_gp_wgt.pdf"),
+       plot = amenity_plot_w_gp)
+
+
+
 
 aware_reg_list_wmt<-svyglm(ehf_aware_pretr ~
                     age_clean +
