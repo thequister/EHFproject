@@ -6,7 +6,7 @@ ACNT_clean <- read_csv(here("3_cleaned_data", "ACNT_clean.csv"))
 
 # Create initial balance table
 demos <- ACNT_clean %>%
-  select(multiple_jobs, fulltime, hourly, ehf_aware_pretr, 
+  select(multiple_jobs, fulltime, ehf_aware_pretr, 
          voted, college, male, nonwhite, practice_religion_bin, 
          identify_religion_bin, healthcare, ideology_conlib, home_ownership, pph, manager, member_union, treatment_full) %>%
   mutate(across(c(multiple_jobs:home_ownership, manager, member_union), factor)) %>%
@@ -18,6 +18,12 @@ demos <- ACNT_clean %>%
                                               "Conservative",
                                               "Extremely conservative"),
                                           ordered = T)))
+# please look at cobalt::bal.tab( )
+
+
+summary(estimatr::lm_robust(treatment_full == "vid0"  ~., data=demos))
+summary(estimatr::lm_robust(treatment_full == "vidChar"  ~., data=demos))
+summary(estimatr::lm_robust(treatment_full == "vidSolid"  ~., data=demos))
 
 datasummary_balance(~ treatment_full, demos, output = here("4_output", "ACNT_balance_tab.html"))
 
