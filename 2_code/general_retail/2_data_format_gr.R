@@ -219,8 +219,6 @@ gr <- gr %>%
                           "At least $25,000 but less than $35,000 per year" ~ 25,
                           "At least $15,000 but less than $25,000 per year" ~ 15,
                           "Less than $15,000 per year"~ 0, .default = NA),
-  across(c(ehf_offer_thd:ehf_offer_costco), ~(. == "Offers an EHF"),
-         .names = "{.col}_bin"),
   ehf_support_new = factor(ehf_support_new, levels = 
                                c("Not at all supportive",
                                  "Moderately supportive",
@@ -273,7 +271,12 @@ gr <- gr %>%
     ehf_wrk_exist %in% c("Workers control the fund with management input", "Only workers control the fund"),
     TRUE,
     FALSE),
-  )
+  across(c(ehf_offer_thd:ehf_offer_costco), ~(. == "Offers an EHF"),
+         .names = "{.col}_bin")) %>%
+  rowwise() %>%
+  mutate(ehf_offer_crct = sum(c_across(ehf_offer_thd_bin:ehf_offer_kohls_bin)) + (ehf_offer_costco == "Does not offer an EHF"), 
+         ehf_offer_ans = sum(c_across(ehf_offer_thd:ehf_offer_costco) != "Not Sure"), 
+         ehf_offer_percent = 100*ifelse(ehf_offer_ans == 0, 0, ehf_offer_crct/ehf_offer_ans))
 
 pca_att_dt <- gr %>%
   select(emp_loyal_num, wrk_loyal_num, emp_reco_num, new_job_num) %>%

@@ -180,6 +180,10 @@ attr(gr_clean$ehf_wrk_exist_bin, "description") <- "Binary version of ehf_wrk_ex
 attr(gr_clean$acs_weight, "description") <- "Weights calculated as the PUMS weighted proportion of ACS respondents over the proportion of respondents in the survey, using education, gender, race, and age bins."
 attr(gr_clean$acs_weight_trim, "description") <- "Weights trimmed to [0.4, 2.5]."
 
+attr(gr_clean$ehf_offer_ans, "description") <- "Number of companies for which respondent had an opinion as to whether they offer an EHF."
+attr(gr_clean$ehf_offer_crct, "description") <- "Number of companies for which respondent correctly identified whether they offer an EHF."
+attr(gr_clean$ehf_offer_percent, "description") <- "Percentage of correct responses over all complete (non-DK) responses to whether a company offers an EHF."
+
 
 output_codebook <- codebook(
   df = gr_clean,
