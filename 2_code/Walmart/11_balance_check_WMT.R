@@ -1,3 +1,14 @@
+###
+#created on: 12/30/24
+#last updated: 03/16/25
+#updated by: TNt
+###
+# Purpose: This code outputs a balance table for the ACNT survey.
+# Output:
+## balance_tab_ACNT: kableExtra object to be used by other code
+## ACNT_balance_tab.html: html version of the above table
+###
+
 library(here)
 source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
 here::i_am("2_code/Walmart/11_balance_check_WMT.R")
@@ -14,19 +25,6 @@ ACNT_clean <- ACNT_clean %>%
                                               "Conservative",
                                               "Extremely conservative"),
                                           ordered = T)))
-
-# a <- cobalt::bal.tab(demos, treat = ACNT_clean$treatment_bin, weights = ACNT_clean$rk_wgt_trim)
-# print(a)
-# 
-# summary(estimatr::lm_robust(treatment_full == "vid0"  ~., data=demos))
-# summary(estimatr::lm_robust(treatment_full == "vidChar"  ~., data=demos))
-# summary(estimatr::lm_robust(treatment_full == "vidSolid"  ~., data=demos))
-# 
-# datasummary_balance(~ treatment_bin, demos, output = here("4_output", "ACNT_balance_tab.html"))
-# 
-# datasummary_balance(~ treatment_bin, demos)
-# 
-# balance_table(demos, treatment = ACNT_clean$treatment_bin)
 
 ### Balance Table -------------------------------------------------------------
 
@@ -81,27 +79,14 @@ balance.data <- data.frame(varnames,
 names(balance.data) <- c("Variables", "Type", "Standardized Mean Difference", "KS Test Statistic",
                          "T-Test P-Value")
 
-stargazer(balance.data, summary = F, rownames = F)
-
-kableExtra::kable(balance.data, format.args = list(big.mark = ","),
+balance_tab_ACNT <- kableExtra::kable(balance.data, format.args = list(big.mark = ","),
                   digits = 4,
                   align = c("l", "l", rep("r", 3)),
                   caption = "ACNT Balance Table") %>%
   kableExtra::kable_styling(full_width = F, position = "center") %>%
-  kableExtra::row_spec(0, bold = T) %>%
-  kableExtra::save_kable(file = "4_output/ACNT_balance_tab.html", self_contained = T)
+  kableExtra::row_spec(0, bold = T)
 
-# demos <- ACNT_clean %>%
-#   select(multiple_jobs, hourly, fulltime, ehf_aware_pretr, 
-#          voted, college, male, nonwhite, practice_religion_bin, 
-#          identify_religion_bin, healthcare, home_ownership, manager, member_union, treatment_full) %>%
-#   na.omit()
-# 
-# sparse <- polr(as.factor(treatment_full) ~ 1, demos)
-# full <- polr(as.factor(treatment_full) ~ ., demos)
-# 
-# summary(full)
-# 
-# anova(full, sparse)
-# 
-# a <- stepAIC(full)
+cat(knitr::kable(balance_tab_ACNT, format = 'markdown'), file = "4_output/ACNT_balance_tab.md")
+
+kableExtra::save_kable(balance_tab_ACNT, file = "4_output/ACNT_balance_tab", self_contained = T)
+
