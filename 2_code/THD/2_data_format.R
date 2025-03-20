@@ -111,7 +111,7 @@ rec <- recipe(~ emp_loyal_num + wrk_loyal_num +emp_reco_num,
 
 pca_att_dt_knn<-bake(rec, new_data = NULL)   
 
-pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
+#pca_pr <- prcomp(pca_att_dt2, scale = T, center=T)
 pca_pr_knn <- prcomp(pca_att_dt_knn, scale = T, center=T)
 #pca_pr_knn$rotation # 1PC is negatively loading on all items so reverse scaling
 
