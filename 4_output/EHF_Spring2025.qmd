@@ -190,12 +190,13 @@ The Home Depot is clearly not representative of all firms or even all firms that
 
 
 # Study 2
+## Case selection
+
+To answer more detailed questions about EHF awareness and engagement as well as conduct meaningful survey-based experiments, we fielded an original survey of workers at one large, non unionized US retailer, The Home Depot.  The Home Depot is an attractive case for numerous reasons.  It operates nationwide and reports 418,000 "associates" in the US in 2022, making it feasible to recruit a sizable survey sample [@THD_AR_2022]. It enters the National Retail Federation's ranking of retailers at number five by revenue.  The Home Depot's EHF--The Homer Fund--is among the oldest known; it has been in continuous operation since 1999 and it is managed in-house.  It is also among the more generous programs, with a maximum grant amount of \$10,000 and the ability to apply repeatedly (conditional on a qualifying emergency).  The Homer Fund is a sizable program, reporting disbursements of \$21.2 million to over 12,000 workers in the 2022 fiscal year [@THD_ESG_2022].  The fund claims that it has disbursed $230 million to 164,000 employees since inception to 2022.  Most importantly for my purposes, The Home Depot maintains an aggressive internal outreach and marketing effort to solicit worker donations and engagement with the Homer Fund.  The Homer Fund manages a dedicated website and YouTube channel with numerous professional-quality testimonial videos along with active social media accounts aimed at workers.  The Home Depot runs regular donation drives in which different stores compete with one another to generate participation and donation dollars for the EHF.  And the Homer Fund prides itself on worker participation; their website states that a "majority of contributions" come from "associates."^[https://corporate.homedepot.com/page/homer-fund-0]  I exploit these corporate outreach messages in the survey experiment described below.  
+
+The Home Depot is clearly not representative of all firms or even all firms that maintain EHFs.  It is larger and puts more effort and resources behind its EHF, having done so for longer than most firms.  I therefore view the Home Depot as a extreme case; worker awareness at the Home Depot likely approaches the upper bound of what is achievable among US retail employers.
 
 ## The sample and survey
-
-This paper reports on a survey of workers at one large, non unionized US retailer, The Home Depot.  The Home Depot is an attractive case for numerous reasons.  It operates nationwide and reports 418,000 "associates" in the US in 2022, making it feasible to recruit a sizable survey sample [@THD_AR_2022]. It enters the National Retail Federation's ranking of retailers at number five by revenue.  The Home Depot's EHF--The Homer Fund--is among the oldest known; it has been in continuous operation since 1999 and it is managed in-house.  It is also among the more generous programs, with a maximum grant amount of \$10,000 and the ability to apply repeatedly (conditional on a qualifying emergency).  The Homer Fund is a sizable program, reporting disbursements of \$21.2 million to over 12,000 workers in the 2022 fiscal year [@THD_ESG_2022].  The fund claims that it has disbursed $230 million to 164,000 employees since inception.  Most importantly for my purposes, The Home Depot maintains an aggressive internal outreach and marketing effort to solicit worker donations and engagement with the Homer Fund.  The Homer Fund manages a dedicated website and YouTube channel with numerous professional-quality testimonial videos along with active social media accounts aimed at workers.  The Home Depot runs regular donation drives in which different stores compete with one another to generate participation and donation dollars for the EHF.  And the Homer Fund prides itself on worker participation; their website states that a "majority of contributions" come from "associates."^[https://corporate.homedepot.com/page/homer-fund-0]  I exploit these corporate outreach messages in the survey experiment described below.  
-
-The Home Depot is clearly not representative of all firms or even all firms that maintain EHFs.  It is larger and puts more effort and resources behind its EHF, having done so for longer than most firms.  I therefore view the Home Depot as a extreme case; worker awareness at the Home Depot likely approaches the upper bound of what is achievable among US retail employers.      
 
 Constructing a matched worker-employer survey sample is quite challenging.  In designing this study, I follow @schneider_whats_2019 and use ads on the Facebook and Instagram platforms targeted at users 18+ based on their Facebook-reported status as Home Depot employees.  @schneider_whats_2019 show that this strategy has considerable promise, providing accurate estimates of the employee population of a large number of retail firms.  But the Facebook strategy has the primary drawback of sample selection.  I follow @schneider_whats_2019 and construct raking weights using the Facebook-reported gender and age distributions for Facebook/Instagram users who report employment at the Home Depot.  Recent work shows that Facebook-reported age and gender appear quite accurate [@grow_is_nodate]. I report weighted analysis for the descriptive quantities, but use the unweighted sample when analyzing the survey experiment.
 
@@ -232,8 +233,13 @@ aware_tab<-summarise(THD_comp,
           know.prop = survey_mean(HF_know=="Yes", na.rm=T),  # too many NAs
           applied.prop = survey_mean(HF_applied=="Yes", na.rm=T),
          received.prop = survey_mean(HF_received=="Yes", na.rm=T),
-         donated.prop = survey_mean(HF_donate=="Yes", na.rm=T)
+         donated.prop = survey_mean(HF_donate=="Yes", na.rm=T),
+         eligible.prop = survey_mean(Q4.2=="Yes", na.rm=T),
           )
+takeup <- THD_comp |> 
+  filter(HDTreatment != "cntrl", Q4.2 == "Yes") |> 
+  summarize(takeup.prop = survey_mean(HF_applied == "Yes"))
+
 aware_tab_uw<-summarise(THD_comp_uw, 
           aware.prop.l = mean(EHF_aware_list), 
           aware.prop.s = mean(EHF_aware_simp=="Yes", na.rm=T),
@@ -254,13 +260,13 @@ aware_know_xt <- svytable(~EHF_aware_list + HF_know, THD_comp, round=T)
 aware_donate_xt <- svytable(~EHF_aware_list + HF_donate, THD_comp, round=T)
 ```
 
-I look at three different quantities to measure worker awareness of the EHF. First, the survey contains an embedded survey experiment (discussed in detail below). Control group respondents saw no information about the EHF in the survey.  For the first measure of awareness, I look at the proportion of control group respondents who answer "yes" to a direct question about whether their employer has an EHF.^[The exact question wording was "Some companies have programs that take donations and provide emergency cash to help workers like you through hard times. Does The Home Depot offer a program like this for workers like you?"]  On this basis, I estimate the weighted proportion of control-condition respondents who report knowing about the EHF as `r round(aware_tab$aware.prop.s,2)` (se = `r round(aware_tab$aware.prop.s_se,2)`). Second, prior to the experimental treatment, we gave _all_ respondents a list of eight work-related benefits their employer might offer and asked them to select all that are available to "workers like you." Among the possible answers was "cash grants to help in times of emergency."  The proportion of respondents selecting this answer provides a parallel measure for EHF awareness available for all survey respondents.  I estimate that `r 100*round(aware_tab$aware.prop.l,2)`% (se = `r 100*round(aware_tab$aware.prop.l_se,2)`%) were aware of a cash grant program.^[Using this measure of awareness, we estimate that 58% of the control condition respondents are aware.]    
+I look at three different quantities to measure worker awareness of the EHF.  Our preferred measure comes from a list of eight work-related benefits or programs presented to respondents.^[I discuss the other indicators of awareness and compare them with the preferred "list" measure in \@ref(app-HFaware).]  They were asked to select all available to "workers like you." Among the possible answers was "cash grants to help in times of emergency."  The proportion of respondents selecting this answer provides a measure for EHF awareness available for all survey respondents without contaminating the later survey experiment.  I estimate that `r 100*round(aware_tab$aware.prop.l,2)`% (se = `r 100*round(aware_tab$aware.prop.l_se,2)`%) were aware of a cash grant program.^[Using this measure of awareness, we estimate that 58% of the control condition respondents are aware.]  
 
-The difference in estimated awareness produced by the the first two measurement strategies is striking.  Among those in the control group correctly answering "yes" to the direct question about their employer's EHF, `r round(100*aware_xt["FALSE","Yes"]/sum(aware_xt[,"Yes"]),0)`% _failed_ to identify the cash grant program as one of their job benefits whereas nearly all of those correctly choosing the cash grant program from the list of benefits also correctly answered direct question.  Consequently, I interpret the lower estimate based on the "list" question as the more accurate reflection of EHF awareness. I use responses to this question as the indicator of awareness in the analysis below.  By way of comparison, in a separate, Fall 2022 survey of front line workers in five industries (including retail), we asked respondents about the benefits available at their main job using the same "list" method just described [@AGT_youngworkers; @WERNsurvey2023].  Twelve percent (12%) of that sample and 13% of retail workers reported that their employer had an emergency cash grant program.  Awareness at the Home Depot seems exceptionally high.      
+By way of comparison, in a separate, Fall 2022 survey of front line workers in five industries (including retail), we asked respondents about the benefits available at their main job using the same "list" method just described [@AGT_youngworkers; @WERNsurvey2023].  Twelve percent (12%) of that sample and 13% of retail workers reported that their employer had an emergency cash grant program.  Awareness at the Home Depot seems exceptionally high.      
 
-As a third indicator of awareness, I asked respondents in the EHF treatment groups whether they know personally someone who has received money from the EHF.  We find that `r round(100*aware_tab$know.prop,1)`% (se = `r round(100*aware_tab$know.prop_se,1)`%) claim to know someone who has gotten money from the program.  I consider this a remarkably high number, but when we again look at the respondents saying they know someone who received EHF money to those identifying the cash grant program from the list of benefits, we find that `r round(100*aware_know_xt["FALSE","Yes"]/sum(aware_know_xt[,"Yes"]),0)`% _failed_ to identify the cash grant program as one of their job benefits.  
+As indicators of engagement, we asked whether respondents had donated to, applied to, received money from, and know personally someone who has received money from the EHF.^[The donation and grant receipt questions were asked of all respondents while the applied and "know someone" questions were asked only of treatment group respondents, post-treatment.]     A remarkable `r round(100*aware_tab$donated.prop,1)`% (se = `r round(100*aware_tab$donated.prop_se,1)`%) of respondents reported that they had donated.  Roughly 30% of the respondents indicating donation fail to identify emergency cash grants as a benefit their employer offers.  We find that `r round(100*aware_tab$know.prop,1)`% (se = `r round(100*aware_tab$know.prop_se,1)`%) claim to know someone who has gotten money from the program.  I consider this a remarkably high number. 
 
-As indicators of engagement, we asked whether respondents had donated to, applied to, and received money from the EHF.^[The donation and grant receipt questions were asked of all respondents while the applied question was asked only of treatment group respondents.]     A remarkable `r round(100*aware_tab$donated.prop,1)`% (se = `r round(100*aware_tab$donated.prop_se,1)`%) of respondents reported that they had donated.  Again, roughly 30% of the respondents indicating donation fail to identify emergency cash grants as a benefit their employer offers. Application and grant receipt estimates are also quite high.  Among our respondents we find that, respectively, `r round(100*aware_tab$applied.prop)`% and  `r round(100*aware_tab$received.prop)`% applied for and received EHF grants.
+Application and grant receipt estimates are also quite high.  Among our respondents we find that, respectively, `r round(100*aware_tab$applied.prop)`% and  `r round(100*aware_tab$received.prop)`% applied for and received EHF grants.  Survey self-reports indicate that `r round(100*aware_tab$eligible.prop)`% experienced an event in the last 12 months that would make them potentially eligible for and HF grant.  Of that group, `r round(100*takeup$takeup.prop)`% applied to the HF.
 
 Taken together with the awareness results and consistent with the messaging around the Homer Fund donation drives, it appears that workers at this firm are aware of a charitable endeavor that relates to their coworkers.  But worker awareness of the program's _benefit_ function appears relatively thin.
 
@@ -465,7 +471,7 @@ EHFs also provide an interesting area for potential collaboration between employ
 
 # (APPENDIX) Appendix {-}
 
-# Survey summary table (unweighted) {#app-survsum-uw}
+# Home Depot Survey summary table (unweighted) {#app-survsum-uw}
 
 ```{r tab-sum-uw, echo=FALSE, tab.cap="Survey summary (unweighted)"}
 tbl_sum_1<- 
@@ -512,7 +518,7 @@ tbl_sum_2 |>
 
 \newpage
 
-# Survey summary table (weighted){#app-survsum-w}
+# Home Depot Survey summary table (weighted){#app-survsum-w}
 
 ```{r tab-sum-w, echo=FALSE, tab.cap="Survey summary (weighted)"}
 
@@ -560,7 +566,17 @@ tbl_sum_2 |>
 
 \newpage
 
-# Difficulty paying bills {#app-bills}
+# Home Depot EHF awareness measures {#app-HFaware}
+
+Other measures of EHF awareness for Home Depot respondents: Control group respondents saw no information about the EHF in the survey.  For the first measure of awareness, I look at the proportion of control group respondents who answer "yes" to a direct question about whether their employer has an EHF.^[The exact question wording was "Some companies have programs that take donations and provide emergency cash to help workers like you through hard times. Does The Home Depot offer a program like this for workers like you?"]  On this basis, I estimate the weighted proportion of control-condition respondents who report knowing about the EHF as `r round(aware_tab$aware.prop.s,2)` (se = `r round(aware_tab$aware.prop.s_se,2)`).  The difference in estimated awareness produced by the this measure of awareness and the list approach used in the main text is striking.  Among those in the control group correctly answering "yes" to the direct question about their employer's EHF, `r round(100*aware_xt["FALSE","Yes"]/sum(aware_xt[,"Yes"]),0)`% _failed_ to identify the cash grant program as one of their job benefits whereas nearly all of those correctly choosing the cash grant program from the list of benefits also correctly answered direct question.  Consequently, I interpret the lower estimate based on the "list" question as the more accurate reflection of EHF awareness.
+
+When we look at the percent of respondents saying they know someone who received EHF money to those identifying the cash grant program from the list of benefits, we find that `r round(100*aware_know_xt["FALSE","Yes"]/sum(aware_know_xt[,"Yes"]),0)`% _failed_ to identify the cash grant program as one of their job benefits.
+
+These indicate that knowledge of the Homer Fund was "broad but thin"
+
+\newpage
+
+# Difficulty paying bills (Home Depot) {#app-bills}
 ```{r fig-bills, echo=FALSE, fig.cap="Subjective financial security"}
 temp<-here::here('1_code', 'THD', '4a_bills_summary_plots.R')
 source(temp)
@@ -571,7 +587,7 @@ p.ord
 ```
 \newpage
 
-# Reporting full covariate results {#app-cov}
+# Reporting full covariate results (Home Depot) {#app-cov}
 
 ```{r tab-app-full-cov, echo = FALSE, tab.cap = "Regression models with all covariates reported"}
 
@@ -616,7 +632,7 @@ modelsummary(uv_mnl_c_uw,
 
 \newpage
 
-# Ordered logistic regression models {#app-ol}
+# Ordered logistic regression models (Home Depot) {#app-ol}
 
 ```{r tab-app-ol, echo = FALSE, tab.cap = "Ordered logit versions of regression models"}
 
@@ -651,7 +667,7 @@ model_ol_uw
 
 \newpage
 
-# Placebos for UI support {#app-placebo}
+# Placebos for UI support (Home Depot) {#app-placebo}
 ```{r tab-placebo, echo=FALSE, tab.cap="Placebo regressions for UI"}
 
 placebo_tab
