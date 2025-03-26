@@ -1,9 +1,10 @@
 library(here)
 source(here::here('2_code', 'general_retail', '2_data_format_gr.R'))
-here::i_am("2_code/general_retail/3_weights_gr.R")
+source(here::here('2_code', 'general_retail', '3_weights_gr.R'))
+
+gr <- gr_clean
 
 #### EHF Aware Plot ----
-
 gr_pl1 <- gr %>%
   select(nonwhite, male, age_clean, college, tenure_fac, hourly, fulltime, ehf_prior_know) %>%
   mutate(age_bin = cut(age_clean, 
@@ -60,7 +61,6 @@ ggplot(plotdt, aes(x=group, y=ehf_prior_know, group=outcome, shape=outcome)) +
   xlab("") +
   ylim(0, 50) +
   coord_flip() +
-  theme_bw() +
   theme(legend.position = "")
   
 ggsave("4_output/plots/genpop_ehfaware_crosstab.pdf")
@@ -70,7 +70,7 @@ gr_pl1.5 <- gr %>%
 
 ggplot(data = gr_pl1.5) +
   geom_bar(aes(fill = ehf_prior_know, x = ehf_prior_know), position = "dodge", color = "black") +
-  theme_bw() +
+  
   scale_fill_brewer("", palette = "RdYlBu") +
   xlab("Prior Knowlegde of EHFs") +
   ylab("Count") +
@@ -102,7 +102,6 @@ ggplot(gr_pl2.1, aes(x = Q, y = per, fill = ans)) +
       ymax = per + 1.96*SE), 
     color = "black", position=position_dodge(.9), width = .2
   ) +
-  theme_bw() +
   scale_fill_brewer("", palette = "RdYlBu") +
   ggtitle("Worker support for EHF (weighted)") +
   ylab("Proportion") +
@@ -112,7 +111,21 @@ ggsave("4_output/plots/genpop_ehfsupport.pdf")
 
 # EHF Control Plot
 gr_pl2.2 <- gr %>%
-  select(ehf_wrk_exist, ehf_wrk_new, acs_weight_trim)
+  select(ehf_wrk_exist, ehf_wrk_new, acs_weight_trim) %>%
+  mutate(ehf_wrk_exist = factor(ehf_wrk_exist, levels = 
+                                  c("Only management controls the fund",
+                                    "Management control the fund with worker input",
+                                    "Workers and management share control equally",
+                                    "Workers control the fund with management input",
+                                    "Only workers control the fund"),
+                                ordered= TRUE), 
+         ehf_wrk_new =  factor(ehf_wrk_new, levels = 
+           c("Only management should control the fund",
+             "Management should control the fund with worker input",
+             "Workers and management should share control equally",
+             "Workers should control the fund with management input",
+             "Only workers should control the fund"),
+         ordered= TRUE))
 
 levels(gr_pl2.2$ehf_wrk_exist) <- c("Only management control", "More management control", 
                                   "Equal control", "More worker control", "Only worker control")
@@ -129,12 +142,14 @@ gr_pl2.2 <- gr_pl2.2 %>%
   filter(!is.na(ans)) %>%
   mutate(per = ifelse(Q == "ehf_wrk_exist", per/197, per/811),
          SE = ifelse(Q == "ehf_wrk_exist", sqrt(per*(1 - per)/197), sqrt(per*(1 - per)/811))) %>%
+  mutate(fac = case_match(Q, "ehf_wrk_exist" ~ "Actual control over existing EHF", 
+                        "ehf_wrk_new" ~ "Prefered control over new EHF")) %>%
   mutate(Q = case_match(Q, "ehf_wrk_exist" ~ "Employer has an EHF (N = 197)", 
                         "ehf_wrk_new" ~ "Employer does not have an EHF (N = 811)")) %>%
   mutate(ans = factor(ans, levels=c("Only management control", "More management control", 
                                     "Equal control", "More worker control", "Only worker control")))
 
-ggplot(gr_pl2.2, aes(x = Q, y = per, fill = ans)) +
+ggplot(filter(gr_pl2.2, fac == "Prefered control over new EHF"), aes(x = ans, y = per)) +
   geom_col(color = "black", position = "dodge") +
   geom_errorbar(
     aes(
@@ -142,11 +157,11 @@ ggplot(gr_pl2.2, aes(x = Q, y = per, fill = ans)) +
       ymax = per + 1.96*SE), 
     color = "black", position=position_dodge(.9), width = .2
   ) +
-  theme_bw() +
-  scale_fill_brewer("", palette = "RdYlBu") +
-  ggtitle("Worker preferences over EHF control (weighted estimates)") +
+  labs(title = "Preferences over worker control for hypothetical EHF", 
+       subtitle = "(N = 811, weighted estimates)") +
   ylab("Proportion") +
-  xlab("")
+  xlab("") +
+  theme(axis.text.x = element_text(size = 13))
 
 ggsave("4_output/plots/genpop_ehfcontrol.pdf")
 
@@ -184,7 +199,6 @@ ggplot(gr_pl3.1) +
             ymax = per + 1.96*SE), 
         color = "black", width = .2
     ) +
-  theme_bw() +
   ggtitle("Proportion of correct identification of whether company has an EHF (weighted)") +
   ylab("Proportion Correct")
   
@@ -215,7 +229,6 @@ ggplot(gr_pl3.2, aes(x = Q, y = per, fill = ans)) +
         ymax = per + 1.96*SE), 
     color = "black", position=position_dodge(.9), width = .2
   ) +
-  theme_bw() +
   scale_fill_brewer("", palette = "RdYlBu") +
   ggtitle("Does the company in question offer an EHF? (weighted)") +
   ylab("Proportion")

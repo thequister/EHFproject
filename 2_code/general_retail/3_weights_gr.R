@@ -1,5 +1,5 @@
 library(here)
-source(here::here('2_code', 'general_retail', '1_libraries_and_settings_gr.R'))
+source(here::here('2_code', '1_libraries_and_settings_global.R'))
 here::i_am("2_code/general_retail/3_weights_gr.R")
 
 gr_clean <- read.csv(here("3_cleaned_data", "general_retail_clean.csv"))

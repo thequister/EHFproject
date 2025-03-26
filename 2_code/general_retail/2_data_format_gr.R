@@ -1,5 +1,5 @@
 library(here)
-source(here::here('2_code', 'general_retail', '1_libraries_and_settings_gr.R'))
+source(here::here('2_code', '1_libraries_and_settings_global.R'))
 here::i_am("2_code/general_retail/2_data_format_gr.R")
 
 gr <- read_csv(here("0_raw_data", "general_retail", "general_retail_purged.csv"))
