@@ -471,15 +471,14 @@ Is unemployment insurance the appropriate policy to link with the EHF?  After al
 # Study 3
 ## Case selection and survey
 
-Do the results from Study 2 replicate at other large US retailers?  Or is the Home Depot something of an outlier?  Based on the results from Study 2, we conducted a third study, this time focusing on Walmart workers.  As another publicly traded, "big box" retailer, work practices and conditions at Walmart will be similar to the Home Depot. The two firms compete to some degree, including over workers.  Walmart has also seen union activism in some locations. Walmart is the largest retailer (and private sector employer) in the United States, over three times as large the Home Depot in employee headcount, making the social media recruitment strategy feasible.  With its size and ubiquity, Walmart employment benefits, programs, and procedures have an impact on the retail industry as a whole. 
+Do the results from Study 2 replicate at other large US retailers?  Or is the Home Depot something of an outlier?  Based on the results from Study 2, we conducted a third study, this time focusing on Walmart workers.  As another publicly traded, "big box" retailer, work practices and conditions at Walmart will be similar to the Home Depot. The two firms compete to some degree, including over workers.  Walmart has also seen union activism in some locations. Walmart is the largest retailer (and private sector employer) in the United States, over three times as large the Home Depot in employee headcount, making the social media recruitment strategy feasible.  With its size and ubiquity, Walmart job benefits, programs, and procedures have an impact on the retail industry as a whole. 
 
 As with the HF, Walmart's ACNT Together Fund is over 20 years old and managed in-house.  The EHF is available to both full- and part-time workers who have been at Walmart for at least one year.  As of 2021, ACNT claims to have disbursed over \$142 million to over 145,000 employees.  But the ACNT is substantially less generous than the HF and operates on a smaller scale, notwithstanding Walmart's considerably larger presence. And Walmart appears to engage in less internal promotion around its EHF.^[Interestingly, Walmart matches employee donations to the Walmart political action committee 2:1 with corporate donations to the Together Fund.  This was challenged but found legal by the Federal Election Commission in 2015.]  The ACNT Together Fund has a minimal social media presence.  Interviews with practitioners in the field also concurred that Walmart is perceived as less aggressive than the Home Depot in generating engagement with its EHF.    
-In fielding a survey of Walmart workers, I followed the same social media recruitment strategy as with the Home Depot.  Survey completers were offered the opportunity to enter a raffle for a $400 gift card.  The survey was in the field from XXX to XXX and produced `r nrow(wmt)` complete responses that passed screener and attention checks.  We produce raking weights for the Walmart sample in a manner analogous to the Home Depot and employ them below in the same way.
+In fielding a survey of Walmart workers, I followed the same social media recruitment strategy as with the Home Depot.  Survey completers were offered the opportunity to enter a raffle for a $400 gift card.  The survey was in the field from XXX to XXX and produced `r nrow(wmt)` complete responses that passed screener and attention checks.  We produce raking weights for the Walmart sample in a manner analogous to the Home Depot and employ them below in the same way.  Survey descriptives by treatment status appear in Appendix XX.
 
 The surveys in Studies 2 and 3 were very similar in question wording and ordering, but there were four main extensions in Study 3:  we asked about quit intentions and job amenities; we included a behavioral measure of donation to the EHF (clicking on a link to a donation page); we expanded the EHF survey experiment; and we sent a follow-up survey one week after survey completion to respondents who opted in to the incentive raffle.^[Respondents were sent emails to invite them into the follow-up survey, offering them a second entry into the raffle for follow-up completion.  Respondents were contacted a maximum of three times. We received valid followup responses from `r sum(!is.na(wmt$age_f))` or `r round(100*sum(!is.na(wmt$age_f)) /nrow(wmt))`% of those completing the main survey.] 
 
 ## ACNT awareness and engagement
-As expected, EHF awareness and engagement is substantially lower among the Walmart sample than among the Home Depot workers.  
 
 ```{r ACNT-aware-calcs, echo=FALSE}
 
@@ -488,38 +487,38 @@ source(temp)
 rm(temp)
 
 aware_tab_wmt<-summarise(wmt_wgt_f, 
-          aware.prop.l = survey_mean(EHF_aware_list), 
-          aware.prop.s = survey_mean(EHF_aware_simp=="Yes", na.rm=T),
-          know.prop = survey_mean(HF_know=="Yes", na.rm=T),  # too many NAs
-          applied.prop = survey_mean(HF_applied=="Yes", na.rm=T),
-         received.prop = survey_mean(HF_received=="Yes", na.rm=T),
-         donated.prop = survey_mean(HF_donate=="Yes", na.rm=T),
-         eligible.prop = survey_mean(Q4.2=="Yes", na.rm=T),
+          aware.prop = survey_mean(emerg_assist_benefits=="Yes"),
+          aware.prop.direct = survey_mean(ehf_exist == "Yes"),
+          know.prop = survey_mean(ehf_other_recip=="Yes", na.rm=T),
+          applied.prop = survey_mean(ehf_applied=="Yes", na.rm=T),
+         received.prop = survey_mean(ehf_received_all=="Yes", na.rm=T),
+         donated.prop = survey_mean(ehf_donation=="Yes", na.rm=T),
+         eligible.prop = survey_mean(emergency=="Yes", na.rm=T),
           )
-takeup <- THD_comp |> 
-  filter(HDTreatment != "cntrl", Q4.2 == "Yes") |> 
-  summarize(takeup.prop = survey_mean(HF_applied == "Yes"))
-
+takeup_wmt <- wmt_wgt_f |> 
+  filter(ehf_exist != "No", treatment_bin == FALSE, emergency == "Yes") |> 
+  summarize(takeup.prop = survey_mean(ehf_applied == "Yes"))
 
 ```
 
+As expected, EHF awareness and engagement is substantially lower among the Walmart sample than among the Home Depot workers. We find that `r round(100*aware_tab_wmt$aware.prop)`% (se = `r round(100*aware_tab_wmt$aware.prop_se)`) were aware of the ACNT. Of those who both knew about the ACNT _and_ experienced a qualifying event, `r round(100*takeup_wmt$takeup.prop)`% applied for a grant.  `r round(100*aware_tab_wmt$know.prop)`% (se = `r round(100*aware_tab_wmt$know.prop_se)`) claim to know a grant recipient and `r round(100*aware_tab_wmt$donated.prop)`% (se = `r round(100*aware_tab_wmt$donated.prop_se)`)  claim to have donated.
 
+Table \@ref(tab:tab-ACNT-aware) presents regression results for the correlates of awareness and engagement.  Consistent with the Home Depot results, job tenure is a consistently important predictor of awareness.  We also find that men are less engaged with  
 ```{r tab-ACNT-aware, eval=TRUE, echo = FALSE, tab.cap="ACNT awareness and engagement" }
 print(model_print_aware_wmt)
-
 ```
 
 
 ## Survey experiment 
 
-Based on the findings from the Home Depot, the experiment in the Walmart survey used only a video vingette treatment.  To make the video treatments as similar as possible across settings, I used the HF video as a script and visual template to then produce an original video adapted to the Walmart context using a paid actor.  The paid actor exhibited the same gender (male) and racial (white) expression as in the HF video.  The actor was also viewed as approximately the same age as the HF spokesperson, according to mTurk coders.^[The ACNT-adapted video was 41 seconds shorter than the HF video.  We achieved this by shortening or removing some interstitial and panning shots, not through any reduction in the spoken script beyond those parts that were only relevant to the Home Depot.  We also included text indicating that the speaker was an actor at the beginning of the video.]    
+Based on the findings from the Home Depot, the experiment in the Walmart survey used only a video vingette treatment.  In the absence of a Walmart-produced video and to make the video treatments as similar as possible across settings, I used the HF video as a script and visual template to then produce an original video adapted to the Walmart context using a paid actor.^[The paid actor exhibited the same gender (male) and racial (white) expression as in the HF video.  The actor was also viewed as approximately the same age as the HF spokesperson, according to mTurk coders. The ACNT-adapted video was 41 seconds shorter than the HF video.  We achieved this by shortening or removing some interstitial and panning shots, not through any reduction in the spoken script beyond those parts that were only relevant to the Home Depot.  We also included text indicating that the speaker was an actor at the beginning of the video.]    
 
-Respondents were randomly assigned to either treatment or control.  Within the control condition, respondents were randomly divided between the pure control and the placebo conditions.  The pure controls saw no additional information, just as in Study 2.  Respondents in the placebo condition watched a video in which the hired actor delivered a Walmart press release about the company's acquisition of Vizio.^[I also pre-registered a framing study, in which I slightly vary the framing of the treatment video.  Specifically, the "card" visible on the screen before the respondent clicks "play" differs, with the _solidarity_ framing displaying text emphasizing supporting other Walmart workers and the and the _charity_ framing displaying text emphasizing charitable donations to help those in need. The content of the video vingettes was otherwise identical across treatment groups.  As there was no detectable difference between these framings, I do not report on this in the main text.  Regression results demonstrating this for key outcomes appears in appendix [cite appendix].]  A manipulation check (see Appendix XX) confirms that the video treatment did, indeed increase respondent awareness of the ACNT, as expected.  There were no detectable differences between pure control and placebo groups in their (non-)effect.  Thus we display results for binary treatment/control in the analysis below. 
+Respondents were randomly assigned with equal probability to either treatment or control.  Within the control condition, respondents were randomly divided between the pure control and the placebo conditions.  The pure controls saw no additional information, just as in Study 2.  Respondents in the placebo condition watched a video in which the hired actor delivered a Walmart press release about the company's acquisition of Vizio.^[I also pre-registered a framing study, in which I slightly vary the framing of the treatment video.  Specifically, the "card" visible on the screen before the respondent clicks "play" differs, with the _solidarity_ framing displaying text emphasizing supporting other Walmart workers and the and the _charity_ framing displaying text emphasizing charitable donations to help those in need. The content of the video vingettes was otherwise identical across treatment groups.  As there was no detectable difference between these framings, I do not report on this in the main text.  Regression results demonstrating this for key outcomes appears in appendix [cite appendix].]  A manipulation check (see Appendix XX) confirms that the video treatment did, indeed increase respondent awareness of the ACNT, as expected.  There were no detectable differences between pure control and placebo groups in their (non-)effect.  Thus we display results for binary treatment/control in the analysis below. 
 
 
 ### Financial security and job attachment
 
-To summarize I construct an attachment index by taking the first principal component from a principal components analysis of the four questions, scaled so that larger values indicate greater attachment.^[The questions were loyalty to coworkers, loyalty to employer, willingness to recommend employer, and likelihood of looking for a new job in the next 3 months (revese coded).  The first principal component captured XX% of the variation across these variables.]  We analyze the various components of the attachment in  that  
+I construct an index of job attachment by conducting a principal components analysis of the four questions for job attachement, scaled so that larger values indicate greater attachment.^[The questions were loyalty to coworkers, loyalty to employer, willingness to recommend employer, and likelihood of looking for a new job in the next 3 months (revese coded).  The first principal component captured XX% of the variation across these variables.]  I then use the first principal component as the attachment index; analyzing the individual components separtely does not alter qualitative conclusions.  
 
 
 
