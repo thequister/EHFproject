@@ -63,80 +63,164 @@ ggplot(plotdt, aes(x=group, y=ehf_prior_know, group=outcome, shape=outcome)) +
   theme_bw() +
   theme(legend.position = "")
   
-ggsave("4_output/plots/genpop_ehfaware.pdf")
+ggsave("4_output/plots/genpop_ehfaware_crosstab.pdf")
 
-#### EHF Likert Plot -----
+gr_pl1.5 <- gr %>%
+  select(ehf_prior_know)
 
-# Code from https://scisley.github.io/articles/ggplot-likert-plot/
+ggplot(data = gr_pl1.5) +
+  geom_bar(aes(fill = ehf_prior_know, x = ehf_prior_know), position = "dodge", color = "black") +
+  theme_bw() +
+  scale_fill_brewer("", palette = "RdYlBu") +
+  xlab("Prior Knowlegde of EHFs") +
+  ylab("Count") +
+  theme(legend.position = "")
 
-gr_pl2 <- gr %>%
-  select(ehf_support_exist, ehf_wrk_new, ehf_support_new, ehf_wrk_exist) 
+ggsave("4_output/plots/genpop_ehfaware_simple.pdf")
 
-levels(gr_pl2$ehf_wrk_exist) <- c("Only management control", "More management control", 
+#### EHF Support + Control Plots -----
+
+# EHF Support Plot
+gr_pl2.1 <- gr %>%
+  select(ehf_support_exist, ehf_support_new, acs_weight_trim) %>%
+  pivot_longer(cols = c(ehf_support_exist:ehf_support_new), 
+               names_to = "Q", 
+               values_to = "ans") %>%
+  group_by(Q, ans) %>%
+  summarize(per=sum(acs_weight_trim)) %>%
+  filter(!is.na(ans)) %>%
+  mutate(per = ifelse(Q == "ehf_support_exist", per/197, per/811),
+    SE = ifelse(Q == "ehf_support_exist", sqrt(per*(1 - per)/197), sqrt(per*(1 - per)/811))) %>%
+  mutate(Q = case_match(Q, "ehf_support_exist" ~ "Employer has an EHF (N = 197)", 
+                        "ehf_support_new" ~ "Employer does not have an EHF (N = 811)"))
+
+ggplot(gr_pl2.1, aes(x = Q, y = per, fill = ans)) +
+  geom_col(color = "black", position = "dodge") +
+  geom_errorbar(
+    aes(
+      ymin = per - 1.96*SE, 
+      ymax = per + 1.96*SE), 
+    color = "black", position=position_dodge(.9), width = .2
+  ) +
+  theme_bw() +
+  scale_fill_brewer("", palette = "RdYlBu") +
+  ggtitle("Worker support for EHF (weighted)") +
+  ylab("Proportion") +
+  xlab("")
+
+ggsave("4_output/plots/genpop_ehfsupport.pdf")
+
+# EHF Control Plot
+gr_pl2.2 <- gr %>%
+  select(ehf_wrk_exist, ehf_wrk_new, acs_weight_trim)
+
+levels(gr_pl2.2$ehf_wrk_exist) <- c("Only management control", "More management control", 
                                   "Equal control", "More worker control", "Only worker control")
-levels(gr_pl2$ehf_wrk_new) <- c("Only management control", "More management control", 
+levels(gr_pl2.2$ehf_wrk_new) <- c("Only management control", "More management control", 
                                 "Equal control", "More worker control", "Only worker control")
 
-names(gr_pl2) <- c("Support for Existing EHF", "Control of Existing EHF", 
-                   "Support for New EHF", "Control of New EHF")
-
-gr_pl2 <- gr_pl2 %>%
-  gather("Q", "ans") %>%
-  filter(!is.na(ans)) %>%
+gr_pl2.2 <- gr_pl2.2 %>%
+  mutate(across(ehf_wrk_exist:ehf_wrk_new, ~ factor(.x, ordered = F))) %>%
+  pivot_longer(cols = c(ehf_wrk_exist:ehf_wrk_new), 
+               names_to = "Q", 
+               values_to = "ans") %>%
   group_by(Q, ans) %>%
-  summarize(n=n()) %>%
-  mutate(per = n/sum(n), ans = factor(ans, levels=c("Only management control", "More management control", 
-                                                    "Equal control", "More worker control", "Only worker control", 
-                                                    "Not at all supportive", "Moderately supportive", "Extremely supportive"))) %>%
-  arrange(Q, ans)
+  summarize(per=sum(acs_weight_trim)) %>%
+  filter(!is.na(ans)) %>%
+  mutate(per = ifelse(Q == "ehf_wrk_exist", per/197, per/811),
+         SE = ifelse(Q == "ehf_wrk_exist", sqrt(per*(1 - per)/197), sqrt(per*(1 - per)/811))) %>%
+  mutate(Q = case_match(Q, "ehf_wrk_exist" ~ "Employer has an EHF (N = 197)", 
+                        "ehf_wrk_new" ~ "Employer does not have an EHF (N = 811)")) %>%
+  mutate(ans = factor(ans, levels=c("Only management control", "More management control", 
+                                    "Equal control", "More worker control", "Only worker control")))
 
-stage1 <- gr_pl2 %>%
-  mutate(text = paste0(formatC(100 * per, format="f", digits=0), "%"),
-         cs = cumsum(per),
-         offset = sum(per[1:(floor(n()/2))]) + (n() %% 2)*0.5*(per[ceiling(n()/2)]),
-         xmax = -offset + cs,
-         xmin = xmax-per) %>%
-  ungroup()
-
-gap <- 0.2
-
-stage2 <- stage1 %>%
-  left_join(stage1 %>%
-              group_by(Q) %>%
-              summarize(max.xmax = max(xmax)) %>%
-              mutate(r = c(1, 2, 4, 3)),
-            by = "Q") %>%
-  arrange(desc(r)) %>%
-  mutate(ymin = r - (1-gap)/2,
-         ymax = r + (1-gap)/2) %>%
-  mutate(category = ifelse(grepl("Control", Q, fixed = T), "Worker Control", "EHF Support")) %>%
-  arrange(Q)
-
-percent <- c("-100%", "-75%", "-50%", "-25%", "0%", 
-             "25%", "50%", "75%", "100%")
-
-
-wrk_plot <- ggplot(filter(stage2, category == "Worker Control")) +
-  geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill=ans)) +
-  geom_text(aes(x=(xmin+xmax)/2, y=(ymin+ymax)/2, label=text), size = 3) +
-  scale_x_continuous("", labels=percent, breaks=seq(-1, 1, len=9), limits=c(-1, 1)) +
-  scale_y_continuous("", breaks = 1:2,
-                     labels=rev(filter(stage2, category == "Worker Control") %>% distinct(Q) %>% .$Q)) +
+ggplot(gr_pl2.2, aes(x = Q, y = per, fill = ans)) +
+  geom_col(color = "black", position = "dodge") +
+  geom_errorbar(
+    aes(
+      ymin = per - 1.96*SE, 
+      ymax = per + 1.96*SE), 
+    color = "black", position=position_dodge(.9), width = .2
+  ) +
+  theme_bw() +
   scale_fill_brewer("", palette = "RdYlBu") +
-  annotate("text", x=1, y=2, label= "N = 811") + 
-  annotate("text", x=1, y=1, label= "N = 197")
+  ggtitle("Worker preferences over EHF control (weighted estimates)") +
+  ylab("Proportion") +
+  xlab("")
 
-supp_plot <- ggplot(filter(stage2, category == "EHF Support")) +
-  geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill=ans)) +
-  geom_text(aes(x=(xmin+xmax)/2, y=(ymin+ymax)/2, label=text), size = 3) +
-  scale_x_continuous("", labels=percent, breaks=seq(-1, 1, len=9), limits=c(-1, 1)) +
-  scale_y_continuous("", breaks = 3:4,
-                     labels=rev(filter(stage2, category == "EHF Support") %>% distinct(Q) %>% .$Q)) +
-  scale_fill_brewer("", palette = "RdYlBu") + 
-  annotate("text", x=1, y=4, label= "N = 811") + 
-  annotate("text", x=1, y=3, label= "N = 197")
+ggsave("4_output/plots/genpop_ehfcontrol.pdf")
 
-plot2 <- grid.arrange(wrk_plot, supp_plot)
 
-ggsave("4_output/plots/genpop_ehfcontrol.pdf", plot = plot2)
+#### EHF Correct Attribution Plots ------
+gr_pl3 <- gr %>%
+  select("ehf_offer_thd", "ehf_offer_wal", "ehf_offer_stb", "ehf_offer_disn", "ehf_offer_kohls", "ehf_offer_costco", 
+         "ehf_offer_thd_bin", "ehf_offer_wal_bin", "ehf_offer_stb_bin", "ehf_offer_disn_bin", "ehf_offer_kohls_bin", "ehf_offer_costco_bin", "acs_weight_trim")
+  
+
+# Correct Identification plot
+gr_pl3.1 <- gr_pl3 %>%
+  select(ehf_offer_thd_bin:ehf_offer_costco_bin, acs_weight_trim) %>%
+  mutate(ehf_offer_costco_bin = 1 - ehf_offer_costco_bin) %>%
+  mutate(across(ehf_offer_thd_bin:ehf_offer_costco_bin, ~ .x * acs_weight_trim)) %>%
+  select(-acs_weight_trim) %>%
+  gather("Q", "ans") %>%
+  group_by(Q) %>%
+  summarize(n=sum(ans)) %>%
+  mutate(per = n/1008) %>%
+  mutate(SE = sqrt(per*(1 - per)/1008))
+
+gr_pl3.1$Q <- c("Costco", 
+                "Disney",
+                "Kohls",
+                "Starbucks",
+                "The Home Depot",
+                "Walmart")
+
+ggplot(gr_pl3.1) +
+  geom_col(aes(x = Q, y = per), color = "black", fill = "lightgrey") +
+  geom_errorbar(
+    aes(x = Q,
+            ymin = per - 1.96*SE, 
+            ymax = per + 1.96*SE), 
+        color = "black", width = .2
+    ) +
+  theme_bw() +
+  ggtitle("Proportion of correct identification of whether company has an EHF (weighted)") +
+  ylab("Proportion Correct") +
+  xlab("Company Name")
+  
+ggsave("4_output/plots/genpop_ehfcorrect.pdf")
+
+# Overall answers plot
+gr_pl3.2 <- gr_pl3 %>%
+  select(ehf_offer_thd:ehf_offer_costco, acs_weight_trim) %>%
+  pivot_longer(cols = c(ehf_offer_thd:ehf_offer_costco), 
+               names_to = "Q", 
+               values_to = "ans") %>%
+  group_by(Q, ans) %>%
+  summarize(per=sum(acs_weight_trim)/1008) %>%
+  mutate(SE = sqrt(per*(1 - per)/1008)) %>%
+  mutate(Q = case_match(Q, "ehf_offer_costco" ~ "Costco", 
+                        "ehf_offer_disn" ~ "Disney",
+                        "ehf_offer_kohls" ~ "Kohls",
+                        "ehf_offer_stb" ~ "Starbucks",
+                        "ehf_offer_thd" ~ "The Home Depot",
+                        "ehf_offer_wal" ~ "Walmart"))
+  
+
+ggplot(gr_pl3.2, aes(x = Q, y = per, fill = ans)) +
+  geom_col(color = "black", position = "dodge") +
+  geom_errorbar(
+    aes(
+        ymin = per - 1.96*SE, 
+        ymax = per + 1.96*SE), 
+    color = "black", position=position_dodge(.9), width = .2
+  ) +
+  theme_bw() +
+  scale_fill_brewer("", palette = "RdYlBu") +
+  ggtitle("Does the company in question offer an EHF? (weighted)") +
+  ylab("Proportion") +
+  xlab("Company Name")
+
+ggsave("4_output/plots/genpop_ehfoffer.pdf")
 
