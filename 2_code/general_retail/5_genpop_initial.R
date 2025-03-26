@@ -150,7 +150,7 @@ gr_pl2.2 <- gr_pl2.2 %>%
                                     "Equal control", "More worker control", "Only worker control")))
 
 ggplot(filter(gr_pl2.2, fac == "Prefered control over new EHF"), aes(x = ans, y = per)) +
-  geom_col(color = "black", position = "dodge") +
+  geom_col(color = "black", position = "dodge", alpha = .5) +
   geom_errorbar(
     aes(
       ymin = per - 1.96*SE, 
