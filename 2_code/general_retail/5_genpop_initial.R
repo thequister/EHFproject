@@ -159,8 +159,8 @@ gr_pl3 <- gr %>%
 
 # Correct Identification plot
 gr_pl3.1 <- gr_pl3 %>%
+  mutate(ehf_offer_costco_bin = ehf_offer_costco == "Does not offer an EHF") %>%
   select(ehf_offer_thd_bin:ehf_offer_costco_bin, acs_weight_trim) %>%
-  mutate(ehf_offer_costco_bin = 1 - ehf_offer_costco_bin) %>%
   mutate(across(ehf_offer_thd_bin:ehf_offer_costco_bin, ~ .x * acs_weight_trim)) %>%
   select(-acs_weight_trim) %>%
   gather("Q", "ans") %>%
@@ -186,8 +186,7 @@ ggplot(gr_pl3.1) +
     ) +
   theme_bw() +
   ggtitle("Proportion of correct identification of whether company has an EHF (weighted)") +
-  ylab("Proportion Correct") +
-  xlab("Company Name")
+  ylab("Proportion Correct")
   
 ggsave("4_output/plots/genpop_ehfcorrect.pdf")
 
@@ -219,8 +218,7 @@ ggplot(gr_pl3.2, aes(x = Q, y = per, fill = ans)) +
   theme_bw() +
   scale_fill_brewer("", palette = "RdYlBu") +
   ggtitle("Does the company in question offer an EHF? (weighted)") +
-  ylab("Proportion") +
-  xlab("Company Name")
+  ylab("Proportion")
 
 ggsave("4_output/plots/genpop_ehfoffer.pdf")
 
