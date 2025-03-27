@@ -18,6 +18,21 @@ unionvote_pretr_trbin <- wmt %>%
   select(-ci)
 print(unionvote_pretr_trbin)
 
+unionvote_pretr_trbin_hq <- wmt.hq %>%
+  group_by(treatment_bin, ehf_aware_pretr, union_elec) %>%
+  summarise(count = n(), .groups = 'drop') %>%
+  group_by(treatment_bin, ehf_aware_pretr) %>%
+  mutate(total = sum(count),
+         proportion = count / total) %>%
+  ungroup() |> 
+  mutate(
+    ci = map2(count, total, ~binom.confint(.x, .y, methods = "wilson")),
+    ci_low = unlist(map(ci, ~.x$lower)),
+    ci_high = unlist(map(ci, ~.x$upper))
+  )  |> 
+  select(-ci)
+print(unionvote_pretr_trbin_hq)
+
 
 
 unionvote_pretr_trplacebo <- wmt %>%

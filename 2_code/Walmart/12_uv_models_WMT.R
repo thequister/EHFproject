@@ -2,33 +2,38 @@
 #source("2_data_format.R")
 
 #unweighted models
-THD_comp_uw$union_vote <- relevel(THD_comp_uw$union_vote, 
+wmt.hq$union_elec <- relevel(as.factor(wmt.hq$union_elec), 
                                   ref= "For the union")
 
-uv_mnl_uw <- nnet::multinom(union_vote ~ HDTreatment,
+uv_wmt_mnl <- nnet::multinom(union_elec ~ treatment_full,
                             Hess=TRUE, model = TRUE,
                             trace = FALSE,
-                            data = THD_comp_uw)
+                            data = wmt)
 
-uv_mnl_int_uw <- nnet::multinom(union_vote ~ HDTreatment*EHF_aware_list,
+uv_wmt_mnl_int <- nnet::multinom(union_elec ~ treatment_bin*ehf_aware_pretr,
                             Hess=TRUE, model = TRUE,
                             trace = FALSE,
-                            data = THD_comp_uw)
+                            data = wmt)
 
-uv_mnl_c_uw <- nnet::multinom(union_vote ~ HDTreatment*EHF_aware_list +
-                                  rk_age + male + main_job + tenure_num +
-                                  nonwhite + fulltime + college,
+uv_wmt_mnl_c <- nnet::multinom(union_elec ~ treatment_bin*ehf_aware_pretr+
+                                age_clean +
+                                male +
+                                main_job +
+                                tenure_num +
+                                nonwhite +
+                                fulltime +
+                                hourly+
+                                college,,
                                 Hess=TRUE, model = TRUE,
                                 trace = FALSE,
-                                data = THD_comp_uw)
+                                data = wmt)
 
-uv.models.uw<-list( uv_mnl_uw, uv_mnl_int_uw, uv_mnl_c_uw)
-names(uv.models.uw) <- c("Base", "Pre-exposure", "Covariates")
-coef_maps <- c("HDTreatmenttxt" = "Text treatment",
-               "HDTreatmentvid" = "Video treatment",
-               "EHF_aware_listTRUE" = "Pre-exposed",
-               "HDTreatmenttxt:EHF_aware_listTRUE" = "Text x pre-exposed",
-               "HDTreatmentvid:EHF_aware_listTRUE" = "Video x pre-exposed")
+uv.wmt.models.hq<-list( uv_wmt_mnl, uv_wmt_mnl_int, uv_wmt_mnl_c)
+names(uv.wmt.models.hq) <- c("Base", "Pre-exposure", "Covariates")
+coef_maps <- c(
+               "treatment_binTRUE" = "Treated",
+               "ehf_aware_pretrTRUE" = "Pre-exposed",
+               "treatment_binTRUE:ehf_aware_pretrTRUE" = "Treated x pre-exposed")
 
 rows<-tribble(
   ~"term", ~"Base", ~"Preexposure",  ~"Covariates",
@@ -43,7 +48,7 @@ gm <- list(
   list("raw" = "nobs", "clean" = "N", "fmt" = 0),
   list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 
-multinom_tab<-modelsummary(uv.models.uw,
+multinom_tab<-modelsummary(uv.wmt.models.hq,
              shape = term + response ~ statistic,
              coef_map = coef_maps,
             title = "Multinomial logistic regression of union support \\label{tab:tab-uv}",

@@ -12,7 +12,7 @@ aware_reg_list_wmt<-svyglm(ehf_aware_pretr ~
                     fulltime +
                     hourly+
                     college, 
-                  design = wmt_wgt_f,
+                  design = wmt.hq_wgt_f,
                   family = quasibinomial)
 
 know_reg_wmt <- svyglm(ehf_other_recip=="Yes" ~
@@ -24,7 +24,7 @@ know_reg_wmt <- svyglm(ehf_other_recip=="Yes" ~
                      fulltime +
                      hourly+
                      college, 
-                   design = wmt_wgt_f,
+                   design = wmt.hq_wgt_f,
                   family = quasibinomial)
 
 applied_reg_wmt <- svyglm(ehf_applied =="Yes" ~
@@ -36,7 +36,7 @@ applied_reg_wmt <- svyglm(ehf_applied =="Yes" ~
                         fulltime +
                         hourly+
                         college, 
-                      design = wmt_wgt_f,
+                      design = wmt.hq_wgt_f,
                   family = quasibinomial)
 
 
@@ -49,7 +49,7 @@ received_reg_wmt <- svyglm(ehf_received_all =="Yes" ~
                          fulltime +
                          hourly+
                          college, 
-                       design = wmt_wgt_f,
+                       design = wmt.hq_wgt_f,
                        maxit = 50,
                   family = quasibinomial)
 
@@ -62,7 +62,7 @@ donate_reg_wmt <- svyglm(ehf_donation=="Yes" ~
                        fulltime +
                        hourly+
                        college, 
-                     design = wmt_wgt_f,
+                     design = wmt.hq_wgt_f,
                      family = quasibinomial)
 
 
@@ -107,7 +107,7 @@ model_print_aware_wmt<- modelsummary::modelsummary( engage.models_wmt,
                                gof_map = gm,
                                #vcov = "robust",
                                #add_rows = rows,
-                               title = "Weighted logistic regression of EHF awareness and engagement \\label{tab:awareness-model}",
+                               title = "Weighted logistic regression of EHF awareness and engagement \\label{tab:awareness-model-wmt}",
                                output = "kableExtra",
                                notes = list(note2),
                                stars = c('*' = .05, '**' = .01),
