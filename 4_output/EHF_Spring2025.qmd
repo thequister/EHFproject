@@ -37,7 +37,7 @@ rm(temp)
 
 genpop <- read_csv(here("3_cleaned_data", "general_retail_clean.csv"))
 
-genpop_w<- genpop %>% 
+genpop_w<- genpop  |>  
   as_survey_design(ids = 1, weights = acs_weight_trim)
 
 ```
@@ -213,18 +213,26 @@ genpop_aware_tab<-summarise(genpop_w,
           )
 ```
 
-We asked respondents which of a list of benefits and programs they had at their current retail job.  The EHF response on this list is "emergency cash support." We find that `r round(100*genpop_aware_tab$got.ehf.prop)`% (se = `r 100*genpop_aware_tab$got.ehf.prop_se`) report that their current employer offers emergency cash support and  `r round(100*genpop_aware_tab$aware.prior.prop)`% (se = `r 100*genpop_aware_tab$aware.prior.prop_se`) said that they had heard of EHF programs prior to taking the survey. By way of comparison, in a separate, Fall 2022 survey of frontline workers in five industries (including retail), we asked respondents about programs and benefits available at their main job using the same method [@AGT_youngworkers; @WERNsurvey2023].  Twelve percent (12%) of that sample and 13% of retail workers reported that their employer had an emergency cash grant program.  
+We asked respondents which of a list of benefits and programs they had at their current retail job.  The EHF response on this list is "emergency cash support." We find that `r round(100*genpop_aware_tab$got.ehf.prop)`% (se = `r 100*genpop_aware_tab$got.ehf.prop_se`) report that their current employer offers emergency cash support and  `r round(100*genpop_aware_tab$aware.prior.prop)`% (se = `r 100*genpop_aware_tab$aware.prior.prop_se`) said that they had heard of EHF programs prior to taking the survey. By way of comparison, in a separate, Fall 2022 survey of frontline workers in five industries (including retail), we asked respondents about programs and benefits available at their main job using the same method [@AGT_youngworkers; @WERNsurvey2023].  Twelve percent (12%) of that sample and 13% of retail workers reported that their employer had an emergency cash grant program.  Note that we are unable to confirm the accuracy of respondents' reports about their employers' EHFs, so these quantities represent perceptions only.  
 
-To evaluate the breadth and accuracy of retail workers' knowledge of EHFs, I presented respondents with a definition of EHF programs and then asked them to state whether each of six large retail employers had an EHF.^[The employers were Costco (no), Disney (yes), Home Depot (yes), Kohl's (yes), Starbucks (yes), Walmart (yes).]  Figure @ref() displays the distribution of responses across all firms separately for workers who claim to currently have a job with an EHF versus those that do not.  Regardless of current EHF exposure, respondents in this survey largely admitted to their ignorance as to which employers offered EHF programs.  Among those who ventured to make choices about which employers offered EHFs, they did worse, on average, than pure chance guessing.  
+To evaluate the breadth and accuracy of retail workers' knowledge of EHFs, I presented respondents with a definition of EHF programs and then asked them to state whether each of six large retail employers had an EHF.^[The employers were Costco (no), Disney (yes), Home Depot (yes), Kohl's (yes), Starbucks (yes), Walmart (yes).]  Figure @ref() displays the distribution of responses across all firms separately for workers who claim to currently have a job with an EHF versus those that do not.   
 
 ```{r}
+temp<-here::here('2_code', 'general_retail', '6_awareness_amenities_models_plots_gp.R')
+source(temp)
+rm(temp)
+
+ehf_firm_beliefs
 ```
 
-Overall, these findings indicate that retail workers' exposure to EHFs is relatively modest.  Their knowledge of the programs seems superficial, given the weak ability to identify .
+Regardless of current EHF exposure, large majorities of respondents admitted to their ignorance as to which employers offered EHF programs.  Those who made choices about which employers offered EHFs did worse, on average, than pure chance guessing. Nevertheless, respondents who report an EHF at their current job are less likely to express ignorance and much more likely to offer the (correct) EHF response for the Home Depot and, especially, Walmart.  Overall, these findings suggest that retail workers' EHF awareness is relatively modest.  Their knowledge of these programs seems superficial at best, but there is some indication that Walmart and Home Depot are better known and recognized as having these programs.
 
 ## Interest and preferences over EHFs
 
+Notwithstanding these 
+
 ```{r}
+ehf_support_genpop
 amenity_plot_w_gp
 ```
 
@@ -314,7 +322,7 @@ Once we condition on multiple covariates, tenure at the Home Depot is the only p
 
 ```{r awareness-model, echo=FALSE}
 
-temp<-here::here('1_code', 'THD', '3_awareness_models.R')
+temp<-here::here('2_code', 'THD', '3_awareness_models.R')
 source(temp)
 rm(temp)
 

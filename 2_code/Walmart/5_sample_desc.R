@@ -27,7 +27,6 @@ wmt.hq_wgt_dei <- wmt |>
   filter(quality == "high") |> 
   as_survey_design(ids = 1, weights = rk_wgt_trim) 
 
-rk_wgt_trim
 #duration and treatment
 
 duration.table <- wmt |> 

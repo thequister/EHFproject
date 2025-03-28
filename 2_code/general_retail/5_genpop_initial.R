@@ -1,8 +1,8 @@
-library(here)
-source(here::here('2_code', 'general_retail', '2_data_format_gr.R'))
-source(here::here('2_code', 'general_retail', '3_weights_gr.R'))
+#library(here)
+#source(here::here('2_code', 'general_retail', '2_data_format_gr.R'))
+#source(here::here('2_code', 'general_retail', '3_weights_gr.R'))
 
-gr <- gr_clean
+gr <- genpop
 
 #### EHF Aware Plot ----
 gr_pl1 <- gr %>%
@@ -81,34 +81,49 @@ ggsave("4_output/plots/genpop_ehfaware_simple.pdf")
 #### EHF Support + Control Plots -----
 
 # EHF Support Plot
-gr_pl2.1 <- gr %>%
+gr_pl2.1 <- genpop %>%
   select(ehf_support_exist, ehf_support_new, acs_weight_trim) %>%
   pivot_longer(cols = c(ehf_support_exist:ehf_support_new), 
                names_to = "Q", 
-               values_to = "ans") %>%
+               values_to = "ans")
+
+gr_pl2.1_w <- gr_pl2.1 |> 
+  as_survey_design(ids = 1, weights = acs_weight_trim) 
+
+
+support_sum <-  gr_pl2.1_w |> 
   group_by(Q, ans) %>%
-  summarize(per=sum(acs_weight_trim)) %>%
-  filter(!is.na(ans)) %>%
-  mutate(per = ifelse(Q == "ehf_support_exist", per/197, per/811),
-    SE = ifelse(Q == "ehf_support_exist", sqrt(per*(1 - per)/197), sqrt(per*(1 - per)/811))) %>%
-  mutate(Q = case_match(Q, "ehf_support_exist" ~ "Employer has an EHF (N = 197)", 
-                        "ehf_support_new" ~ "Employer does not have an EHF (N = 811)"))
+  filter(!is.na(ans)) |> 
+  summarize(
+    prop = survey_mean(vartype = "ci", na.rm = TRUE),
+    .groups = "drop") |> 
+  mutate(Q = case_match(Q, 
+                        "ehf_support_exist" ~ "has EHF (N = 200)", 
+                        "ehf_support_new" ~ "doesn't/may not have EHF (N = 804)"))
 
-ggplot(gr_pl2.1, aes(x = Q, y = per, fill = ans)) +
-  geom_col(color = "black", position = "dodge") +
+my_colors <- RColorBrewer::brewer.pal(1, "Set2")
+
+ggplot(support_sum, aes(x = ans, y = prop, fill = Q)) +
+  geom_col(position = position_dodge(width = 0.9), width = 0.7) +
   geom_errorbar(
-    aes(
-      ymin = per - 1.96*SE, 
-      ymax = per + 1.96*SE), 
-    color = "black", position=position_dodge(.9), width = .2
+    aes(ymin = prop_low, ymax = prop_upp),
+    width = 0.2,
+    position = position_dodge(width = 0.9)
   ) +
-  scale_fill_brewer("", palette = "RdYlBu") +
-  ggtitle("Worker support for EHF (weighted)") +
-  ylab("Proportion") +
-  xlab("")
-
-ggsave("4_output/plots/genpop_ehfsupport.pdf")
-
+  facet_grid(.~Q) +
+  scale_fill_manual(values = my_colors) +
+  labs(
+    title = "Support for introduction of EHF, by own EHF status",
+    y = "Proportion",
+    x = ""
+  ) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none" 
+  )
+  
+  
 # EHF Control Plot
 gr_pl2.2 <- gr %>%
   select(ehf_wrk_exist, ehf_wrk_new, acs_weight_trim) %>%
@@ -205,23 +220,64 @@ ggplot(gr_pl3.1) +
 ggsave("4_output/plots/genpop_ehfcorrect.pdf")
 
 # Overall answers plot
-gr_pl3.2 <- gr_pl3 %>%
-  select(ehf_offer_thd:ehf_offer_costco, acs_weight_trim) %>%
+
+round(sum(genpop$acs_weight_trim[genpop$emerg_assist_benefits=="Yes"])) #230
+round(sum(genpop$acs_weight_trim[genpop$emerg_assist_benefits!="Yes"])) #775
+
+gr_pl3.2 <- genpop %>%
+  mutate(eab_yes = if_else(
+    emerg_assist_benefits == "Yes",
+    "has EHF (n = 230)",
+    "does/may not have EHF (n = 775)"
+  ),
+  eab_yes = factor(eab_yes)
+  ) |> 
+  select(ehf_offer_thd:ehf_offer_costco, acs_weight_trim, eab_yes) %>%
   pivot_longer(cols = c(ehf_offer_thd:ehf_offer_costco), 
                names_to = "Q", 
-               values_to = "ans") %>%
-  group_by(Q, ans) %>%
-  summarize(per=sum(acs_weight_trim)/1008) %>%
-  mutate(SE = sqrt(per*(1 - per)/1008)) %>%
+               values_to = "ans")
+gr_pl3.2_w <- gr_pl3.2 |> 
+  as_survey_design(ids = 1, weights = acs_weight_trim) 
+
+firms_summary <- gr_pl3.2_w |> 
+  group_by(eab_yes, Q, ans) |>
+  summarize(
+    prop = survey_mean(vartype = "ci", na.rm = TRUE),
+    .groups = "drop") |> 
   mutate(Q = case_match(Q, "ehf_offer_costco" ~ "Costco", 
                         "ehf_offer_disn" ~ "Disney",
-                        "ehf_offer_kohls" ~ "Kohls",
+                        "ehf_offer_kohls" ~ "Kohl's",
                         "ehf_offer_stb" ~ "Starbucks",
-                        "ehf_offer_thd" ~ "The Home Depot",
+                        "ehf_offer_thd" ~ "Home Depot",
                         "ehf_offer_wal" ~ "Walmart"))
   
+my_colors <- RColorBrewer::brewer.pal(3, "Set2")
 
-ggplot(gr_pl3.2, aes(x = Q, y = per, fill = ans)) +
+ehf_firm_beliefs <- ggplot(firms_summary, aes(x = Q, y = prop, fill = ans)) +
+  geom_col(position = position_dodge(width = 0.9), width = 0.7) +
+  geom_errorbar(
+    aes(ymin = prop_low, ymax = prop_upp),
+    width = 0.2,
+    position = position_dodge(width = 0.9)
+  ) +
+  facet_grid(.~eab_yes) +
+  scale_fill_manual(values = my_colors) +
+  labs(
+    title = "Beliefs about EHFs at major retailers, by own EHF status",
+    y = "Proportion",
+    x = ""
+  ) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "bottom"
+  ) +
+  guides(fill = guide_legend(title = NULL))
+  
+ggsave(ehf_firm_beliefs, file = "4_output/plots/genpop_ehf_firm_beliefs.pdf")  
+  
+  
+  
   geom_col(color = "black", position = "dodge") +
   geom_errorbar(
     aes(
