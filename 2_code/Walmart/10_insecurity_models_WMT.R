@@ -1,9 +1,6 @@
 #source("1_libraries_and_settings.R")
 #source("2_data_format.R")
 
-
-emergency_expense_num
-
 #unweighted regressions
 ee_lm_wmt <- lm(emergency_expense_num ~ treatment_bin, 
                data = wmt.hq)
@@ -18,7 +15,7 @@ ee_lm_wmt_c <- lm(emergency_expense_num ~
                     fulltime +
                     hourly+
                     college, data = wmt.hq)
-ee_ol_uw_int <- MASS::polr(as.factor(emergency_expense_num)~ treatment_bin*ehf_aware_pretr,
+ee_ol_uw_int_wmt <- MASS::polr(as.factor(emergency_expense_num)~ treatment_bin*ehf_aware_pretr,
                            data = wmt.hq)
 
 ee.models.wmt <- list(ee_lm_wmt, ee_lm_wmt_int, ee_lm_wmt_c)

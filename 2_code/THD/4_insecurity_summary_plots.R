@@ -73,9 +73,9 @@ p.bin<- p.bin + geom_col(position = dodge, alpha = 0.2) +
   
   
 gridExtra::grid.arrange(p.ord, p.bin, nrow = 2)
-ggsave(filename = here::here("output", "plots", "finsec_ord.pdf"),
+ggsave(filename = here::here("4_output", "plots", "finsec_ord.pdf"),
   plot = p.ord)
-ggsave(filename = here::here("output", "plots", "finsec_bin.pdf"),
+ggsave(filename = here::here("4_output", "plots", "finsec_bin.pdf"),
   plot = p.bin)
 
 #summary(svyglm(emergency_expense_bin~HDTreatment, design = THD_comp, family=binomial))

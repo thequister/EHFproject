@@ -16,6 +16,7 @@ output:
 #biblio-style: "`r here::here('inputs', 'apsr.bst')`"
 bibliography: 
    - "`r here::here('inputs', 'EHFbib3.bib')`"
+   - "`r here::here('inputs', 'EHFbib4.bib')`"
 link-citations: true
 header-includes:
    - \usepackage{setspace}\doublespacing
@@ -82,13 +83,7 @@ There is no central database of EHFs, but our research team has positively docum
 
 \@ref(fig:fig-tpm) and \@ref(fig-HfACNTcomps) further illustrate the scale and growth of EHFs using information reported in publicly available IRS 990 forms [@lecyNCCSIRS9902023, @suozzoProPublicaNonprofitExplorer2025].^[If a firm contracts with a third party to provide an EHF program, the firm essentially rents the third party's nonprofit IRS identification number (EIN).  All donations and grants are linked to the third party's EIN, not the original firm.  Consequently, IRS nonprofit filings will not be able to identify most firms that maintain an EHF, given the large number of employers working through third party providers.  EHFs directly visible in IRS filing data appear to be older EHFs at larger firms.] \@ref(fig:fig-tpm) compares the revenues and total grants paid out from four EHF outsourcing organizations (EAF, E4E relief, America's Charities, and Canary).  EAF, the oldest and largest, has grown rapidly since first appearing in the IRS data in 2012, reaching over \$144 million in revenue and \$86 million in grants to individuals in 2020. The data also show the recent entry of several competitor organizations, with E4E and America's Charities operating a similar scales in recent years and Canary growing rapidly.
 
-```{r}
-#| label: fig-tpm
-#| fig-cap: ""
-#| fig-subcap: 
-#|   - "a"
-#|   - "b"
-#| layout-ncol: 2
+```{r fig-tpm, fig.show="hold", out.width="50%"}
 temp<-here::here('2_code', "IRS_filings.R")
 source(file = temp)
 rm(temp)
@@ -96,15 +91,9 @@ outsource_revenue_plot
 outsource_dgrant_plot
 ```
 
-```{r}
-#| label: fig-HfACNTcomps
-#| fig-cap: ""
-#| fig-subcap: 
-#|   - "a"
-#|   - "b"
-#| layout-ncol: 2
-outsource_revenue_plot
-outsource_dgrant_plot
+```{r fig-HfACNTcomps, fig.show="hold", out.width="50%"}
+net_assets_plot
+grants_plot
 ```
 
 \@ref(fig-HfACNTcomps) zooms in on the Home Depot's Homer Fund (HF) and Walmart's Associates in Critical Need Trust (ACNT), two in-house EHF programs that we will examine in more detail.  In panel (a) we report net assets for both firms' nonprofit foundations.^[For tax purposes, both HF and ACNT EHFs are part of the larger Home Depot and Walmart corporate foundations, respectively.]  Both corporate charities show strong growth from 2010, but HF is operating a more than double the ACNT's size.  Panel (b) looks at grants to domestic individuals, our preferred indicator of EHF activity.^[The larger foundations typically focus on disbursing grants to other nonprofit and community organizations, as opposed to individuals.  The HF website reports disbursing \$17 million in 2023 EHF grants whereas the Home Depot foundation 2023 IRS form 990 reports \$19.1 million in grants to individuals.  No comparable information is available for ACNT.]  HF is making \$15-25 million in annual grants between 2008 and 2022 whereas ACNT typically disburses less than \$10 million, notwithstanding Walmart's much larger corporate presence.  HF reports making a total of over \$267 million in grants to more than 183,000 individuals over its existence. ACNT claims to have disbursed over \$142 million over its existence to over 145,000 workers.   
@@ -119,9 +108,11 @@ This paper does not attempt to explain the variation in EHF existence and struct
 
 Some EHFs appear to be the result of spontaneous initiatives from executives or even workers, often in response to a major natural disaster affecting a region closely connected to the firm and its employees.^[Disaster aid and social insurance are closely linked in the US [@landis_fate_1999].]  Even before COVID-19, there was plenty of evidence that the existing social insurance and welfare systems were stigmatizing, encumbered with numerous "administrative burdens" [@herd_administrative_2019], and straining to deliver to those in need.  EHFs may present a private, partial solution to a weakening public system.  By locating mutual aid programs in the firm, program participation might be higher and the EHF can benefit from corporate resources.  Applying for an EHF grant may be easier or less stigmatizing than applying for government assistance and the turn around time for benefits could be much faster in times of acute need.^[The Home Depot claims that grants are processed within 7 business days of application receipt, far faster than welfare or unemployment benefits, which also require waiting periods in many states.]
 
-> In the late 90s, after a hurricane came through...the CEO at the time wanted to know why we weren't, you know, doing something for the employees. And so my, um, my boss...did the research into it and kind of got a good understanding of how it would work and, uh, basically helped write the bylaws and, um, protocols around how we would issue grants.  #3
+> In the late 90s, after a hurricane came through...the CEO at the time wanted to know why we weren't, you know, doing something for the employees. And so my, um, my boss...did the research into it and kind of got a good understanding of how it would work and, uh, basically helped write the bylaws and, um, protocols around how we would issue grants.  [@humanresourcesandpayrolladministratoratalargeretailerEHFInterview42024]
 
-> I think [executives and owners] felt like investing in the [EHF] was a way for them to alleviate a little bit of the pain for the workforce that they were laying off sort of en masse in the late 90s and early 2000s #1
+> I think [executives and owners] felt like investing in the [EHF] was a way for them to alleviate a little bit of the pain for the workforce that they were laying off sort of en masse in the late 90s and early [@corporatephilanthropyexecutiveatanapparelcompanyEHFInterview12024]
+
+> My mom's a social worker. So a lot a lot of you know, so social, oriented professionals in my family. So that that's been my dinner table my whole life. And so that's that's really where [my desire to start a hardship fund] stems from. [@seniorexecutiveatamidsizehealthservicesfirmEHFInterview62025]
 
 
 ### Communicating corporate culture and building attachment
@@ -134,18 +125,20 @@ Reports from practitioners and author interviews with EHF managers suggest that 
 
 > When our founder, Sam Walton, began the now-famous tradition of “passing the hat” at Saturday Morning Meetings years ago, he laid the foundation for a culture of caring and giving back to fellow associates. It’s a tradition that endures today through the Associates in Critical Need Trust (ACNT).  [@walmartaccociatesincriticalneedtrustACNTFiscalYear2020], 4
 
-> [The employees] love their program so much. It's so built into the culture of belonging and giving and take care. And so I think when it gets that closely tied, they continue to give resources to make sure that they can care for folks. #3 
+> The values are incredibly authentic and ingrained in the company...this is the proof point of our 
+corporate value of empathy. And it's very much the center of the  culture...We have a eligible  on day one rule for current employees. It doesn't matter how many hours  a week you work or what your status is, as long as you're directly  employed by the company...we have a fair number of franchisees and third party affiliates...that we don't and can't serve. [@corporatephilanthropyexecutiveatanapparelcompanyEHFInterview12024]
 
-> There's wide variability in purpose. Also, I mean, you know, on one end of the spectrum it could just be used as like a quantitative retention tool, and on the
-other end is, you know, to contribute to a social good. And you know, a lot of both. #6
+> [The employees] love their program so much. It's so built into the culture of belonging and giving and take care. And so I think when it gets that closely tied, they continue to give resources to make sure that they can care for folks. [@maretingandcommunicationexecutiveatehfthirdpartyproviderEHFInterview32024] 
+
+> There's wide variability in purpose. Also, I mean, you know, on one end of the spectrum it could just be used as like a quantitative retention tool, and on the other end is, you know, to contribute to a social good. And you know, a lot of both. [@seniorexecutiveatamidsizehealthservicesfirmEHFInterview62025]
 
 ### "ESG" concerns
 
-There are other ends that EHFs might serve alongside charitable motivations or team-building functions. One is investor relations [@godfreyRelationshipCorporateSocial2009].  "Environment, Social, and Governance" (ESG) became something of a corporate fad in the late 2010s, spawning numerous mutual funds and other investment vehicles that claim to channel resources toward companies that meet particular standards for sustainability, stakeholder respect, and corporate governance.  This, in turn, has created a whole slew of ESG ratings, with various levels of transparency and disclosure.  Whether EHFs succeed in is unclear.  But several major retailers, including the Home Depot, Kohl's, and Walmart aggressively promoted their EHFs in their ESG reports [@THD_ESG_2022]. Author interviews with EHF professionals confirm that some of the recent interest in EHFs stems from the hope that EHF programs will help with investor relations and "count" in the "S" bucket when large investors and fund managers evaluate a company's ESG performance.
+There are other ends that EHFs might serve alongside charitable motivations or team-building functions. One is investor relations [@godfreyRelationshipCorporateSocial2009].  "Environment, Social, and Governance" (ESG) became something of a corporate fad in the late 2010s, spawning numerous mutual funds and other investment vehicles that claim to channel resources toward companies that meet particular standards for sustainability, stakeholder respect, and corporate governance.  This, in turn, has created a whole slew of ESG ratings, with various levels of transparency and disclosure.  Whether EHFs succeed in is unclear.  But several major retailers, including the Home Depot, Kohl's, and Walmart aggressively promoted their EHFs in their ESG reports [@THD_ESG_2022]. Author interviews with EHF professionals confirm that some of the recent interest in EHFs stems from the hope that EHF programs will help with investor relations and "count" in the "S" bucket when large investors and fund managers evaluate a company's ESG performance.  But this is not the driving motivation.
 
-> So strategic reasons, CSR, what does that look like? We want to get into ESG. Okay, great...from a social standpoint, as well as the disaster preparedness, but definitely from a social standpoint people are trying to make the case that these programs will fall under those buckets. #2
+> So strategic reasons, CSR, what does that look like? We want to get into ESG...[but] not as often as you'd think somebody comes like yeah, we're doing this for an ESG initiative...from a social standpoint, as well as the disaster preparedness, but definitely from a social standpoint people are trying to make the case that these programs will fall under those buckets. [@executiveatehfthirdpartyproviderEHFInterview22024]
 
-> The [ESG] metrics are very murky...The first few years, some people were trying to fit [the EHF] into environmental because of climate disasters, that it was a response to climate disasters, but the metric piece really gets into the social and then of course the governance...But a huge driver for us to was how to really have more integrity around telling people that they could have the metrics for checking the box if they didn't really know if it was helping their people or not. #3
+> The [ESG] metrics are very murky...The first few years, some people were trying to fit [the EHF] into environmental because of climate disasters, that it was a response to climate disasters, but the metric piece really gets into the social and then of course the governance...But a huge driver for us to was how to really have more integrity around telling people that they could have the metrics for checking the box if they didn't really know if it was helping their people or not. [@maretingandcommunicationexecutiveatehfthirdpartyproviderEHFInterview32024]
 
 ### Union avoidance
 
@@ -159,7 +152,10 @@ The union substitution hypothesis also has an echo in the literature on support 
 
 Interviews with practitioners and EHF managers were less clear on these points.  Informants did not volunteer any comments about unions and were reluctant to discuss worker participation in EHFs more generally.  When asked about whether and how their EHF programs were designed to connect with public services and social welfare benefits, informants demurred
 
-[more quotations about unions, worker participation, and connection with social services and welfare]
+> We have not [worked with unions or employee groups]...I had conversations with a variety of different workers rights organizations and none of which really materialized into anything...We do sometimes include advice about where else to go for additional help in our ongoing customer service. I think navigating people to the public benefits that they might be eligible for...turns out like fairly labor intensive. So it's not what we exist to do today...FEMA and insurance companies...are very clear that they are not 1st responders...an employer's best use is to be a first responder, helping with immediate needs to be in a hotel or fix a car. And so we want to be extremely fast. [@executiveatehfthirdpartyproviderEHFInterview52025]
+
+> "It's so fascinating what countries need help and don't during crisis based on government response...You know that everybody was getting access to [benefits and healthcare ] that made [Canadian's] overarching, um, employee bases apply less for grants depending on governmental policies." [@maretingandcommunicationexecutiveatehfthirdpartyproviderEHFInterview32024]
+
 
 ## Cost effectiveness
 
@@ -169,17 +165,16 @@ Nevertheless, firm-based mutual aid arrangements could have other drawbacks, dep
 
 Again, interviews with practitioners regularly pointed to EHF's low cost and flexibility as reasons for their popularity and growth.  There was also concern with program management to minimize any blowback from workers.
 
-> We've capped our grants at 750 bucks right now. And so the the thinking behind that is, go go wider with more people as opposed to deeper and
-more impactful...If you get up into the into the multi thousands like you're only helping a couple of people per year. #6
+> "We've capped our grants at 750 bucks right now. And so the the thinking behind that is, go go wider with more people as opposed to deeper and more impactful...If you get up into the into the multi thousands like you're only helping a couple of people per year." [@seniorexecutiveatamidsizehealthservicesfirmEHFInterview62025]
 
-> The actual cost [of an EHF program] is tiny...Even if you do a really robust program, the actual cost compared to what you're gonna spend on health insurance, what you're spending on wages like it's minuscule. Even if you have the biggest program that you could possibly have. It's gonna be very small compared to those other line items...The most important KPI for us to track is our [grant application] approval rate...I think a program with a low approval rate does more harm than good to the employee-employer relationship. -- leader of a third-party EHF provider [@ehfthirdpartyproviderEHFInterview52025]
+> "The actual cost [of an EHF program] is tiny...Even if you do a really robust program, the actual cost compared to what you're gonna spend on health insurance, what you're spending on wages like it's minuscule. Even if you have the biggest program that you could possibly have. It's gonna be very small compared to those other line items...The most important KPI for us to track is our [grant application] approval rate...I think a program with a low approval rate does more harm than good to the employee-employer relationship." [@executiveatehfthirdpartyproviderEHFInterview52025]
 
 
 ## Research goals
 
 Before laying out specific hypotheses about EHFs, there are some important scope conditions and points of clarification.   First, there is a chicken-and-egg problem.  On the one hand, cross-firm variation in EHFs is important for understanding the programs' possible effects.  But we want to document EHF _effects_ to understand why firms might create these programs and how they might differ.  Because EHFs are ostensibly targeted at workers and for reasons of tractability, this paper concentrates on how workers interact with EHFs.  Exploring cross-firm variation will require a different research design.
 
-In a similar vein, I am interested in how a company's broad workforce interact with an EHF, _not_ the effect of EHF grant receipt on individuals in need.  This is for reasons of theoretical interest as well as tractability.  A small proportion of a firm's employees is ever likely to qualify and apply for EHF assistance.^[Based on estimates from Study 1, {r 100*sum(genpop$acs_weight_trim[genpop$emergency=="Yes"]/sum(genpop$acs_weight_trim))}% of retail workers experienced a potential "qualifying event" in the last year.] Not only does this make it quite difficult to credibly compare grant recipients with non-recipients, but, more importantly, it suggests that the effects of these programs are likely to spillover more broadly to others. 
+In a similar vein, I am interested in how a company's broad workforce interact with an EHF, _not_ the effect of EHF grant receipt on individuals in need.  This is for reasons of theoretical interest as well as tractability.  A small proportion of a firm's employees is ever likely to qualify and apply for EHF assistance.^[Based on estimates from Study 1, `r 100*sum(genpop$acs_weight_trim[genpop$emergency=="Yes"]/sum(genpop$acs_weight_trim))`% of retail workers experienced a potential "qualifying event" in the last year.] Not only does this make it quite difficult to credibly compare grant recipients with non-recipients, but, more importantly, it suggests that the effects of these programs are likely to spillover more broadly to others. 
 
 Third, we know very little about these programs, meaning there are important unanswered descriptive questions.  What proportion of workers are even aware of their employer's EHF?  Are they aware of these programs at other employers in their industry?  What proportion have engaged with the EHF (contributed, applied, received a grant)? What are the predictors of EHF awareness and engagement?  Of those who experienced a qualifying event, how many applied for EHF support? How much do workers value EHFs relative to other job amenities? 
 
@@ -215,9 +210,9 @@ genpop_aware_tab<-summarise(genpop_w,
 
 We asked respondents which of a list of benefits and programs they had at their current retail job.  The EHF response on this list is "emergency cash support." We find that `r round(100*genpop_aware_tab$got.ehf.prop)`% (se = `r 100*genpop_aware_tab$got.ehf.prop_se`) report that their current employer offers emergency cash support and  `r round(100*genpop_aware_tab$aware.prior.prop)`% (se = `r 100*genpop_aware_tab$aware.prior.prop_se`) said that they had heard of EHF programs prior to taking the survey. By way of comparison, in a separate, Fall 2022 survey of frontline workers in five industries (including retail), we asked respondents about programs and benefits available at their main job using the same method [@AGT_youngworkers; @WERNsurvey2023].  Twelve percent (12%) of that sample and 13% of retail workers reported that their employer had an emergency cash grant program.  Note that we are unable to confirm the accuracy of respondents' reports about their employers' EHFs, so these quantities represent perceptions only.  
 
-To evaluate the breadth and accuracy of retail workers' knowledge of EHFs, I presented respondents with a definition of EHF programs and then asked them to state whether each of six large retail employers had an EHF.^[The employers were Costco (no), Disney (yes), Home Depot (yes), Kohl's (yes), Starbucks (yes), Walmart (yes).]  Figure @ref() displays the distribution of responses across all firms separately for workers who claim to currently have a job with an EHF versus those that do not.   
+To evaluate the breadth and accuracy of retail workers' knowledge of EHFs, I presented respondents with a definition of EHF programs and then asked them to state whether each of six large retail employers had an EHF.^[The employers were Costco (no), Disney (yes), Home Depot (yes), Kohl's (yes), Starbucks (yes), Walmart (yes).]  Figure \@ref(fig-genpop-beliefs) displays the distribution of responses across all firms separately for workers who claim to currently have a job with an EHF versus those that do not.   
 
-```{r}
+```{r fig-genpop-beliefs, fig.show="hold", out.width="80%", fig.cap="Worker beliefs about EHFs at major US retailers"}
 temp<-here::here('2_code', 'general_retail', '6_awareness_amenities_models_plots_gp.R')
 source(temp)
 rm(temp)
@@ -231,8 +226,15 @@ Regardless of current EHF exposure, large majorities of respondents admitted to 
 
 Notwithstanding these 
 
-```{r}
+```{r fig-genpop-support, fig.show="hold", out.width="80%", fig.cap="Support for creating or maintaining  an EHF"}
 ehf_support_genpop
+```
+
+```{r fig-genpop-prefs, fig.show="hold", out.width="80%", fig.cap="Preferences over job amenities"}
+amenity_plot_w_gp
+```
+
+```{r fig-genpop-control, fig.show="hold", out.width="80%", fig.cap="Preferences worker voice in the EHF"}
 amenity_plot_w_gp
 ```
 
@@ -341,7 +343,7 @@ In the experiment were a control condition and two treatment arms, referred to a
 A brief, neutral text prompt does not reflect how employers actually communicate with their employees.  I take advantage of the Home Depot's existing promotion of the HF.  The HF posts professionally-produced video testimonials from purported HF recipients on the HF website and YouTube channel. Respondents in the video treatment were presented with one of these testimonial videos (2:41 in length) before answering the same set of questions. Figure \@ref(fig:fig-ray) displays a screen shot of the video treatment.^[The video can be found here: [https://www.youtube.com/watch?v=qF-HBoySMe](https://www.youtube.com/watch?v=qF-HBoySMe) and here: [https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story](https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story).  The summary text appearing on the Home Depot website is: "When Ray, a retired Army veteran and proud Home Depot associate, fell severely ill, his family needed help covering expenses such as food and gas. With the help the Homer Fund and his fellow associates’ generosity, he and his family were able to recover. The Homer Fund, a nonprofit exclusively for Home Depot associates, celebrates 20 years of giving in 2019. Established by our co-founders Bernie Marcus, Arthur Blank and Ken Langone, it has awarded $176 million to more than 138,000 Home Depot families facing unforeseen hardships. For Ray and his family, The Fund’s help came at a critical time. Ray spent six weeks in an induced coma. The Homer Fund stepped in to help his family secure necessities so they could focus their energy on Ray’s recovery. The Fund’s impact on Ray’s family reminded him of the comradery of his Army days. 'You know you have a brother and sister to your left or to your right. And you look out for them and they look out for you,' Ray says."  This text was not presented to survey respondents, but is presented here to provide a summary of video contents.]   Immediately following the experimental treatment, I asked a series of questions designed to measure respondents' subjective financial well-being, attachment to co-workers, attachment to their employer, willingness for vote for unionization, and support government-provided unemployment insurance, childcare, and old-age pensions.  
 
 ```{r fig-ray, echo=FALSE, fig.cap="Image of the video treatment", out.width="60%"}
-knitr::include_graphics(here('THD', 'HF_images', 'RaysStory.jpeg' ))
+knitr::include_graphics(here('4_output', 'plots','RaysStory.jpeg' ))
 ```
 
 ### Analytic approach
@@ -367,7 +369,7 @@ The existing practitioner literature contains many interviews with EHF grant rec
 
 ```{r fig-finsec, echo=FALSE, fig.cap="Subjective financial security (weighted)"}
 
-temp<-here::here('1_code', 'THD', '4_insecurity_summary_plots.R')
+temp<-here::here('2_code', 'THD', '4_insecurity_summary_plots.R')
 source(temp)
 rm(temp)
 
@@ -379,7 +381,7 @@ Table \@ref(tab:tab-finsec) presents regression results that mirror the graphica
 
 ```{r tab-finsec, echo=FALSE, tab.cap="Subjective financial security regression models"}
 
-temp<-here::here('1_code', 'THD', 'insecurity_models.R')
+temp<-here::here('2_code', 'THD', 'insecurity_models.R')
 source(temp)
 rm(temp)
 model_print_uw
@@ -406,7 +408,7 @@ On average, the text treatment had no effect but the video treatment has a notic
 To put more precision on these estimates and account for covariates, we report OLS regressions for each of the loyalty/attachment measures.^[Results are robust to ordered logit specifications; see Appendix \@ref(app-ol).]  We report results in Table \@ref(tab:tab-loyalty-models).
 
 ```{r tab-loyalty-models, echo=FALSE, tab.cap="Coworker and employer attachement regression models"}
-temp<-here::here('1_code', 'THD', '6_loyalty_models.R')
+temp<-here::here('2_code', 'THD', '6_loyalty_models.R')
 source(temp)
 rm(temp)
 model_print_uw_loyal
@@ -430,7 +432,7 @@ These final two sections discuss experimental effects on support for unionizatio
 
 ```{r fig-uvui,eval=TRUE, echo=FALSE, fig.cap="Support for unions and unemployment insurance (weighted)"}
 
-temp<-here::here('1_code', 'THD', '7_uiuv_summary_plots.R')
+temp<-here::here('2_code', 'THD', '7_uiuv_summary_plots.R')
 source(temp)
 rm(temp)
 
@@ -443,7 +445,7 @@ Turning to treatment effects, we see some surprising results.  First, echoing fi
 Given the importance of all three outcome categories, I report multinomial logit results in table \@ref(tab:tab-uv).  In the base model we see that video treatment, on average, produces an increase in the "not sure" responses, echoing Figure \@ref(fig:fig-uvui).  But accounting for pre-exposure status in a regression framework is particularly illuminating here.  Once we condition on pre-exposure, we see that those aware of the EHF prior to the experiment were significantly less supportive of unions than the unexposed.   Among the unexposed, we see that both the text and video treatments reduce support for unionization, although the video treatment effect is the only one that crosses conventional significance thresholds.  
 
 ```{r tab-uv, eval=TRUE, echo = FALSE, warning = FALSE, tab.cap="Support for unionization regression models"}
-temp<-here::here('1_code', 'THD', '8_uv_models.R')
+temp<-here::here('2_code', 'THD', '8_uv_models.R')
 source(temp)
 rm(temp)
 
@@ -464,7 +466,7 @@ print(mnl_eff_plot)
 Compared to unionization, workers in this sample are far more supportive of unemployment insurance, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.  We see that the video treatment substantially reduces the proportion of responses in the "none" category in favor of the two positive categories.  The EHF video treatment made respondents more rather than less supportive of government-provided social insurance, contrary to expectations.  The text treatment, on the other hand, does not appear to have any detectable treatment effect on average.
 
 ```{r tab-ui,eval=TRUE, echo = FALSE, tab.cap="Support for UI regression models" }
-temp<-here::here('1_code', 'THD', '9_ui_models.R')
+temp<-here::here('2_code', 'THD', '9_ui_models.R')
 source(temp)
 rm(temp)
 ui_tab
@@ -521,7 +523,7 @@ As expected, EHF awareness and engagement is substantially lower among the Walma
 Table \@ref(tab:awareness-model-wmt) presents regression results for the correlates of awareness and engagement.  Consistent with the Home Depot results, job tenure is a consistently important predictor of awareness and men are less engaged with the ACNT. 
 
 ```{r awareness-model-wmt, eval=TRUE, echo = FALSE, tab.cap="ACNT awareness and engagement" }
-print(model_print_aware_wmt)
+model_print_aware_wmt
 ```
 
 
@@ -547,10 +549,9 @@ rm(temp)
 
 model_print_sec_wmt
 
-temp<-here::here('2_code', 'Walmart', '7_attachment_summary_plots_WMT.R')
-source(temp)
-rm(temp)
-
+#temp<-here::here('2_code', 'Walmart', '7_attachment_summary_plots_WMT.R')
+#source(temp)
+#rm(temp)
 
 ```
 
@@ -621,7 +622,8 @@ tbl_sum_1<-
          HF_received, HF_donate) |> 
   gtsummary::tbl_summary(by = HDTreatment,
                          missing_text = "(missing/not gathered)",
-                       label = list(HDTreatment ~ "treatment", EHF_aware_list ~ "EHF awareness (list)", 
+                       label = list(#HDTreatment ~ "treatment", 
+                                    EHF_aware_list ~ "EHF awareness (list)", 
                                     EHF_aware_simp ~ "EHF awareness (cntrl)",
                                     rk_age ~ "age", male ~ "male",
                                     main_job ~ "main job", tenure_fac ~ "job tenure",
@@ -644,7 +646,9 @@ tbl_sum_2<-
          union_vote, gov_ui, gov_pension, gov_childcare) |>
   gtsummary::tbl_summary(by = HDTreatment,
                          missing_text = "(missing/not gathered)",
-                       label = list(HDTreatment ~ "treatment",wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
+                       label = list(
+                         #HDTreatment ~ "treatment",
+                         wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
                                     emp_reco~"recommend employer", union_vote ~"union vote", 
                                     gov_ui ~"UI support", gov_pension~"pension support", gov_childcare~"childcare support"
                        )
@@ -669,7 +673,9 @@ tbl_sum_1<-
          HF_received, HF_donate) |> 
   gtsummary::tbl_svysummary(by = HDTreatment,
                          missing_text = "(missing/not gathered)",
-                       label = list(HDTreatment ~ "treatment", EHF_aware_list ~ "EHF awareness (list)", 
+                       label = list(
+                         #HDTreatment ~ "treatment", 
+                         EHF_aware_list ~ "EHF awareness (list)", 
                                     EHF_aware_simp ~ "EHF awareness (cntrl)",
                                     rk_age ~ "age", male ~ "male",
                                     main_job ~ "main job", tenure_fac ~ "job tenure",
@@ -692,7 +698,9 @@ tbl_sum_2<-
          union_vote, gov_ui, gov_pension, gov_childcare) |>
   gtsummary::tbl_svysummary(by = HDTreatment,
                          missing_text = "(missing/not gathered)",
-                       label = list(HDTreatment ~ "treatment",wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
+                       label = list(
+                         #HDTreatment ~ "treatment",
+                         wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
                                     emp_reco~"recommend employer", union_vote ~"union vote", 
                                     gov_ui ~"UI support", gov_pension~"pension support", gov_childcare~"childcare support"
                        )
@@ -718,7 +726,7 @@ These indicate that knowledge of the Homer Fund was "broad but thin"
 
 # Difficulty paying bills (Home Depot) {#app-bills}
 ```{r fig-bills, echo=FALSE, fig.cap="Subjective financial security"}
-temp<-here::here('1_code', 'THD', '4a_bills_summary_plots.R')
+temp<-here::here('2_code', 'THD', '4a_bills_summary_plots.R')
 source(temp)
 rm(temp)
 
@@ -759,7 +767,7 @@ gm <- list(
 
 modelsummary(uv_mnl_c_uw,
              gof_map = gm,
-             shape = term + response ~ statistic,
+             shape = term + y.level ~ statistic,
              title = "Full covariate reporting for MNL model \\label{tab:tab-app-full-cov-mnl}",
              notes = "Reference category is 'for the union.' Standard errors in parentheses",
              output = "kableExtra",

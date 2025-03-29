@@ -149,11 +149,11 @@ employal_eff_plot <- plot(employal_eff,
 employal_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
 
 
-png(here::here("output","plots", "wrkloyal_eff.png"))
+png(here::here("4_output","plots", "wrkloyal_eff.png"))
 print(wrkloyal_eff_plot)
 dev.off()
 
-png(here::here("output","plots", "employal_eff.png"))
+png(here::here("4_output","plots", "employal_eff.png"))
 print(employal_eff_plot)
 dev.off()
 

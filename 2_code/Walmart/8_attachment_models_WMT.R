@@ -157,7 +157,7 @@ wrkloyal_lm_c_wmt <- lm(wrk_loyal_num ~
                      hourly+
                      college, 
                    data = wmt)
-wrkloyal_ol_int_uw <- MASS::polr(as.ordered(wrk_loyal_num)~ treatment_bin*ehf_aware_pretr,
+wrkloyal_ol_int_uw_wmt <- MASS::polr(as.ordered(wrk_loyal_num)~ treatment_bin*ehf_aware_pretr,
                            data = wmt)
 
 wl.models.wmt.bin <- list(wrkloyal_lm_wmt, wrkloyal_lm_int_wmt, wrkloyal_lm_c_wmt)
@@ -177,207 +177,207 @@ employal_lm_c_wmt <- lm(emp_loyal_num ~
                           fulltime +
                           hourly+
                           college, 
-                        data = wmt.hq)
-employal_ol_int_uw <- MASS::polr(as.ordered(emp_loyal_num)~ treatment_bin*ehf_aware_pretr,
+                        data = wmt)
+employal_ol_int_uw_wmt <- MASS::polr(as.ordered(emp_loyal_num)~ treatment_bin*ehf_aware_pretr,
                                  data = wmt.hq)
 
-el.models.uw <- list(employal_lm_uw, employal_lm_int_uw, employal_lm_c_uw)
-names(el.models.uw) <- c("Base", "Pre-exposure", "Covariates")
-
-empreco_lm_uw <- lm(emp_reco_num ~ treatment_bin, 
-                     data = wmt.hq)
-empreco_lm_int_uw <- lm(emp_reco_num ~ treatment_bin*ehf_aware_pretr, 
-                         data = wmt.hq)
-empreco_lm_c_uw <- lm(emp_reco_num ~ 
-                        treatment_bin*ehf_aware_pretr+
-                        age_clean +
-                        male +
-                        main_job +
-                        tenure_num +
-                        nonwhite +
-                        fulltime +
-                        hourly+
-                        college, 
-                      data = wmt)
-empreco_ol_int_uw <- MASS::polr(emp_reco~ treatment_bin*ehf_aware_pretr,
-                                 data = wmt.hq)
-
-er.models.uw <- list(empreco_lm_uw, empreco_lm_int_uw, empreco_lm_c_uw)
-names(el.models.uw) <- c("Base", "Pre-exposure", "Covariates")
-
-
-coef_maps <- c("HDTreatmenttxt" = "Text treatment",
-               "HDTreatmentvid" = "Video treatment",
-               "EHF_aware_listTRUE" = "Pre-exposed",
-               "HDTreatmenttxt:EHF_aware_listTRUE" = "Text x pre-exposed",
-               "HDTreatmentvid:EHF_aware_listTRUE" = "Video x pre-exposed")
-
-rows<-tribble(
-  ~"term", ~"Base", ~"Preexposure",  ~"Full",
-  "Covariates?", "No", "No", "Yes")
-attr(rows, 'position') <- c(41)
-
-note1 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
-
-gm <- list(
-  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
-  list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
-  list("raw" = "F", "clean" = "$F$", "fmt" = 2))
-
-panels <- list(
-  "Outcome: co-worker loyalty" = wl.models.uw,
-  "Outcome: employer loyalty" = el.models.uw,
-  "Outcome: recommend employer" = el.models.uw
-)
-
-model_print_uw_loyal<- modelsummary( panels,
-                               shape = "rbind",
-                               coef_map = coef_maps,
-                               gof_map = gm,
-                               vcov = "robust",
-                               #add_rows = rows,
-                               title = "Coworker and employer attachment, OLS regression \\label{tab:tab-loyalty-models}",
-                               output = "kableExtra",
-                               notes = list(note1),
-                               stars = c('*' = .05, '**' = .01),
-                               threeparttable=TRUE
-)
+# el.models.uw <- list(employal_lm_uw, employal_lm_int_uw, employal_lm_c_uw)
+# names(el.models.uw) <- c("Base", "Pre-exposure", "Covariates")
+# 
+# empreco_lm_uw <- lm(emp_reco_num ~ treatment_bin, 
+#                      data = wmt.hq)
+# empreco_lm_int_uw <- lm(emp_reco_num ~ treatment_bin*ehf_aware_pretr, 
+#                          data = wmt.hq)
+# empreco_lm_c_uw <- lm(emp_reco_num ~ 
+#                         treatment_bin*ehf_aware_pretr+
+#                         age_clean +
+#                         male +
+#                         main_job +
+#                         tenure_num +
+#                         nonwhite +
+#                         fulltime +
+#                         hourly+
+#                         college, 
+#                       data = wmt.hq)
+# empreco_ol_int_uw <- MASS::polr(as.ordered(emp_reco)~ treatment_bin*ehf_aware_pretr,
+#                                  data = wmt.hq)
+# 
+# er.models.uw <- list(empreco_lm_uw, empreco_lm_int_uw, empreco_lm_c_uw)
+# names(el.models.uw) <- c("Base", "Pre-exposure", "Covariates")
 
 
-wrkloyal_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 
-    wrkloyal_lm_int_uw,
-    vcov = sandwich::vcovHC(wrkloyal_lm_int_uw),     
-    se = TRUE)
-
-wrkloyal_eff_plot <- plot(wrkloyal_eff,
-     main = "Treament effect on coworker loyalty\n by pre-exposure status",
-     xlab = "Experimental condition",
-     axes = list(
-       y = list(type = "response",
-                lab="predicted value")),
-     ylim = c(.2, .9),
-     lattice=list(strip=list(factor.names=FALSE)),
-     colors = grey(0.5)
-)
-
-wrkloyal_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
-
-employal_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 
-    employal_lm_int_uw,
-    vcov = sandwich::vcovHC(employal_lm_int_uw),     
-    se = TRUE)
-
-employal_eff_plot <- plot(employal_eff,
-     main = "Treament effect on employer loyalty\n by pre-exposure status",
-     xlab = "Experimental condition",
-     axes = list(
-       y = list(type = "response",
-                lab="predicted value")),
-     ylim = c(.2, .9),
-     lattice=list(strip=list(factor.names=FALSE)),
-     colors = grey(0.5)
-)
-
-employal_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
-
-
-png(here::here("output","plots", "wrkloyal_eff.png"))
-print(wrkloyal_eff_plot)
-dev.off()
-
-png(here::here("output","plots", "employal_eff.png"))
-print(employal_eff_plot)
-dev.off()
-
+# coef_maps <- c("HDTreatmenttxt" = "Text treatment",
+#                "HDTreatmentvid" = "Video treatment",
+#                "EHF_aware_listTRUE" = "Pre-exposed",
+#                "HDTreatmenttxt:EHF_aware_listTRUE" = "Text x pre-exposed",
+#                "HDTreatmentvid:EHF_aware_listTRUE" = "Video x pre-exposed")
+# 
+# rows<-tribble(
+#   ~"term", ~"Base", ~"Preexposure",  ~"Full",
+#   "Covariates?", "No", "No", "Yes")
+# attr(rows, 'position') <- c(41)
+# 
+# note1 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
+# 
+# gm <- list(
+#   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
+#   list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
+#   list("raw" = "F", "clean" = "$F$", "fmt" = 2))
+# 
+# panels <- list(
+#   "Outcome: co-worker loyalty" = wl.models.uw,
+#   "Outcome: employer loyalty" = el.models.uw,
+#   "Outcome: recommend employer" = el.models.uw
+# )
+# 
+# model_print_uw_loyal<- modelsummary( panels,
+#                                shape = "rbind",
+#                                coef_map = coef_maps,
+#                                gof_map = gm,
+#                                vcov = "robust",
+#                                #add_rows = rows,
+#                                title = "Coworker and employer attachment, OLS regression \\label{tab:tab-loyalty-models}",
+#                                output = "kableExtra",
+#                                notes = list(note1),
+#                                stars = c('*' = .05, '**' = .01),
+#                                threeparttable=TRUE
+# )
+# 
+# 
+# wrkloyal_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 
+#     wrkloyal_lm_int_uw,
+#     vcov = sandwich::vcovHC(wrkloyal_lm_int_uw),     
+#     se = TRUE)
+# 
+# wrkloyal_eff_plot <- plot(wrkloyal_eff,
+#      main = "Treament effect on coworker loyalty\n by pre-exposure status",
+#      xlab = "Experimental condition",
+#      axes = list(
+#        y = list(type = "response",
+#                 lab="predicted value")),
+#      ylim = c(.2, .9),
+#      lattice=list(strip=list(factor.names=FALSE)),
+#      colors = grey(0.5)
+# )
+# 
+# wrkloyal_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
+# 
+# employal_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 
+#     employal_lm_int_uw,
+#     vcov = sandwich::vcovHC(employal_lm_int_uw),     
+#     se = TRUE)
+# 
+# employal_eff_plot <- plot(employal_eff,
+#      main = "Treament effect on employer loyalty\n by pre-exposure status",
+#      xlab = "Experimental condition",
+#      axes = list(
+#        y = list(type = "response",
+#                 lab="predicted value")),
+#      ylim = c(.2, .9),
+#      lattice=list(strip=list(factor.names=FALSE)),
+#      colors = grey(0.5)
+# )
+# 
+# employal_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
+# 
+# 
+# png(here::here("output","plots", "wrkloyal_eff.png"))
+# print(wrkloyal_eff_plot)
+# dev.off()
+# 
+# png(here::here("output","plots", "employal_eff.png"))
+# print(employal_eff_plot)
+# dev.off()
+# 
 
 #weighted models
-wrkloyal_reg_b<-svyglm(wrk_loyal_num ~
-                    HDTreatment, 
-                  design = THD_comp)
-
-wrkloyal_reg_b_int<-svyglm(wrk_loyal_num ~
-                    HDTreatment*EHF_aware_list +
-                      tenure_num, 
-                  design = THD_comp)
-
-wrkloyal_reg_c<-svyglm(wrk_loyal_num ~
-                    HDTreatment*EHF_aware_list + rk_age + male +
-                    main_job +
-                    tenure_num +
-                    nonwhite +
-                    fulltime +
-                    hourly+
-                    college, 
-                  design = THD_comp)  # fitted values outside [1,4] 
-
-wrkloyal_reg_polr<-svy_vglm(wrk_loyal ~
-                    HDTreatment*EHF_aware_list+ rk_age + male +
-                    main_job +
-                    tenure_num +
-                    nonwhite +
-                    fulltime +
-                    hourly+
-                    college, 
-                  design = THD_comp,
-                  family=propodds())
-
-employal_reg_b<-svyglm(emp_loyal_num ~
-                    HDTreatment, 
-                  design = THD_comp)
-
-employal_reg_b_int<-svyglm(emp_loyal_num ~
-                    HDTreatment*EHF_aware_list, 
-                  design = THD_comp)
-
-
-employal_reg_c<-svyglm(emp_loyal_num ~
-                    HDTreatment*EHF_aware_list + rk_age +
-                      male + main_job + tenure_num +
-                    nonwhite + fulltime +
-                    hourly+ college, 
-                  design = THD_comp)
-
-employal_reg_polr<-svy_vglm(emp_loyal ~
-                    HDTreatment*EHF_aware_list+ rk_age + male +
-                    main_job +
-                    tenure_num +
-                    nonwhite +
-                    fulltime +
-                    hourly+
-                    college, 
-                  design = THD_comp,
-                  family=propodds())
-
-
-empreco_reg_b<-svyglm(emp_reco_num ~
-                    HDTreatment, 
-                  design = THD_comp)
-
-empreco_reg_b_int<-svyglm(emp_reco_num ~
-                    HDTreatment*EHF_aware_list +
-                      tenure_fac, 
-                  design = THD_comp)
-
-empreco_reg_c<-svyglm(emp_reco_num ~
-                    HDTreatment*EHF_aware_list +rk_age + male +
-                    main_job +
-                    tenure_num +
-                    nonwhite +
-                    fulltime +
-                    hourly+
-                    college, 
-                  design = THD_comp)
-
-empreco_reg_polr<-svy_vglm(emp_reco ~
-                    HDTreatment*EHF_aware_list +rk_age + male +
-                    main_job +
-                    tenure_num +
-                    nonwhite +
-                    fulltime +
-                    hourly+
-                    college, 
-                  design = THD_comp,
-                  family=propodds())
+# wrkloyal_reg_b<-svyglm(wrk_loyal_num ~
+#                     HDTreatment, 
+#                   design = THD_comp)
+# 
+# wrkloyal_reg_b_int<-svyglm(wrk_loyal_num ~
+#                     HDTreatment*EHF_aware_list +
+#                       tenure_num, 
+#                   design = THD_comp)
+# 
+# wrkloyal_reg_c<-svyglm(wrk_loyal_num ~
+#                     HDTreatment*EHF_aware_list + rk_age + male +
+#                     main_job +
+#                     tenure_num +
+#                     nonwhite +
+#                     fulltime +
+#                     hourly+
+#                     college, 
+#                   design = THD_comp)  # fitted values outside [1,4] 
+# 
+# wrkloyal_reg_polr<-svy_vglm(wrk_loyal ~
+#                     HDTreatment*EHF_aware_list+ rk_age + male +
+#                     main_job +
+#                     tenure_num +
+#                     nonwhite +
+#                     fulltime +
+#                     hourly+
+#                     college, 
+#                   design = THD_comp,
+#                   family=propodds())
+# 
+# employal_reg_b<-svyglm(emp_loyal_num ~
+#                     HDTreatment, 
+#                   design = THD_comp)
+# 
+# employal_reg_b_int<-svyglm(emp_loyal_num ~
+#                     HDTreatment*EHF_aware_list, 
+#                   design = THD_comp)
+# 
+# 
+# employal_reg_c<-svyglm(emp_loyal_num ~
+#                     HDTreatment*EHF_aware_list + rk_age +
+#                       male + main_job + tenure_num +
+#                     nonwhite + fulltime +
+#                     hourly+ college, 
+#                   design = THD_comp)
+# 
+# employal_reg_polr<-svy_vglm(emp_loyal ~
+#                     HDTreatment*EHF_aware_list+ rk_age + male +
+#                     main_job +
+#                     tenure_num +
+#                     nonwhite +
+#                     fulltime +
+#                     hourly+
+#                     college, 
+#                   design = THD_comp,
+#                   family=propodds())
+# 
+# 
+# empreco_reg_b<-svyglm(emp_reco_num ~
+#                     HDTreatment, 
+#                   design = THD_comp)
+# 
+# empreco_reg_b_int<-svyglm(emp_reco_num ~
+#                     HDTreatment*EHF_aware_list +
+#                       tenure_fac, 
+#                   design = THD_comp)
+# 
+# empreco_reg_c<-svyglm(emp_reco_num ~
+#                     HDTreatment*EHF_aware_list +rk_age + male +
+#                     main_job +
+#                     tenure_num +
+#                     nonwhite +
+#                     fulltime +
+#                     hourly+
+#                     college, 
+#                   design = THD_comp)
+# 
+# empreco_reg_polr<-svy_vglm(emp_reco ~
+#                     HDTreatment*EHF_aware_list +rk_age + male +
+#                     main_job +
+#                     tenure_num +
+#                     nonwhite +
+#                     fulltime +
+#                     hourly+
+#                     college, 
+#                   design = THD_comp,
+#                   family=propodds())
 
 #wrkloyal_reg_polr etc. won't work with stargazer til I fix it.
 

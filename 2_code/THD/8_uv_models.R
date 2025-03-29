@@ -44,7 +44,8 @@ gm <- list(
   list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 
 multinom_tab<-modelsummary(uv.models.uw,
-             shape = term + response ~ statistic,
+             shape = term + y.level ~ statistic,
+             #shape = term ~ statistic,
              coef_map = coef_maps,
             title = "Multinomial logistic regression of union support \\label{tab:tab-uv}",
             gof_map = gm,
@@ -67,7 +68,7 @@ mnl_eff_plot <- plot(eff_probs,
 
 mnl_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
 
-png(here::here("output","plots", "mnl_eff.png"))
+png(here::here("4_output","plots", "mnl_eff.png"))
 print(mnl_eff_plot)
 dev.off()
 

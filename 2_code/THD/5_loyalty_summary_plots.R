@@ -154,9 +154,9 @@ gridExtra::grid.arrange(wk.loyal, emp.loyal, emp.reco, nrow = 3)
 #gridExtra::grid.arrange(wk.loyal, emp.reco, nrow = 2)
 #dev.off()
 
-ggsave(filename = here::here("output", "plots", "wk_loyal.pdf"),
+ggsave(filename = here::here("4_output", "plots", "wk_loyal.pdf"),
   plot = wk.loyal)
-ggsave(filename = here::here("output", "plots", "emp_loyal.pdf"),
+ggsave(filename = here::here("4_output", "plots", "emp_loyal.pdf"),
   plot = emp.loyal)
-ggsave(filename = here::here("output", "plots", "emp_reco.pdf"),
+ggsave(filename = here::here("4_output", "plots", "emp_reco.pdf"),
   plot = emp.reco)

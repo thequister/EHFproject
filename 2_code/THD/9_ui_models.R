@@ -63,7 +63,7 @@ ui_eff_plot <- plot(ui_eff,
 
 ui_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
 
-png(here::here("output","plots", "ui_eff.png"))
+png(here::here("4_output","plots", "ui_eff.png"))
 print(ui_eff_plot)
 dev.off()
 
