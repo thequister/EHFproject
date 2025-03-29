@@ -114,6 +114,73 @@ ggsave(ehf_support_genpop,
        filename = here::here("4_output", "plots", "support_gp_w.pdf")
        )
 
+# Control
+
+gr_pl2.2 <- genpop %>%
+  select(ehf_wrk_new, acs_weight_trim) %>%
+  mutate(ehf_wrk_new =  
+           factor(ehf_wrk_new, 
+                  levels = 
+                    c("Only management should control the fund",
+                      "Management should control the fund with worker input",
+                      "Workers and management should share control equally",
+                      "Workers should control the fund with management input",
+                      "Only workers should control the fund"),
+                  ordered= TRUE)
+         ) %>% 
+  pivot_longer(cols = c(ehf_wrk_new), 
+               names_to = "Q", 
+               values_to = "ans")
+
+gr_pl2.2_w <- gr_pl2.2 |> 
+  as_survey_design(ids = 1, weights = acs_weight_trim) 
+
+control_sum <-  gr_pl2.2_w |> 
+  group_by(Q, ans) %>% 
+  filter(!is.na(ans)) |> 
+  summarize(
+    prop = survey_mean(vartype = "ci", na.rm = TRUE),
+    .groups = "drop") %>% 
+  mutate(cntrllev = factor(c("full mgmt", 
+                              "more mgmt", 
+                              "equal", 
+                              "more worker", 
+                              "full worker"),
+                      levels = c("full mgmt", 
+                                 "more mgmt", 
+                                 "equal", 
+                                 "more worker", 
+                                 "full worker"),
+                      ordered=T)
+           )
+
+genpop_cntrl <- ggplot(control_sum,
+  aes(x = cntrllev, y = prop)) +
+  geom_col(position = position_dodge(width = 0.9), 
+           width = 0.7,
+           alpha = 0.75, fill = "grey") +
+  geom_errorbar(
+    aes(ymin = prop_low, ymax = prop_upp),
+    width = 0.2,
+    position = position_dodge(width = 0.9)
+  ) +
+  labs(title = "Preferred worker control over EHF" 
+       #subtitle = "N = 804, weighted estimates)"
+       ) +
+  scale_x_discrete(breaks = 
+                     c("full mgmt", 
+                       "equal", 
+                       "full worker")) +
+  ylab("Proportion") +
+  xlab("")
+  #theme(legend.position = "none",  # Hide the legend if not necessary
+   #     axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+ggsave("4_output/plots/genpop_ehfcontrol.pdf")
+
+
+
 #Amenities
 
 genpop$hire_benefits_pto_num <- as.ordered(genpop$hire_benefits_pto_num)
