@@ -1,5 +1,5 @@
 library(here)
-source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
+source(here::here('2_code', '1_libraries_and_settings_global.R'))
 here::i_am("2_code/Walmart/2_data_format_ACNT.R")
 
 ACNT_uw <- read_csv(here("0_raw_data", "ACNT", "ACNT_full.csv"))
@@ -129,7 +129,7 @@ ACNT_uw <- ACNT_uw %>%
   emergency_fam = grepl("Family or friends", emergency_aid),
   emergency_church = grepl("Church, synagogue, mosque or other religious community", emergency_aid),
   emergency_other = grepl("Other", emergency_aid),
-  emergency_sum = rowSums(across(emergency_bank:emergency_other)),
+  emergency_sum = rowSums(dplyr::across(emergency_bank:emergency_other)),
   ehf_coverage = fct_rev(factor(ehf_coverage, levels = 
                        c("It covered all my emergency needs",
                          "It covered more than ½ but not all of my emergency needs",
@@ -182,7 +182,7 @@ ACNT_uw <- ACNT_uw %>%
                          "Between 5 days and a week" ~ 5,
                              "Between 1 and 2 weeks" ~ 7,
                              "More than 2 weeks" ~ 14)) %>%
-  mutate(across(c(hire_benefits_pto:hire_benefits_tuition), ~case_match(., 
+  mutate(dplyr::across(c(hire_benefits_pto:hire_benefits_tuition), ~case_match(., 
                                                                         "Not seriously" ~ 0,
                                                                         "Somewhat seriously" ~ 0.5,
                                                                         "Very seriously" ~ 1),
@@ -190,7 +190,7 @@ ACNT_uw <- ACNT_uw %>%
   mutate(ehf_hire_bin = (hire_benefits_emerg != "Not seriously")) |>
   rowwise() |>  # This ensures that the operations are performed row by row
   mutate(ehf_hire_relative = hire_benefits_emerg_num - mean(
-    c_across(c(hire_benefits_pto_num, hire_benefits_health_num, 
+    dplyr::c_across(c(hire_benefits_pto_num, hire_benefits_health_num, 
       hire_benefits_retire_num, hire_benefits_parent_num, 
       hire_benefits_union_num,
       hire_benefits_tuition_num)), na.rm=T),
@@ -214,18 +214,17 @@ ACNT_uw <- ACNT_uw %>%
                            !is.na(vote_pres_post_elec) ~ "I'm sure I voted", 
                            .default = "I did not vote (in the election this November)"),
   voted = (vote_lik_fix == "I'm sure I voted"),
-  across(c(govt_responsib_elder:govt_responsib_hardship),
+  dplyr::across(c(govt_responsib_elder:govt_responsib_hardship),
                 ~fct_rev(factor(., levels = c(
                   "A lot of responsibility",
                   "Some responsibility",
                   "A little responsibility",
                   "No responsibility"
                 ), ordered = T))),
-  across(c(govt_responsib_elder:govt_responsib_hardship), 
-         ~(as.numeric(.) - min(as.numeric(.)))/
-           (max(as.numeric(.))- min(as.numeric(.))),
-         .names = "{.col}_num"),
-  across(c(govt_responsib_elder:govt_responsib_hardship), ~(. != "No responsibility"),
+  dplyr::across(c(govt_responsib_elder:govt_responsib_hardship), 
+        ~(as.numeric(.))/4,
+      .names = "{.col}_num"),
+  dplyr::across(c(govt_responsib_elder:govt_responsib_hardship), ~(. != "No responsibility"),
          .names = "{.col}_bin"), # coded binary T if assigned at least some responsibility
   ed = factor(educ, levels = 
                 c("No degree or diploma earned",
