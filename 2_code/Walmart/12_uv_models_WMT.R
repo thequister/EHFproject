@@ -5,17 +5,31 @@
 wmt.hq$union_elec <- relevel(as.factor(wmt.hq$union_elec), 
                                   ref= "For the union")
 
-uv_wmt_mnl <- nnet::multinom(union_elec ~ treatment_full,
+uv_wmt_mnl <- nnet::multinom(union_elec ~ treatment_bin,
                             Hess=TRUE, model = TRUE,
                             trace = FALSE,
-                            data = wmt)
+                            data = wmt.hq)
+
+uv_wmt_mnl_c <- nnet::multinom(union_elec ~ treatment_bin+
+                                 age_clean +
+                                 male +
+                                 main_job +
+                                 tenure_num +
+                                 nonwhite +
+                                 fulltime +
+                                 hourly+
+                                 college,
+                               Hess=TRUE, model = TRUE,
+                               trace = FALSE,
+                               data = wmt.hq)
+
 
 uv_wmt_mnl_int <- nnet::multinom(union_elec ~ treatment_bin*ehf_aware_pretr,
                             Hess=TRUE, model = TRUE,
                             trace = FALSE,
-                            data = wmt)
+                            data = wmt.hq)
 
-uv_wmt_mnl_c <- nnet::multinom(union_elec ~ treatment_bin*ehf_aware_pretr+
+uv_wmt_mnl_int_c <- nnet::multinom(union_elec ~ treatment_bin*ehf_aware_pretr+
                                 age_clean +
                                 male +
                                 main_job +
@@ -23,24 +37,25 @@ uv_wmt_mnl_c <- nnet::multinom(union_elec ~ treatment_bin*ehf_aware_pretr+
                                 nonwhite +
                                 fulltime +
                                 hourly+
-                                college,,
+                                college,
                                 Hess=TRUE, model = TRUE,
                                 trace = FALSE,
-                                data = wmt)
+                                data = wmt.hq)
 
-uv.wmt.models.hq<-list( uv_wmt_mnl, uv_wmt_mnl_int, uv_wmt_mnl_c)
-names(uv.wmt.models.hq) <- c("Base", "Pre-exposure", "Covariates")
+uv.wmt.models.hq<-list( uv_wmt_mnl, uv_wmt_mnl_c, uv_wmt_mnl_int, uv_wmt_mnl_int_c)
+names(uv.wmt.models.hq) <- c("Base", "Covariates", "Pre-exposure", "Pre-exposure +\n covariates")
 coef_maps <- c(
                "treatment_binTRUE" = "Treated",
                "ehf_aware_pretrTRUE" = "Pre-exposed",
                "treatment_binTRUE:ehf_aware_pretrTRUE" = "Treated x pre-exposed")
 
 rows<-tribble(
-  ~"term", ~"Base", ~"Preexposure",  ~"Covariates",
-  "Covariates?", "No", "No", "Yes")
-attr(rows, 'position') <- c(12)
+ ~"",~"",~"",~"",~"",~"",~"",~"",~"",~"",
+  # ~"term", ~"",~"Base",~"", ~"Covariates",~"", ~"Preexposure",~"",  ~"Pre-covariates",~"",
+  "Covariates?", "","No","", "Yes","", "No","", "Yes","")
+attr(rows, 'position') <- c(9)
 
-note1 <- "Reference category is 'For the union'. Covariates include age, gender race, job tenure, full time status, college degree, and main job.  Hourly worker indicator was excluded due to perfect separation."
+note1 <- "Reference category is 'For the union'. Covariates include age, gender race, job tenure, hourly and full time status, college degree, and main job."
 #note2 <- "Robust standard errors in parentheses."
 
 
@@ -48,55 +63,114 @@ gm <- list(
   list("raw" = "nobs", "clean" = "N", "fmt" = 0),
   list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 
-multinom_tab<-modelsummary(uv.wmt.models.hq,
+multinom_tab_wmt<-modelsummary(uv.wmt.models.hq,
              shape = term + response ~ statistic,
              coef_map = coef_maps,
-            title = "Multinomial logistic regression of union support \\label{tab:tab-uv}",
+            title = "Multinomial logistic regression of union support \\label{tab:tab-uv-models-wmt}",
             gof_map = gm,
+            #add_rows = rows,
             notes = list(note1),
             threeparttable=TRUE, 
             stars = c('*' = .05, '**' = .01)
 )
 
-eff_probs<-Effect(c("HDTreatment", "EHF_aware_list"), uv_mnl_int_uw, se = TRUE)
 
-mnl_eff_plot <- plot(eff_probs,
-     main = "Treament effect on union vote\n by pre-exposure status",
-     xlab = "Experimental condition",
-     axes = list(
-       y = list(type = "probability",
-                lab="predicted probability")),
-     lattice=list(strip=list(factor.names=FALSE)),
-     colors = grey(0.5)
+eff_probs_uv_wmt<-marginaleffects::avg_comparisons(uv_wmt_mnl_c, variables = "treatment_bin")
+
+wmt_mnl_uv_interp <-ggplot(eff_probs_uv_wmt, aes(x = group, y = estimate)) +
+  geom_point() +  # Adds the dots for estimates
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +  # Adds the whiskers for confidence intervals
+  labs(title = "Average Treatment Effects",
+       x = "Union vote",
+       y = "Change in predicted probability")
+  
+# eff_probs<-Effect(c("treatment_bin"), uv_wmt_mnl_c , se = TRUE)
+# 
+# mnl_eff_plot <- plot(eff_probs,
+#      main = "Treament effect on union vote\n by pre-exposure status",
+#      xlab = "Experimental condition",
+#      axes = list(
+#        y = list(type = "probability",
+#                 lab="predicted probability")),
+#      lattice=list(strip=list(factor.names=FALSE)),
+#      colors = grey(0.5)
+# )
+# 
+# mnl_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
+# 
+# png(here::here("output","plots", "mnl_eff.png"))
+# print(mnl_eff_plot)
+# dev.off()
+# 
+# 
+# #mnl_eff_plot
+
+# coworker support model
+union_supp_pct<-lm(union_coworkers_6 ~ treatment_bin,
+   data = wmt.hq)
+
+union_supp_pct_c<-lm(union_coworkers_6 ~ treatment_bin + 
+                           age_clean + 
+                           male +
+                           main_job +
+                           tenure_num +
+                           nonwhite +
+                           fulltime +
+                           hourly+
+                           college,
+                         data = wmt.hq)
+
+
+union_supp_pct_int<-lm(union_coworkers_6 ~ treatment_bin*ehf_aware_pretr,
+   data = wmt.hq)
+
+union_supp_pct_int_c<-lm(union_coworkers_6 ~ treatment_bin*ehf_aware_pretr + 
+                       age_clean + 
+                       male +
+                       main_job +
+                       tenure_num +
+                       nonwhite +
+                       fulltime +
+                       hourly+
+                       college,
+                     data = wmt.hq)
+
+union_supp_pct_models <- list(union_supp_pct,union_supp_pct_c,union_supp_pct_int,union_supp_pct_int_c)
+note1 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly and full time status, college degree, and main job."
+#note2 <- ""
+
+
+gm <- list(
+  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
+  list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
+
+union_supp_pct_tab_wmt<-modelsummary(union_supp_pct_models,
+                               #shape = term + response ~ statistic,
+                               coef_map = coef_maps,
+                               title = "OLS regression of expected union support among co-workers \\label{tab:tab-usupp-models-wmt}",
+                               vcov = "robust",
+                               gof_map = gm,
+                               #add_rows = rows,
+                               notes = list(note1),
+                               threeparttable=TRUE, 
+                               stars = c('*' = .05, '**' = .01)
 )
 
-mnl_eff_plot$condlevels$EHF_aware_list<-c("unaware", "aware")
 
-png(here::here("output","plots", "mnl_eff.png"))
-print(mnl_eff_plot)
-dev.off()
+#donation
 
 
-#mnl_eff_plot
-
-#weighted union vote models
-uv_multinom_b<- svy_vglm(
-    formula = union_vote ~ HDTreatment,
-    design = THD_comp, 
-    family = multinomial(refLevel = "Not sure"))
-
-uv_multinom_b_int<- svy_vglm(
-    formula = union_vote ~ HDTreatment*EHF_aware_list + tenure_num,
-    design = THD_comp, 
-    family = multinomial(refLevel = "Not sure"))
-
-
-uv_multinom_c<- svy_vglm(
-    formula = union_vote ~ HDTreatment +
-      rk_age + male + main_job + tenure_num +
-      nonwhite + fulltime + college, #hourly removed b/c perfect sep
-    design = THD_comp, 
-    family = multinomial(refLevel = "Not sure"))
+d1 <-glm(wmt.hq$donate == "YES I would like to learn how to donate" ~ treatment_bin + 
+                              age_clean + 
+                             male +
+                             main_job +
+                             tenure_num +
+                             nonwhite +
+                             fulltime +
+                         #    hourly+ perfect separation
+                             college, family=binomial(link="cloglog"), data=wmt.hq)
+d_firth <-logistf::logistf(donate == "YES I would like to learn how to donate" ~ treatment_bin,
+                           data = wmt.hq)
 
 # out.tab<-summary(uv_multinom_c)
 

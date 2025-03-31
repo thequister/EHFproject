@@ -192,7 +192,7 @@ Beyond the descriptive quantities just outlined, the survey experiments describe
 # Study 1
 In study 1, I set out to answer basic descriptive questions: are workers aware of EHFs?  How accurate is their knowledge?  How attractive do they find EHFs to be, relative to other job amenities? I concentrate on the retail industry, which employed more than 16 million Americans in 2024.  Retail is known for low wages, poor benefits, high turnover, and several high-profile recent unionization drives.  EHFs are widespread in the industry and there are several very large employers, making a survey strategy feasible.
 
-I fielded an original survey using the Cloud Research incentivized panel, targeting US respondents 18+ employed in retail.^[In the pre-registered study, we planned a survey of Costco workers, as Costco is the only major retailer without an EHF.  It proved impossible to recruit a sample of Costco workers, so I turned to a study of general retail workers.  Measurement and analysis of the survey follows the pre-registered plan.]  Of those targeted, only respondents with US IP addresses, who passed a screening question confirming employment in the retail industry, and who successfully passed two different attention check questions were allowed to complete the survey.  Respondents with duplicate IP addresses reporting identical demographic values were also excluded.  The survey was in the field from XX - XX 2025 and produced `r nrow(genpop)` valid responses.  Using the 2024 ACS-reported demographics for US adults working in retail, we constructed post-stratification weights based on gender, race, and education. All descriptive quantities below represent weighted calculations.    
+I fielded an original survey using the Cloud Research incentivized panel, targeting US respondents 18+ employed in retail.^[In the pre-registered study, we planned a survey of Costco workers, as Costco is the only major retailer without an EHF.  It proved impossible to recruit a sample of Costco workers, so I turned to a study of general retail workers.  Measurement and analysis of the survey follows the pre-registered plan.]  Of those targeted, only respondents with US IP addresses, who passed a screening question confirming employment in the retail industry, and who successfully passed two different attention check questions were allowed to complete the survey.  Respondents with duplicate IP addresses reporting identical demographic values were also excluded.  The survey was in the field from February 12 - 22, 2025 and produced `r nrow(genpop)` valid responses.  Using the 2024 ACS-reported demographics for US adults working in retail, we constructed post-stratification weights based on gender, race, and education. All descriptive quantities below represent weighted calculations.    
 
 ## Worker awareness
 ```{r genpop-awareness-calcs, echo=FALSE}
@@ -210,34 +210,48 @@ genpop_aware_tab<-summarise(genpop_w,
 
 We asked respondents which of a list of benefits and programs they had at their current retail job.  The EHF response on this list is "emergency cash support." We find that `r round(100*genpop_aware_tab$got.ehf.prop)`% (se = `r 100*genpop_aware_tab$got.ehf.prop_se`) report that their current employer offers emergency cash support and  `r round(100*genpop_aware_tab$aware.prior.prop)`% (se = `r 100*genpop_aware_tab$aware.prior.prop_se`) said that they had heard of EHF programs prior to taking the survey. By way of comparison, in a separate, Fall 2022 survey of frontline workers in five industries (including retail), we asked respondents about programs and benefits available at their main job using the same method [@AGT_youngworkers; @WERNsurvey2023].  Twelve percent (12%) of that sample and 13% of retail workers reported that their employer had an emergency cash grant program.  Note that we are unable to confirm the accuracy of respondents' reports about their employers' EHFs, so these quantities represent perceptions only.  
 
-To evaluate the breadth and accuracy of retail workers' knowledge of EHFs, I presented respondents with a definition of EHF programs and then asked them to state whether each of six large retail employers had an EHF.^[The employers were Costco (no), Disney (yes), Home Depot (yes), Kohl's (yes), Starbucks (yes), Walmart (yes).]  Figure \@ref(fig-genpop-beliefs) displays the distribution of responses across all firms separately for workers who claim to currently have a job with an EHF versus those that do not.   
+To evaluate the breadth and accuracy of retail workers' knowledge of EHFs, I presented respondents with a definition of EHF programs.^[All respondents in Study 1 answered the following question before responding to questions about : "Some companies offer their employees programs called "Employee Hardship Funds." Employee Hardship Funds provide emergency cash to a company's workers if they face unexpected financial hardships, such as a house or apartment fire. The emergency money from the Employee Hardship Fund is not a loan and does not have to be repaid. The money in the fund comes directly from donations from the company's own workers. Before taking this survey, had you ever heard of Employee Hardship Funds?"] A subsequent question asked them to state whether each of six large retail employers had an EHF.^[The employers were Costco (no), Disney (yes), Home Depot (yes), Kohl's (yes), Starbucks (yes), Walmart (yes).]  Figure \@ref(fig-genpop-beliefs) displays the distribution of responses across all firms separately for workers who claim to currently have a job with an EHF versus those that do not.
 
 ```{r fig-genpop-beliefs, fig.show="hold", out.width="80%", fig.cap="Worker beliefs about EHFs at major US retailers"}
 temp<-here::here('2_code', 'general_retail', '6_awareness_amenities_models_plots_gp.R')
 source(temp)
 rm(temp)
 
+genpop_engage_sum<- genpop_w |> 
+  summarize(donte_new = survey_mean(ehf_donate_new!="I would not donate at all",
+                            na.rm=TRUE),
+         donte_exist = survey_mean(ehf_donate_exist=="Yes",
+                            na.rm=TRUE),
+         union_support = survey_mean(union_elec=="For the union", na.rm=T),
+         union_oppose = survey_mean(union_elec=="Against the union", na.rm=T)
+  )
+
 ehf_firm_beliefs
 ```
 
-Regardless of current EHF exposure, large majorities of respondents admitted to their ignorance as to which employers offered EHF programs.  Those who made choices about which employers offered EHFs did worse, on average, than pure chance guessing. Nevertheless, respondents who report an EHF at their current job are less likely to express ignorance and much more likely to offer the (correct) EHF response for the Home Depot and, especially, Walmart.  Overall, these findings suggest that retail workers' EHF awareness is relatively modest.  Their knowledge of these programs seems superficial at best, but there is some indication that Walmart and Home Depot are better known and recognized as having these programs.
+Regardless of current EHF exposure, large majorities of respondents admitted to their ignorance as to which retail employers offered EHF programs.  Those who made choices about which employers offered EHFs did worse, on average, than pure chance guessing. Nevertheless, respondents who report an EHF at their current job are less likely to express ignorance and much more likely to offer the (correct) EHF response for the Home Depot and, especially, Walmart.  Overall, these findings suggest that retail workers' EHF awareness is modest and their understanding superficial at best. But there is also some indication that Walmart and Home Depot are better known and recognized as having these programs.
 
 ## Interest and preferences over EHFs
 
-Notwithstanding these 
+Notwithstanding their limited awareness of existing EHF programs, respondents were remarkably supportive of EHFs after they were explained, preferring a program in which workers have some voice. When asked about a willingness to donate to the EHF, `r round(100*genpop_engage_sum$donte_new)`% would donate, with a modal response of a "regular donation less than \$20". Figure \@ref[fig:fig-genpop-support] displays levels of support for an existing or hypothetical EHF.  In both cases, large majorities show "extreme" support.  Workers already exposed to EHFs showed even stronger support than those asked to consider a hypothetical program, with `r round(100*support_sum$prop[1])`% "extremely" supportive against `r round(100*support_sum$prop[4])`%.  
 
 ```{r fig-genpop-support, fig.show="hold", out.width="80%", fig.cap="Support for creating or maintaining  an EHF"}
 ehf_support_genpop
 ```
 
+I went on to ask respondents to consider a hypothetical job with another retailer that paid the same wages as their current job, has a 10 minute longer commute, but better amenities.  I asked how seriously they would consider the new job depending on which ammentiy was better.  Figure \@ref(fig-genpop-prefs) displays the responses.  Among the amenities offered, "emergency cash offered during hard times" was second only to paid time off in terms of the proportion of respondents saying they would take the new job "very sersiously."  EHF programs were notably more attractive to workers than parental leave or union representation.   
+
 ```{r fig-genpop-prefs, fig.show="hold", out.width="80%", fig.cap="Preferences over job amenities"}
 amenity_plot_w_gp
 ```
 
+Finally, I asked respondents who did not report having an EHF how much control workers _should_ have if their employer launched an EHF program.  As displayed in Figure \@ref(fig:fig-genpop-control), large majorities prefer that workers have a voice in running the fund.  In fact, I have not yet found a single EHF in which there is a representative of frontline workers involved in the EHF.  Outsourced EHFs, by construction, have no worker representation. 
+
 ```{r fig-genpop-control, fig.show="hold", out.width="80%", fig.cap="Preferences worker voice in the EHF"}
-genpop_cntrl
+genpop_ehf_cntrl
 ```
 
+Study 1 suggests that, although they are not widely known or understood, EHFs receive strong support and can be attractive amenities to retail workers.
 
 # Study 2
 ## Case selection
@@ -438,7 +452,7 @@ rm(temp)
 
 ```
 
-We see that workers in this sample are generally skeptical of unions, with `r 100*round(summary_tab_uw_c$prounion,2)`%  of control respondents reporting a willingness to vote for a union and `r 100*round(summary_tab_uw_c$antiunion,2)`% voting against (the remainder answered "not sure").  This level of union support is substantially lower than recent estimates among front line retail workers.^[@AGT_youngworkers; @WERNsurvey2023 find that 36% of retail workers would vote for the union and 26% would vote against.]  There are, however, a substantial portion of undecided workers, the modal response among the video treatment group.  
+We see that workers in this sample are generally skeptical of unions, with `r 100*round(summary_tab_uw_c$prounion,2)`%  of control respondents reporting a willingness to vote for a union and `r 100*round(summary_tab_uw_c$antiunion,2)`% voting against (the remainder answered "not sure").  This level of union support is substantially lower than recent estimates among front line retail workers.^[In Study 1, we found that `r round(100*genpop_engage_sum$union_support)`% would vote for a union and `r round(100*genpop_engage_sum$union_oppose)`% against.  @AGT_youngworkers; @WERNsurvey2023 find that 36% of retail workers would vote for the union and 26% would vote against.]  There are, however, a substantial portion of undecided workers, the modal response among the video treatment group.  
 
 Turning to treatment effects, we see some surprising results.  First, echoing findings for the attachment questions, we find no evidence that the text treatment has any average effect at all for either outcome.  Second, we find that the video treatment again moves respondents' opinions.  On average, the video treatment makes respondents more _uncertain_ about their support for unionization.  Whether this represents an increase in survey disengagement or truly increased uncertainty will take additional work. But the fact that respondents chose to answer the question (as opposed to skipping it) suggests increased uncertainty, as opposed to disinterest.
 
@@ -489,9 +503,9 @@ Is unemployment insurance the appropriate policy to link with the EHF?  After al
 
 Do the results from Study 2 replicate at other large US retailers?  Or is the Home Depot something of an outlier?  Based on the results from Study 2, we conducted a third study, this time focusing on Walmart workers.  As another publicly traded, "big box" retailer, work practices and conditions at Walmart will be similar to the Home Depot. The two firms compete to some degree, including over workers.  Walmart has also seen union activism in some locations. Walmart is the largest retailer (and private sector employer) in the United States, over three times as large the Home Depot in employee headcount, making the social media recruitment strategy feasible.  With its size and ubiquity, Walmart job benefits, programs, and procedures have an impact on the retail industry as a whole. 
 
-As with the HF, Walmart's ACNT Together Fund is over 20 years old and managed in-house.  The EHF is available to both full- and part-time workers who have been at Walmart for at least one year.  As of 2021, ACNT claims to have disbursed over \$142 million to over 145,000 employees.  But the ACNT is substantially less generous than the HF and operates on a smaller scale, notwithstanding Walmart's considerably larger presence. And Walmart appears to engage in less internal promotion around its EHF.^[Interestingly, Walmart matches employee donations to the Walmart political action committee 2:1 with corporate donations to the Together Fund.  This was challenged but found legal by the Federal Election Commission in 2015.]  The ACNT Together Fund has a minimal social media presence.  Interviews with practitioners in the field also concurred that Walmart is perceived as less aggressive than the Home Depot in generating engagement with its EHF.
+As with the HF, Walmart's ACNT Together Fund is over 20 years old and managed in-house.  The EHF is available to both full- and part-time workers who have been at Walmart for at least one year.  As of 2021, ACNT claims to have disbursed over \$142 million to over 145,000 employees.  But the ACNT is substantially less generous than the HF and operates on a smaller scale, notwithstanding Walmart's considerably larger presence. And Walmart appears to engage in less internal promotion around its EHF.^[Interestingly, Walmart matches employee donations to the Walmart political action committee 2:1 with corporate donations to the Together Fund. This practice that was challenged but found legal by the Federal Election Commission in 2015.  In our sample, less than 1% of respondents reported making a contribution to the Walmart PAC.]  The ACNT Together Fund has a minimal social media presence.  Interviews with practitioners in the field also concurred that Walmart is perceived as less aggressive than the Home Depot in generating engagement with its EHF.
 
-In fielding a survey of Walmart workers, I followed the same social media recruitment strategy as with the Home Depot.  Survey completers were offered the opportunity to enter a raffle for a $400 gift card.  The survey was in the field from XXX to XXX and produced `r nrow(wmt.hq)` complete responses that passed screener and attention checks.  We produce raking weights for the Walmart sample in a manner analogous to the Home Depot and employ them below in the same way.  Survey descriptive statistics by treatment status appear in Appendix XX.
+In fielding a survey of Walmart workers, I followed the same social media recruitment strategy as with the Home Depot.  Survey completers were offered the opportunity to enter a raffle for a $400 gift card.  The survey was in the field from October 23 to December 4, 2024 and produced `r nrow(wmt.hq)` complete responses that passed screener and attention checks.  We produce raking weights for the Walmart sample in a manner analogous to the Home Depot and employ them below in the same way.  Survey descriptive statistics by treatment status appear in Appendix XX.
 
 The surveys in Studies 2 and 3 were very similar in question wording and ordering, but there were four main extensions in Study 3:  we asked about quit intentions and job amenities; we included a behavioral measure of donation to the EHF (clicking on a link to a donation page); we expanded the EHF survey experiment; and we sent a follow-up survey one week after survey completion to respondents who opted in to the incentive raffle.^[Respondents were sent emails to invite them into the follow-up survey, offering them a second entry into the raffle for follow-up completion.  Respondents were contacted a maximum of three times. We received valid followup responses from `r sum(!is.na(wmt.hq$age_f))` or `r round(100*sum(!is.na(wmt.hq$age_f)) /nrow(wmt.hq))`% of those completing the main survey.] 
 
@@ -520,16 +534,15 @@ takeup_wmt <- wmt.hq_wgt_f |>
 
 As expected, EHF awareness and engagement is substantially lower among the Walmart sample than among the Home Depot workers. We find that `r round(100*aware_tab_wmt$aware.prop)`% (se = `r round(100*aware_tab_wmt$aware.prop_se)`) were aware of the ACNT. Of those who both knew about the ACNT _and_ experienced a qualifying event, `r round(100*takeup_wmt$takeup.prop)`% applied for a grant.  `r round(100*aware_tab_wmt$know.prop)`% (se = `r round(100*aware_tab_wmt$know.prop_se)`) claim to know a grant recipient and `r round(100*aware_tab_wmt$donated.prop)`% (se = `r round(100*aware_tab_wmt$donated.prop_se)`)  claim to have donated.
 
-Table \@ref(tab:awareness-model-wmt) presents regression results for the correlates of awareness and engagement.  Consistent with the Home Depot results, job tenure is a consistently important predictor of awareness and men are less engaged with the ACNT. 
+Table \@ref(tab:tab-awareness-model-wmt) presents regression results for the correlates of awareness and engagement.  Consistent with the Home Depot results, job tenure is a consistently important predictor of awareness and men are less engaged with the ACNT. 
 
-```{r awareness-model-wmt, eval=TRUE, echo = FALSE, tab.cap="ACNT awareness and engagement" }
+```{r tab-awareness-model-wmt, eval=TRUE, echo = FALSE, tab.cap="ACNT awareness and engagement" }
 model_print_aware_wmt
 ```
 
-
 ## Survey experiment 
 
-Based on the findings from the Home Depot, the experiment in the Walmart survey used only a video vingette treatment.  In the absence of a Walmart-produced video and to make the video treatments as similar as possible across settings, I used the HF video as a script and visual template to then produce an original video adapted to the Walmart context using a paid actor.^[The paid actor exhibited the same gender (male) and racial (white) expression as in the HF video.  The actor was also viewed as approximately the same age as the HF spokesperson, according to mTurk coders. The ACNT-adapted video was 41 seconds shorter than the HF video.  We achieved this by shortening or removing some interstitial and panning shots, not through any reduction in the spoken script beyond those parts that were only relevant to the Home Depot.  We also included text indicating that the speaker was an actor at the beginning of the video.]    
+Based on results from the Home Depot survey, I use only a video vingette treatment in the Walmart survey experiment.  There were no available Walmart-produced video testimonials. To construct a video treatments as similar as possible across surveys, I used the HF video as a script and visual template to then produce an original video adapted to the Walmart context using a paid actor.^[The paid actor exhibited the same gender (male) and racial (white) expression as in the HF video.  The actor was also viewed as approximately the same age as the spokesperson in the HF video, according to mTurk coders. The ACNT-adapted video was 41 seconds shorter than the HF video.  We achieved this by shortening or removing some interstitial and panning shots, not through any reduction in the spoken script beyond those parts that were only relevant to the Home Depot.  The video included text indicating that the speaker was an actor at the beginning of the video.]    
 
 Respondents were randomly assigned with equal probability to either treatment or control.  Within the control condition, respondents were randomly divided between the pure control and the placebo conditions.  The pure controls saw no additional information, just as in Study 2.  Respondents in the placebo condition watched a video in which the hired actor delivered a Walmart press release about the company's acquisition of Vizio.^[I also pre-registered a framing study, in which I slightly vary the framing of the treatment video.  Specifically, the "card" visible on the screen before the respondent clicks "play" differs, with the _solidarity_ framing displaying text emphasizing supporting other Walmart workers and the and the _charity_ framing displaying text emphasizing charitable donations to help those in need. The content of the video vingettes was otherwise identical across treatment groups.  As there was no detectable difference between these framings, I do not report on this in the main text.  Regression results demonstrating this for key outcomes appears in appendix [cite appendix].]  A manipulation check (see Appendix XX) confirms that the video treatment did, indeed increase respondent awareness of the ACNT, as expected.  There were no detectable differences between pure control and placebo groups in their (non-)effect.  Thus we display results for binary treatment/control in the analysis below.  As in the Home Depot sample, we examine whether there are heterogeneous effects based on pre-exposure to the ACNT before the survey. 
 
@@ -559,7 +572,7 @@ In addition to feeling more financially precarious, Walmart respondents were les
 
 To analyze treatment effects on job attachment, I again construct a job attachment index using a principal components analysis of the four questions around workplace attachment, scaled so that larger values indicate greater attachment.^[The questions were loyalty to coworkers, loyalty to employer, willingness to recommend employer, and quit intentions (reverse coded).  The first principal component captured 65% of the variation across these variables.  Note that this attachment index differs from the Home Depot in the inclusion of quit intentions.  Analyzing quit intentions separately has no effect on our conclusions.]  I then use the first principal component as the attachment index; analyzing the individual components separately does not alter qualitative conclusions.
 
-Table \@ref(tab:tab-attachment-models-wmt) summarizes findings. Consistent with what we observed in the Walmart sample, those pre-exposed to the EHF are more attached to their jobs, even after conditioning on predictors of ACNT awareness. But experimental findings around the ACNT differ from we observed with the Home Depot sample: the video treatment has no discernible effect on job attachment among the Walmart sample.   
+Table \@ref(tab:tab-attachment-models-wmt) summarizes findings. Consistent with what we observed in the Walmart sample, those pre-exposed to the EHF are more attached to their jobs, even after conditioning on predictors of ACNT awareness. But experimental findings around the ACNT differ from we observed with the Home Depot sample: the video treatment has positive effect, but the effect size is much more modest and no discernible effect on job attachment among the Walmart sample.   
 
 ```{r tab-attachment-models-wmt, eval=TRUE, echo = FALSE, tab.cap="Job attachment (Walmart)"}
 temp<-here::here('2_code', 'Walmart', '8_attachment_models_WMT.R')
@@ -569,19 +582,47 @@ rm(temp)
 model_print_attachment_hq
 ```
 
+<!---
+In the Walmart sample, we also asked respondents about a hypothetical job offer at another retailer with better amenities, following the same pattern as in Study 1.  In Table \@ref(), we look at treatment effects from the survey experiment on how seriously the respondent would cosider a job that offered "emergency cash assistance in hard times" a respondent places on
+--->
+
 ### Attitudes towards unionization and social insurance
 
+In the Walmart survey we again look for treatment effects on attitudes toward unionization and social insurance programs.    
+Table \@ref(tab-uv-models-wmt) displays results for a multinomial logistic regression on willingness to vote for unionization.  Contrary to findings at the Home Depot, the EHF video treatment induces a modest _reduction_ in the opposition to unionization among the Walmart sample.  Unlike among Home Depot workers, I find no evidence of any differences in union support due to prior awareness of the ACNT.  I therefore use the "covariate" model to produce effect estimates.   
+```{r tab-uv-models-wmt, eval=TRUE, echo = FALSE, tab.cap="Support for unionization (Walmart)"}
+temp<-here::here('2_code', 'Walmart', '12_uv_models_WMT.R')
+source(temp)
+rm(temp)
+multinom_tab_wmt
+```
 
+Figure \@ref(fig-uv-models-wmt) displays the estimated average shift in the probability of choosing the various outcome categories by treatment status.  On average, the ACNT video lowered the probability of voting against the union by almost 5 percentage points; this substantively large, given a 21% rate of anti-union voting among the control group respondents.  Unlike the Home Depot sample, the pro-union vote absorbed most of this treatment effect. 
+
+```{r fig-uv-models-wmt, eval=TRUE, echo = FALSE, fig.cap="Treatment effect on support for unionization (Walmart)"}
+temp<-here::here('2_code', 'Walmart', '13_ui_models_WMT.R')
+source(temp)
+rm(temp)
+wmt_mnl_uv_interp
+```
+
+Finally, we look at social insurance policies.  In the Walmart survey we again asked respondents the level of responsibility the government has for the elderly and the unemployed.  To further directly examine the substitution hypothesis, I also asked respondents about government responsibility for "people confronting short-term hardships."  As Table~\@ref(tab:tab-ui-hard-wmt) displays, we find no evidence of any treatment effect for any of these policy areas among Walmart workers; pre-exposure to the ACNT makes no difference in this conclusion.  Across both the Home Depot and Walmart surveys, we see no evidence that "private welfare" in the form of EHFs has any negative effect on support for government-directed social support, whether for the unemployed, elderly, those experiencing, or the .
+
+```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)"}
+
+ui_hard_tab_wmt
+```
 # Discussion and Conclusion
 
-Employers have tremendous leeway to introduce or modify benefit plans and other incentives that may influence workers perceptions and attitudes,
-including around employer attachment and politically relevant actions like unionization. EHFs are one such program that has received virtually no systematic study, notwithstanding their prevalence.  This oversight is all the more remarkable as EHFs clearly echo both an earlier era of welfare capitalism and past worker mutual aid initiatives that helped produce and sustain modern labor unions.  
+Employers have tremendous leeway to introduce or modify benefit plans and other incentives that may influence workers perceptions and attitudes, including around employer attachment and politically relevant actions like unionization. EHFs are one such program that has received virtually no systematic study, notwithstanding their prevalence.  This oversight is all the more remarkable as EHFs clearly echo both an earlier era of welfare capitalism and past worker mutual aid initiatives that helped produce and sustain modern labor unions.  
 
-This paper provides the first systematic glimpse into EHFs among major US retailers. how one large retailer's EHF affects its workforce.  Using a social media recruitment strategy, I constructed an original sample of respondents who work at the Home Depot, an employer with among the largest, oldest, and most generous EHF programs.    Among this sample, I find "broad-but-thin" awareness of the EHF.  A large majority of workers knew an emergency grant program existed, but were less clear on how it functioned and its connection to worker donations.  Awareness of the EHF is strongly correlated with tenure and full-time status.
+This paper provides the first systematic glimpse into EHFs among major US retailers. Retail workers are generally unaware of the EHFs and show limited knowledge about which employers offer these programs, suggesting that EHFs have not become a major way to recruit and retain retail workers.  Nevertheless, when the programs are explained to workers, they show strong support for them, including valuing them as highly as improved health insurance benefits when considering a hypothetical job offer.
+
+the how one large retailer's EHF affects its workforce.  Using a social media recruitment strategy, I constructed an original sample of respondents who work at the Home Depot, an employer with among the largest, oldest, and most generous EHF programs.    Among this sample, I find "broad-but-thin" awareness of the EHF.  A large majority of workers knew an emergency grant program existed, but were less clear on how it functioned and its connection to worker donations.  Awareness of the EHF is strongly correlated with tenure and full-time status.
 
 Using a survey experiment, I explored the effect of prompting workers with information about their employer's EHF on several outcomes: subjective financial security, attachment to co-workers and employer, and support for unionization and unemployment insurance.  The experiment featured two treatment arms, one a relatively neutral, text-based description of the Homer Fund and another that showed respondents an employer-produced video testimonial about the Homer Fund. Although the treatments varied in several ways, the video treatment is unambiguously more intense. I review how findings connect to the specific research hypotheses as well as several apparent patterns across the various outcomes.   
 
-Employers promote their EHFs as both charitable acts as well as programs that support workers in hard times, ostensibly improving their sense of financial stability.  Contrary to expectations and program goals, we found no evidence in our survey that the EHF treatments induce any improvement in worker's subjective financial security, although workers who were aware of the program before the survey experiment were systematically more positive about their financial situation. However, in light of the treatment effects we observed for other outcomes in the survey, I am unwilling to treat this difference in baseline responses as indicative of any EHF-specific effect on financial security.   
+Employers promote their EHFs as both charitable acts as well as programs that support workers in hard times, ostensibly improving their sense of financial stability.  Contrary to expectations and program goals, we found no evidence in either survey that the EHF treatments induce any improvement in worker's subjective financial security, although workers who were aware of the program before the survey experiment were systematically more positive about their financial situation. However, in light of the treatment effects we observed for other outcomes in the survey, I am unwilling to treat this difference in baseline responses as indicative of any EHF-specific effect on financial security.   
 
 When looking at attachment to co-workers and the employer, we saw that the video treatment had the expected positive effect, consistent with past work on CSR initiatives and employee motivation and retention [@burbanoGettingGigWorkers2021].  On average, video-treated respondents were more attached to their co-workers and the Home Depot as an employer, although the former effect appears stronger.  When we disaggregated these effects, we found that the treatment effects were largely (although not entirely) concentrated among the respondents who were unaware of the EHF before the survey.  Looking at support for unionization, we uncovered an even starker pattern: consistent with the union substitution hypothesis, the video treatment caused a large and significant decrease in support for unionization among those unaware of the EHF before the survey, but no effect among the pre-exposed (who were more anti-union on average).  By examining the full range of outcome values, we also saw that this decrease in support for unionization came through an increase in uncertainty about unions, as opposed to an increase in outright opposition.  This suggests that EHFs could be used to demobilize workers, especially newer hires, during a unionization campaign.  
 
@@ -767,7 +808,7 @@ gm <- list(
 
 modelsummary(uv_mnl_c_uw,
              gof_map = gm,
-             shape = term + y.level ~ statistic,
+             shape = term + response ~ statistic,
              title = "Full covariate reporting for MNL model \\label{tab:tab-app-full-cov-mnl}",
              notes = "Reference category is 'for the union.' Standard errors in parentheses",
              output = "kableExtra",

@@ -33,9 +33,9 @@ attr(rows, 'position') <- c(7)
 
 note2 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
 gm <- list(
-  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
-  list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
-  list("raw" = "F", "clean" = "$F$", "fmt" = 2))
+  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
+  list("raw" = "r.squared", "clean" = "R^2", "fmt" = 2),
+  list("raw" = "F", "clean" = "F", "fmt" = 2))
 
 
 model_print_sec_wmt<- modelsummary( ee.models.wmt,

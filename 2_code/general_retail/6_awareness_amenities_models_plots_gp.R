@@ -154,7 +154,7 @@ control_sum <-  gr_pl2.2_w |>
                       ordered=T)
            )
 
-genpop_cntrl <- ggplot(control_sum,
+genpop_ehf_cntrl <- ggplot(control_sum,
   aes(x = cntrllev, y = prop)) +
   geom_col(position = position_dodge(width = 0.9), 
            width = 0.7,
@@ -177,7 +177,8 @@ genpop_cntrl <- ggplot(control_sum,
    #     axis.text.x = element_text(angle = 45, hjust = 1))
 
 
-ggsave("4_output/plots/genpop_ehfcontrol.pdf")
+ggsave(plot = genpop_ehf_cntrl, 
+       filename =here::here("4_output","plots", "genpop_ehfcontrol.pdf"))
 
 
 
@@ -214,13 +215,13 @@ long_df$benefit_type <- factor(long_df$benefit_type, levels = proportions_uw$ben
 long_df$benefit_type_w <- factor(long_df$benefit_type, levels = proportions_w$benefit_type)
 
 # Custom labels for the x-axis
-labels <- c(hire_benefits_pto_num = "Paid Time Off",
-            hire_benefits_health_num = "Health Insurance",
-            hire_benefits_retire_num = "Retirement Plan",
-            hire_benefits_parent_num = "Paid Family Leave",
-            hire_benefits_union_num = "Union Representation",
-            hire_benefits_emerg_num = "Emergency Cash Support",
-            hire_benefits_tuition_num = "Tuition Assistance")
+labels <- c(hire_benefits_pto_num = "Paid time off",
+            hire_benefits_health_num = "Health insurance",
+            hire_benefits_retire_num = "Retirement lan",
+            hire_benefits_parent_num = "Paid family leave",
+            hire_benefits_union_num = "Union representation",
+            hire_benefits_emerg_num = "Emergency cash support",
+            hire_benefits_tuition_num = "Tuition assistance")
 legend_labels <- c('1' = 'Serious', '0.5' = 'Some', '0' = 'None') 
 colors <- RColorBrewer::brewer.pal(3, "Set2")
 
@@ -246,7 +247,7 @@ amenity_plot_w_gp <- ggplot(long_df, aes(x = benefit_type_w, fill = level)) +
   #                    labels = legend_labels)+
   scale_fill_manual(values = colors, name = "", labels = legend_labels) +
   labs(
-    title = "Level of interest in new job with longer commute but better amenities",
+    title = "Interest in new job with longer commute but better amenities",
     x = "Amenity",
     y = "Count", 
     fill = "Interest") +

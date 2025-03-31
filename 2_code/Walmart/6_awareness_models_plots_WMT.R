@@ -96,8 +96,8 @@ coef_maps <- c("age_clean" = "age",
                "collegeTRUE" = "college")
 
 gm <- list(
-  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
-  list("raw" = "aic", "clean" = "AIC", "fmt" = 1))
+  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
+  list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 note2 <- "Standard errors in parentheses."
 
 

@@ -39,7 +39,7 @@ ggplot2::theme_set(ggplot2::theme_bw(base_size = 13))
 here()
 set.seed(98)
 options("modelsummary_factory_default" = "kableExtra")
-options(modelsummary_get = "all")
+#options(modelsummary_get = "all")
 
 #renv::restore()
 #renv::update()

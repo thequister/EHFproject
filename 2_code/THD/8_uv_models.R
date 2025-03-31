@@ -44,8 +44,8 @@ gm <- list(
   list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 
 multinom_tab<-modelsummary(uv.models.uw,
-             shape = term + y.level ~ statistic,
-             #shape = term ~ statistic,
+             #shape = term + y.level ~ statistic,
+             shape = term + response ~ statistic,
              coef_map = coef_maps,
             title = "Multinomial logistic regression of union support \\label{tab:tab-uv}",
             gof_map = gm,
