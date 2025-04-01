@@ -111,7 +111,8 @@ model_print_aware_wmt<- modelsummary::modelsummary( engage.models_wmt,
                                output = "kableExtra",
                                notes = list(note2),
                                stars = c('*' = .05, '**' = .01),
-                               threeparttable = TRUE
+                               threeparttable = TRUE,
+                               escape = FALSE
 )
 
 

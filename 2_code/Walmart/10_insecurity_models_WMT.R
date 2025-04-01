@@ -33,8 +33,8 @@ attr(rows, 'position') <- c(7)
 
 note2 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
 gm <- list(
-  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
-  list("raw" = "r.squared", "clean" = "R^2", "fmt" = 2),
+  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
+  list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
   list("raw" = "F", "clean" = "F", "fmt" = 2))
 
 
@@ -43,11 +43,12 @@ model_print_sec_wmt<- modelsummary( ee.models.wmt,
                                      gof_map = gm,
                                      vcov = "robust",
                                      add_rows = rows,
-                                     title = "Ability to meet $400 emergency expense; OLS estimates \\label{tab:tab-finsec-wmt}",
+                                     title = "Ability to meet emergency expense; OLS estimates \\label{tab:tab-finsec-wmt}",
                                      notes = list(note2),
                                      output = "kableExtra",
                                      threeparttable=TRUE,
-                                     stars = c('*' = .05, '**' = .01)
+                                     stars = c('*' = .05, '**' = .01),
+                                    escape = FALSE
 )
 
 

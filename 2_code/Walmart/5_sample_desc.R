@@ -126,16 +126,17 @@ extra_row <- data.frame(
 )
   
 attr(extra_row, "position") <- 17
-model_print<- modelsummary::modelsummary( mc_all,
+manip_model_print<- modelsummary::modelsummary( mc_all,
                             #shape = "rbind",
                             coef_map = coef_maps,
                             gof_map = gm,
                             #vcov = "robust",
                             add_rows = extra_row,
-                            title = "OLS regression of treatment on correctly reporting a Walmart EHF (manipulation check) \\label{tab:awareness-model}",
+                            title = "OLS regression of treatment on correctly reporting a Walmart EHF (manipulation check) \\label{tab:tab-manip-check}",
                             output = "kableExtra",
                             notes = list(note2),
-                            stars = c('*' = .05, '**' = .01)
+                            stars = c('*' = .05, '**' = .01),
+                            escape = FALSE
 )
 
 

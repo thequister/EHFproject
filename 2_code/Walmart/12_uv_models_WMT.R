@@ -60,7 +60,7 @@ note1 <- "Reference category is 'For the union'. Covariates include age, gender 
 
 
 gm <- list(
-  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
+  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
   list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 
 multinom_tab_wmt<-modelsummary(uv.wmt.models.hq,
@@ -70,8 +70,10 @@ multinom_tab_wmt<-modelsummary(uv.wmt.models.hq,
             gof_map = gm,
             #add_rows = rows,
             notes = list(note1),
+            output = "kableExtra",
             threeparttable=TRUE, 
-            stars = c('*' = .05, '**' = .01)
+            stars = c('*' = .05, '**' = .01),
+            escape = FALSE
 )
 
 
@@ -135,42 +137,31 @@ union_supp_pct_int_c<-lm(union_coworkers_6 ~ treatment_bin*ehf_aware_pretr +
                        college,
                      data = wmt.hq)
 
-union_supp_pct_models <- list(union_supp_pct,union_supp_pct_c,union_supp_pct_int,union_supp_pct_int_c)
+union_supp_pct_models <- list(union_supp_pct,union_supp_pct_c,union_supp_pct_int)
+names(union_supp_pct_models) <- c("base", "covariates", "pre-exposed")
 note1 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly and full time status, college degree, and main job."
 #note2 <- ""
 
 
 gm <- list(
-  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
-  list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
+  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
+  list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
+  list("raw" = "F", "clean" = "F", "fmt" = 2))
 
-union_supp_pct_tab_wmt<-modelsummary(union_supp_pct_models,
-                               #shape = term + response ~ statistic,
+union_supp_pct_tab_wmt<-modelsummary(union_supp_pct_models, 
                                coef_map = coef_maps,
                                title = "OLS regression of expected union support among co-workers \\label{tab:tab-usupp-models-wmt}",
                                vcov = "robust",
                                gof_map = gm,
+                               output = "kableExtra",
                                #add_rows = rows,
                                notes = list(note1),
                                threeparttable=TRUE, 
-                               stars = c('*' = .05, '**' = .01)
+                               stars = c('*' = .05, '**' = .01),
+                               escape = FALSE
 )
 
 
-#donation
-
-
-d1 <-glm(wmt.hq$donate == "YES I would like to learn how to donate" ~ treatment_bin + 
-                              age_clean + 
-                             male +
-                             main_job +
-                             tenure_num +
-                             nonwhite +
-                             fulltime +
-                         #    hourly+ perfect separation
-                             college, family=binomial(link="cloglog"), data=wmt.hq)
-d_firth <-logistf::logistf(donate == "YES I would like to learn how to donate" ~ treatment_bin,
-                           data = wmt.hq)
 
 # out.tab<-summary(uv_multinom_c)
 
