@@ -2,14 +2,14 @@
 title: "Welfare Capitalism on the Cheap?"
 subtitle: "the case of employee harship funds"
 author: 
-   - John S. Ahlquist, UCSD^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, Theodoros Ntounias, and Yuchen Wang provided research assistance.  Versions of this research were presented at the APSA, LERA, CAPE and EPSA meetings as well as seminars at Duke, IE-Madrid, Universitat de Barcelona, Wisconsin, and Yale. Kate Bronfenbrenner, Daniel Galvin, Jake Grumbach, Margaret Levi, Elizabeth Lyons, and Eric Thai provided helpful comments.  Shane Xuan assisted with Facebook.]
+   - John S. Ahlquist^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, Theodoros Ntounias, and Yuchen Wang provided research assistance.  Versions of this research were presented at the APSA, LERA, CAPE and EPSA meetings as well as seminars at Duke, IE-Madrid, Universitat de Barcelona, Wisconsin, and Yale. Kate Bronfenbrenner, Daniel Galvin, Jake Grumbach, Margaret Levi, Elizabeth Lyons, and Eric Thai provided helpful comments.  Shane Xuan assisted with Facebook.]
   
-#date: "`r format(Sys.time(), '%d %B, %Y')`"
-abstract: | 
-  Hundreds of US employers have created “employee hardship funds” (EHFs). EHFs pool money donations from a firm’s workers in order to offer cash grants to the firm’s employees in unforeseen emergencies. Do these programs have any impact on workers’ financial well-being or attachment to their job? Can they be deployed for union avoidance? I use original surveys of workers at two large employers with well-established EHFs as well as a representative sample of retail workers nationwide to study these questions. Workers at firms without EHFs have limited knowledge of these programs.  I find “broad but thin” levels of worker awareness of EHF programs at firms that have them. Using a survey experiment that exploits novel video vignettes, I find that the EHF treatment increases worker attachment to both co-workers and the employer, increases uncertainty about unionization, and increases support for government support in times of crisis.   Among workers unaware of their employer’s EHF before the survey, I find that the EHF treatment reduces support for unionization. There is no evidence that EHFs affect workers’ perceived financial security.  Findings have implications for studying the "moral economy" between low-wage workers and employers in the US as well as unionization and union avoidance.  Findings also have implications for the study of charitable giving, organizational attachment, and solidarity.
+date: "`r paste(format(Sys.time(), '%d %B, %Y'), 'INCOMPLETE WORKING DRAFT', sep=' ')`"
 
 output: 
   bookdown::pdf_document2:
+    latex_engine: xelatex
+    keep_tex: true
     toc: false
     #citation_package: natbib
     extra_dependencies: ["hyperref", "bbm", "subfig", "flafter"]
@@ -18,10 +18,16 @@ bibliography:
    - "`r here::here('inputs', 'EHFbib3.bib')`"
    - "`r here::here('inputs', 'EHFbib4.bib')`"
 link-citations: true
+classoption: [11pt, oneside]
 header-includes:
-   - \usepackage{setspace}\doublespacing
+   - \usepackage{setspace}\onehalfspacing
 
 ---
+\begin{abstract}
+\begin{singlespace} 
+Hundreds of US employers have created “employee hardship funds” (EHFs). EHFs pool money donations from a firm’s workers in order to offer cash grants to the firm’s employees in unforeseen emergencies. Do workers know about and engage with these programs? Do they have any impact on workers’ financial well-being or job attachment? Can they be deployed for union avoidance? I use original surveys of workers at two large employers with well-established EHFs as well as a sample of retail workers nationwide to study these questions. Retail workers have limited knowledge of these programs.  At firms with EHFs, I find “broad but thin” levels of worker awareness that reflects employer promotional effort. Using survey experiments that exploit novel video vignettes, I find mixed results: At a firm with a generous and well-promoted EHF, treatment increases worker attachment to both co-workers and the employer and increases uncertainty about unionization; these effects are concentrated among workers unaware of their employer’s EHF before the survey.  At the firm with the less generous program, I find weaker or non-existent effects, although the EHF treatment in this case reduces opposition to unionization. There is no evidence that EHFs affect workers’ perceived financial security and no evidence that EHFs "substitute" for public social insurance programs in the minds of workers.  Findings have implications for studying the "moral economy" between low-wage workers and employers in the US as well as unionization and union avoidance.  Findings also have implications for the study of charitable giving, organizational attachment, and solidarity.
+\end{singlespace}
+\end{abstract}
 
 ```{r setup, include=FALSE}
 #loading THD, WMT, and genpop data
