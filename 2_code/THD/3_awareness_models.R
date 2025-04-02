@@ -100,7 +100,7 @@ coef_maps <- c("rk_age" = "age",
 
 gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
-  list("raw" = "aic", "clean" = "AIC", "fmt" = 1))
+  list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 note2 <- "Standard errors in parentheses."
 
 
@@ -110,11 +110,12 @@ model_print<- modelsummary( engage.models,
                                gof_map = gm,
                                #vcov = "robust",
                                #add_rows = rows,
-                               title = "Weighted logistic regression of EHF awareness and engagement \\label{tab:awareness-model}",
+                               title = "Weighted logistic regression of Home Depot EHF awareness and engagement \\label{tab:awareness-model}",
                                output = "kableExtra",
                                notes = list(note2),
                                stars = c('*' = .05, '**' = .01),
-                               threeparttable = TRUE
+                               threeparttable = TRUE,
+                            escape = FALSE
 )
 
 

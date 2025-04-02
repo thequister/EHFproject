@@ -96,7 +96,7 @@ coef_maps <- c("age_clean" = "age",
                "collegeTRUE" = "college")
 
 gm <- list(
-  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
+  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
   list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 note2 <- "Standard errors in parentheses."
 
@@ -107,7 +107,7 @@ model_print_aware_wmt<- modelsummary::modelsummary( engage.models_wmt,
                                gof_map = gm,
                                #vcov = "robust",
                                #add_rows = rows,
-                               title = "Weighted logistic regression of EHF awareness and engagement \\label{tab:awareness-model-wmt}",
+                               title = "Weighted logistic regression of EHF awareness and engagement \\label{tab:tab-awareness-model-wmt}",
                                output = "kableExtra",
                                notes = list(note2),
                                stars = c('*' = .05, '**' = .01),

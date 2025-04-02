@@ -40,7 +40,7 @@ note1 <- "Reference category is 'For the union'. Covariates include age, gender 
 
 
 gm <- list(
-  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
+  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
   list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 
 multinom_tab<-modelsummary(uv.models.uw,
@@ -51,7 +51,8 @@ multinom_tab<-modelsummary(uv.models.uw,
             gof_map = gm,
             notes = list(note1),
             threeparttable=TRUE, 
-            stars = c('*' = .05, '**' = .01)
+            stars = c('*' = .05, '**' = .01),
+            escape = FALSE
 )
 
 eff_probs<-Effect(c("HDTreatment", "EHF_aware_list"), uv_mnl_int_uw, se = TRUE)

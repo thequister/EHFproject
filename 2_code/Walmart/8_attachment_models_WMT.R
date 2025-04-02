@@ -96,7 +96,7 @@ model_print_attachment_hq<- modelsummary::modelsummary( attachment.models.wmt.hq
                                      output = "kableExtra",
                                      notes = list(note1),
                                      stars = c('*' = .05, '**' = .01),
-                                     threeparttable=FALSE,
+                                     threeparttable=TRUE,
                                      escape = FALSE
 )
 

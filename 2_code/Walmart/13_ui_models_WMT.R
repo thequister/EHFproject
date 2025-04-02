@@ -86,9 +86,9 @@ coef_maps <- c(
 rows<-tribble(
   ~"term", ~"Base", ~"Preexposure",  ~"Covariates",~"Base", ~"Preexposure",  ~"Covariates",
   "Covariates?", "No", "No", "Yes","No", "No", "Yes")
-attr(rows, 'position') <- c(12)
+attr(rows, 'position') <- c(7)
 
-note1 <- "Robust standard errors in parentheses.\n Covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
+note1 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
 
 
 gm <- list(
@@ -98,13 +98,14 @@ gm <- list(
 
 ui_hard_tab_wmt<-modelsummary(ui.hard.models.wmt,
              coef_map = coef_maps,
-            title = "Support for Unemployment Insurance \\label{tab:tab-ui-hard-wmt}",
+            title = "Support for unemployment insurance and emergency government support  \\label{tab:tab-ui-hard-wmt}",
             gof_map = gm,
             vcov = "robust",
             add_rows = rows, 
             notes = list(note1),
             threeparttable=TRUE,
-            stars = c('*' = .05, '**' = .01) 
+            stars = c('*' = .05, '**' = .01),
+            escape = FALSE
 )
 
 # ui_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 

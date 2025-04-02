@@ -42,7 +42,8 @@ ui_tab<-modelsummary(ui.models.uw,
             add_rows = rows, 
             notes = list(note1),
             threeparttable=TRUE,
-            stars = c('*' = .05, '**' = .01) 
+            stars = c('*' = .05, '**' = .01),
+            escape = FALSE
 )
 
 ui_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 

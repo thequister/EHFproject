@@ -85,7 +85,7 @@ ai_mods <- list(
   "Covariates" = ai_c_thd_uw)
 
 model_print_thd_uw_attachment<- modelsummary( ai_mods,
-                                     shape = term + statistic ~ model,
+                                     #shape = term + statistic ~ model,
                                      coef_map = coef_maps,
                                      gof_map = gm,
                                      vcov = "robust",
@@ -94,7 +94,8 @@ model_print_thd_uw_attachment<- modelsummary( ai_mods,
                                      output = "kableExtra",
                                      notes = list(note1),
                                      stars = c('*' = .05, '**' = .01),
-                                     threeparttable=FALSE
+                                     threeparttable=FALSE,
+                                     escape = FALSE
 )
 
 
@@ -108,7 +109,8 @@ model_print_uw_loyal<- modelsummary( panels,
                                output = "kableExtra",
                                notes = list(note1),
                                stars = c('*' = .05, '**' = .01),
-                               threeparttable=TRUE
+                               threeparttable=TRUE,
+                               escape = FALSE
 )
 
 

@@ -82,6 +82,7 @@ eff_probs_uv_wmt<-marginaleffects::avg_comparisons(uv_wmt_mnl_c, variables = "tr
 wmt_mnl_uv_interp <-ggplot(eff_probs_uv_wmt, aes(x = group, y = estimate)) +
   geom_point() +  # Adds the dots for estimates
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +  # Adds the whiskers for confidence intervals
+  geom_hline(yintercept=0, linetype='dotted') +
   labs(title = "Average Treatment Effects",
        x = "Union vote",
        y = "Change in predicted probability")

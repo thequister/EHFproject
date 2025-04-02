@@ -40,11 +40,12 @@ model_print_uw<- modelsummary( ee.models.uw,
                                      gof_map = gm,
                                      vcov = "robust",
                                      add_rows = rows,
-                                     title = "Ability to meet $400 emergency expense; OLS estimates \\label{tab:tab-finsec}",
+                                     title = "Ability to meet emergency expense; OLS estimates \\label{tab:tab-finsec}",
                                      notes = list(note2),
                                      output = "kableExtra",
                                      threeparttable=TRUE,
-                                     stars = c('*' = .05, '**' = .01)
+                                     stars = c('*' = .05, '**' = .01),
+                               escape = FALSE
 )
 
 
