@@ -64,6 +64,9 @@ ehf_firm_beliefs <- ggplot(firms_summary, aes(x = Q, y = prop, fill = ans)) +
   ) +
   guides(fill = guide_legend(title = NULL))
 
+ggsave(ehf_firm_beliefs, 
+       filename = here::here("4_output", "plots", "genpop_ehf_firm_beliefs.pdf")
+)
 
 # Support
 

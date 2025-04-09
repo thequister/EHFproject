@@ -528,6 +528,11 @@ takeup_wmt <- wmt.hq_wgt_f |>
   filter(ehf_exist != "No", treatment_bin == FALSE, emergency == "Yes") |> 
   summarize(takeup.prop = survey_mean(ehf_applied == "Yes"))
 
+cntlaware_wmt <- wmt.hq_wgt_f |> 
+  filter(treatment_bin == FALSE) |> 
+  summarize(aware.prop.direct.cntrl = survey_mean(ehf_exist == "Yes"))
+
+
 ```
 
 As expected, EHF awareness and engagement is substantially lower among the Walmart sample than among the Home Depot workers. We find that `r round(100*aware_tab_wmt$aware.prop)`% (se = `r round(100*aware_tab_wmt$aware.prop_se)`%) were aware of the ACNT. Of those who both knew about the ACNT _and_ experienced a qualifying event, `r round(100*takeup_wmt$takeup.prop)`% applied for a grant.  `r round(100*aware_tab_wmt$know.prop)`% (se = `r round(100*aware_tab_wmt$know.prop_se)`%) claim to know a grant recipient and `r round(100*aware_tab_wmt$donated.prop)`% (se = `r round(100*aware_tab_wmt$donated.prop_se)`%)  claim to have donated.

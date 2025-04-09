@@ -52,10 +52,13 @@ donation_summary <- wmt.hq  |>
 d_plot <-ggplot(donation_summary, aes(x = as.factor(treatment_bin), y = prop, color = as.factor(treatment_bin))) +
   geom_point(position = position_dodge(width = 0.25), size = 4) +
   geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.2, position = position_dodge(0.25)) +
-  labs(x = "Treatment Group", y = "Proportion Donating", title = "Proportion of Donations by Treatment Group") +
+  labs(x = "", y = "Proportion", title = "Proportion taking donation action") +
   scale_color_brewer(palette = "Dark2", name = "Treatment Group") +
-  theme_minimal()
+  scale_x_discrete(labels = c("FALSE" = "Untreated", "TRUE" = "Treated"))+
+  theme_minimal() + 
+  theme(legend.position = "none") 
 
+ggsave(d_plot, filename=here::here("4_output", "plots", "donate_wmt.pdf"))
 
 donate_dp<-interpretCI::propCI(n1=donation_summary$n[1],
                                n2=donation_summary$n[2],
