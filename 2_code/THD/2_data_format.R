@@ -118,4 +118,4 @@ pca_pr_knn <- prcomp(pca_att_dt_knn, scale = T, center=T)
 THD_comp_uw$attachment_index <- -pca_pr_knn$x[,1]
 
 THD_comp <- THD_comp_uw %>%
-  as_survey_design(ids = 1, weights = rk_wgt)
+  srvyr::as_survey_design(ids = 1, weights = rk_wgt)

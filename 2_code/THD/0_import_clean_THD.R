@@ -26,7 +26,7 @@ library(here)
 here()
 
 #setting up data
-qual_raw <- read_survey(here("0_data", "THD", "THD_qualtrics_raw_103121.csv"))
+qual_raw <- read_survey(here("0_raw_data", "THD", "THD_qualtrics_raw_103121.csv"))
 qual_dedupe <- qual_raw[!duplicated(qual_raw$Q7.1, incomparables = NA), ] %>% #removing duplicate email addresses
   exclude_location(include_na = TRUE) %>% #excluding IP addresses outside the USA
   mark_duplicates(dupl_ip=T, dupl_location = F) %>% #mark duplicate IP addresses
@@ -62,9 +62,9 @@ for (var_name in to_numeric) {
 
 THD <- mutate(qual_dedupe, age = 2021 - Q6.4) %>% 
   filter(age>17 | is.na(age))  %>% #removing those who report age less than 18
-  select(-Status:-IPAddress, -RecordedDate:-UserLanguage, -Q7.1:-MaxGrantAmt) # removing PII and useless info
+  select(-StartDate:-Progress, -Finished:-UserLanguage, -Q7.1:-MaxGrantAmt) # removing PII and useless info
 write.csv(THD, 
-          file = here("0_data", "THD", "THD_clean.csv"),
+          file = here("0_raw_data", "THD", "THD_clean.csv"),
           row.names = FALSE)  #dataset purged of all PII, irrelevant info 
 
 # creating raking weights for ~completed surveys
@@ -94,7 +94,7 @@ THD_complete <- mutate(THD_impute,
   droplevels()
 
 ## target distribution from to FB marginals 
-fb_thd_dems <- read_csv(here("0_data", "THD", "THD_audience.csv")) %>%
+fb_thd_dems <- read_csv(here("0_raw_data", "THD", "THD_audience.csv")) %>%
   mutate(targeting = NULL, location = NULL)
 thd_tr = sum(fb_thd_dems$potential_reach)
 fb_thd_dems <- mutate(fb_thd_dems, 
@@ -107,5 +107,5 @@ THD_complete <- THD_complete %>%
   mutate(rk_wgt = rake_survey(THD_complete, pop_margins = rk_targets))
 
 write.csv(THD_complete,   # dataset of survey (near-)completers with raking weights  
-          file = here("0_data", "THD", "THD_completed.csv"),
+          file = here("0_raw_data", "THD", "THD_completed.csv"),
           row.names = FALSE)
