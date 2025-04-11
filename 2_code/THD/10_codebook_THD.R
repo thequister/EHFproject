@@ -162,4 +162,4 @@ output_codebook <- codebookr::codebook(
   description = "Cleaned survey data relating to the Home Depot Homer Fund EHF study. Compiled by Theodoros Ntounias (RA)."
 )
 
-print(output_codebook, "Walmart_EHF_codebook.docx")
+print(output_codebook, "HomeDepot_EHF_codebook.docx")
