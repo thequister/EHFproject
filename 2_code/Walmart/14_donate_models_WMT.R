@@ -27,7 +27,7 @@ note1 <- "Standard errors in parentheses. Covariates include age, gender race, j
 donation_tab_wmt<-modelsummary(d_mods,
                                #shape = term + response ~ statistic,
                                coef_map = coef_maps,
-                               title = "Logistic regression on ACNT donation  \\label{tab:tab-d-wmt}",
+                               title = "Logistic regression on ACNT donation  \\label{tab:tab-donate-models-wmt}",
                                #vcov = "robust",
                                gof_map = gm,
                                #add_rows = rows,
