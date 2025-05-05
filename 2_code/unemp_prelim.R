@@ -2,21 +2,27 @@ library(here)
 source(here::here('2_code', '1_libraries_and_settings_global.R'))
 
 ACNT <- read_csv(here("3_cleaned_data", "ACNT_clean.csv")) %>%
-  select(unemp_benefits, other_welfare, ehf_aware_pretr, rk_wgt_trim) %>%
+  select(unemp_benefits, other_welfare, ehf_aware_pretr, rk_wgt_trim, 
+         registered, ideology, party, voted, ideology_conlib_num) %>%
   mutate(og = "ACNT") %>%
   rename(wgt = rk_wgt_trim)
 
 gr <- read_csv(here("3_cleaned_data", "general_retail_clean.csv")) %>%
-  select(unemp_benefits, other_welfare, ehf_aware_pretr, ehf_support_exist, ehf_support_new, acs_weight_trim) %>%
+  select(unemp_benefits, other_welfare, ehf_aware_pretr, ehf_support_exist, 
+         ehf_support_new, ehf_support_new_num, acs_weight_trim, registered, ideology, voted, party, 
+         vote_choice, ideology_conlib_num) %>%
   mutate(og = "General Retail", 
          new = ifelse(is.na(ehf_support_exist), "Support for a new EHF (Gen retail)", "Support for existing EHF (Gen retail)"), 
-         supp = ifelse(is.na(ehf_support_exist), ehf_support_new, ehf_support_exist)) %>%
+         supp = ifelse(is.na(ehf_support_exist), ehf_support_new, ehf_support_exist), 
+         voted = voted == "Yes") %>%
   rename(wgt = acs_weight_trim)
 
 THD <- read_csv(here("3_cleaned_data", "THD_clean.csv")) %>%
-  select(Q4.7, Q4.10, EHF_aware_list, rk_wgt) %>%
-  rename(unemp_benefits = Q4.7, other_welfare = Q4.10, ehf_aware_pretr = EHF_aware_list, wgt = rk_wgt) %>%
-  mutate(og = "THD")
+  select(Q4.7, Q4.10, EHF_aware_list, rk_wgt, Q5.2, Q5.3, Q5.5, Q5.6) %>%
+  rename(unemp_benefits = Q4.7, other_welfare = Q4.10, ehf_aware_pretr = EHF_aware_list, 
+         wgt = rk_wgt, registered = Q5.2, voted = Q5.5, vote_choice_20 = Q5.6, 
+         ideology = Q5.3) %>%
+  mutate(og = "THD", voted = voted == "Yes")
 
 wf <- bind_rows(ACNT, gr, THD)
 
@@ -48,7 +54,7 @@ cor.test(as.numeric(gr$other_welfare == "Yes"), as.numeric(gr$ehf_support_exist_
 cor.test(as.numeric(gr$other_welfare == "Yes"), as.numeric(gr$ehf_support_new_num), use = "complete.obs")
 
 
-## Plots
+## Plots: benefits and awareness
 ggplot(wf) +
   geom_bar(aes(x = unemp_benefits, fill = ehf_aware_pretr), position = "fill") +
   facet_grid(cols = vars(og))
@@ -60,6 +66,27 @@ ggplot(filter(wf, og == "General Retail")) +
 ggplot(filter(wf, og == "General Retail" & other_welfare != "Don't know")) +
   geom_bar(aes(x = other_welfare, fill = supp), position = "fill") +
   facet_grid(cols = vars(new))
+
+### Plots: politics and awareness
+ggplot(wf) +
+  geom_bar(aes(x = voted, fill = ehf_aware_pretr), position = "fill") +
+  facet_grid(cols = vars(og)) #nothing interesting
+
+ggplot(wf) +
+  geom_bar(aes(x = (registered == "Yes"), fill = ehf_aware_pretr), position = "fill") +
+  facet_grid(cols = vars(og)) #nothing interesting
+
+ggplot(wf) +
+  geom_bar(aes(x = ehf_aware_pretr, fill = ideology), position = "fill") +
+  facet_grid(cols = vars(og))
+
+glm(ehf_aware_pretr ~ voted + registered + ideology_conlib_num + party, ACNT, family = "binomial")
+
+summary(glm(ehf_aware_pretr ~ voted + registered + ideology_conlib_num + party, THD, family = "binomial"))
+
+summary(lm(ehf_support_new_num ~ (registered == "Yes") + ideology_conlib_num + (party == "Something else"), gr))
+
+summary(lm(attachment_index ~ party + registered + ideology_conlib_num, ACNT))
 
 ## Use of welfare
 weighted.mean(ACNT$unemp_benefits == "Yes", ACNT$wgt, na.rm = T) # 7.3%

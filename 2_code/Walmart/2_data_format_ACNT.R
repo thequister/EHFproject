@@ -206,8 +206,7 @@ ACNT_uw <- ACNT_uw %>%
                                "Extremely conservative"),
                            ordered = T)),
   ideology_conlib_num = ifelse(is.na(ideology_conlib), NA,
-    (as.numeric(ideology_conlib) - min(as.numeric(ideology_conlib), na.rm = T))/
-    (max(as.numeric(ideology_conlib), na.rm = T)- min(as.numeric(ideology_conlib), na.rm = T))), 
+    (as.numeric(ideology_conlib) - 1)/4), 
   ideology = factor(ideology),
   vote_lik_fix_flag = (RecordedDate <= "2024-11-13 09:22:16"),
   vote_lik_fix = case_when(RecordedDate > "2024-11-13 09:22:16" ~ vote_lik_post_elec,
