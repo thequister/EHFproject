@@ -219,7 +219,7 @@ emp.reco <- emp.reco + geom_col(position = dodge, alpha = 0.2) +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L))
 
   
-gridExtra::grid.arrange(wk.loyal, emp.loyal, emp.reco, nrow = 4)
+#gridExtra::grid.arrange(wk.loyal, emp.loyal, emp.reco, nrow = 4)
 #pdf("attachments.pdf")
 #gridExtra::grid.arrange(wk.loyal, emp.reco, nrow = 2)
 #dev.off()

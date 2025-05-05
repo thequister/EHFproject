@@ -94,9 +94,34 @@ model_print_thd_uw_attachment<- modelsummary( ai_mods,
                                      output = "kableExtra",
                                      notes = list(note1),
                                      stars = c('*' = .05, '**' = .01),
-                                     threeparttable=FALSE,
+                                     threeparttable=TRUE,
                                      escape = FALSE
 )
+
+
+THDattach_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 
+                      ai_c_thd_uw,
+                      vcov = sandwich::vcovHC(ai_c_thd_uw),     
+                      se = TRUE)
+
+THDattach_eff_plot <- plot(THDattach_eff,
+                          main = "Treament effect on Home Depot job attachment\n by pre-exposure status",
+                          xlab = "Experimental condition",
+                          axes = list(
+                            y = list(type = "response",
+                                     lab="predicted value")),
+                          ylim = c(-1.2, 1),
+                          lattice=list(strip=list(factor.names=FALSE)),
+                          colors = grey(0.5)
+)
+
+THDattach_eff_plot$condlevels$EHF_aware_list<-c("unaware", "pre-exposed")
+
+
+
+
+
+
 
 
 model_print_uw_loyal<- modelsummary( panels,
