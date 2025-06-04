@@ -1,0 +1,152 @@
+---
+title: "Workplace Welfare and Support for Social Insurance"
+subtitle: "employee harship funds"
+author: 
+   - John S. Ahlquist^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, and Yuchen Wang provided research assistance.  Versions of this research were presented at the APSA, LERA, CAPE and EPSA meetings as well as seminars at Columbia, Duke, IE-Madrid, Universitat de Barcelona, Wisconsin, and Yale. Kate Bronfenbrenner, Daniel Galvin, Jake Grumbach, Margaret Levi, Elizabeth Lyons, and Eric Thai provided helpful comments.  Shane Xuan assisted with Facebook.]
+   - Theodoros Ntounias^[PhD Candidate, department of political science, UC San Diego]
+  
+date: "`r paste(format(Sys.time(), '%d %B, %Y'), 'INCOMPLETE WORKING DRAFT', sep=' ')`"
+
+output: 
+  bookdown::pdf_document2:
+    latex_engine: xelatex
+    keep_tex: true
+    toc: false
+    #citation_package: natbib
+    extra_dependencies: ["hyperref", "bbm", "subfig", "flafter"]
+#biblio-style: "`r here::here('inputs', 'apsr.bst')`"
+bibliography: 
+   - "`r here::here('inputs', 'EHFbib3.bib')`"
+   - "`r here::here('inputs', 'EHFbib4.bib')`"
+link-citations: true
+classoption: [11pt, oneside]
+header-includes:
+   - \usepackage{setspace}\onehalfspacing
+
+---
+\begin{abstract}
+\begin{singlespace} 
+
+There is a long-standing argument that public welfare and social insurance crowds out private savings and charity. There is also a newer set of arguments that private resources (home equity, credit) may dampen voters' support for public insurance programs and redistributive taxation. We investigate the "substitution hypothesis" in the context of a novel set of workplace mutual aid arrangements--Employee Hardship Funds (EHFs). EHFs enable employers to distribute emergency cash to their workers using donations pooled from employees themselves.  Hundreds of major US firms now operate these programs. We use three original surveys---including two matched to workers at specific employers with EHFs and including experiments.We find that state-level generosity in the social safety net is unrelated to worker knowledge of and support for EHFs. Experimental manipulation of EHF salience among workers at two large retailers indicates that EHFs do not displace support for public unemployment insurance or government emergency aid, regardless of the generosity of the EHF program. [Something about political ideology]. EHFs, as a workplace mutual aid arrangement, and government social insurance programs appear unconnected in the minds of workers.\\
+
+
+\end{singlespace}
+\end{abstract}
+
+<!---
+Hundreds of US employers have created “employee hardship funds” (EHFs). EHFs pool money donations from a firm’s workers in order to offer cash grants to the firm’s employees in unforeseen emergencies. Do workers know about and engage with these programs? Do they have any impact on workers’ financial well-being or job attachment? Can they be deployed for union avoidance? I use original surveys of workers at two large employers with well-established EHFs as well as a sample of retail workers nationwide to study these questions. Retail workers have limited knowledge of these programs.  At firms with EHFs, I find “broad but thin” levels of worker awareness that reflects employer promotional effort. Using survey experiments that exploit novel video vignettes, I find mixed results: At a firm with a generous and well-promoted EHF, treatment increases worker attachment to both co-workers and the employer and increases uncertainty about unionization; these effects are concentrated among workers unaware of their employer’s EHF before the survey.  At the firm with the less generous program, I find weaker or non-existent effects, although the EHF treatment in this case reduces opposition to unionization. There is no evidence that EHFs affect workers’ perceived financial security and no evidence that EHFs "substitute" for public social insurance programs in the minds of workers.  Findings have implications for studying the "moral economy" between low-wage workers and employers in the US as well as unionization and union avoidance.  Findings also have implications for the study of charitable giving, organizational attachment, and solidarity.
+--->
+
+```{r setup, include=FALSE}
+#loading THD, WMT, and genpop data
+temp<-here::here('2_code', '1_libraries_and_settings_global.R')
+source(file = temp, local = knitr::knit_global())
+
+temp<-here::here('2_code', 'THD', '2_data_format.R')
+source(file = temp)
+
+#WMT data with sample descriptives for appendix.
+temp<-here::here('2_code','Walmart', '5_sample_desc.R')
+source(file = temp)
+rm(temp)
+
+genpop <- read_csv(here("3_cleaned_data", "general_retail_clean.csv"))
+
+genpop_w<- genpop  |>  
+  as_survey_design(ids = 1, weights = acs_weight_trim)
+
+```
+
+Past generations of workers built organizations to help one another in hard times.  Some of these mutual aid societies eventually transformed into full-fledged trade unions.  Others morphed into mutual insurance companies that later informed government social insurance programs [@deswaanWorkersClientsMutualism1986].  Such organizations transformed workplace relations, socialized workers into political life, and produced labor-based political movements. 
+
+
+
+nor do they displace support for public benefits.
+
+
+and more supportive of unemployment insurance
+
+There is no detectable treatment effect on attitudes towards government programs in support of the unemployed or those facing hardship.
+
+
+The union substitution hypothesis also has an echo in the literature on support for the welfare state.  There is now a growing body of scholarship arguing that government welfare programs and private resources substitute for one another [@beito_mutual_2000; @yeo_working_1979; @wiedemann_how_2022].  Public programs often step in when private mutual aid or insurance pools collapse.  For example, the famous "Ghent system," in which unions administer government-mandated unemployment insurance, arose out of the repeated collapse of various privately-organized welfare and mutual aid pools [@socialsecurityadministrationSocialSecurityHistory2023; @western_1997].  @panjwaniCausesConsequencesMedical2023 show that health-related crowdfunding GoFundMe campaigns declined after expansions in medical insurance coverage due to the  Affordable Care Act.  @leeNewDigitalSafety2022 show that areas with poor private insurance coverage and fewer social associations see greater initiation rates for GoFundMe campaigns, but campaigns in these same areas are less likely to be successful.   Conversely, increases in private resources, private insurance, or employer-provided benefits can crowd out support for government programs [@ansell_political_2014; @busemeyer_welfare_2020; @rosner_struggle_2003; @hacker_insecure_2013; @zhu_policy_2015] .  Insofar as EHFs are a form of private emergency aid, increased program awareness could blunt support for social insurance or government aid programs in times of emergency (e.g., COVID-19).  This paper seeks to determine whether we can observe this effect among workers exposed to EHF information.
+
+
+
+EHF may be viewed as "private insurance", which could dampen support for social insurance. Prompting workers with information about their employer's EHF will reduce workers' willingness to vote for unionization and reduce stated support for government aid programs for unemployment or emergencies.
+
+
+
+
+ attitudes, or beliefs about the welfare state?
+
+### 
+
+ Model specifications:
+
+Genpop:
+ EHF awareness/support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status)
+
+THD:
+ EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure)
+ SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status)
+
+WMT:
+ EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure)
+ SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status)
+
+
+
+### Attitudes toward government social insurance
+
+Compared to unionization, workers in this sample are far more supportive of unemployment insurance, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.  We see that the video treatment substantially reduces the proportion of responses in the "none" category in favor of the two positive categories.  The EHF video treatment made respondents more rather than less supportive of government-provided social insurance, contrary to expectations.  The text treatment, on the other hand, does not appear to have any detectable treatment effect on average.
+
+```{r tab-ui,eval=TRUE, echo = FALSE, tab.cap="Support for UI regression models" }
+temp<-here::here('2_code', 'THD', '9_ui_models.R')
+source(temp)
+rm(temp)
+ui_tab
+
+```
+
+Table \@ref(tab:tab-ui) displays regression estimates for UI support.  Results here confirm a positive average treatment effect for the video treatment of about `r round(coef(ui_lm_uw)[3]/sd(THD_comp_uw$gov_ui_num,na.rm=T),2)` standard deviations.  In contrast to all of the outcomes studied above, we see no large or statistically discernible difference between the pre-exposed and unaware in average support for UI.  We also see no treatment effects among the unaware, although there are treatment effects among the _pre-exposed_, especially for the video treatment.
+
+To interpret this more easily, Figure \@ref(fig:fig-uieff) displays treatment effects by respondent pre-exposure to the EHF.  In the case of UI, we see that treatment effects are entirely concentrated among those _already_ aware of the Home Depot's EHF.  Contrary to expectations, both the text and video treatments _increase_ support for UI, although only the latter is a significant effect by conventional standards.  This finding deserves more exploration, but it consistent with author interviews with EHF professionals in which they indicate that EHFs are meant to supplement or provide a bridge to public benefits, rather than supplant them.   
+
+```{r fig-uieff, eval=TRUE, echo=FALSE, fig.cap="Interpreting treatment effects from UI models"}
+ui_eff_plot
+
+```
+
+Is unemployment insurance the appropriate policy to link with the EHF?  After all, the EHF is designed to provide benefits while having a job with this employer whereas UI is designed to help when a job is lost.^[The pre-exposed may better appreciate this distinction, which may help explain the unexpected findings.]  There are two pieces of evidence that UI is a reasonable policy domain to link with EHF benefits.  First, although EHF benefits are not available to someone who loses her job with an employer, benefits are often available when a worker's immediate family member loses a job.  Second, the UI question was asked as part of a battery of questions asking about UI was well as two other policy areas: pensions for the elderly and the provision of childcare for working parents.  These two questions can constitute "placebos" since EHFs have no connection with either policy area.  Parameter estimates from regressing support for these alternative policy areas on the EHF treatments and EHF awareness appear in Appendix Table \@ref(tab:tab-placebo).  I find no evidence for any relationship between the EHF treatments and support for government involvement in either old age pensions or childcare, regardless of whether the respondent was aware of the EHF going into the survey.
+
+Finally, we look at social insurance policies.  In the Walmart survey we again asked respondents the level of responsibility the government has for the elderly and the unemployed.  To further directly examine the substitution hypothesis, I also asked respondents about government responsibility for "people confronting short-term hardships."  As Table \@ref(tab:tab-ui-hard-wmt) displays, we find no evidence of any treatment effect for any of these policy areas among Walmart workers; pre-exposure to the ACNT makes no difference in this conclusion.  Across both the Home Depot and Walmart surveys, we see no evidence that "private welfare" in the form of EHFs has any negative effect on support for government-directed social support, whether for childcare, the unemployed, the elderly, or those experiencing sudden hardship.
+
+```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)"}
+
+ui_hard_tab_wmt
+```
+
+
+Findings related to the "substitution hypothesis"--the claim that private benefits and resources reduce support for government-provided programs--were another area of agreement across Studies 2 and 3.  Specifically, the video treatment shows no evidence of a negative effect on respondent support for government unemployment insurance or aid to those in temporary hardship.  In the Home Depot sample, the treatment induced a modest but significant _increase_ in support for government-provided UI.  This outcome may be the result of Home Depot workers having a better understanding of the EHF program (and its limitations).  Findings in these surveys are inconsistent with a simple "private options crowd out public benefits" story.
+
+
+
+# References {-}
+
+<div id="refs"></div>
+
+\newpage
+
+# (APPENDIX) Appendix {-}
+
+\newpage
+
+# Placebos for UI support (Home Depot) {#app-placebo}
+```{r tab-placebo, echo=FALSE, tab.cap="Placebo regressions for UI"}
+
+placebo_tab
+
+```
+
+
