@@ -1,6 +1,6 @@
 ---
-title: "Workplace Welfare and Support for Social Insurance"
-subtitle: "employee harship funds"
+title: "Private Welfare in the Workplace and Support for Social Insurance"
+subtitle: "the case of employee harship funds"
 author: 
    - John S. Ahlquist^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, and Yuchen Wang provided research assistance.  Versions of this research were presented at the APSA, LERA, CAPE and EPSA meetings as well as seminars at Columbia, Duke, IE-Madrid, Universitat de Barcelona, Wisconsin, and Yale. Kate Bronfenbrenner, Daniel Galvin, Jake Grumbach, Margaret Levi, Elizabeth Lyons, and Eric Thai provided helpful comments.  Shane Xuan assisted with Facebook.]
    - Theodoros Ntounias^[PhD Candidate, department of political science, UC San Diego]
