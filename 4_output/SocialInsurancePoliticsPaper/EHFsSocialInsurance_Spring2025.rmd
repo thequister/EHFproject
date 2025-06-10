@@ -80,6 +80,11 @@ EHF may be viewed as "private insurance", which could dampen support for social 
 
 
  attitudes, or beliefs about the welfare state?
+ 
+ Some EHFs appear to be the result of spontaneous initiatives from executives, often in response to a major natural disaster affecting a region closely connected to the firm and its employees.^[Disaster aid and social insurance are closely linked in the US [@landis_fate_1999].]  Based on interviews, this often stemmed from frustration with the slow and uneven government aid. 
+
+Even before COVID-19, there was plenty of evidence that the existing social insurance and welfare systems were stigmatizing, encumbered with numerous "administrative burdens" [@herd_administrative_2019], and straining to deliver to those in need.  Several informants suggested that EHFs may present a private, partial complement to a weakening or slow public system.  By locating mutual aid programs in the firm, program participation might be higher and the EHF can benefit from corporate resources.  Applying for an EHF grant may be easier or less stigmatizing than applying for government assistance and the turn around time for benefits could be much faster in times of acute need.^[The Home Depot claims that grants are processed within 7 business days of application receipt, far faster than welfare or unemployment benefits, which also require waiting periods in many states.]
+
 
 ### 
 
