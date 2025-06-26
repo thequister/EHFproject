@@ -77,7 +77,7 @@ There is now a growing body of scholarship arguing that government welfare progr
 EHF may be viewed as "private insurance", which could dampen support for social insurance. Prompting workers with information about their employer's EHF will reduce workers' willingness to vote for unionization and reduce stated support for government aid programs for unemployment or emergencies.
 
 
-
+@fishbackSocialInsurancePublic2020
 
  attitudes, or beliefs about the welfare state?
  
@@ -104,6 +104,8 @@ WMT:
 
 
 ### Attitudes toward government social insurance
+
+In examining social insurance, I take a question battery from the General Social Survey that asks the extent to which the respondent thinks the government has a responsibility to provide for different constituencies.  Here I examine responses for "the unemployed" (4-category response ranging from "none at all" to "a lot").
 
 Compared to unionization, workers in this sample are far more supportive of unemployment insurance, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.  We see that the video treatment substantially reduces the proportion of responses in the "none" category in favor of the two positive categories.  The EHF video treatment made respondents more rather than less supportive of government-provided social insurance, contrary to expectations.  The text treatment, on the other hand, does not appear to have any detectable treatment effect on average.
 
