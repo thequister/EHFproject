@@ -1,6 +1,7 @@
 #source("1_libraries_and_settings.R")
 #source("2_data_format.R")
 
+d_wmt_ols <-lm_robust(wmt.hq$donate == "YES I would like to learn how to donate" ~ treatment_bin, data=wmt.hq)
 d_wmt <- d_int_wmt <-glm(wmt.hq$donate == "YES I would like to learn how to donate" ~ treatment_bin, family=binomial, data=wmt.hq)
 d_int_wmt <-glm(wmt.hq$donate == "YES I would like to learn how to donate" ~ treatment_bin*ehf_aware_pretr, family=binomial, data=wmt.hq)
 
@@ -15,7 +16,7 @@ d_c_wmt <-glm(wmt.hq$donate == "YES I would like to learn how to donate" ~ treat
                 college, family=binomial, data=wmt.hq)
 d_firth <-logistf::logistf(donate == "YES I would like to learn how to donate" ~ treatment_bin,
                            data = wmt.hq)
-d_firth <-logistf::logistf(donate == "YES I would like to learn how to donate" ~ treatment_full,
+d_firth_cov <-logistf::logistf(donate == "YES I would like to learn how to donate" ~ treatment_full,
                            data = wmt.hq)
 d_mods<-list(d_wmt, d_c_wmt, d_int_wmt)
 names(d_mods)<-c("base", "covariates", "pre-exposure")
@@ -32,10 +33,28 @@ donation_tab_wmt<-modelsummary(d_mods,
                                gof_map = gm,
                                #add_rows = rows,
                                notes = list(note1),
-                               threeparttable=TRUE, 
-                               stars = c('*' = .05, '**' = .01),
+                               #threeparttable=TRUE, 
+                               stars = c('+' = 0.1, '*' = .05, '**' = .01),
                                escape = FALSE
 )
+
+
+d_mods_app<-list(d_wmt_ols, d_wmt, d_firth)
+names(d_mods_app) <-c("OLS", "logit", "Firth")
+donation_tab_app <- modelsummary(d_mods_app,
+                               #shape = term + response ~ statistic,
+                               coef_map = c("treatment_binTRUE" = "Treated"),
+                               title = "Regression of ACNT donation on treatment  \\label{tab:tab-donate-models-wmt-app}",
+                               #vcov = "robust",
+                               gof_map = gm,
+                               #add_rows = rows,
+                               notes = "Robust standard errors for OLS model",
+                               #threeparttable=TRUE, 
+                               stars = c('+' = 0.1, '*' = .05, '**' = .01),
+                               escape = FALSE
+)
+
+
 
 donation_summary <- wmt.hq  |>
   mutate(

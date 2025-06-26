@@ -43,7 +43,7 @@ uv_plot <- uv_plot + geom_col(position = dodge, alpha = 0.2) +
     #                 labels = c("1" ="none at all",
     #                            "2"="", "3" = "",
     #                            "4"="a lot")) +
-  labs(title = "Support for unionization by EHF treatment",
+  labs(#title = "Support for unionization by EHF treatment",
        x = NULL, y = "% treatment group") +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
   scale_fill_discrete(name="EHF treatment", 
@@ -70,7 +70,7 @@ ui_plot <- ui_plot + geom_col(position = dodge, alpha = 0.2) +
                      labels = c("1" ="none",
                                 "2"="", "3" = "",
                                 "4"="a lot")) +
-  labs(title = "Support for UI by EHF treatment",
+  labs(#title = "Support for UI by EHF treatment",
        x = NULL, y = "% treatment group") +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
   scale_fill_discrete(name="EHF treatment", 
@@ -82,7 +82,7 @@ ui_plot <- ui_plot + geom_col(position = dodge, alpha = 0.2) +
   theme(legend.position = "none",
         panel.grid = element_blank())
 
-gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
+#gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
 #pdf("ui_uv.pdf")
 #gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
 #dev.off()

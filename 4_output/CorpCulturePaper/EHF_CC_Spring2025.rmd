@@ -61,13 +61,13 @@ genpop_w<- genpop  |>
 
 ```
 
-From the small startup to the large multinational enterprise, firms now implement a wide variety of corporate social responsibility (CSR) initiatives to influence external audiences and internal stakeholders—-particularly employees. Under certain conditions, CSR programs can help attract value-aligned workers, foster attachment to the firm and to coworkers, reduce turnover, and even elicit increased work effort [@ruppEmployeeReactionsCorporate2006; @turbanCorporateSocialPerformance1997; @bodeCorporateSocialInitiatives2015; @burbanoGettingGigWorkers2021; @bodeCorporateSocialInitiatives2015; @greeningCorporateSocialPerformance2000; @portocarreroEffectsShortTermCorporate2024; @toninCorporatePhilanthropyProductivity2015]. These positive effects on workers also depend on workers' perceptions of management motives, CSR alignment with other corporate practices, and the range of other jobs on offer [@cassarIntentionsDoingGood2021; @burbanoMitigatingGigRemote2022; @listWhenCorporateSocial2021; @zhaoInfluenceCorporateSocial2022; @brisceseWhoBenefitsCorporate2021]. CSR efforts that appear inauthentic or inconsistent with internal management culture may backfire.  Yet this literature focuses entirely on outwardly-directed CSR activities: corporate philanthropy, volunteerism, and environmental sustainability efforts. Much less is known about *inward*-oriented CSR--that is, voluntary charitable programs directing support to internal stakeholders—-and how it relates to workplace culture and labor relations.
+From the small startup to the large multinational enterprise, firms now implement a wide variety of corporate social responsibility (CSR) initiatives to influence external audiences and internal stakeholders—-particularly employees. Under certain conditions, CSR programs can help attract value-aligned workers, foster attachment to the firm and to coworkers, reduce turnover, and even elicit increased work effort [@ruppEmployeeReactionsCorporate2006; @turbanCorporateSocialPerformance1997; @bodeCorporateSocialInitiatives2015; @burbanoGettingGigWorkers2021; @bodeCorporateSocialInitiatives2015; @greeningCorporateSocialPerformance2000; @portocarreroEffectsShortTermCorporate2024; @toninCorporatePhilanthropyProductivity2015]. These positive effects on workers depnd on CSR alignment with other corporate practices, which influence workers' perceptions of management motives [@cassarIntentionsDoingGood2021; @burbanoMitigatingGigRemote2022; @listWhenCorporateSocial2021; @zhaoInfluenceCorporateSocial2022; @brisceseWhoBenefitsCorporate2021]. CSR efforts that appear inauthentic or inconsistent with internal management culture may backfire.  But everything we know about CSR effects comes from studies of outwardly-directed CSR activities: corporate philanthropy, volunteerism, and environmental sustainability efforts. Much less is known about *inward*-oriented CSR--that is, voluntary charitable programs directing support to internal stakeholders—-and how it relates to workplace culture and labor relations.
 
 In the contemporary U.S., this question is especially urgent. Unionization rates remain historically low, public welfare and social insurance systems are under strain, and non-standard and precarious employment arrangements are increasingly widespread [@abrahamMeasuringGigEconomy2021; @hackerGreatRiskShift2019]. Workers in the lower half of the earnings and education distributions face stagnating wages and rising economic insecurity, even as fissured workplaces and distributed supply chains make it harder to develop occupational identities and coworker networks that once supported collective action [@ahlquistResearchFrontiersInstitutional2018; @naiduThereAnyFuture2022; @thelenAmericanPrecariatCapitalism2019; @weilFissuredWorkplace2014].  Economic precarity itself induces a ``cognitive tax'' on workers, negatively affecting numerous aspects of their lives, including job performance [@meurisPriceFinancialPrecarity2018; @meurisHighCostLow2015; @leanaOrganizationalBehaviorWorking2012; @mullainathanScarcity2013].
 
 Against this backdrop, a growing number of U.S. employers now sponsor Employee Hardship Funds (EHFs): tax-advantaged programs that provide emergency cash grants to workers, usually funded through donations from employees themselves. EHFs revive earlier elements of both  worker mutual aid arrangements and "welfare capitalism" [@brandesAmericanWelfareCapitalism1976; @jacobyModernManorsWelfare1998], but they have attracted almost no scholarly attention. We know virtually nothing about how workers perceive EHFs, whether they affect job attachment, or how they influence support for unionization. EHFs thus provide a tractable and unexplored context for studying how private governance initiatives impact workers [@lockePromiseLimitsPrivate2013; @ahlquistFirmParticipationVoluntary2020; @distelhorstDoesLeanImprove2017; @brisceseWhoBenefitsCorporate2021] while also connecting with the cross-disciplinary literature on worker support for unionization [@ahlquistRiseUnionCurious2024; @kochanWorkerVoiceAmerica2019; @pezoldLaborMarketTightness2023].
 
-I argue that EHFs represent a contemporary form of employer-driven welfare capitalism that echoes the mutual aid arrangements associated with labor unions. Interviews with corporate executives and EHF managers suggest that EHFs are, more than anything, vehicles for inculcating corporate culture and values.  I therefore expect that EHFs will produce mixed and contingent effects on worker attitudes depending on program structure and broader corporate culture. I document basic empirical facts about EHFs and test this argument using three original, pre-registered studies.^[The study was pre-registered as.  In appendix XX, I document where the research design or analysis deviates from the pre-registered studies.]
+I argue that EHFs represent a contemporary form of employer-driven welfare capitalism that echoes the mutual aid arrangements associated with labor unions. Interviews with corporate executives and EHF managers suggest that EHFs are, more than anything, vehicles for inculcating corporate culture and values.  I therefore expect that EHFs will produce mixed and contingent effects on worker attitudes depending on program structure and broader corporate culture. I document basic empirical facts about EHFs and test this argument using three original, pre-registered studies.^[The study was pre-registered under osf.io/fhq93.  In appendix \@ref(app-PAP), I document where the execution, analysis, or reporting deviates from the pre-analysis plans.]
 
 Study 1 is a national survey of U.S. retail workers, designed to map awareness of EHF programs across major employers, gauge worker interest in such programs, and examine preferences for program governance.   I find that retail workers are not well-informed about which firms sponsor EHF programs, suggesting that EHFs are not widely used as a recruitment or screening mechanism for attracting value-aligned workers.  Nevertheless, when weighed against other job amenities, emergency cash support is second only to paid time off in inducing workers to consider a hypothetical job offer at another retailer.  Respondents strongly support the creation of an EHF at their current employer and preferred a program in which workers themselves have meaningful influence over fund management.
 
@@ -79,7 +79,7 @@ The overwhelming majority of research into CSR effects on workers occurs in the 
 
 Finally, this study is, to my knowledge, the first to link CSR and unionization.  Research on union avoidance emphasizes either employer attempts to preempt unionization by improving wages and benefits or employers' use of captive audience meetings, threats, and retaliatory firings during the unionization drives that do occur [@taschereau-dumouchelUnionThreat2020; @farberNonunionWageRates2005; @bronfenbrennerIntensificationEmployerOpposition2009; @laferFearWorkAccount2020; @stansburyUSFirmsHave2021]. Findings here suggest there is scope for inward-oriented CSR--in the form of EHFs--to reduce support for unionization, but these effects depend greatly on execution and, even then, have limits.  There is also a renewed emphasis on mutual aid as a basis for rebuilding worker solidarity [@hertel-fernandezWhyPublicSector2021; @jarleyUnionsSocialCapital2005; @horowitzMutualismBuildingNext2021]. EHFs can clearly play a role here, although I have not uncovered any examples of unions and management exploring EHFs as a potential area of common interest.
 
-The next section provides details about EHFs, how they vary, and their growth.  Section XX reviews the relevant literature and poses the core reseach questions and hypotheses.  Section XX describes the research design and case selection.  Sections XX-XX present results.  Section XX concludes.  Details about the survey samples, pre-analysis plan, and supplementary data analysis are collected in the appendicies.   
+The next section provides details about EHFs, how they vary, and their growth.  Section \@ref(sec-lit-review) reviews the relevant literature and poses the core research questions and hypotheses.  Sections \@ref(sec-study-1)-\@ref(sec-study-2-3) describes the research designs, case selection, and present results.  Section \@ref(sec-conclusion) concludes.  Details about the survey samples, pre-analysis plan, and supplementary data analysis are collected in the appendicies.   
 
 <!---
 ######
@@ -106,7 +106,7 @@ In Study 2, Home Depot workers who were already aware of the Homer Fund prior to
 In Study 3, I find both similarities and differences with Study 2.  As in the Home Depot sample, Walmart workers who were already aware of their EHF prior to the survey were more confident in their financial stability, more attached to their employer and coworkers, and less supportive of unions, even after adjusting for job tenure.  For the experiment in Study 3, I construct a custom video vignette that reproduced the Homer Fund video for the Walmart context.  The video treatment again produced no detectable effect on perceived financial stability.  But, contrary to findings in the Home Depot sample, I find no evidence of a treatment effect on job attachment, including quit intentions.  The video treatment did produce a four percentage point increase in the likelihood a respondent takes an action to donate.  The video treatment reduces opposition to unionization and increases (by four percentage points) the percent of coworkers expected to vote for unionization.   In contrast to the Home Depot sample, the Walmart sample showed no evidence of heterogeneous treatment effects based on prior knowledge of the Walmart EHF, known as the Associates in Critical Need Trust Together Fund (ACNT). 
 --->
 
-# EHFs in practice
+# EHFs in practice {#sec-ehf-bkgrnd}
 
 The Home Depot and Walmart are two of the largest retailers in the world, with approximately 420,000 and 1.6 million 2024 US employees, respectively. These firms compete to some degree in both product and labor markets and both have experienced union activism. Their job benefits, programs, and procedures have an impact on the retail industry as a whole as well as the communities surrounding their establishments [@wiltshireWalmartSupercentersMonopsony2023; @derenoncourtVoluntaryMinimumWages2025; @wartzmanStillBrokeWalmarts2022].
 
@@ -114,11 +114,11 @@ The Home Depot has maintained the Homer Fund since 1999 while Walmart started th
 
 Both ACNT and the Homer Fund are examples of Employee Hardship Funds (EHFs).  Such funds have grown rapidly since 2001, when the US Internal Revenue Service (IRS) amended its rules to allow employer-controlled non-profit foundations to provide direct cash assistance to employees who suffer a "qualifying event." Qualifying events typically include unforeseen emergencies such as natural disasters, crime victimization, house fires, terrorist or military actions, etc. [@internalrevenueserviceDisasterReliefProviding2014; @aprillCharitableClassDisaster2016].  Funds can only be used for basic living expenses (food, clothing, transportation, housing/house repair, burial) for the recipient and immediate family [@internalrevenueserviceDisasterReliefProviding2014].
 
-We know very little about EHFs.  There is a small practitioner literature [@associationofdisasterrelieffundsandemployeehardshipfundsEnvironmentalScanDisaster2013; @employeerelieffundeducationgroupEnvironmentalScanDisaster2019;@aspeninstituteIlluminatingHiddenSafety2019; @rodriguezEmployeeHardshipFunds2020;@rodriguezEveryCompanyShould2020], but scholarly attention has been minimal and oblique^[@amorimScheduleUnpredictabilityHighCost2022; @reichWorkingRespectCommunity2018 are the only two peer-reviewed pieces mentioning EHFs of which I am aware.] Existing reports largely rely on interviews with EHF grant recipients and aggregated data on grant disbursement to document how EHF grants helped recipients in need.  None of the existing studies reports basic descriptive information such as employee awareness and engagement rates nor do they document overall effects among the broader workforce. We have no knowledge about selection into grant application or receipt nor is there information about how these programs operate at scale. 
+We know very little about EHFs.  There is a small practitioner literature [@associationofdisasterrelieffundsandemployeehardshipfundsEnvironmentalScanDisaster2013; @employeerelieffundeducationgroupEnvironmentalScanDisaster2019;@aspeninstituteIlluminatingHiddenSafety2019; @rodriguezEmployeeHardshipFunds2020;@rodriguezEveryCompanyShould2020], but scholarly attention has been minimal and oblique.^[@amorimScheduleUnpredictabilityHighCost2022; @reichWorkingRespectCommunity2018 are the only two peer-reviewed pieces mentioning EHFs of which I am aware.] Existing reports largely rely on interviews with EHF grant recipients and aggregated data on grant disbursement to document how EHF grants helped recipients in need.  None of the existing studies reports basic descriptive information such as employee awareness and engagement rates nor do they document overall effects among the broader workforce. We have no knowledge about selection into grant application or receipt nor is there information about how these programs operate at scale. 
 
 Lacking a central database of EHFs, we have positively documented over 320 companies operating EHFs as of January 2025. Nine of the ten top US retailers by revenue have maintained an EHF. There is sufficient corporate interest in EHFs that a cottage industry in EHF management has developed.  Many employers now outsource the administration of their EHFs to third-party nonprofit agencies, such as the Employee Assistance Foundation (EAF), E4E Relief, America's Charities, and Canary.  EAF claims to have over 400 clients [@employeeassistancefoundationDecadeAssistanceOffering2022]. 
 
-EHFs appear to be expanding along both the extensive and intensive margins in the shadow of the COVID-19 pandemic.  Levi Strauss & Co. reported a three-fold increase in applications to their EHF in 2020 [@@rodriguezEveryCompanyShould2020], with another spike in applications once coronavirus emergency aid programs expired in the US.  The Home Depot suspended fundraising from employees and expedited grant processing during the pandemic emergency. EAF reported a more than tenfold increase in grant applications relative to historical averages in the first two quarters of 2020 as well as 140 new client EHFs [@employeeassistancefoundationDecadeAssistanceOffering2022].   In May 2020 Amazon.com launched its EHF--using \$25 million in corporate money--in the face of extensive criticism of its workplace safety practices during the coronavirus outbreak as well as ongoing attempts to unionize its warehouse and fulfillment centers.  Amazon shuttered its EHF in August 2022.  
+EHFs appear to be expanding along both the extensive and intensive margins in the shadow of the COVID-19 pandemic.  Levi Strauss & Co. reported a three-fold increase in applications to their EHF in 2020 [@rodriguezEveryCompanyShould2020], with another spike in applications once coronavirus emergency aid programs expired in the US.  The Home Depot suspended fundraising from employees and expedited grant processing during the pandemic emergency. EAF reported a more than tenfold increase in grant applications relative to historical averages in the first two quarters of 2020 as well as 140 new client EHFs [@employeeassistancefoundationDecadeAssistanceOffering2022].   In May 2020 Amazon.com launched its EHF--using \$25 million in corporate money--in the face of extensive criticism of its workplace safety practices during the coronavirus outbreak as well as ongoing attempts to unionize its warehouse and fulfillment centers.  Amazon shuttered its EHF in August 2022.  
 
 Figures \@ref(fig:fig-tpm) and \@ref(fig:fig-HfACNTcomps) further illustrate the scale and growth of EHFs using data from IRS 990 forms [@lecyNCCSIRS9902023; @suozzoProPublicaNonprofitExplorer2025].^[If a firm contracts with a third party to provide an EHF program, the firm essentially rents the third party's IRS identification number (EIN).  All donations and grants are linked to the third party's EIN, not the original firm.  With a large number of employers offering EHFs through third party providers, we cannot systematically identify firms with and without EHFs through IRS nonprofit filings.  EHFs directly visible in IRS filing data appear to be older EHFs at larger firms.] Figure \@ref(fig:fig-tpm) compares the revenues and total grants paid out to individuals from four EHF outsourcing organizations.  EAF, the oldest and largest, has grown rapidly since first appearing in IRS data in 2012, reaching over \$144 million in revenue and \$86 million in grants to individuals in 2020. The data also show the recent entry of several competitor organizations, with E4E and America's Charities operating a similar scales in recent years and Canary growing rapidly.
 
@@ -147,7 +147,7 @@ Two critical features distinguish EHFs from other job amenities or employer-base
 
 Second, EHFs are potentially accessible to hourly, part-time, and contract workers.  This sets EHFs apart from other benefits and labor protections that only accrue to directly-employed workers, especially those working full-time or in salaried positions. The increasingly "fissured" workplace can save some labor-related costs in the near term, but pose additional challenges [@weilFissuredWorkplace2014; @tonWhyGoodJobs2012]. EHFs are one tool firms can use to direct some benefits to their workers--perhaps improving morale and blunting public criticism--while retaining the savings that make non-standard labor contracting attractive.  There are examples consistent with this interpretation. Amazon.com restricted its EHF to "Amazon Flex Delivery Partners, Delivery Service Partner Delivery Associates, Temporary Associates employed by eligible staffing agencies, and drivers of eligible line haul partners," i.e., non-standard, temporary contract labor.  EAF updated its EHF program guidelines, recommending that employers "include contractors, furloughed employees, and franchise employees" in their EHF schemes [@employeeassistancefoundationDecadeAssistanceOffering2022].
 
-# Mutual aid, welfare capitalism, \& CSR
+# Mutual aid, welfare capitalism, \& CSR {#sec-lit-review}
 
 Although EHFs are a relatively recent development, mutual aid is not.  Workers in an industry, region, or ethnic group routinely pooled their savings to assist one another in hard times [@beitoMutualAidWelfare2000; @glennUnderstandingMutualBenefit2001; @dreyfusLabourMovementMutual1993].   Early mutual aid funds and friendly societies built upon and deepened existing social connections, creating dense webs of obligation and formal organizational structures [@ismayTrustStrangersFriendly2018]. These organizations were precursors to modern trade unions [@webbHistoryTradeUnionism1920; @bacharachMutualAidUnion2018; @jarleyUnionsSocialCapital2005], or even attempts to circumvent union repression [@morrisCriminalConspiracyEarly1937]. Many unions continued maintaining emergency aid programs and insurance schemes to support, recruit, and retain members [@dericksonWorkersHealthWorkers1988; @dreyfusLabourMovementMutual1993;@beitoMutualAidWelfare2000;@glennUnderstandingMutualBenefit2001;@olsonLogicCollectiveAction1965; @hertel-fernandezWhyPublicSector2021]. 
 
@@ -167,7 +167,7 @@ Corporate philanthropy has a long history [@marinettoHistoricalDevelopmentBusine
 
 This produces a clear hypothesis about EHFs: 
 
-- **H2 (Awareness):** If EHFs are used to attract and screen for value-matched employees then workers should be widely aware of their own employer's EHF as well as the presence of EHFs at other major employers in the industry.
+- **H3 (Awareness):** If EHFs are used to attract and screen for value-matched employees then workers should be widely aware of their own employer's EHF as well as the presence of EHFs at other major employers in the industry.
 
 Beyond signalling and selection, there is evidence that CSR activities can shape both workers' beliefs about their employer and their economically relevant behavior.  Employees who participate in external CSR activities show stronger identification with the firm, greater attachment to coworkers, and reduced turnover   [@brammerContributionCorporateSocial2007; @bodeCorporateSocialInitiatives2015; @turbanCorporateSocialPerformance1997].  Experiments in the lab and online labor markets have shown that information about the employer's charitable activities reduces the wage required to attract higher-performing workers [@burbanoSocialResponsibilityMessages2016], increases worker productivity [@toninCorporatePhilanthropyProductivity2015], increases attachment and willingness to exert unpaid effort [@burbanoGettingGigWorkers2021;@cassarJobMissionSubstitute2019], and reduces misconduct [@burbanoMitigatingGigRemote2022].^[But see @listWhenCorporateSocial2021.]  @portocarreroEffectsShortTermCorporate2024 use a field experiment to show that even a short social impact activity reduces turnover.  All this suggests that workers respond to perceived value alignment with their employer with improved organizational citizenship [@zhaoInfluenceCorporateSocial2022].
 
@@ -175,7 +175,7 @@ All of the experimental work linking CSR with workers examines *externally-orien
 
 This leads to the third hypothesis:
 
-- **H3 (Attachment):** Exposure to EHF messages increases workers’ job attachment.
+- **H4 (Attachment):** Exposure to EHF messages increases workers’ job attachment.
 
 Existing research has also demonstrated that CSR effects are contingent on how workers interpret managerial motives and corporate values [@gatignon-turnauMisUsingEmployeeVolunteering2015].  Strong corporate cultures emerge from on degree of consistency between stated values and actual practices and norms [@grahamCorporateCultureEvidence2022]. Whether a firm can realize the CSR benefits depends on the alignment between CSR activities and internal organizational practices  [@grantGivingTimeTime2012]. When CSR messages are paired with actions that signal distrust or control, such as increased surveillance, they may fail or even backfire [@burbanoMitigatingGigRemote2022]. Similarly, @cassarIntentionsDoingGood2021 demonstrates that employees respond more positively when CSR initiatives appear sincere rather than strategic or insincere.
 
@@ -201,7 +201,7 @@ Finally, one executive at a third-party outsourcing organization reflected on ho
 
 This produces a fourth hypothesis:
 
-- **H4 (Contingency):** The effects of EHF messaging on job attachment and union support will be stronger where the program is more generous and where the program is more deeply emebedded in an organizational culture that emphasizes mutual obligation and teamwork.
+- **H5 (Contingency):** The effects of EHF messaging on job attachment and union support will be stronger where the program is more generous and where the program is more deeply emebedded in an organizational culture that emphasizes mutual obligation and teamwork.
 
 
 <!---
@@ -223,7 +223,7 @@ In pursuing this strategy, I recognize that EHFs may have effects distinct from 
 
 --->
 
-# Study 1
+# Study 1 {#sec-study-1}
 In study 1, I set out to answer basic descriptive questions: are workers aware of EHFs?  How accurate is their knowledge?  How attractive do they find EHFs, relative to other job amenities? I concentrate on the retail industry, which employed more than 16 million Americans in 2024.  Retail is known for low wages, poor benefits, high turnover, and several high-profile recent unionization drives.
 
 I fielded an original survey using the Cloud Research incentivized panel, targeting US respondents 18+ employed in retail.^[Of those targeted, only respondents with US IP addresses, who passed a screening question confirming employment in the retail industry, and who successfully passed two different attention check questions were allowed to complete the survey.  Respondents with duplicate IP addresses reporting identical demographic values were also excluded.]  The survey was in the field from February 12 - 22, 2025 and produced `r nrow(genpop)` valid responses.  Using the 2024 American Community Survey-reported demographics for US adults working in retail, we constructed post-stratification weights based on gender, race, and education. All descriptive quantities below represent weighted calculations.  Descriptive statistics appear in Appendix @app-genpop-survsum.    
@@ -264,7 +264,7 @@ genpop_engage_sum<- genpop_w |>
 ehf_firm_beliefs
 ```
 
-Regardless of current EHF exposure, large majorities confessed ignorance as to large retail employers' EHF programs.  Contrary to @besleyCompetitionIncentivesMotivated2005, this suggests that EHFs are not currently used to attract "mission-oriented" or "value-aligned" workers.  Nevertheless, respondents who report an EHF at their current job are less likely to express ignorance and much more likely to offer the (correct) EHF response for the Home Depot and, especially, Walmart.  Overall, retail workers do not seem to find EHFs at the largest employers particularly salient.
+Regardless of current EHF exposure, large majorities confessed ignorance as to large retail employers' EHF programs.  This suggests that EHFs are not currently used to attract "mission-oriented" or "value-aligned" workers.  Nevertheless, respondents who report an EHF at their current job are less likely to express ignorance and much more likely to offer the (correct) EHF response for the Home Depot and, especially, Walmart.  Overall, retail workers do not seem to find EHFs at the largest employers particularly salient.
 
 ## Interest and preferences over EHFs
 
@@ -288,7 +288,7 @@ genpop_ehf_cntrl
 
 Study 1 indicates that EHFs are not widely widely known across retail employers, but they receive strong support and can be attractive amenities to retail workers.  Workers prefer EHFs in which they share control with management.
 
-# Studies 2 \& 3
+# Studies 2 \& 3 {#sec-study-2-3}
 ## Case selection
 
 Studies 2 and 3 focus on workers at two "big box" US retailers with well-established EHF programs, The Home Depot and Walmart, respectively.  These firms compete to some degree in both product and labor markets and both have seen union activism. They are extremely large employers, which makes recruiting a survey sample feasible.   By concentrating on two specific firms I can address detailed questions about EHF awareness and engagement as well as conduct survey-based experiments tailored to specific programs.  The differences between the firms and their EHFs are potentially instructive about variation in EHF effects.   
@@ -332,9 +332,10 @@ summary_tab_uw_c<-summarise(cntrls,
 
 
 ## EHF awareness and engagement
-### Homer Fund
-We first look at Home Depot workers' awareness of and engagement with their employer's EHF.      
+Before examining the survey experiment, we look compare workers' awareness of and engagement with their employer's EHF at the Home Depot and Walmart.
 
+### Homer Fund
+      
 ```{r awareness-calcs, echo=FALSE}
 aware_tab<-summarise(THD_comp, 
           aware.prop.l = survey_mean(EHF_aware_list), 
@@ -428,23 +429,7 @@ model_print_aware_wmt
 
 ## EHF experiments
 
-In both studies 2 and 3, I included experiments that randomly exposed respondents to messages about their employer's EHF to test H1, H3, and H4. 
-
-### Study 2 experiment
-
-The experiment in Study 2 consisted of a control condition and two treatment arms, referred to as the _text_ and _video_ treatments, respectively.  Respondents in the control arm saw no prompt or mention of the EHF.  
-
-Those in the text treatment saw the following statement about their employer's EHF:
-
-> Your employer, The Home Depot, maintains a program called the Homer Fund.   The Homer Fund combines donations from workers like you with money from The Home Depot corporation.  The Homer Fund uses this money to offer cash grants of up to $10,000 to Home Depot employees in times of unexpected financial hardship like a natural disaster, illness, or death in the family.
-
-Brief, neutral textual descriptions do not reflect how employers actually communicate with their employees.  Fortunately, the Home Depot maintains a YouTube channel that includes high-quality video testimonials from purported Homer Fund grant recipients. Study 2 respondents in the video treatment were asked to watch the video displayed in Figure \@ref(fig:fig-ray).^[The video can be found here: [https://www.youtube.com/watch?v=qF-HBoySMe](https://www.youtube.com/watch?v=qF-HBoySMe) and here: [https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story](https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story).  The summary text appearing on the Home Depot website is: "When Ray, a retired Army veteran and proud Home Depot associate, fell severely ill, his family needed help covering expenses such as food and gas. With the help the Homer Fund and his fellow associates’ generosity, he and his family were able to recover. The Homer Fund, a nonprofit exclusively for Home Depot associates, celebrates 20 years of giving in 2019. Established by our co-founders Bernie Marcus, Arthur Blank and Ken Langone, it has awarded $176 million to more than 138,000 Home Depot families facing unforeseen hardships. For Ray and his family, The Fund’s help came at a critical time. Ray spent six weeks in an induced coma. The Homer Fund stepped in to help his family secure necessities so they could focus their energy on Ray’s recovery. The Fund’s impact on Ray’s family reminded him of the comradery of his Army days. 'You know you have a brother and sister to your left or to your right. And you look out for them and they look out for you,' Ray says."  This text was not presented to survey respondents, but is presented here to provide a summary of video contents.  The video was 2:41 in length.]   Immediately following the experimental treatment, Respondents answered a series of questions designed to measure subjective financial well-being, attachment to co-workers, attachment to their employer, and willingness to for vote for unionization.  
-
-```{r fig-ray, echo=FALSE, fig.cap="Image of the video treatment", out.width="60%"}
-knitr::include_graphics(here('4_output', 'plots','RaysStory.jpeg' ))
-```
-
-#### Analytic approach
+In both studies 2 and 3, I included experiments that randomly exposed respondents to messages about their employer's EHF to test hypothesis 1 and 3-5.
 
 The main quantities of interest are the average treatment effect (ATE) for each of the two EHF treatments relative to control for each of the outcome variables.  I present graphical displays as well as regression-based estimates.  I then look for heterogeneity in treatment effects, depending on whether the respondent was aware of the EHF program before the survey experiment.
 
@@ -460,11 +445,23 @@ where $T_i$ and $V_i$ denote text and video treatments, respectively, and $P_i$ 
 
 One might object that the measurement of EHF awareness is itself a form of priming or pre-exposure in the survey. There are three reasons why this is not a serious concern here.  First, as I described above, the elicitation of EHF awareness is subtle, embedded in longer list of potential job benefits, and avoids using the program's name.  The risk of actual priming is low.  Second, if there were a meaningful priming effect from the EHF awareness question, we would expect to see minimal differences between the aware and un-aware.  This is not what we observe below. The pre-exposed Study 2 respondents are systematically different in terms of mean outcome levels and treatment effects from the un-exposed.  Third, to the extent that there is a priming or contamination from the EHF awareness question, it would reduce any detectable treatment effects or differences between the aware and unaware respondents. Thus my estimates are, if anything, downward biased and my conclusions are conservative.
 
-#### Results
+### Study 2 experiment
 
-##### Financial insecurity
+The experiment in Study 2 consisted of a control condition and two treatment arms, referred to as the _text_ and _video_ treatments, respectively.  Respondents in the control arm saw no prompt or mention of the EHF.  
 
-Our indicator of subjective financial is the standard question from the Survey of Household Economics and Decision-making, asking whether a respondent could cover a $400 emergency expense.  Figure \@ref(fig:fig-finsec) displays the weighted distribution of responses by treatment condition.  The upper panel reports the full distribution of the Likert scale for the response whereas the lower panel dichotomizes the variable based on whether the respondent was able or unable to cover the expense.  Vertical lines represent 95% confidence intervals.  
+Those in the text treatment saw the following statement about their employer's EHF:
+
+> Your employer, The Home Depot, maintains a program called the Homer Fund.   The Homer Fund combines donations from workers like you with money from The Home Depot corporation.  The Homer Fund uses this money to offer cash grants of up to $10,000 to Home Depot employees in times of unexpected financial hardship like a natural disaster, illness, or death in the family.
+
+Brief, neutral textual descriptions do not reflect how employers actually communicate with their employees.  Fortunately, the Home Depot maintains a YouTube channel that includes high-quality video testimonials from purported Homer Fund grant recipients. Study 2 respondents in the video treatment were asked to watch the video displayed in Figure \@ref(fig:fig-ray).^[The video can be found here: [https://www.youtube.com/watch?v=qF-HBoySMe](https://www.youtube.com/watch?v=qF-HBoySMe) and here: [https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story](https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story).  The summary text appearing on the Home Depot website is: "When Ray, a retired Army veteran and proud Home Depot associate, fell severely ill, his family needed help covering expenses such as food and gas. With the help the Homer Fund and his fellow associates’ generosity, he and his family were able to recover. The Homer Fund, a nonprofit exclusively for Home Depot associates, celebrates 20 years of giving in 2019. Established by our co-founders Bernie Marcus, Arthur Blank and Ken Langone, it has awarded $176 million to more than 138,000 Home Depot families facing unforeseen hardships. For Ray and his family, The Fund’s help came at a critical time. Ray spent six weeks in an induced coma. The Homer Fund stepped in to help his family secure necessities so they could focus their energy on Ray’s recovery. The Fund’s impact on Ray’s family reminded him of the comradery of his Army days. 'You know you have a brother and sister to your left or to your right. And you look out for them and they look out for you,' Ray says."  This text was not presented to survey respondents, but is presented here to provide a summary of video contents.  The video was 2:41 in length.]   Immediately following the experimental treatment, Respondents answered a series of questions designed to measure subjective financial well-being, attachment to co-workers, attachment to their employer, and willingness to for vote for unionization.  
+
+```{r fig-ray, echo=FALSE, fig.cap="Image of the video treatment", out.width="60%"}
+knitr::include_graphics(here('4_output', 'plots','RaysStory.jpeg' ))
+```
+
+#### Financial insecurity
+
+Our indicator of subjective financial is the standard question from the Survey of Household Economics and Decision-making that asks whether a respondent could cover a $400 emergency expense.  Figure \@ref(fig:fig-finsec) displays the weighted distribution of responses by treatment condition.  The upper panel reports the full distribution of the Likert scale for the response whereas the lower panel dichotomizes the variable based on whether the respondent was able or unable to cover the expense.  Vertical lines represent 95% confidence intervals.  
 
 ```{r fig-finsec, echo=FALSE, fig.cap="Subjective financial security (weighted)"}
 
@@ -487,7 +484,7 @@ model_print_uw
 
 ```
 
-##### Job attachment
+#### Job attachment
 
 Even if EHFs do not improve feelings of financial security, they may affect worker attachment to one another and the employer.  We presented respondents with a series of questions on this topic.  Following @freemanSharedCapitalismWork2010, we asked respondents to report how loyal they felt toward their co-workers and their employer, with responses in four categories ranging from "none at all" to "a lot".  We also asked respondents how willing they would be to recommend their employer to a friend as a place to work.  For brevity, we combine all these indicators into a single job attachment index by taking the first principle component of all three questions, oriented so that high values indicate greater attachment.^[Results for individual items appear in Appendix \@ref(app-HFattachment).  Treatment effects are similar across each component of the index.] 
 
@@ -513,25 +510,25 @@ To see the heterogeneous effects more clearly, Figure \@ref(fig:fig-THD-effattac
 THDattach_eff_plot
 ```
 
-##### Unionization
+#### Unionization
 
-In measuring support for unionization, respondents answered the standard union vote question:  "If an election were held today to decide whether employees like you should be represented by a union at The Home Depot, would you vote for the union or against the union?"  Respondents could answer \{yes, no, not sure\}.    The distribution of responses to both questions by EHF treatment is displayed in Figure \@ref(fig:fig-uvui).
+In measuring support for unionization, respondents answered the standard union vote question:  "If an election were held today to decide whether employees like you should be represented by a union at The Home Depot, would you vote for the union or against the union?"  Respondents could answer \{yes, no, not sure\}.    The distribution of responses to both questions by EHF treatment is displayed in Figure \@ref(fig:fig-uv-thd).
 
-```{r fig-uvui,eval=TRUE, echo=FALSE, fig.cap="Support for unions and unemployment insurance (weighted)"}
+```{r fig-uv-thd,eval=TRUE, echo=FALSE, fig.cap="Support for unionization by treatment status in the Home Depot sample"}
 
 temp<-here::here('2_code', 'THD', '7_uiuv_summary_plots.R')
 source(temp)
 rm(temp)
-
+uv_plot
 ```
 
-We see that workers in this sample are generally skeptical of unions, with `r 100*round(summary_tab_uw_c$prounion,2)`%  of control respondents reporting a willingness to vote for a union and `r 100*round(summary_tab_uw_c$antiunion,2)`% voting against (the remainder answered "not sure").  This level of union support is substantially lower than recent estimates among front line retail workers.^[In Study 1, we found that `r round(100*genpop_engage_sum$union_support)`% would vote for a union and `r round(100*genpop_engage_sum$union_oppose)`% against.  @ahlquistVoiceJobYounger2023; @WERNsurvey2023 find that 36% of retail workers would vote for the union and 26% would vote against.]  There are, however, a substantial portion of undecided workers, the modal response among the video treatment group.  
+We see that workers in the Home Depot sample are generally skeptical of unions, with `r 100*round(summary_tab_uw_c$prounion,2)`%  of control respondents reporting a willingness to vote for a union and `r 100*round(summary_tab_uw_c$antiunion,2)`% voting against (the remainder answered "not sure").  This level of union support is substantially lower than recent estimates among front line retail workers.^[In Study 1, we found that `r round(100*genpop_engage_sum$union_support)`% would vote for a union and `r round(100*genpop_engage_sum$union_oppose)`% against.  In a separate survey, @ahlquistVoiceJobYounger2023; @WERNsurvey2023 find that 36% of retail workers would vote for the union and 26% would vote against.]  There are, however, a substantial portion of undecided workers, the modal response among the video treatment group.  
 
-Turning to treatment effects, we see some surprising results.  First, echoing findings for the attachment questions, we find no evidence that the text treatment has any average effect at all.  Second, we find that the video treatment again moves respondents' opinions.  On average, the video treatment makes respondents more _uncertain_ about their support for unionization.  The fact that respondents chose to answer the question (as opposed to skipping it) suggests that the video treatment actually increased uncertainty, as opposed to respondent disinterest.
+Turning to treatment effects, we see some surprising results.  First, echoing findings for the attachment questions, we find no evidence that the text treatment has any average effect at all.  Second, we find that the video treatment again moves respondents' opinions.  On average, the video treatment makes respondents more _uncertain_ about their support for unionization.  The fact that respondents chose to answer the question (as opposed to skipping it) suggests that the video treatment increased uncertainty, not disinterest.
 
-Given the importance of all three outcome categories, I report multinomial logit results in table \@ref(tab:tab-uv).  In the base model we see that video treatment, on average, produces an increase in the "not sure" responses, echoing Figure \@ref(fig:fig-uvui).  But accounting for pre-exposure status in a regression framework is particularly illuminating for this outcome.  Those aware of the EHF prior to the experiment were significantly less supportive of unions than the unexposed.   Among the unexposed, we see that both the text and video treatments reduce support for unionization, although only the video treatment effect crosses conventional significance thresholds.  
+Given the importance of all three outcome categories, I report multinomial logit results in table \@ref(tab:tab-uv).  In the base model we see that video treatment, on average, produces an increase in the "not sure" responses, echoing Figure \@ref(fig:fig-uv-thd).  But accounting for pre-exposure status in a regression framework is particularly illuminating for this outcome.  Those aware of the EHF prior to the experiment were already significantly less supportive of unions than the unexposed.   Among the unexposed, we see that both the text and video treatments reduce support for unionization, although only the video treatment effect crosses pre-registered significance thresholds.  Including covariates that are predictive of pre-exposure does not alter conclusions.  In the Home Depot sample, we see evidence largely consistent with H2, but with important caveats: the treatment increased uncertainty and effects were concentrated among the unaware.    
 
-```{r tab-uv, eval=TRUE, echo = FALSE, warning = FALSE, tab.cap="Support for unionization regression models"}
+```{r tab-uv, eval=TRUE, echo = FALSE, warning = FALSE, tab.cap="Multinomial logit regression models on support for unionization "}
 temp<-here::here('2_code', 'THD', '8_uv_models.R')
 source(temp)
 rm(temp)
@@ -542,7 +539,7 @@ multinom_tab
 
 Figure \@ref(fig:fig-uveff) provides a graphical interpretation of treatment effects by pre-exposure status.  The left column displays the predicted outcomes by treatment status for those who were not aware of the EHF before the survey.  This right column displays the same quantities for those already aware of the EHF.  On the left, we clearly see that the treatments, especially the video version, reduce support for unionization. Predicted union support among the unaware respondents in the video treatment is effectively identical to that among respondents already aware of the EHF prior to the survey.  But rather than increasing opposition to unionization, the video treatment makes the unaware respondents more unsure.  In the right hand column we see that the video treatment actually reduces opposition to unionization among those who were already aware of the EHF.  But, again, this effect comes from an increase the "not sure" responses.  Overall, we see evidence consistent with the idea that EHFs reduce support for unionization, largely by increasing uncertainty or apathy as opposed to encouraging opposition.      
 
-```{r fig-uveff, eval=TRUE, echo=FALSE, fig.height=8, fig.cap="Interpreting treatment effects from union vote models"}
+```{r fig-uveff, eval=TRUE, echo=FALSE, fig.height=8, fig.cap="Interpreting heterogeneous treatment effects on union support (Home Depot sample)"}
 #dev.new(width = 6000, height = 1500, unit = "px")
 print(mnl_eff_plot)
 
@@ -559,7 +556,7 @@ In Study 3, Respondents were randomly assigned with equal probability to either 
 
 Manipulation checks (see Appendix \@ref(app-manip-wmt)) confirm that the video treatment did indeed increase respondent awareness of the ACNT, as expected whereas the placebo had no effect. Study 3 also included a behavioral indicator of ACNT donation willingness.^[At the end of the survey, respondents had the opportunity to click on a link where they could donate to the ACNT.  We know only whether a respondent clicked the link.] Consistent with @andreoniPowerAskingHow2011, those in the video treatment were four percentage points (or 35\%, $p < 0.05$) more likely to click on the donation link (see Appendix \@ref(app-donate-wmt)).  There were no detectable differences between pure control and placebo groups in either manipulation check.  Thus we display results for binary treatment/control in the analysis below.  Based on the findings in the Home Depot sample, we pre-registered a plan to examine whether treatment effects differ based on pre-exposure to the ACNT, measured using the same question format as in the Home Depot survey. 
 
-### Financial security and job attachment
+#### Financial security and job attachment
 
 ```{r}
 ee.prop<-summarise(wmt.hq_wgt_f, 
@@ -603,7 +600,7 @@ model_print_attachment_hq
 In the Walmart sample, we also asked respondents about a hypothetical job offer at another retailer with better amenities, following the same pattern as in Study 1.  In Table \@ref(), we look at treatment effects from the survey experiment on how seriously the respondent would consider a job that offered "emergency cash assistance in hard times" a respondent places on
 --->
 
-### Attitudes towards unionization
+#### Unionization
 
 In the Walmart survey we again look for treatment effects on attitudes toward unionization.  Table \@ref(tab:tab-uv-models-wmt) displays results for a multinomial logistic regression on willingness to vote for unionization.  Contrary to findings in Study 2, the EHF video treatment induces a modest _reduction in opposition_ to unionization among the Walmart sample.  Also contrary to findings from Home Depot workers, I find no evidence of any difference in union support due to prior awareness of the ACNT.  I therefore use the "covariate" model to produce effect estimates for interpretive purposes.   
 
@@ -646,7 +643,7 @@ There were two notable differences in treatment effects between Study 2 and Stud
 
 These contrary findings suggest that the effect of EHF programs and messages depend on the nature of the program itself as well as context, including other corporate practices and signals about corporate culture.  The Homer Fund is considerably more visible and generous, embedded in a significant CSR and internal promotional apparatus. Home Depot workers held more favorable attitudes towards their employer and were already more likely to engage with the EHF prior to the survey experiment.  Consequently, the EHF treatment appears to have reinforced an existing set of attitudes and dispositions, making those who were unaware of the program "look more like" already-informed Home Depot workers in their attitudes.  When looking at Walmart, it seems that an EHF program with less organizational support and visibility does not "make up the difference" in worker attachment between a "strong culture, low turnover" employer like the Home Depot and a "weak culture, high turnover" employer such as Walmart.   
 
-# Conclusion
+# Conclusion {#sec-conclusion}
 
 Employers have tremendous leeway to introduce or modify benefit plans and workplace programs that may influence workers perceptions, attitudes, and behaviors including around actions like unionization. EHFs are one such tax-incentivized program that has received virtually no systematic study.  This oversight is all the more remarkable as EHFs clearly echo both an earlier era of welfare capitalism and past mutual aid initiatives that produced and modern labor unions.
 
@@ -976,11 +973,14 @@ model_ol_uw
 
 # Manipulation check for Walmart experiment {#app-manip-wmt}
 
+In the Walmart sample, treatment significantly increased the probability that a respondent would correctly state what Walmart has an EHF. 
 ```{r tab-manip-check, echo=FALSE, tab.cap="manipulation check"}
 
-manip_model_print
+manip_model_print_compact
 
 ```
+
+
 
 # Donation behavior (Walmart) {#app-donate-wmt}
 
@@ -992,9 +992,9 @@ rm(temp)
 
 At the end of Study 3, respondents had the opportunity to click on a link to take them to a page where they could donate to the ACNT. Based on past research [@andreoniPowerAskingHow2011], we expect those exposed to the emotional appeal in the video to be more willing to donate.  
 
-In the Walmart sample, we see a low baseline willingness to click on the link of `r round(100*donation_summary$prop[1])`%.  Nevertheless, those seeing the EHF video were about 4 percentage points more likely to take an action to donate. Table \@ref(tab:tab-donate-models-wmt) presents regression-based estimates.
+In the Walmart sample, we see a low baseline willingness to click on the link of `r round(100*donation_summary$prop[1])`%.  Nevertheless, those seeing the EHF video were about 4 percentage points more likely to take an action to donate. Table \@ref(tab:tab-donate-models-wmt-app) presents regression-based estimates of treatment effects, using OLS and logistic regression.  We also include Firth regression to address concerns with rare events.  Treatment significalntly increases willingness to take an action to donate.
 
-```{r tab-donate-models-wmt, eval=FALSE, echo = FALSE, tab.cap="Taking action to Donate to EHF (Walmart)"}
+```{r tab-donate-models-wmt-app, eval=TRUE, echo = FALSE, tab.cap="Taking action to Donate to EHF (Walmart)"}
 
-donation_tab_wmt
+donation_tab_app
 ```

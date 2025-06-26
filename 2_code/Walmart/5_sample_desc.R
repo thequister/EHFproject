@@ -139,6 +139,30 @@ manip_model_print<- modelsummary::modelsummary( mc_all,
                             escape = FALSE
 )
 
+mc_c <- list(mc_bin_hq, mc_full_hq, mc_bin_hq_pe, mc_full_hq_pe)
+extra_row_c <- data.frame(
+  term =  "Sample",
+  one = "high quality",
+  two = "high quality",
+  three = "high quality",
+  four = "high quality"
+  )
+
+
+manip_model_print_compact<- modelsummary::modelsummary( mc_c,
+                            #shape = "rbind",
+                            coef_map = coef_maps,
+                            gof_map = gm,
+                            #vcov = "robust",
+                            add_rows = extra_row_c,
+                            title = "OLS regression of treatment on correctly reporting a Walmart EHF (manipulation check) \\label{tab:tab-manip-check}",
+                            output = "kableExtra",
+                            notes = list(note2),
+                            stars = c('+' = .1, '*' = .05, '**' = .01),
+                            escape = FALSE
+)
+
+
 
 ### Sample descriptives
 

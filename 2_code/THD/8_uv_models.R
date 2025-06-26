@@ -58,7 +58,8 @@ multinom_tab<-modelsummary(uv.models.uw,
 eff_probs<-Effect(c("HDTreatment", "EHF_aware_list"), uv_mnl_int_uw, se = TRUE)
 
 mnl_eff_plot <- plot(eff_probs,
-     main = "Treament effect on union vote\n by pre-exposure status",
+     #main = "Treament effect on union vote\n by pre-exposure status",
+     main = NULL,
      xlab = "Experimental condition",
      axes = list(
        y = list(type = "probability",
