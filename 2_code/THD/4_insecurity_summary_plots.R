@@ -34,7 +34,7 @@ p.ord<- p.ord + geom_col(position = dodge, alpha = 0.2) +
                      labels = c("1" ="definitely can't cover $400",
                                 "2"="","3"="",
                                 "4"="can definitely cover $400")) +
-  labs(title = "Financial insecurity by EHF treatment",
+  labs(#title = "Financial insecurity by EHF treatment",
        x = NULL, y = "% treatment group") +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
   scale_fill_discrete(name="EHF treatment", 

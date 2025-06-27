@@ -90,7 +90,7 @@ model_print_thd_uw_attachment<- modelsummary( ai_mods,
                                      gof_map = gm,
                                      vcov = "robust",
                                      #add_rows = rows,
-                                     title = "Home Depot attachment index, OLS regression \\label{tab:tab-aithd-models}",
+                                     title = "OLS regression on Home Depot job attachment index \\label{tab:tab-aithd-models}",
                                      output = "kableExtra",
                                      notes = list(note1),
                                      stars = c('*' = .05, '**' = .01),
@@ -105,7 +105,8 @@ THDattach_eff<-Effect(c("HDTreatment", "EHF_aware_list"),
                       se = TRUE)
 
 THDattach_eff_plot <- plot(THDattach_eff,
-                          main = "Treament effect on Home Depot job attachment\n by pre-exposure status",
+                          main = NULL,
+                          #main = "Treament effect on Home Depot job attachment\n by pre-exposure status",
                           xlab = "Experimental condition",
                           axes = list(
                             y = list(type = "response",

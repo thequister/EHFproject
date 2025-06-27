@@ -17,8 +17,8 @@ round(sum(genpop$acs_weight_trim[genpop$ehf_own_comp!="Yes"])) #804
 gr_pl3.2 <- genpop %>%
   mutate(eab_yes = if_else(
     emerg_assist_benefits == "Yes",
-    "has EHF (n = 200)",
-    "does/may not have EHF (n = 804)"
+    "claims EHF (n = 200)",
+    "doesn't claim EHF (n = 804)"
   ),
   eab_yes = factor(eab_yes)
   ) |> 
@@ -53,7 +53,7 @@ ehf_firm_beliefs <- ggplot(firms_summary, aes(x = Q, y = prop, fill = ans)) +
   facet_grid(.~eab_yes) +
   scale_fill_manual(values = my_colors) +
   labs(
-    title = "Beliefs about EHFs at major retailers, by own EHF status",
+    #title = "Beliefs about EHFs at major retailers, by own EHF status",
     y = "Proportion",
     x = ""
   ) +
@@ -88,8 +88,8 @@ support_sum <-  gr_pl2.1_w |>
     prop = survey_mean(vartype = "ci", na.rm = TRUE),
     .groups = "drop") |> 
   mutate(Q = case_match(Q, 
-                        "ehf_support_exist" ~ "has EHF (N = 200)", 
-                        "ehf_support_new" ~ "doesn't/may not have EHF (N = 804)"))
+                        "ehf_support_exist" ~ "claims EHF (N = 200)", 
+                        "ehf_support_new" ~ "doesn't claim EHF (N = 804)"))
 
 my_colors <- RColorBrewer::brewer.pal(2, "Set2")
 
@@ -103,7 +103,7 @@ ehf_support_genpop <- ggplot(support_sum, aes(x = ans, y = prop, fill = Q)) +
   facet_grid(.~Q) +
   scale_fill_manual(values = my_colors) +
   labs(
-    title = "Support for introduction of EHF, by own EHF status",
+    #title = "Support for introduction of EHF, by own EHF status",
     y = "Proportion",
     x = ""
   ) +
@@ -167,7 +167,7 @@ genpop_ehf_cntrl <- ggplot(control_sum,
     width = 0.2,
     position = position_dodge(width = 0.9)
   ) +
-  labs(title = "Preferred worker control over EHF" 
+  labs(#title = "Preferred worker control over EHF" 
        #subtitle = "N = 804, weighted estimates)"
        ) +
   scale_x_discrete(breaks = 
@@ -236,7 +236,7 @@ amenity_plot_gp <- ggplot(long_df, aes(x = benefit_type, fill = level)) +
   #                    labels = legend_labels)+
   scale_fill_manual(values = colors, name = "", labels = legend_labels) +
   labs(
-    title = "Level of interest in new job with longer commute but better amenities",
+    #title = "Level of interest in new job with longer commute but better amenities",
     x = "Amenity",
     y = "Count", 
     fill = "Interest") +
@@ -250,7 +250,7 @@ amenity_plot_w_gp <- ggplot(long_df, aes(x = benefit_type_w, fill = level)) +
   #                    labels = legend_labels)+
   scale_fill_manual(values = colors, name = "", labels = legend_labels) +
   labs(
-    title = "Interest in new job with longer commute but better amenities",
+    #title = "Interest in new job with longer commute but better amenities",
     x = "Amenity",
     y = "Count", 
     fill = "Interest") +
