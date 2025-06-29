@@ -27,7 +27,7 @@ header-includes:
 \begin{abstract}
 \begin{singlespace} 
 
-There is a long-standing argument that public welfare and social insurance crowds out private savings and charity. There is also a newer set of arguments that private resources (home equity, credit) may dampen voters' support for public insurance programs and redistributive taxation. We investigate the "substitution hypothesis" in the context of a novel set of workplace mutual aid arrangements--Employee Hardship Funds (EHFs). EHFs enable employers to distribute emergency cash to their workers using donations pooled from employees themselves.  Hundreds of major US firms now operate these programs. We use three original surveys---including two matched to workers at specific employers with EHFs and including experiments.We find that state-level generosity in the social safety net is unrelated to worker knowledge of and support for EHFs. Experimental manipulation of EHF salience among workers at two large retailers indicates that EHFs do not displace support for public unemployment insurance or government emergency aid, regardless of the generosity of the EHF program. [Something about political ideology]. EHFs, as a workplace mutual aid arrangement, and government social insurance programs appear unconnected in the minds of workers.\\
+There is a long-standing argument that public welfare and social insurance crowds out private savings and charity. There is also a newer set of arguments that private resources (home equity, credit) may dampen voters' support for public insurance programs and redistributive taxation. We investigate the "substitution hypothesis" in the context of a novel set of workplace mutual aid arrangements--Employee Hardship Funds (EHFs). EHFs enable employers to distribute emergency cash to their workers using donations pooled from employees themselves. Hundreds of major US firms now operate these programs. We use three original surveys---including two matched to workers at specific employers with EHFs and including experiments.  We find that state-level generosity in the social safety net is unrelated to worker knowledge of and support for EHFs. Experimental manipulation of EHF salience among workers at two large retailers indicates that EHFs do not displace support for public unemployment insurance or government emergency aid, regardless of the generosity of the EHF program. [Something about political ideology]. EHFs, as a workplace mutual aid arrangement, and government social insurance programs appear unconnected in the minds of workers.\\
 
 
 \end{singlespace}
@@ -59,11 +59,21 @@ genpop_w<- genpop  |>
 
 Past generations of workers built organizations to help one another in hard times.  Some of these mutual aid societies eventually transformed into full-fledged trade unions.  Others morphed into mutual insurance companies that later informed government social insurance programs [@deswaanWorkersClientsMutualism1986].  Such organizations transformed workplace relations, socialized workers into political life, and produced labor-based political movements. 
 
+Employers have tremendous leeway to introduce or modify benefit plans and workplace programs that may influence workers perceptions, attitudes, and behaviors including around actions like unionization. EHFs are one such tax-incentivized program that has received virtually no systematic study.  This oversight is all the more remarkable as EHFs clearly echo both an earlier era of welfare capitalism and past mutual aid initiatives that produced and modern labor unions.
 
 The lack of any substitution effect between EHFs and support for public assistance suggests that EHFs may represent a reconfiguration of the moral economy of low-wage work, a recognition of the public system's many failings.  Rather than a substitute for social insurance and assistance, EHFs are low-cost signals of corporate values and selective benevolence.
 
 
+
+From a policy perspective, EHFs appear to resonate with a felt need among low-wage retail workers in the US today.  But, as the Home Depot and Walmart surveys indicate, program details, context, and promotion matter for the effects they might have on the workforce.  These programs operate in the shadow of eroded public welfare institutions, yet they are funded in part by favorable tax treatment.  Are the benefits these programs provide worth the tax expenditures?  How do these programs change when workers themselves have a voice in how they are run? 
+
+Workers value emergency aid arrangements, which coincides with the renewed emphasis on mutual aid--and other solidaristic selective incentives--as a basis for rebuilding worker solidarity [@hertel-fernandez_why_nodate; @jarley_unions_2005; @horowitz_mutualism_2021].  The development, management, and outreach around programs like EHFs provide a clear point of common interest between workers, unions, and management.  To date this possibility remains unexplored.
+
+
 nor do they displace support for public benefits.
+
+
+EHFs present a fascinating window into employer behavior and the state of the low wage labor market in the US and beyond. Future research can extend in a variety of productive directions.  
 
 
 and more supportive of unemployment insurance

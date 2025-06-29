@@ -42,8 +42,8 @@ uv_wmt_mnl_int_c <- nnet::multinom(union_elec ~ treatment_bin*ehf_aware_pretr+
                                 trace = FALSE,
                                 data = wmt.hq)
 
-uv.wmt.models.hq<-list( uv_wmt_mnl, uv_wmt_mnl_c, uv_wmt_mnl_int, uv_wmt_mnl_int_c)
-names(uv.wmt.models.hq) <- c("Base", "Covariates", "Pre-exposure", "Pre-exposure +\n covariates")
+uv.wmt.models.hq.big<-list( uv_wmt_mnl, uv_wmt_mnl_c, uv_wmt_mnl_int, uv_wmt_mnl_int_c)
+names(uv.wmt.models.hq.big) <- c("Base", "Covariates", "Pre-exposure", "Pre-exposure +\n covariates")
 coef_maps <- c(
                "treatment_binTRUE" = "Treated",
                "ehf_aware_pretrTRUE" = "Pre-exposed",
@@ -63,7 +63,7 @@ gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
   list("raw" = "aic", "clean" = "AIC", "fmt" = 0))
 
-multinom_tab_wmt<-modelsummary(uv.wmt.models.hq,
+multinom_tab_big_wmt<-modelsummary(uv.wmt.models.hq.big,
              shape = term + response ~ statistic,
              coef_map = coef_maps,
             title = "Multinomial logistic regression of union support \\label{tab:tab-uv-models-wmt}",
@@ -77,9 +77,38 @@ multinom_tab_wmt<-modelsummary(uv.wmt.models.hq,
 )
 
 
-eff_probs_uv_wmt<-marginaleffects::avg_comparisons(uv_wmt_mnl_c, variables = "treatment_bin")
+uv.wmt.models.hq<-list( uv_wmt_mnl, uv_wmt_mnl_int, uv_wmt_mnl_int_c)
+names(uv.wmt.models.hq) <- c("Base", "Pre-exposure", "Covariates")
+
+multinom_tab_wmt<-modelsummary(uv.wmt.models.hq,
+             shape = term + response ~ statistic,
+             coef_map = coef_maps,
+            title = "Multinomial logistic regression for union support at Walmart \\label{tab:tab-uv-models-wmt}",
+            gof_map = gm,
+            #add_rows = rows,
+            notes = list(note1),
+            output = "kableExtra",
+            threeparttable=TRUE, 
+            stars = c('$^+$' = 0.1, '*' = .05, '**' = .01),
+            escape = FALSE
+)
+
+
+
+eff_probs_uv_wmt<-marginaleffects::avg_comparisons(uv_wmt_mnl, variables = "treatment_bin")
 
 wmt_mnl_uv_interp <-ggplot(eff_probs_uv_wmt, aes(x = group, y = estimate)) +
+  geom_point() +  # Adds the dots for estimates
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +  # Adds the whiskers for confidence intervals
+  geom_hline(yintercept=0, linetype='dotted') +
+  labs(#title = "Average Treatment Effects",
+       #x = "Union vote",
+       y = "Difference in predicted probability")
+
+
+eff_probs_uv_wmt_c<-marginaleffects::avg_comparisons(uv_wmt_mnl_c, variables = "treatment_bin")
+
+wmt_mnl_uv_interp_c <-ggplot(eff_probs_uv_wmt_c, aes(x = group, y = estimate)) +
   geom_point() +  # Adds the dots for estimates
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +  # Adds the whiskers for confidence intervals
   geom_hline(yintercept=0, linetype='dotted') +
@@ -138,8 +167,8 @@ union_supp_pct_int_c<-lm(union_coworkers_6 ~ treatment_bin*ehf_aware_pretr +
                        college,
                      data = wmt.hq)
 
-union_supp_pct_models <- list(union_supp_pct,union_supp_pct_c,union_supp_pct_int)
-names(union_supp_pct_models) <- c("base", "covariates", "pre-exposed")
+union_supp_pct_models <- list(union_supp_pct,union_supp_pct_int,union_supp_pct_int_c)
+names(union_supp_pct_models) <- c("base", "pre-exposed", "covariates")
 note1 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly and full time status, college degree, and main job."
 #note2 <- ""
 
@@ -151,14 +180,14 @@ gm <- list(
 
 union_supp_pct_tab_wmt<-modelsummary(union_supp_pct_models, 
                                coef_map = coef_maps,
-                               title = "OLS regression of expected union support among co-workers \\label{tab:tab-usupp-models-wmt}",
+                               title = "OLS regression of treatment effects on expected union support among Walmart co-workers \\label{tab:tab-usupp-models-wmt}",
                                vcov = "robust",
                                gof_map = gm,
                                output = "kableExtra",
                                #add_rows = rows,
                                notes = list(note1),
                                threeparttable=TRUE, 
-                               stars = c('*' = .05, '**' = .01),
+                               stars = c('$^+$' = 0.1, '*' = .05, '**' = .01),
                                escape = FALSE
 )
 
