@@ -63,6 +63,30 @@ Employers have tremendous leeway to introduce or modify benefit plans and workpl
 
 The lack of any substitution effect between EHFs and support for public assistance suggests that EHFs may represent a reconfiguration of the moral economy of low-wage work, a recognition of the public system's many failings.  Rather than a substitute for social insurance and assistance, EHFs are low-cost signals of corporate values and selective benevolence.
 
+<!---
+######
+
+
+In the contemporary United States, unions are vanishing and the welfare and social insurance systems are creaking. Temporary and other "non-standard" employment relationships are increasingly widespread [@abraham_measuring_2018].  Yet such work arrangements fail to provide access to traditional social insurance and labor market protections. Americans in the lower half of the education and earnings distributions have seen years of stagnating wages while also bearing more economic risk [@hacker_great_2019].  Precarious employment, "fissured" workplaces, and distributed supply chains make it more difficult for workers to develop the occupational identities and dense networks of coworkers that supported the organization-building of the past [@ahlquist_research_2018;@thelen_american_2019;@naidu_is_nodate;@weil_fissured_2014].  
+
+Even as unions and social protections atrophy, employers across the U.S. are sponsoring a new form of private mutual aid: Employee Hardship Funds (EHFs). These tax-exempt programs distribute emergency cash grants to workers, funded in part through donations raised from the workers themselves. Although EHFs recall earlier eras of "welfare capitalism" [@brandesAmericanWelfareCapitalism1976;@jacobyModernManorsWelfare1998], these programs have gone largely unstudied. What do workers know about them? Can they influence job attachment and support for unionization?  What does this tell us about the "moral economy" between low-wage workers and employers in the US today?
+
+EHFs present a tractable, unexploited context to study important questions in the social sciences and management.  EHFs present a well-defined intervention for studying  whether "private governance" initiatives actually benefit workers themselves [@anderson_private_2017; @ahlquist_firm_2020; @locke_promise_2013; @malesky_chains_2018; @distelhorst_does_2017; ].      
+
+I argue that EHFs are a blend of employer-driven welfare capitalism and worker mutual aid.  Drawing on interviews with executives and EHF managers, I expect EHFs to be closely connected to the corporate culture in which they are embedded, producing mixed and contingent effects on worker attitudes. Using three original, pre-registered studies, I present the first _systematic_ description of worker awareness and experience with EHFs as well as experimental evidence on the effect of corporate messaging around EHFs. I show that EHFs can build attachment to employers and coworkers when they are generous, well-promoted, and align with other corporate signals and management practices, but they do not affect workers' subjective financial security.
+
+In study 1, I use a survey of US retail workers to describe retail workers' awareness of EHF programs among major employers, their level of interest in such programs, and their preferred influence over how the fund is run.  I find that awareness is limited and retail workers are not well-informed about which firms offer such programs.  Nevertheless, when weighed against other job amenities, emergency cash support is second only to paid time off in inducing workers to consider a hypothetical job offer at another retailer.  Respondents strongly support the creation of an EHF at their current employer and preferred a program in which workers themselves have meaningful influence over fund management.
+
+In studies 2 and 3,  I focus on workers at two large retailers with long-standing EHF programs: the Home Depot and Walmart.  Both firms have EHFs that are over two decades old and managed in-house.   But the firms and programs differ in important ways.  The Home Depot EHF, the Homer Fund, is considerably more generous (with a maximum grant of \$10,000 against Walmart's \$1,500) and more heavily promoted among workers and executives.  IRS filing data indicates that the Homer Fund is also considerably larger than Walmart's EHF, even though Walmart is over three times the size of the Home Depot in US employee headcount.  Both firms also maintain strikingly different corporate cultures, with the Home Depot known for.^[According to the MIT Sloan Culture 500 rankings, based on analysis of Glassdoor postings, Walmart's]  
+
+Using social media to manage the difficult task of recruiting a sample of workers linked to specific firms, I fielded original, independent surveys of Home Depot and Walmart workers. I find considerable differences in program awareness across employers.  Among Home Depot workers, awareness is "broad-but-thin": over 60% of Home Depot respondents displayed some awareness of the Homer Fund, but there were inconsistencies across measurement items, suggesting recognition but not real understanding. At Walmart, only 38% were aware of the program.  At both employers, tenure with the firm is the primary consistent predictor of EHF awareness and engagement.
+
+In both studies 2 and 3, I use survey experiments to identify the impact of messages that raise EHF awareness.  Specifically, I exploit employer-produced promotional video messages about the EHF and look at effects on workers' subjective financial security, job attachment, and support for unionization and government-provided social insurance. In the Walmart survey I look at additional outcomes, including willingness to click on a link to donate to the EHF and perceptions about co-workers' support for unionization. 
+
+In Study 2, Home Depot workers who were already aware of the Homer Fund prior to the survey were more confident in their financial stability, more attached to their employer and coworkers, less supportive of unions, and less supportive of unemployment benefits, even after adjusting for job tenure.  The video treatment produced an average increase in job attachment of about 0.6 standard deviations on the relevant scale.  On average, the video treatment makes workers more _uncertain_ about unionization.  Further decomposing treatment effects, I find that the Homer Fund video treatment effects were largely concentrated among respondents _unaware_ of the EHF prior to my survey. Among this group, the video treatment significantly reduced support for unionization while increasing uncertainty (as opposed to outright opposition).
+
+In Study 3, I find both similarities and differences with Study 2.  As in the Home Depot sample, Walmart workers who were already aware of their EHF prior to the survey were more confident in their financial stability, more attached to their employer and coworkers, and less supportive of unions, even after adjusting for job tenure.  For the experiment in Study 3, I construct a custom video vignette that reproduced the Homer Fund video for the Walmart context.  The video treatment again produced no detectable effect on perceived financial stability.  But, contrary to findings in the Home Depot sample, I find no evidence of a treatment effect on job attachment, including quit intentions.  The video treatment did produce a four percentage point increase in the likelihood a respondent takes an action to donate.  The video treatment reduces opposition to unionization and increases (by four percentage points) the percent of coworkers expected to vote for unionization.   In contrast to the Home Depot sample, the Walmart sample showed no evidence of heterogeneous treatment effects based on prior knowledge of the Walmart EHF, known as the Associates in Critical Need Trust Together Fund (ACNT). 
+--->
 
 
 From a policy perspective, EHFs appear to resonate with a felt need among low-wage retail workers in the US today.  But, as the Home Depot and Walmart surveys indicate, program details, context, and promotion matter for the effects they might have on the workforce.  These programs operate in the shadow of eroded public welfare institutions, yet they are funded in part by favorable tax treatment.  Are the benefits these programs provide worth the tax expenditures?  How do these programs change when workers themselves have a voice in how they are run? 
@@ -101,15 +125,15 @@ Even before COVID-19, there was plenty of evidence that the existing social insu
  Model specifications:
 
 Genpop:
- EHF awareness/support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status)
+ EHF awareness/support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status + religiousity )
 
 THD:
- EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure)
- SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status)
+ EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure  + religiousity )
+ SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
 
 WMT:
- EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure)
- SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status)
+ EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + religiousity )
+ SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
 
 
 
