@@ -218,6 +218,49 @@ model_print_aware_wmt_dei<- modelsummary::modelsummary( engage.models_wmt_dei,
 
 
 
+## Among awares
+
+wmt_sub <- subset(wmt.hq_wgt_f, ehf_aware_pretr == TRUE)
+
+donate_reg_wmt_aware <- svyglm(ehf_donation=="Yes" ~
+                       age_clean +
+                       male +
+                       main_job +
+                       tenure_num +
+                       nonwhite +
+                       fulltime +
+                       hourly+
+                       college, 
+                     design = wmt_sub,
+                     family = quasibinomial)
+
+
+know_reg_wmt_aware <- svyglm(ehf_other_recip=="Yes" ~
+                     age_clean +
+                     male +
+                     main_job +
+                     tenure_num +
+                     nonwhite +
+                     fulltime +
+                     hourly+
+                     college, 
+                   design = wmt_sub,
+                  family = quasibinomial)
+
+applied_reg_wmt_aware <- svyglm(ehf_applied =="Yes" ~
+                        age_clean +
+                        male +
+                        main_job +
+                        tenure_num +
+                        nonwhite +
+                        fulltime +
+                        hourly+
+                        college, 
+                      design = wmt_sub,
+                  family = quasibinomial)
+
+
+
 #Amenities
 
 wmt$hire_benefits_pto_num <- as.ordered(wmt$hire_benefits_pto_num)

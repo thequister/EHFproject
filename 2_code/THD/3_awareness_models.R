@@ -119,6 +119,34 @@ model_print<- modelsummary( engage.models,
 )
 
 
+## Among those aware
+
+THD_sub <- subset(THD_comp, EHF_aware_list == TRUE)
+
+
+know_reg_aware <- svyglm(HF_know=="Yes" ~
+                    rk_age + male +
+                    main_job +
+                    tenure_num +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_sub,
+                  family = quasibinomial)
+
+
+donate_reg_aware <- svyglm(HF_donate=="Yes" ~
+                    rk_age + male +
+                    main_job +
+                    tenure_num +
+                    nonwhite +
+                    fulltime +
+                    hourly+
+                    college, 
+                  design = THD_sub,
+                  family = quasibinomial)
+
 
 
 
