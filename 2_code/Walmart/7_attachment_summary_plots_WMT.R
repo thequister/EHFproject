@@ -93,7 +93,7 @@ ggsave(filename = here::here("4_output", "plots", "attachment_wmt_hq.pdf"),
 #components
 
 
-new.job.out<-wmt_unwgt %>% 
+new.job.out<-wmt.hq_unwgt %>% 
   group_by(treatment_bin, new_job_num) %>%
   summarise(new_job = survey_mean(proportion=TRUE, vartype="ci"),
             w_n = n(),
@@ -101,20 +101,20 @@ new.job.out<-wmt_unwgt %>%
 
 
 # loyalty to coworkers
-wrk.loyal.out<-wmt_unwgt %>% 
+wrk.loyal.out<-wmt.hq_unwgt %>% 
   group_by(treatment_bin, wrk_loyal_num) %>%
   summarise(loyal = survey_mean(proportion=TRUE, vartype="ci"),
             w_n = n(),
             n = unweighted(n()))
 
 #loyalty to employer
-emp.loyal.out<-wmt_unwgt %>% 
+emp.loyal.out<-wmt.hq_unwgt %>% 
   group_by(treatment_bin, emp_loyal_num) %>%
   summarise(loyal = survey_mean(proportion=TRUE, vartype="ci"),
             n = unweighted(n()))
 
 #recomend employer
-emp.reco.out <- wmt_unwgt %>% 
+emp.reco.out <- wmt.hq_unwgt %>% 
   group_by(treatment_bin, emp_reco_num) %>%
   summarise(reco = survey_mean(proportion=TRUE, vartype="ci"),
             n = unweighted(n()))
@@ -150,7 +150,7 @@ newjob.p <- newjob.p + geom_col(position = dodge, alpha = 0.2) +
 
 
 
-wk.loyal <- ggplot(data = wrk.loyal.out,
+wk.loyal_wmt <- ggplot(data = wrk.loyal.out,
             mapping = aes(x = wrk_loyal_num*3, y = loyal,
                           ymin = loyal_low,
                           ymax = loyal_upp,
@@ -158,7 +158,7 @@ wk.loyal <- ggplot(data = wrk.loyal.out,
                           color = treatment_bin,
                           group = treatment_bin))
 
-wk.loyal <- wk.loyal + geom_col(position = dodge, alpha = 0.2) +
+wk.loyal_wmt <- wk.loyal_wmt + geom_col(position = dodge, alpha = 0.2) +
     geom_errorbar(position = dodge, width = 0.2) +
     scale_x_continuous(name=NULL, 
                      breaks = 0:3,
@@ -180,7 +180,7 @@ wk.loyal <- wk.loyal + geom_col(position = dodge, alpha = 0.2) +
 #        panel.grid = element_blank())
 
 
-emp.loyal <- ggplot(data = emp.loyal.out,
+emp.loyal_wmt <- ggplot(data = emp.loyal.out,
             mapping = aes(x = emp_loyal_num*3, y = loyal,
                           ymin = loyal_low,
                           ymax = loyal_upp,
@@ -188,7 +188,7 @@ emp.loyal <- ggplot(data = emp.loyal.out,
                           color = treatment_bin,
                           group = treatment_bin))
 
-emp.loyal <- emp.loyal + geom_col(position = dodge, alpha = 0.2) +
+emp.loyal_wmt <- emp.loyal_wmt + geom_col(position = dodge, alpha = 0.2) +
     geom_errorbar(position = dodge, width = 0.2) +
     scale_x_continuous(name=NULL, 
                      breaks = 0:3,
@@ -199,7 +199,7 @@ emp.loyal <- emp.loyal + geom_col(position = dodge, alpha = 0.2) +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) 
 
 
-emp.reco <- ggplot(data = emp.reco.out,
+emp.reco_wmt <- ggplot(data = emp.reco.out,
             mapping = aes(x = emp_reco_num*4, y = reco,
                           ymin = reco_low,
                           ymax = reco_upp,
@@ -207,10 +207,10 @@ emp.reco <- ggplot(data = emp.reco.out,
                           color = treatment_bin,
                           group = treatment_bin))
 
-emp.reco <- emp.reco + geom_col(position = dodge, alpha = 0.2) +
+emp.reco_wmt <- emp.reco_wmt + geom_col(position = dodge, alpha = 0.2) +
     geom_errorbar(position = dodge, width = 0.2) +
     scale_x_continuous(name=NULL, 
-                     breaks = 1:5,
+                     breaks = 0:4,
                      labels = c("0" ="def. wouldn't", "1" ="",
                                 "2"="unsure", "3" = "",
                                 "4"="def. would")) +
@@ -228,8 +228,8 @@ ggsave(filename = here::here("4_output", "plots", "new_job_trt_wmt.pdf"),
        plot = newjob.p)
 
 ggsave(filename = here::here("4_output", "plots", "wk_loyal_wmt.pdf"),
-  plot = wk.loyal)
+  plot = wk.loyal_wmt)
 ggsave(filename = here::here("4_output", "plots", "emp_loyal_wmt.pdf"),
-  plot = emp.loyal)
+  plot = emp.loyal_wmt)
 ggsave(filename = here::here("4_output", "plots", "emp_reco_wmt.pdf"),
-  plot = emp.reco)
+  plot = emp.reco_wmt)

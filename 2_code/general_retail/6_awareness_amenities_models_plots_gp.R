@@ -225,7 +225,7 @@ labels <- c(hire_benefits_pto_num = "Paid time off",
             hire_benefits_union_num = "Union representation",
             hire_benefits_emerg_num = "Emergency cash support",
             hire_benefits_tuition_num = "Tuition assistance")
-legend_labels <- c('1' = 'Serious', '0.5' = 'Some', '0' = 'None') 
+legend_labels <- c('1' = 'Very', '0.5' = 'Somewhat', '0' = 'None') 
 colors <- RColorBrewer::brewer.pal(3, "Set2")
 
 # Plot
