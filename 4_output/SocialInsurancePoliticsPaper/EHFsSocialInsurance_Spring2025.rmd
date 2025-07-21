@@ -27,15 +27,11 @@ header-includes:
 \begin{abstract}
 \begin{singlespace} 
 
-There is a long-standing argument that public welfare and social insurance crowds out private savings and charity. There is also a newer set of arguments that private resources (home equity, credit) may dampen voters' support for public insurance programs and redistributive taxation. We investigate the "substitution hypothesis" in the context of a novel set of workplace mutual aid arrangements--Employee Hardship Funds (EHFs). EHFs enable employers to distribute emergency cash to their workers using donations pooled from employees themselves. Hundreds of major US firms now operate these programs. We use three original surveys---including two matched to workers at specific employers with EHFs and including experiments.  We find that state-level generosity in the social safety net is unrelated to worker knowledge of and support for EHFs. Experimental manipulation of EHF salience among workers at two large retailers indicates that EHFs do not displace support for public unemployment insurance or government emergency aid, regardless of the generosity of the EHF program. [Something about political ideology]. EHFs, as a workplace mutual aid arrangement, and government social insurance programs appear unconnected in the minds of workers.\\
+There is a long-standing claim that public social insurance and welfare crowd out private savings and charity. There is also a newer set of arguments that improved access to private resources (home equity, credit) dampen voters' support for public insurance programs and redistributive taxation. We investigate this "substitution hypothesis" in the context of a novel set of workplace mutual aid arrangements--Employee Hardship Funds (EHFs). EHFs enable employers to distribute emergency cash to their workers using donations pooled from employees themselves. Hundreds of major US firms now operate these programs. We use three original surveys---including two matched to workers at specific employers with EHFs and including experiments.  We find that state-level generosity in the social safety net is unrelated to worker knowledge of and support for EHFs. Experimental manipulation of EHF salience among workers at two large retailers indicates that EHFs do not displace support for public unemployment insurance or government emergency aid, regardless of the generosity of the EHF program. [Something about political ideology]. EHFs, as a workplace mutual aid arrangement, and government social insurance programs appear unconnected in the minds of workers.\\
 
 
 \end{singlespace}
 \end{abstract}
-
-<!---
-Hundreds of US employers have created “employee hardship funds” (EHFs). EHFs pool money donations from a firm’s workers in order to offer cash grants to the firm’s employees in unforeseen emergencies. Do workers know about and engage with these programs? Do they have any impact on workers’ financial well-being or job attachment? Can they be deployed for union avoidance? I use original surveys of workers at two large employers with well-established EHFs as well as a sample of retail workers nationwide to study these questions. Retail workers have limited knowledge of these programs.  At firms with EHFs, I find “broad but thin” levels of worker awareness that reflects employer promotional effort. Using survey experiments that exploit novel video vignettes, I find mixed results: At a firm with a generous and well-promoted EHF, treatment increases worker attachment to both co-workers and the employer and increases uncertainty about unionization; these effects are concentrated among workers unaware of their employer’s EHF before the survey.  At the firm with the less generous program, I find weaker or non-existent effects, although the EHF treatment in this case reduces opposition to unionization. There is no evidence that EHFs affect workers’ perceived financial security and no evidence that EHFs "substitute" for public social insurance programs in the minds of workers.  Findings have implications for studying the "moral economy" between low-wage workers and employers in the US as well as unionization and union avoidance.  Findings also have implications for the study of charitable giving, organizational attachment, and solidarity.
---->
 
 ```{r setup, include=FALSE}
 #loading THD, WMT, and genpop data
@@ -56,6 +52,68 @@ genpop_w<- genpop  |>
   as_survey_design(ids = 1, weights = acs_weight_trim)
 
 ```
+
+
+# Introduction
+
+# The "substitution hypothesis," two ways
+
+[Lit review + theory]
+
+# EHFs
+
+[background and relevance]
+
+# Study 1
+## Research design
+## Survey & Measurement
+## Results
+Genpop:
+ EHF awareness/support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status + religiousity )
+
+# Studies 2 & 3
+## Case selection, justification, common survey and research design components
+## Study 2
+### Specifics of survey details
+### Awareness and Donation willingness
+EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure  + religiousity )
+
+### Survey experiments
+#### gov't aid/responsibility
+ SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
+
+#### COVID experiment (?)
+
+## Study 3
+### Specifics of survey details
+### Awareness and Donation willingness
+EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + religiousity )
+
+### Survey experiment
+#### gov't aid/responsibility
+ SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
+
+#### donation action
+ click donate ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
+
+
+# Discussion and Conclusion
+
+
+# Appendix
+## Deviation from PAP
+## Survey details
+## Alternative specifications & Study 1
+## Alternative specifications & Study 2
+## Manipulation check Study 3
+## Alternative specifications & Study 3
+
+
+
+
+
+
+
 
 Past generations of workers built organizations to help one another in hard times.  Some of these mutual aid societies eventually transformed into full-fledged trade unions.  Others morphed into mutual insurance companies that later informed government social insurance programs [@deswaanWorkersClientsMutualism1986].  Such organizations transformed workplace relations, socialized workers into political life, and produced labor-based political movements. 
 
@@ -120,21 +178,8 @@ EHF may be viewed as "private insurance", which could dampen support for social 
 Even before COVID-19, there was plenty of evidence that the existing social insurance and welfare systems were stigmatizing, encumbered with numerous "administrative burdens" [@herd_administrative_2019], and straining to deliver to those in need.  Several informants suggested that EHFs may present a private, partial complement to a weakening or slow public system.  By locating mutual aid programs in the firm, program participation might be higher and the EHF can benefit from corporate resources.  Applying for an EHF grant may be easier or less stigmatizing than applying for government assistance and the turn around time for benefits could be much faster in times of acute need.^[The Home Depot claims that grants are processed within 7 business days of application receipt, far faster than welfare or unemployment benefits, which also require waiting periods in many states.]
 
 
-### 
 
- Model specifications:
-
-Genpop:
- EHF awareness/support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status + religiousity )
-
-THD:
- EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure  + religiousity )
- SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
-
-WMT:
- EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + religiousity )
- SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
-
+ 
 
 
 ### Attitudes toward government social insurance
