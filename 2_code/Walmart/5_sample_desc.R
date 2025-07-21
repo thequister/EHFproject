@@ -4,9 +4,10 @@
 
 #datasets
 wmt <- read_csv(here("3_cleaned_data", "ACNT_clean.csv"))
-wmt |> 
+wmt <- wmt |> 
   mutate(
-    treatment_placebo_ref = relevel(factor(treatment_placebo), ref="placebo")
+    treatment_placebo_ref = relevel(as.factor(treatment_placebo), ref="placebo"),
+    treatment_framing_ref = relevel(as.factor(treatment_framing), ref="cntrl")
   )
 wmt.hq<-wmt |> 
   filter(quality == "high")

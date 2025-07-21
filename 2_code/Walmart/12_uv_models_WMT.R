@@ -10,6 +10,12 @@ uv_wmt_mnl <- nnet::multinom(union_elec ~ treatment_bin,
                             trace = FALSE,
                             data = wmt.hq)
 
+uv_wmt_mnl_frame <- nnet::multinom(union_elec ~ treatment_framing_ref,
+                            Hess=TRUE, model = TRUE,
+                            trace = FALSE,
+                            data = wmt.hq)
+
+
 uv_wmt_mnl_c <- nnet::multinom(union_elec ~ treatment_bin+
                                  age_clean +
                                  male +
@@ -190,6 +196,14 @@ union_supp_pct_tab_wmt<-modelsummary(union_supp_pct_models,
                                stars = c('$^+$' = 0.1, '*' = .05, '**' = .01),
                                escape = FALSE
 )
+
+
+
+union_supp_pct_framing <- lm(union_coworkers_6 ~ treatment_framing_ref,
+   data = wmt.hq)
+
+framing_test<-car::linearHypothesis(union_supp_pct_framing, "treatment_framing_refcharity - treatment_framing_refsolidarity = 0")
+
 
 
 

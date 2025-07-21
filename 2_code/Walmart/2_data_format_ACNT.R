@@ -6,7 +6,12 @@ ACNT_uw <- read_csv(here("0_raw_data", "ACNT", "ACNT_full.csv"))
 
 ACNT_uw <- ACNT_uw %>%
 #  mutate_at(bin_vars, ~case_match(., "Yes" ~ 1, "No" ~ 0)) %>%
-  mutate(tenure_fac = factor(employ_period, levels = 
+  mutate(
+    treatment_framing = case_when(
+    treatment_full == "vidSolid" ~ "solidarity",
+    treatment_full == "vidChar" ~ "charity",
+    TRUE ~ "cntrl"),
+    tenure_fac = factor(employ_period, levels = 
                           c("Less than 6 months", "At least 6 months but less than 1 year",
                           "At least 1 year but less than 2 years",
                           "At least 2 years but less than 3 years",

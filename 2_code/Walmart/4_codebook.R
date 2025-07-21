@@ -74,6 +74,7 @@ attr(ACNT_clean$treatment_full, "description") <- "Treatment categories. Control
 attr(ACNT_clean$treatment_placebo, "description") <- "Treatment categories. Control (control), control video unrelated to an EHF (placebo), charity treatment video and solidarity treatment video (treatment)."
 attr(ACNT_clean$treatment_bin, "description") <- "Treatment (ctrl, vid0) or no treatment (vidChar, vidSolid) binary."
 attr(ACNT_clean$treatment_vid, "description") <- "Whether the respondent was exposed to a video (vid0, vidChar, vidSolid) or not (ctrl)."
+attr(ACNT_clean$treatment_framing, "description") <- "Whether the respondent was exposed to solidarity video (solidarity), charity video (charity), or cntrl/placebo (cntrl)."
 attr(ACNT_clean$completion_subgroup, "description") <- "Whether the respondent was in the subgroup that completed the survey without providing an email (5), or the subgroup that completed and provided an email (6). Groups 1-4 are excluded from the survey sample, for details please refer to the Pre-Analysis Plan."
 attr(ACNT_clean$age, "description") <- "Recoded from birthyear by subtracting birthyear from 2025."
 attr(ACNT_clean$quality, "description") <- "High quality respondents versus low-quality respondents. Low-quality respondents are those who either incorrectly responded to the attention check while completing the survey, or failed to accurately provide specified numerical variables (age, pph) in a sensical manner."

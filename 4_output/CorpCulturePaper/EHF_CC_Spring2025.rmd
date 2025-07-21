@@ -1,10 +1,10 @@
 ---
 title: "Private Welfare as Corporate Governance"
 subtitle: "Evidence from Employee Hardship Funds"
-author: 
-   - John S. Ahlquist^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, Theodoros Ntounias, and Yuchen Wang provided research assistance.  Versions of this research were presented at the APSA, LERA, CAPE and EPSA meetings as well as seminars at Columbia, Duke, IE-Madrid, Universitat de Barcelona, Wisconsin, and Yale. Kate Bronfenbrenner, Daniel Galvin, Jake Grumbach, Tom Kochan, Margaret Levi, Elizabeth Lyons, and Eric Thai provided helpful comments.  Shane Xuan assisted with Facebook.]
+#author: 
+#   - John S. Ahlquist^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, Theodoros Ntounias, and Yuchen Wang provided research assistance.  Versions of this research were presented at the APSA, LERA, CAPE and EPSA meetings as well as seminars at Columbia, Duke, IE-Madrid, Universitat de Barcelona, Wisconsin, and Yale. Kate Bronfenbrenner, Daniel Galvin, Jake Grumbach, Tom Kochan, Margaret Levi, Elizabeth Lyons, and Eric Thai provided helpful comments.  Shane Xuan assisted with Facebook.]
   
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+#date: "`r format(Sys.time(), '%d %B, %Y')`"
 
 output: 
   bookdown::pdf_document2:
@@ -56,6 +56,7 @@ temp<-here::here('2_code','Walmart', '5_sample_desc.R')
 source(file = temp)
 rm(temp)
 
+# general retail survey
 genpop <- read_csv(here("3_cleaned_data", "general_retail_clean.csv"))
 
 genpop_w<- genpop  |>  
@@ -542,9 +543,9 @@ print(mnl_eff_plot)
 
 ### Study 3 experiment 
 
-Based on results from the Home Depot survey, Study 3 concentrates on a video vignette treatment for the Walmart sample, omitting the text treatment.  Unfortunately, Walmart does not produce video or other testimonials about the ACNT.  To construct a comparable treatment for the Walmart sample, I produced an original video using the Homer Fund treatment as both script and audio-visual template.  We adapted the video to the Walmart context and used a paid actor; Figure \@ref(fig:fig-ray), panel (b) displays a still image from the beginning of the video.^[The paid actor exhibited the same gender (male) and racial (white) expression as in the Homer Fund video.  The actor was also viewed as approximately the same age as the spokesperson in the Homer Fund video, according to mTurk coders. The ACNT-adapted video was 41 seconds shorter than the Homer Fund video.  We achieved this by shortening or removing some interstitial and panning shots, not through any reduction in the spoken script beyond those parts that were only relevant to the Home Depot.] To address concerns that findings from Study 2 might be a "video effect", as opposed the effect of an EHF message, Study 3 includes a placebo arm.  Respondents in the placebo condition watched a video in which the same hired actor reads a Walmart press release about the company's acquisition of Vizio.    
+Based on results from the Home Depot survey, Study 3 concentrates on a video vignette treatment for the Walmart sample, omitting the text treatment.  Unfortunately, Walmart does not produce video or other testimonials about the ACNT.  To construct a comparable treatment for the Walmart sample, I produced an original video using the Homer Fund treatment as both script and audio-visual template.  We adapted the video to the Walmart context and used a paid actor; Figure \@ref(fig:fig-ray), panel (b) displays a still image from the beginning of the video.^[The paid actor exhibited the same gender (male) and racial (white) expression as in the Homer Fund video.  The actor was also viewed as approximately the same age as the spokesperson in the Homer Fund video, according to mTurk coders. The ACNT-adapted video was 41 seconds shorter than the Homer Fund video.  We achieved this by shortening or removing some interstitial and panning shots, not through any reduction in the spoken script beyond those parts that were only relevant to the Home Depot.] To address concerns that findings from Study 2 might be a "video effect", as opposed the effect of an EHF message, Study 3 includes a placebo arm.  Respondents in the placebo condition watched a video in which the same hired actor reads a Walmart press release about the company's acquisition of Vizio.^[Videos can be seen here: [placebo video](https://tinyurl.com/EHF-Study3-placebo); [treatment (solidarity card)](https://tinyurl.com/EHFStudy3-solidarity); [treatment (charity card)](https://tinyurl.com/EHF-Study3-charity).]    
 
-In Study 3, Respondents were randomly assigned with equal probability to either treatment or control.  Within the control condition, respondents were randomly divided between the pure control and the placebo.  The pure controls saw no additional information, just as in Study 2.^[I also pre-registered a framing study, in which I slightly vary the framing of the treatment video.  Specifically, the "card" visible on the screen before the respondent clicks "play" differs, with the _solidarity_ framing displaying text emphasizing supporting other Walmart workers and the and the _charity_ framing displaying text emphasizing charitable donations to help those in need. The content of the video vignette was otherwise identical across treatment groups.  As there was no detectable difference between these framings, I do not report on this in the main text.  Regression results demonstrating this for key outcomes appears in appendix [cite appendix].]  Manipulation checks (see Appendix \@ref(app-manip-wmt)) confirm that the video treatment did indeed increase respondent awareness of the ACNT, as expected whereas the placebo had no effect. Study 3 also included a behavioral indicator of ACNT donation willingness.^[At the end of the survey, respondents had the opportunity to click on a link where they could donate to the ACNT.] Consistent with @andreoniPowerAskingHow2011, those in the video treatment were four percentage points (or 35\%, $p < 0.05$) more likely to click on the donation link (see Appendix \@ref(app-donate-wmt)).  There were no detectable differences between pure control and placebo groups in either manipulation check.  Thus we display results for binary treatment/control in the analysis below.  Based on the findings in the Home Depot sample, I pre-registered a plan to examine whether treatment effects differ based on pre-exposure to the ACNT, measured using the same question format as in the Home Depot survey. 
+In Study 3, Respondents were randomly assigned with equal probability to either treatment or control.  Within the control condition, respondents were randomly divided between the pure control and the placebo.  The pure controls saw no additional information, just as in Study 2.^[As part of Study 3, I pre-registered a sub-experiment in which I randomly vary the initial framing of the treatment video.  Specifically, the "card" visible on the screen before the respondent clicks "play" differs, with the _solidarity_ framing displaying text emphasizing supporting other Walmart workers and the and the _charity_ framing displaying text emphasizing charitable donations to help those in need. The content of the video vignette was otherwise identical across treatment groups; see previous footnote for links to both versions of the treatment video.  There were no detectable differences between the two differetn framings of the treatment video, so I do not report on this in the main text.  Regression results demonstrating this for key outcomes appears in Appendix \@ref(app-framing).]  Manipulation checks (see Appendix \@ref(app-manip-wmt)) confirm that the video treatment did indeed increase respondent awareness of the ACNT, as expected whereas the placebo had no effect. Study 3 also included a behavioral indicator of ACNT donation willingness.^[At the end of the survey, respondents had the opportunity to click on a link where they could donate to the ACNT.] Consistent with @andreoniPowerAskingHow2011, those in the video treatment were four percentage points (or 35\%, $p < 0.05$) more likely to click on the donation link (see Appendix \@ref(app-donate-wmt)).  There were no detectable differences between pure control and placebo groups in this check either.  Thus we display results for binary treatment/control in the analysis below.  Based on the findings in the Home Depot sample, I pre-registered a plan to examine whether treatment effects differ based on pre-exposure to the ACNT, measured using the same question format as in the Home Depot survey. 
 
 #### Financial security 
 ```{r}
@@ -593,7 +594,7 @@ In the Walmart sample, we also asked respondents about a hypothetical job offer 
 
 #### Unionization
 
-We now look at treatment effects on attitudes toward unionization in the Walmart sample.  Table \@ref(tab:tab-uv-models-wmt) displays results for a multinomial logistic regression on willingness to vote for unionization.  Contrary to findings in Study 2, the EHF video treatment induces a modest _reduction in opposition_ to unionization among the Walmart sample.  Also contrary to findings from Study 2, I find no evidence of any difference in union support due to prior awareness of the ACNT.  I therefore use the "base" model to produce effect estimates for interpretive purposes.^[Appendix \@ref(app-full-wmt) displays full covariate estimates for both the model with covariates but no pre-exposure terms and the "covariate" model reported in Table \ref(tab:tab-uv-models-wmt).  The models without the pre-exposure terms are the better fitting models.  The inclusion of covariates does not alter inference about the treatment effect.]   
+We now look at treatment effects on attitudes toward unionization in the Walmart sample.  Table \@ref(tab:tab-uv-models-wmt) displays results for a multinomial logistic regression on willingness to vote for unionization.  Contrary to findings in Study 2, the EHF video treatment induces a modest _reduction in opposition_ to unionization among the Walmart sample.  Also contrary to findings from Study 2, I find no evidence of any difference in union support due to prior awareness of the ACNT.  I therefore use the "base" model to produce effect estimates for interpretive purposes.^[Appendix \@ref(app-full-wmt) displays full covariate estimates for both the model with covariates but no pre-exposure terms and the "covariate" model reported in Table \@ref(tab:tab-uv-models-wmt).  The models without the pre-exposure terms are the better fitting models.  The inclusion of covariates does not alter inference about the treatment effect.]   
 
 ```{r tab-uv-models-wmt, eval=TRUE, echo = FALSE, tab.cap="Support for unionization (Walmart)"}
 temp<-here::here('2_code', 'Walmart', '12_uv_models_WMT.R')
@@ -691,7 +692,7 @@ study_table <- tibble(
     "Analyzing HTE by pre-exposure (alternatively, analyzing compliers and always-takers) was not part of the initial PAP. Its importance to understanding the experiment is obvious so the analysis is included alongside the pre-registered analysis.",
     "Presenational concision in the main text was required. Results for each element of the attachment index inluded in the appendix.",
     
-    "I pre-registered a framing experiment within the treatment arm for Study 3. For those in the treatment arm, we randomized between two different text statements on the screen before the respondent pushes 'play'. These messages are the 'charity' and 'solidarity' framing, respectively. There were no detectable differences between charity and solidarity treatment groups for any outcome, so I omit discussion in the main text.",
+    "I pre-registered a framing experiment within the treatment arm for Study 3. For those in the treatment arm, we randomized between two different text statements on the screen before the respondent pushes 'play'. These messages are the 'charity' and 'solidarity' framing, respectively. There were no detectable differences between charity and solidarity treatment groups for any outcome, so I omit discussion in the main text and pool all treated respondents.  See appendix S",
     
     paste0(
       "Respondents were sent emails inviting them into the follow-up survey one week after completion, offering a second raffle entry. ",
@@ -715,6 +716,7 @@ study_table %>%
 
 By way of informational background, hypothesis generation, and qualitative checks on survey design, I sought semi-structured interviews with professionals in charge of designing and managing EHF programs.  I sought interviews with 12 organizations, including all the main EHF outsourcing organizations, as well as firms from multiple industries with EHFs.  I succeeded in obtaining 6 interviews.  All but one interviewee identified as female.  Interviews were conducted remotely over zoom, approved by UCSD IRB, and granted anonymity.  Interviews lasted about 45 minutes and involved no compensation.   
 
+\newpage
 # General retail survey survey details {#app-genpop-survsum}
 
 ```{r tab-sum-gr, echo=FALSE, tab.cap="General retail survey summary"}
@@ -733,7 +735,7 @@ tbl_sum_genpop_2w
 knitr::include_graphics(here('4_output', 'plots', 'HF_donation_suggestions.png'))
 ```
 
-
+\newpage
 # Home Depot Survey summary table (unweighted) {#app-survsum-uw}
 
 The unweighted sample is older and skewed slightly male relative to reported Facebook demographics for Home Depot workers.^[Our sample is `r 100*round(summary_tab_uw$male,2)`% male and has a median age of `r summary_tab_uw$age` compared to Facebook reported values of 53% male with a median age in the 30-39 interval.  The weighted sample is 52% male with a median age of 38.] The sample is `r 100*(1-round(summary_tab_uw$nonwhite,2))`% white. 
@@ -1023,6 +1025,8 @@ In the Walmart sample, we see a low baseline willingness to click on the link of
 donation_tab_app
 ```
 
+\newpage
+
 # Attachment index components (Walmart) {#app-indexcomps-wmt}
 
 ```{r fig-attachmentparts-wmt, eval=TRUE, echo = FALSE, fig.cap="Job attachment (Walmart)"}
@@ -1033,6 +1037,7 @@ emp.loyal_wmt
 emp.reco_wmt
 ```
 
+\newpage
 
 # Full covariate results (Walmart) {#app-full-wmt}
 
@@ -1093,6 +1098,8 @@ modelsummary(uv_wmt_mnl_int_c,
 
 ```
 
+\newpage
+
 # Ordered logistic regression models (Walmart) {#app-ol-wmt}
 
 ```{r tab-app-ol-wmt, echo = FALSE, tab.cap = "Ordered logit versions of regression models (Walmart)", results= 'asis'}
@@ -1125,6 +1132,91 @@ model_ol_uw_wmt<- modelsummary( ol_mods_wmt,
 
 model_ol_uw_wmt
 ```
+
+\newpage
+# Charity and Solidarity framings of treatment video on union vote and expected co-worker union support (Walmart) {#app-framing}
+
+```{r echo = FALSE, tab.cap = "MNL on union vote, accounting for framing experiment (Walmart)", results= 'asis'}
+modelsummary(uv_wmt_mnl_frame,
+             gof_map = gm,
+             shape = term + response ~ statistic,
+             title = "MNL on union vote, accounting for framing experiment (Walmart) \\label{tab:tab-app-mnl-framing-wmt}",
+             notes = "Reference category is 'for the union.' Standard errors in parentheses",
+             output = "kableExtra",
+             stars = c('$^+$'=.1,'*' = .05, '**' = .01),
+             threeparttable=TRUE,
+             escape = TRUE
+             
+             )
+
+coefs <- coef(uv_wmt_mnl_frame)
+vcov_matrix <- vcov(uv_wmt_mnl_frame)
+
+# Calculate the difference between coefficients
+diff_against <- coefs[1, "treatment_framing_refcharity"] - coefs[1, "treatment_framing_refsolidarity"]
+diff_ns <- coefs[2, "treatment_framing_refcharity"] - coefs[2, "treatment_framing_refsolidarity"]
+
+# Standard error of the difference
+se_diff_against <- sqrt(
+  diag(vcov_matrix)["Against the union:treatment_framing_refcharity"] + 
+    diag(vcov_matrix)["Against the union:treatment_framing_refsolidarity"] - 
+    2 * vcov_matrix["Against the union:treatment_framing_refcharity", "Against the union:treatment_framing_refsolidarity"]
+)
+
+se_diff_ns <- sqrt(
+  diag(vcov_matrix)["Not sure:treatment_framing_refcharity"] + 
+    diag(vcov_matrix)["Not sure:treatment_framing_refsolidarity"] - 
+    2 * vcov_matrix["Not sure:treatment_framing_refcharity", "Not sure:treatment_framing_refsolidarity"]
+)
+
+
+# Wald statistic (z-value) for the difference
+z_against <- as.numeric(diff_against / se_diff_against)
+z_ns <- as.numeric(diff_ns / se_diff_ns)
+# p-value for the Wald test
+p_against <- 2 * (1 - pnorm(abs(z_against)))
+p_ns <- 2 * (1 - pnorm(abs(z_ns)))
+
+Zs <- c(z_against, z_ns)
+Ps <- c(p_against, p_ns)
+
+# Display the results
+test.results <- data.frame(
+  Option = c("Against the union", "Not sure"),
+  Z_value = Zs,
+  P_value = Ps
+)
+
+# Create a nicely formatted table with kableExtra
+kable(test.results, digits = 3, caption = "Hypothesis Tests that different treatment effects are equal") %>%
+  kableExtra::kable_styling(bootstrap_options = "striped", full_width = FALSE)
+
+```
+
+
+```{r echo = FALSE, tab.cap = "OLS on expected coworker union support, accounting for framing experiment (Walmart)", results= 'asis'}
+modelsummary(union_supp_pct_framing,
+             #gof_map = gm,
+             #shape = term + response ~ statistic,
+             title = "OLS on expected coworker union support, accounting for framing experiment (Walmart) \\label{tab:tab-app-ols-framing-wmt}",
+             notes = "Standard errors in parentheses",
+             output = "kableExtra",
+             stars = c('$^+$'=.1,'*' = .05, '**' = .01),
+             threeparttable=TRUE,
+             escape = TRUE, 
+             digits = 3
+             )
+framing_test |> 
+  kable(
+     digits = 3,
+    format = "latex",
+    booktabs = TRUE,
+    caption = "Testing the null that charity and solidarity treatments are equal"
+  ) %>%
+  kable_styling(latex_options = c("hold_position"))
+```
+
+\newpage
 
 # Follow-up survey (Walmart) {#app-followup-wmt}
 
