@@ -56,9 +56,59 @@ genpop_w<- genpop  |>
 
 # Introduction
 
+
+In the contemporary United States, unions are vanishing and the welfare and social insurance systems are creaking. Temporary and other "non-standard" employment relationships are increasingly widespread [@abraham_measuring_2018].  Yet such work arrangements fail to provide access to traditional social insurance and labor market protections. Americans in the lower half of the education and earnings distributions have seen years of stagnating wages while also bearing more economic risk [@hacker_great_2019].  Precarious employment, "fissured" workplaces, and distributed supply chains make it more difficult for workers to develop the occupational identities and dense networks of coworkers that supported the organization-building of the past [@ahlquist_research_2018;@thelen_american_2019;@naidu_is_nodate;@weil_fissured_2014].  
+
+Even as unions and social protections atrophy, employers across the U.S. are sponsoring a new form of private welfare: Employee Hardship Funds (EHFs). These tax-exempt programs distribute emergency cash grants to workers, funded in part through donations raised from the workers themselves.  As such, they blend aspects of charities, private "welfare capitalism". EHFs belie the extraordinary leeway that employers have to introduce job amenitites and progams that.   Nevertheless, these programs have gone largely unstudied. 
+
+In this paper, we examine whether EHFs    
+
 # The "substitution hypothesis," two ways
 
-[Lit review + theory]
+ [Lit review + theory]
+ 
+This paper builds on two largely disconneted literatures, both arguing that government welfare programs and private resources substitute for one another.  The first is an argument that goes back to at least the 18th Century, in which government spending, especially on social welfare and insurance, crowds out private charitable giving as well as private savings.  The second, more recent liteature, links increasing access to private financial resources to a decline in voter support for broad-based welfare and social insurance programs
+
+## Government spending and the crowding out of private savings and charity
+
+Arguments that government spending on the poor is counter productive date back to at least @defoeGivingAlmsNo1893.  @townsendDissertationPoorLaws1786 may have been the first to articulate the claim that tax-funded social spending will depress *both* private savings and private charity when he said "Let the same [generous, charitable] man be straitened in his circumstances, let him be burthened with taxes...and he will have little inclination to seek for objects of distress, or to visit the sequestered cottage of the silent sufferer...If, agreeable to the general practice of the labouring poor, a man...has made no provision for his future wants; if all, to whom he might naturally look for aid, are in the same circumstances with himself; and if the charity of those among his neighbours, who are distinguished for benevolence, nay of all who have the common feelings of humanity, is exhausted; if they who are most willing are least able to relieve him; we must expect to see distress and poverty even among those who are worthy of compassion."^[@malthusEssayPrinciplePopulation1798 claims that "The poor laws of England may therefore be said to diminish both the power and the will to save among the common people" (Ch. 5).  @tocquevilleAlexisTocquevillesMemoir1997 created a distinction between "private" and "legal" charity, arguing that "any permanent, regular, administrative system whose aim will be to provide for the needs of the poor, will breed more miseries than it can cure, will deprave the population that it wants to help and comfort, will in time reduce the rich to being no more than the tenant-farmers of the poor, will dry up the sources of savings, will stop the accumulation of capital, will retard the development of trade, will benumb human industry and activity, and will culminate by bringing about a violent revolution in the State, when the number of those who receive alms will have become as large as those who give it, and the indigent, no longer being able to take from the impoverished rich the means of providing for his needs, will find it easier to plunder them of all their property at one stroke than to ask for their help."]    
+
+@andreoniImpureAltruismDonations1990; @warrParetoOptimalRedistribution1982; @bergstromPrivateProvisionPublic1986  Basic theory about the scale of crowd out.
+
+The rise of corwdfunding paltforms has also provided some evidence here.  @panjwaniCausesConsequencesMedical2023 show that health-related crowdfunding GoFundMe campaigns declined after expansions in medical insurance coverage due to the  Affordable Care Act.  @leeNewDigitalSafety2022 show that areas with poor private insurance coverage and fewer social associations see greater initiation rates for GoFundMe campaigns, but campaigns in these same areas are less likely to be successful.
+
+Debates about the scale of the substitution, especially with old-age pension and social security programs [@alessiePensionWealthHousehold2013; ]
+
+@andreoniCrowdingOutDue2011 increases in goverment funding to charities reduces fundraising 
+
+meta analysis @dewitGovernmentSupportCharitable2016 
+lit review @bredtmannDoesGovernmentSpending2023
+
+New Deal crowds out churches charitable giving @gruberFaithbasedCharityCrowdout2007
+
+### What about crowding in?
+
+@kotchenCrowdingImpureAltruism2023.  Increase in NP funding leads to more volunteer labor
+
+Government funding as a signal of project quality or viability is not relevant here.
+
+Degree of excludability of the output from the private project matters. @bernardOutCrowdingEffects2025.  EHFs are non-excludable in that there is no requirement to have donated in order to access benefits
+
+
+## Private resources and the crowding out of support for social insurance
+
+ [@beito_mutual_2000; @yeo_working_1979; @wiedemann_how_2022].  
+
+On the one hand, public programs often step in when private mutual aid or insurance pools collapse.  One example is the famous "Ghent system," in which unions administer government-mandated unemployment insurance.  These systems, common in Northern Europe, emerged from early unemployment and injury insurance programs run as mutual aid pools founded by trade unions.  Government underwriting of social insurance through taxation grew out of the repeated collapse (and ad hoc bailouts) of these privately-organized welfare and mutual aid pools [@socialsecurityadministrationSocialSecurityHistory2023; @western_1997].
+
+A more recent literature points to a different dynamic: (perceived) improvements in private resources can crowd out support for government social insurance and welfare programs. The logic is simple: voters perciving an improved personal financial position are more confident in their ability to "self-insure" against negative income shocks while also becomeing less willing to pay taxes into the public system.  @ansell_political_2014 focuses on homeownership, finding that American and British voters with appreciating real estate assets are less supportive of social insurance.  @wiedemann_how_2022 and @ahlquistTakingCreditRedistribution2017 focus on easy access to credit as a key private resource that can affect support for redistributive policy  [; @busemeyer_welfare_2020; @rosner_struggle_2003; @hacker_insecure_2013; @zhu_policy_2015] .  
+
+
+
+Insofar as EHFs are a form of private emergency aid, increased program awareness could blunt support for social insurance or government aid programs in times of emergency (e.g., COVID-19).  This paper seeks to determine whether we can observe this effect among workers exposed to EHF information.
+
+
+Hypotheses 
 
 # EHFs
 
@@ -70,6 +120,9 @@ genpop_w<- genpop  |>
 ## Results
 Genpop:
  EHF awareness/support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status + religiousity )
+  - interact SG with religioisty, conservatism.
+  - interact home ownership with state-level home price appreciation
+  - hierarchial specification needed.  
 
 # Studies 2 & 3
 ## Case selection, justification, common survey and research design components
@@ -77,6 +130,7 @@ Genpop:
 ### Specifics of survey details
 ### Awareness and Donation willingness
 EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure  + religiousity )
+  
 
 ### Survey experiments
 #### gov't aid/responsibility
@@ -125,9 +179,7 @@ The lack of any substitution effect between EHFs and support for public assistan
 ######
 
 
-In the contemporary United States, unions are vanishing and the welfare and social insurance systems are creaking. Temporary and other "non-standard" employment relationships are increasingly widespread [@abraham_measuring_2018].  Yet such work arrangements fail to provide access to traditional social insurance and labor market protections. Americans in the lower half of the education and earnings distributions have seen years of stagnating wages while also bearing more economic risk [@hacker_great_2019].  Precarious employment, "fissured" workplaces, and distributed supply chains make it more difficult for workers to develop the occupational identities and dense networks of coworkers that supported the organization-building of the past [@ahlquist_research_2018;@thelen_american_2019;@naidu_is_nodate;@weil_fissured_2014].  
 
-Even as unions and social protections atrophy, employers across the U.S. are sponsoring a new form of private mutual aid: Employee Hardship Funds (EHFs). These tax-exempt programs distribute emergency cash grants to workers, funded in part through donations raised from the workers themselves. Although EHFs recall earlier eras of "welfare capitalism" [@brandesAmericanWelfareCapitalism1976;@jacobyModernManorsWelfare1998], these programs have gone largely unstudied. What do workers know about them? Can they influence job attachment and support for unionization?  What does this tell us about the "moral economy" between low-wage workers and employers in the US today?
 
 EHFs present a tractable, unexploited context to study important questions in the social sciences and management.  EHFs present a well-defined intervention for studying  whether "private governance" initiatives actually benefit workers themselves [@anderson_private_2017; @ahlquist_firm_2020; @locke_promise_2013; @malesky_chains_2018; @distelhorst_does_2017; ].      
 
@@ -162,7 +214,6 @@ and more supportive of unemployment insurance
 
 There is no detectable treatment effect on attitudes towards government programs in support of the unemployed or those facing hardship.
 
-There is now a growing body of scholarship arguing that government welfare programs and private resources substitute for one another [@beito_mutual_2000; @yeo_working_1979; @wiedemann_how_2022].  Public programs often step in when private mutual aid or insurance pools collapse.  For example, the famous "Ghent system," in which unions administer government-mandated unemployment insurance, arose out of the repeated collapse of various privately-organized welfare and mutual aid pools [@socialsecurityadministrationSocialSecurityHistory2023; @western_1997].  @panjwaniCausesConsequencesMedical2023 show that health-related crowdfunding GoFundMe campaigns declined after expansions in medical insurance coverage due to the  Affordable Care Act.  @leeNewDigitalSafety2022 show that areas with poor private insurance coverage and fewer social associations see greater initiation rates for GoFundMe campaigns, but campaigns in these same areas are less likely to be successful.   Conversely, increases in private resources, private insurance, or employer-provided benefits can crowd out support for government programs [@ansell_political_2014; @busemeyer_welfare_2020; @rosner_struggle_2003; @hacker_insecure_2013; @zhu_policy_2015] .  Insofar as EHFs are a form of private emergency aid, increased program awareness could blunt support for social insurance or government aid programs in times of emergency (e.g., COVID-19).  This paper seeks to determine whether we can observe this effect among workers exposed to EHF information.
 
 @hadziabdicPrivateSpannerPublic2022
 
