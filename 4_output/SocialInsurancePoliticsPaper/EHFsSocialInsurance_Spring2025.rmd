@@ -27,7 +27,7 @@ header-includes:
 \begin{abstract}
 \begin{singlespace} 
 
-There is a long-standing claim that public social insurance and welfare crowd out private savings and charity. There is also a newer set of arguments that improved access to private resources (home equity, credit) dampen voters' support for public insurance programs and redistributive taxation. We investigate this "substitution hypothesis" in the context of a novel set of workplace mutual aid arrangements--Employee Hardship Funds (EHFs). EHFs enable employers to distribute emergency cash to their workers using donations pooled from employees themselves. Hundreds of major US firms now operate these programs. We use three original surveys---including two matched to workers at specific employers with EHFs and including experiments.  We find that state-level generosity in the social safety net is unrelated to worker knowledge of and support for EHFs. Experimental manipulation of EHF salience among workers at two large retailers indicates that EHFs do not displace support for public unemployment insurance or government emergency aid, regardless of the generosity of the EHF program. [Something about political ideology]. EHFs, as a workplace mutual aid arrangement, and government social insurance programs appear unconnected in the minds of workers.\\
+There is a long-standing claim that public social insurance and welfare crowd out private savings and charity. There is also a newer set of arguments that improved access to private resources (home equity, credit, or donations) dampen voters' support for public insurance programs and redistributive taxation. These claims have not been jointly investigated nor has the literature looked at workplace programs and benefits.  We investigate this "substitution hypothesis" in the context of a novel set of workplace mutual aid arrangements--Employee Hardship Funds (EHFs). EHFs enable employers to distribute emergency cash to their workers using donations pooled from employees themselves. Hundreds of major US firms now operate these programs. We use three original surveys---including two matched to workers at specific employers with EHFs and including experiments.  We find that state-level generosity in the social safety net is unrelated to worker knowledge of and support for EHFs. Experimental manipulation of EHF salience among workers at two large retailers indicates that EHFs do not displace support for public unemployment insurance or government emergency aid, regardless of the generosity of the EHF program. [Something about political ideology]. EHFs, as a workplace mutual aid arrangement, and government social insurance programs appear unconnected in the minds of workers.\\
 
 
 \end{singlespace}
@@ -67,32 +67,24 @@ In this paper, we examine whether EHFs
 
  [Lit review + theory]
  
-This paper builds on two largely disconnected literatures, both arguing that government welfare programs and private resources substitute for one another.  The first is an argument that goes back to at least the 18th Century, in which government spending, especially on social welfare and insurance, crowds out private charitable giving as well as private savings.  The second, more recent literature, works in the opposite direction, linking improved access to private financial resources to reduced voter support for broad welfare and social insurance programs.
+This paper builds on two largely disconnected literatures, both arguing that government welfare programs and private resources substitute for one another.  The first is an argument that goes back to at least the 18th Century, in which government spending---especially on poor relief, welfare, and social insurance---crowds out private charitable giving and private savings.  The second, more recent literature, works in the opposite direction, linking improved access to private financial resources to reduced voter support for public welfare and social insurance programs.  Neither of these literatures has linked workplace charitable programs or social benefits delivered through employers. 
 
 ## Government spending and the crowding out of private savings and charity
 
 Almost as soon as governments began systematically spending tax money in support of the poor, aged, and infirm, arguments emerged that such spending is actually counterproductive.^[@defoeGivingAlmsNo1893 is the first we could uncover in the British tradition] The reasons given often had much to do with the claimed moral failings of the peasants and working classes, but political economy arguments eventually emerged. @townsendDissertationPoorLaws1786 may have been the first to articulate the claim that tax-funded social spending will depress *both* private savings and private charity.^["Let the same [generous, charitable] man be straitened in his circumstances, let him be burthened with taxes...and he will have little inclination to seek for objects of distress, or to visit the sequestered cottage of the silent sufferer...If, agreeable to the general practice of the labouring poor, a man...has made no provision for his future wants; if all, to whom he might naturally look for aid, are in the same circumstances with himself; and if the charity of those among his neighbours, who are distinguished for benevolence, nay of all who have the common feelings of humanity, is exhausted; if they who are most willing are least able to relieve him; we must expect to see distress and poverty even among those who are worthy of compassion."  @malthusEssayPrinciplePopulation1798 claims that "The poor laws of England may therefore be said to diminish both the power and the will to save among the common people" (Ch. 5).  @detocquevilleAlexisTocquevillesMemoir1997 created a distinction between "private" and "legal" charity, arguing that "any permanent, regular, administrative system whose aim will be to provide for the needs of the poor, will breed more miseries than it can cure, will deprave the population that it wants to help and comfort, will in time reduce the rich to being no more than the tenant-farmers of the poor, will dry up the sources of savings, will stop the accumulation of capital, will retard the development of trade, will benumb human industry and activity, and will culminate by bringing about a violent revolution in the State, when the number of those who receive alms will have become as large as those who give it, and the indigent, no longer being able to take from the impoverished rich the means of providing for his needs, will find it easier to plunder them of all their property at one stroke than to ask for their help."]
 
-As the welfare state expanded dramatically in the post-War period, these arguments were revived [@friedmanCapitalismFreedom2002].  @feldsteinSocialSecurityInduced1974 argued that Social Security depressed household private savings by 30-50%, spawning an ongoing debate about the scale of substitution [@alessiePensionWealthHousehold2013].  Theoretical work based on the assumption the charitable contributions are a public good, suggested that government spending should crowd out private charity to some degree [@andreoniImpureAltruismDonations1990; @warrParetoOptimalRedistribution1982; @bergstromPrivateProvisionPublic1986].  Subsequent work centered on estimating the the scale of this substitution effect to determine whether government spending crowds out private giving dollar-for-dollar (as in models of "pure altruism") or at some lesser rate ("impure altruism").  A variety of empirical contexts and research designs produced widely varying estimates, including some evidence of "crowding in" [@dewitGovernmentSupportCharitable2016; @bredtmannDoesGovernmentSpending2023; @andreoniCharitableGiving2013].^[Crowding-in is particularly in studies of government grants to specific charities, which may signal need or charity quality.  This particular line of reasoning is not relevant to this paper.  A more interesting possibility is that government spending is a signal (or byproduct) of a broader "culture of care".  Lab experimental studies tend to provide the largest estimates of crowding out.]  Most relevant to this study, @hungermanAreChurchState2005a and @gruberFaithbasedCharityCrowdout2007 exploit 20th Century variation across US Stated (as we do below), estimating that government social welfare spending reduces charitable relief from churches by about 30%. @boberg-fazlicDoesWelfareSpending2017 find the parish-level spending on poor relief *increases* charitable spending in early-19th Century England.
+As the welfare state expanded dramatically in the post-War period, these arguments revived [@friedmanCapitalismFreedom2002], along with some empirical scrutiny.  @feldsteinSocialSecurityInduced1974 argued that Social Security depressed household private savings by 30-50%, spawning an ongoing debate about the scale of substitution [@alessiePensionWealthHousehold2013].  Theoretical work, based on the assumption that charitable contributions provide public goods, implies that government spending should crowd out private charity to some degree [@andreoniImpureAltruismDonations1990; @warrParetoOptimalRedistribution1982; @bergstromPrivateProvisionPublic1986].  Subsequent empirical work focused on estimating the exact scale of this substitution effect to determine whether government spending crowds out private giving dollar-for-dollar (as in models of "pure altruism") or at some lesser rate ("impure altruism").  A variety of empirical contexts and research designs produced widely varying estimates, including some evidence of "crowding in" [@dewitGovernmentSupportCharitable2016; @bredtmannDoesGovernmentSpending2023; @andreoniCharitableGiving2013].^[Crowding-in is particularly frequent in studies of government grants to specific charities, which may signal need or charity quality.  This particular line of reasoning is not relevant to this paper.  A more interesting possibility is that both government spending and private charity are signals (or byproducts) of broader cultural or institutional dispositions toward collective support[@dewitGovernmentExpendituresShift2018a].  Lab experimental studies tend to provide the largest estimates of crowding out.]  Most relevant to this study, @hungermanAreChurchState2005a and @gruberFaithbasedCharityCrowdout2007 exploit variation in social support across US States (as we do below), estimating that government social welfare spending reduces charitable relief from churches by about 30%.
 
-At this stage, the large weight of empirical evidence rules out dollar‑for‑dollar crowd‑out between government spending and charitable contributions, but otherwise there remains controversy.  In some of the most well-identified studies, charitable organizations crucially intervene between donations and service provision, complicating interpretation.  For example, fundraising effort responds strategically to government support [@andreoniCrowdingOutDue2011].    Research looking at looks at actual government spending, as opposed to the spending "regimes" or institutions in place.  This is a significant conflation, as @esping-andersenThreeWorldsWelfare1990 noted decades ago.^["Expenditures are epiphenomenal to the theoretical substance of welfare states." [@esping-andersenThreeWorldsWelfare1990] p.19] 
-
-The rise of crowdfunding platforms has provided some evidence around individual donation behavior and government policy.  @panjwaniCausesConsequencesMedical2023 show that health-related crowdfunding GoFundMe campaigns declined after expansions in medical insurance coverage due to the  Affordable Care Act, although this could be a demand effect.  @leeNewDigitalSafety2022 show that areas with poor private insurance coverage and fewer social associations see greater initiation rates for GoFundMe campaigns, but campaigns in these same areas are less likely to be successful.  @bernardOutCrowdingEffects2025 show that the degree of excludability matters.  Crowd-funding projects with low excludability (i.e., you do not need to donate to enjoy benefits, should the project go forward) exhibit the most crowding out from past donations.  EHFs are non-excludable in that there is no requirement to have donated in order to apply for benefits. 
+The empirical literature clearly rules out dollar‑for‑dollar crowd‑out between government spending and charitable contributions, but otherwise there remains controversy.  The weight of evidence suggests that government spending *can* crowd out some lower proportion of charity and savings, but the scale is unclear and the details matter.   In some of the most well-identified studies, charitable organizations intervene between donations and service provision, complicating interpretation.  For example, fundraising effort responds strategically to government support [@andreoniCrowdingOutDue2011].  @panjwaniCausesConsequencesMedical2023 show that health-related crowdfunding GoFundMe campaigns (i.e., demand for charity) declined after expansions in medical insurance coverage due to the  Affordable Care Act.  @leeNewDigitalSafety2022 show that areas with poor private insurance coverage and fewer social associations see greater initiation rates for GoFundMe campaigns, but campaigns in these same areas are *less* likely to be successful (i.e., charitable capacity or norms might be weaker).  @bernardOutCrowdingEffects2025 show that crowd-funding projects with low excludability (i.e., you do not need to donate to enjoy benefits, should the project go forward) exhibit the most crowding out.  EHFs are non-excludable in this regard.    
+In attempting to estimate the exact crowd out rate, existing empirical work frequently uses actual government social spending, as opposed to the spending "regimes" or institutions in place.  This is a problematic conflation for at least three reasons. First, spending levels at any point in time are endogenous to conditions that may also affect savings and charitable giving.^[There are several clever empirical strategies for addressing this, but they produce different estimates of crowd out in different contexts [@boberg-fazlicDoesWelfareSpending2017; @hungermanAreChurchState2005a; @gruberFaithbasedCharityCrowdout2007; @andreoniCrowdingOutDue2011]].  Second, beliefs about government spending levels in general, spending on social programs, and government support for particular charities is weakly connected to actual spending (which fluctuates) but strongly connected to voters' pre-existing political commitments [@dewitHeterogeneityCrowdingoutWhen2017; other cite].^[Worker beliefs about UI replacement levels and difficulty accessing UI benefits are more accurate in the US [@hertel-fernandezLaborOrganizationsUnemployment2020].]  Third, expectations about *future* spending and its adequacy, not current spending levels,  should matter when donation and support decisions are made.  As such, the adequacy and credibility of social spending *regimes* would be more relevant, as @esping-andersenThreeWorldsWelfare1990 noted decades ago.^["Expenditures are epiphenomenal to the theoretical substance of welfare states."   [@esping-andersenThreeWorldsWelfare1990] p.19].   
 
 CSR.  Firms give for different reasons @brammerCorporateReputationPhilanthropy2005.  But this is outward-CSR.  What about inward-CSR? Giving by and through firms @meierSubsidiesIncreaseCharitable2007 matching increases giving but only while match is there.  @rimesGivingWorkExploring2019 workplace giving matters
 
 Despite extensive research, significant gaps remain in our understanding of crowding out effects. Most empirical studies focus on aggregate measures of charitable giving and government spending, potentially obscuring important heterogeneity across types of giving, recipient populations, and policy designs. Additionally, the literature has devoted relatively little attention to how workplace-based giving and mutual aid mechanisms interact with government social policy.
 The temporal dynamics of crowding out remain understudied, with most research focusing on short-term elasticities rather than long-term adaptation effects. Recent work by Meer and Priday (2020) suggests that crowding out effects may increase over time as individuals and organizations adjust to new policy environments, highlighting the need for longer-term longitudinal analysis.
 
-Finally, the literature has given limited attention to how knowledge and awareness of government programs affects private charitable behavior, despite theoretical reasons to expect that information constraints may moderate crowding out effects. This represents an important avenue for future research, particularly relevant to understanding how employee knowledge of government programs might affect participation in workplace charitable mechanisms.
 
 Workplace‑based giving and mutual‑aid funds are understudied frontiers where corporate and community initiatives may supplement public provision—an important caveat for any blanket crowd‑out claim.  This paper seeks to explore how government spending relates to charitable donation behavior through workplace inward CSR.
-
-### What about crowding in?
-
-@kotchenCrowdingImpureAltruism2023.  Increase in NP funding leads to more volunteer labor
-
-Government funding as a signal of project quality or viability is not relevant here.
 
 ### Who gives?
 @brooksWhoReallyCares2006
@@ -106,24 +98,23 @@ Peer pressure matters, espeically at work.  Some firms will exert more pressure 
 
 ## Private resources and the crowding out of support for social insurance
 
- [@beito_mutual_2000; @yeo_working_1979; @wiedemann_how_2022].  
+A newer, smaller, and largely parallel literature has emerged that appears to document how shocks to private resources affect support for public social support programs.  On the one hand, public programs often step in when private mutual aid or insurance pools collapse.  One example is the famous "Ghent system," in which unions administer government-mandated unemployment insurance.  Government underwriting of social insurance through taxation grew out of the repeated collapse (and ad hoc bailouts) of these privately-organized welfare and mutual aid pools [@socialsecurityadministrationSocialSecurityHistory2023; @western_1997].  @harrisSocialPolicyOther2018 argues that a similar dynamic occurred in Britain, as friendly societies' financial positions became increasingly precaroius in the latter 19th Century.
 
-@werfelDoesCharitableGiving2018 perception of charitable resources reduces support for gov't spending
-
-On the one hand, public programs often step in when private mutual aid or insurance pools collapse.  One example is the famous "Ghent system," in which unions administer government-mandated unemployment insurance.  These systems, common in Northern Europe, emerged from early unemployment and injury insurance programs run as mutual aid pools founded by trade unions.  Government underwriting of social insurance through taxation grew out of the repeated collapse (and ad hoc bailouts) of these privately-organized welfare and mutual aid pools [@socialsecurityadministrationSocialSecurityHistory2023; @western_1997].
-
-A more recent literature points to a different dynamic: (perceived) improvements in private resources can crowd out support for government social insurance and welfare programs. The logic is simple: voters perciving an improved personal financial position are more confident in their ability to "self-insure" against negative income shocks while also becomeing less willing to pay taxes into the public system.  @ansell_political_2014 focuses on homeownership, finding that American and British voters with appreciating real estate assets are less supportive of social insurance.  @wiedemann_how_2022 and @ahlquistTakingCreditRedistribution2017 focus on easy access to credit as a key private resource that can affect support for redistributive policy  [; @busemeyer_welfare_2020; @rosner_struggle_2003; @hacker_insecure_2013; @zhu_policy_2015] .  
+The observse side of this approach has received more recent attention: improvements in private resources can crowd out support for government social insurance and welfare programs. The logic is simple: voters who perceive an improved personal financial position are more confident in their ability to "self-insure" against negative income shocks while also becoming less willing to pay taxes into the public system for which they believe they will be less likely to benefit.  @ansell_political_2014 focuses on homeownership, finding that American and British voters with appreciating real estate assets are less supportive of social insurance.  @wiedemann_how_2022 and @ahlquistTakingCreditRedistribution2017 focus on easy access to credit as a key private resource that can affect support for redistributive policy.  @werfelDoesCharitableGiving2018 uses survey experiments to show that the perception that private charities are already contributing in a particular area reduces support for government spending. There were important differences based on existing political commitments. For social services, there was no crowd out of support among liberals, but significatn reduction in support for government spending among conservatives and moderates.     [; @busemeyer_welfare_2020; @rosner_struggle_2003; @hacker_insecure_2013; @zhu_policy_2015] .  
 
 
+
+[@beito_mutual_2000; @yeo_working_1979; @wiedemann_how_2022].  
 
 Insofar as EHFs are a form of private emergency aid, increased program awareness could blunt support for social insurance or government aid programs in times of emergency (e.g., COVID-19).  This paper seeks to determine whether we can observe this effect among workers exposed to EHF information.
 
 
-Hypotheses 
 
 # EHFs
 
 [background and relevance]
+## Hypotheses 
+
 
 # Study 1
 ## Research design
@@ -161,17 +152,240 @@ EHF awareness/donation ~ state generosity (+ income + home ownership + past use 
 #### donation action
  click donate ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
 
+```{r, results = 'asis'}
+temp<-here::here('2_code', 'Walmart', '14_donate_models_WMT.R')
+source(temp)
+rm(temp)
+```
+
+At the end of Study 3, respondents had the opportunity to click on a link to take them to a page where they could donate to the ACNT. Based on past research, we expect those exposed to the emotional appeal in the video to be more willing to donate  [@andreoniPowerAskingHow2011; @bekkersLiteratureReviewEmpirical2011].  
+
+In the Walmart sample, we see a low baseline willingness to click on the link of `r round(100*donation_summary$prop[1])`%.  Nevertheless, those seeing the EHF video were about 4 percentage points more likely to take an action to donate. Table \@ref(tab:tab-donate-models-wmt-app) presents regression-based estimates of treatment effects, using OLS and logistic regression.  We also include Firth regression to address concerns with rare events.  Treatment significantly increases willingness to take an action to donate.
+
+```{r tab-donate-models-wmt-app, eval=TRUE, echo = FALSE, tab.cap="Taking action to Donate to EHF (Walmart)", results='asis'}
+
+donation_tab_app
+```
+
+
 
 # Discussion and Conclusion
 
+Finally, the literature has given limited attention to how knowledge and awareness of government programs affects private charitable behavior, despite theoretical reasons to expect that information constraints may moderate crowding out effects. This represents an important avenue for future research, particularly relevant to understanding how employee knowledge of government programs might affect participation in workplace charitable mechanisms.
 
-# Appendix
-## Deviation from PAP
-## Survey details
-## Alternative specifications & Study 1
-## Alternative specifications & Study 2
-## Manipulation check Study 3
-## Alternative specifications & Study 3
+
+# References {-}
+
+<div id="refs"></div>
+
+\newpage
+
+# (APPENDIX) Appendix {-}
+
+# Deviations from pre-analysis plans {#app-PAP}
+
+The research in this paper was pre-registered with OSF as osf.io/fhq93 
+
+```{r study-pap-deviations, results='asis'}
+followup_n <- sum(!is.na(wmt.hq$age_f))
+followup_pct <- round(100 * followup_n / nrow(wmt.hq), 1)
+
+study_table <- tibble(
+  Study = c("Study 1", "Study 2", "Study 3", "Study 3"),
+  Change = c(
+    "Survey subjects",
+    "HTE by pre-exposure",
+    "Framing results not reported in main text",
+    "Follow-up survey"
+  ),
+  Rationale = c(
+    "In the PAP, we planned a survey of Costco workers, as Costco is the only top-10 retailer without an EHF. Recruiting a meaningful sample of Costco workers through social media proved impossible. I turned to a sample of general retail workers instead. Measurement and analysis of the survey follows the pre-registered plan.",
+    
+    "Analyzing HTE by pre-exposure (alternatively, analyzing compliers and always-takers) was not part of the initial PAP. Its importance to understanding the experiment is obvious so the analysis is included alongside the pre-registered analysis.",
+    
+    "I pre-registered a framing experiment within the treatment arm for Study 3. For those in the treatment arm, we randomized between two different text statements on the screen before the respondent pushes 'play'. These messages are the 'charity' and 'solidarity' framing, respectively. There were no detectable differences between charity and solidarity treatment groups for any outcome, so I omit discussion in the main text and pool all treated respondents.  See appendix S",
+    
+    paste0(
+      "Respondents were sent emails inviting them into the follow-up survey one week after completion, offering a second raffle entry. ",
+      "They were contacted a maximum of three times. We received valid follow-up responses from ",
+      followup_n, " (", followup_pct, "\\%) of those completing the main survey. ",
+      "Analysis appears below, but low response rates and small samples limit the power and reliability of results."
+    )
+  )
+)
+
+study_table %>%
+  kbl(format = "latex", booktabs = TRUE, longtable = TRUE,
+      caption = "Summary of Deviations from Pre-Analysis Plan", escape = FALSE) %>%
+  kable_styling(latex_options = c("striped", "hold_position", "scale_down")) %>%
+  column_spec(2, width = "4cm") %>%
+  column_spec(3, width = "9cm")
+
+```
+
+# General retail survey survey details {#app-genpop-survsum}
+
+```{r tab-sum-gr, echo=FALSE, tab.cap="General retail survey summary"}
+temp<-here::here('2_code', 'general_retail', '7_balance_check_gr.R')
+source(temp)
+rm(temp)
+tbl_sum_genpop_1w
+tbl_sum_genpop_2w
+```
+
+\newpage
+
+# Home Depot suggested Homer Fund contribution rates {#app-THD-suggcont}
+
+```{r fig-sugdon, echo=FALSE, fig.cap="Suggested Homer Fund donation levels as of 2025", out.width="60%", fig.pos='H'}
+knitr::include_graphics(here('4_output', 'plots', 'HF_donation_suggestions.png'))
+```
+
+\newpage
+# Home Depot Survey summary table (unweighted) {#app-survsum-uw}
+
+The unweighted sample is older and skewed slightly male relative to reported Facebook demographics for Home Depot workers.^[Our sample is `r 100*round(summary_tab_uw$male,2)`% male and has a median age of `r summary_tab_uw$age` compared to Facebook reported values of 53% male with a median age in the 30-39 interval.  The weighted sample is 52% male with a median age of 38.] The sample is `r 100*(1-round(summary_tab_uw$nonwhite,2))`% white. 
+
+```{r tab-sum-uw, echo=FALSE, tab.cap="Home Depot survey summary (unweighted)"}
+tbl_sum_1<- 
+  THD_comp_uw |> 
+  select(HDTreatment, EHF_aware_list, EHF_aware_simp, rk_age, male, main_job, 
+         tenure_fac, nonwhite, fulltime, hourly, college,  HF_know, HF_applied,
+         HF_received, HF_donate) |> 
+  gtsummary::tbl_summary(by = HDTreatment,
+                         missing_text = "(missing/not gathered)",
+                       label = list(#HDTreatment ~ "treatment", 
+                                    EHF_aware_list ~ "EHF awareness (list)", 
+                                    EHF_aware_simp ~ "EHF awareness (cntrl)",
+                                    rk_age ~ "age", male ~ "male",
+                                    main_job ~ "main job", tenure_fac ~ "job tenure",
+                                    nonwhite ~ "PoC/nonwhite", fulltime ~ "full time",
+                                    hourly ~ "hourly", college ~ "college degree",
+                                    HF_know ~ "knows EHF recipient", HF_applied ~"applied to EHF", 
+                                    HF_received ~ "received EHF grant", HF_donate ~"donated to EHF"
+                                    )
+) |>  
+  gtsummary::modify_caption("**Sample summary statistics by treatment group**") |> 
+  gtsummary::bold_labels() |> 
+  gtsummary::as_kable_extra()
+
+tbl_sum_1
+
+
+tbl_sum_2<- 
+  THD_comp_uw |> 
+  select(HDTreatment,wrk_loyal, emp_loyal, emp_reco, 
+         union_vote, gov_ui, gov_pension, gov_childcare) |>
+  gtsummary::tbl_summary(by = HDTreatment,
+                         missing_text = "(missing/not gathered)",
+                       label = list(
+                         #HDTreatment ~ "treatment",
+                         wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
+                                    emp_reco~"recommend employer", union_vote ~"union vote", 
+                                    gov_ui ~"UI support", gov_pension~"pension support", gov_childcare~"childcare support"
+                       )
+  )
+tbl_sum_2 |> 
+  gtsummary::modify_caption("*summary table (cont'd)*") |> 
+  gtsummary::bold_labels() |> 
+  gtsummary::as_kable_extra()
+                          
+```
+
+\newpage
+
+# Home Depot Survey summary table (weighted){#app-survsum-w}
+
+```{r tab-sum-w, echo=FALSE, tab.cap="Home Depot survey summary (weighted)"}
+
+tbl_sum_1<- 
+  THD_comp |> 
+  select(HDTreatment, EHF_aware_list, EHF_aware_simp, rk_age, male, main_job, 
+         tenure_fac, nonwhite, fulltime, hourly, college,  HF_know, HF_applied,
+         HF_received, HF_donate) |> 
+  gtsummary::tbl_svysummary(by = HDTreatment,
+                         missing_text = "(missing/not gathered)",
+                       label = list(
+                         #HDTreatment ~ "treatment", 
+                         EHF_aware_list ~ "EHF awareness (list)", 
+                                    EHF_aware_simp ~ "EHF awareness (cntrl)",
+                                    rk_age ~ "age", male ~ "male",
+                                    main_job ~ "main job", tenure_fac ~ "job tenure",
+                                    nonwhite ~ "PoC/nonwhite", fulltime ~ "full time",
+                                    hourly ~ "hourly", college ~ "college degree",
+                                    HF_know ~ "knows EHF recipient", HF_applied ~"applied to EHF", 
+                                    HF_received ~ "received EHF grant", HF_donate ~"donated to EHF"
+                                    )
+) |>  
+  gtsummary::modify_caption("**Sample summary statistics by treatment group**") |> 
+  gtsummary::bold_labels() |> 
+  gtsummary::as_kable_extra()
+
+tbl_sum_1
+
+
+tbl_sum_2<- 
+  THD_comp |> 
+  select(HDTreatment,wrk_loyal, emp_loyal, emp_reco, 
+         union_vote, gov_ui, gov_pension, gov_childcare) |>
+  gtsummary::tbl_svysummary(by = HDTreatment,
+                         missing_text = "(missing/not gathered)",
+                       label = list(
+                         #HDTreatment ~ "treatment",
+                         wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
+                                    emp_reco~"recommend employer", union_vote ~"union vote", 
+                                    gov_ui ~"UI support", gov_pension~"pension support", gov_childcare~"childcare support"
+                       )
+  )
+tbl_sum_2 |> 
+  gtsummary::modify_caption("*summary table (cont'd)*") |> 
+  gtsummary::bold_labels() |> 
+  gtsummary::as_kable_extra()
+
+```
+
+\newpage
+
+# Walmart survey details {#app-wmt-survsum}
+
+```{r tab-sum-wmt, echo=FALSE, tab.cap= "Walmart survey summary"}
+ temp<-here::here('2_code', 'Walmart', '15_balance_check_WMT.R')
+source(temp)
+rm(temp)
+
+tbl_sum_WMT_1
+tbl_sum_WMT_2
+tbl_sum_WMT_1w
+tbl_sum_WMT_2w
+```
+
+
+```{r tab-bal-wmt, echo=FALSE, eval = FALSE, tab.cap= "Balance tests for Walmart survey sample"}
+bal_tbl <- tab$Balance[,1:3]
+
+bal_tbl %>%
+  kbl(
+    format = "latex",
+    booktabs = TRUE,
+    caption = "Covariate Balance Table \\label{tab:balance}"
+  ) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+#print(bal_tbl)
+```
+
+
+# Alternative specifications & Study 1
+# Alternative specifications & Study 2
+# Manipulation check Study 3
+In the Walmart sample, treatment significantly increased the probability that a respondent would correctly state that Walmart has an EHF. 
+```{r tab-manip-check, echo=FALSE, tab.cap="manipulation check"}
+
+manip_model_print_compact
+
+```
+
+# Alternative specifications & Study 3
 
 
 
