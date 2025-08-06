@@ -133,17 +133,27 @@ names(recipiency_2024)[1] <- "recipiency_2024_ui"
 
 gr <- left_join(gr, recipiency_2024, by = c("worksite" = "state_name"))
 
-replacement_2011 <- read_csv(here("0_raw_data", "UI", "replacement_2011.csv"))
+ui_files <- c("ui_replacement_1.csv", 
+             "ui_replacement_2.csv", 
+             "ui_replacement_3.csv", 
+             "ui_replacement_4.csv")
 
-replacement_2011$state_name <- state.name[match(replacement_2011$State,state.abb)]
-replacement_2011$state_name[replacement_2011$State == "DC"] <- "District of Columbia"
-replacement_2011$state_name[replacement_2011$State == "PR"] <- "Puerto Rico"
+replacement <- c()
 
-replacement_2011 <- select(replacement_2011, -Year, -State)
+for(i in 1:4){
+  replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
+                         filter(Year == 2024) %>%
+                         select(State, `Replacement Ratio 1`)) 
+}
 
-names(replacement_2011)[1] <- "replacement_2011_ui"
+replacement$state_name <- state.name[match(replacement$State,state.abb)]
+replacement$state_name[replacement$State == "DC"] <- "District of Columbia"
 
-gr <- left_join(gr, replacement_2011, by = c("worksite" = "state_name"))
+replacement <- select(replacement, -State) 
+
+names(replacement)[1] <- "replacement_2024_ui"
+
+gr <- left_join(gr, replacement, by = c("worksite" = "state_name"))
 
 # TANF Generosity
 tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated July 25 2022.xlsx"), 

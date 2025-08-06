@@ -106,6 +106,52 @@ rk_targets<-list(tibble(rk_gender_age = fb_thd_dems$rk_gender_age,
 THD_complete <- THD_complete %>%
   mutate(rk_wgt = rake_survey(THD_complete, pop_margins = rk_targets))
 
+
+## Add UI Data
+
+# Replacement and Recipiency
+recipiency_2024 <- read_csv(here("0_raw_data", "UI", "recipiency_2024.csv"))
+
+recipiency_2024$state_name <- state.name[match(recipiency_2024$State,state.abb)]
+recipiency_2024$state_name[recipiency_2024$State == "DC"] <- "District of Columbia"
+recipiency_2024$state_name[recipiency_2024$State == "PR"] <- "Puerto Rico"
+
+recipiency_2024 <- select(recipiency_2024, -Year, -State)
+
+names(recipiency_2024)[1] <- "recipiency_2024_ui"
+
+THD_complete <- left_join(THD_complete, recipiency_2024, by = c("Q2.5" = "state_name"))
+
+ui_files <- c("ui_replacement_1.csv", 
+              "ui_replacement_2.csv", 
+              "ui_replacement_3.csv", 
+              "ui_replacement_4.csv")
+
+replacement <- c()
+
+for(i in 1:4){
+  replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
+                         filter(Year == 2024) %>%
+                         select(State, `Replacement Ratio 1`)) 
+}
+
+replacement$state_name <- state.name[match(replacement$State,state.abb)]
+replacement$state_name[replacement$State == "DC"] <- "District of Columbia"
+
+replacement <- select(replacement, -State) 
+
+names(replacement)[1] <- "replacement_2024_ui"
+
+THD_complete <- left_join(THD_complete, replacement, by = c("Q2.5" = "state_name"))
+
+# TANF Generosity
+tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated July 25 2022.xlsx"), 
+                       sheet = "Data") %>%
+  filter(year == "2016") %>%
+  select(State, WG_TANF)
+
+THD_complete <- left_join(THD_complete, tanf_gen, by = c("Q2.6" = "State"))
+
 write.csv(THD_complete,   # dataset of survey (near-)completers with raking weights  
           file = here("0_raw_data", "THD", "THD_completed.csv"),
           row.names = FALSE)

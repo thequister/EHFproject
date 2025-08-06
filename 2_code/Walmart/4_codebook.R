@@ -194,6 +194,14 @@ for(i in which(colnames(ACNT_clean) %in% fup_names)){
 
 attr(ACNT_clean$ehf_received_all, "description") <- "TRUE for everyone who responded YES to ehf_received, FALSE for everyone who did not answer NO to ehf_exist and did not answer YES to ehf_received, and NA for people who answered NO to ehf_exist"
 
+attr(ACNT_clean$WG_TANF, "source") <- "Fox, A.M., Feng, W., Reynolds, M. (2022). The Effect of Administrative Burden on State Safety-Net Participation: Evidence from food assistance, cash assistance and Medicaid, Public Administration Review"
+attr(ACNT_clean$WG_TANF, "description") <- "TANF Generosity Index, for 2016 which is the last year covered by the dataset. For more information, please see the original paper."
+
+
+attr(ACNT_clean$replacement_2024_ui, "description") <- "Replacement rate (proportion of workers wages replaced by unemployment insurance benefits is referred to as the replace rate) from the US Department of Labor. Latest year covered (2011)."
+attr(ACNT_clean$recipiency_2024_ui, "description") <- "Recipiency rate for Unemployment insurance, from the US Department of Labor. Latest year prior to survey covered (2024)."
+
+
 output_codebook <- codebookr::codebook(
   df = ACNT_clean,
   title = "EHF Project: Walmart Survey",

@@ -188,7 +188,7 @@ attr(gr_clean$WG_TANF, "source") <- "Fox, A.M., Feng, W., Reynolds, M. (2022). T
 attr(gr_clean$WG_TANF, "description") <- "TANF Generosity Index, for 2016 which is the last year covered by the dataset. For more information, please see the original paper."
 
 
-attr(gr_clean$replacement_2011_ui, "description") <- "Replacement rate (proportion of workers wages replaced by unemployment insurance benefits is referred to as the replace rate) from the US Department of Labor. Latest year covered (2011)."
+attr(gr_clean$replacement_2024_ui, "description") <- "Replacement rate (proportion of workers wages replaced by unemployment insurance benefits is referred to as the replace rate) from the US Department of Labor. Latest year covered (2011)."
 attr(gr_clean$recipiency_2024_ui, "description") <- "Recipiency rate for Unemployment insurance, from the US Department of Labor. Latest year prior to survey covered (2024)."
 
 
