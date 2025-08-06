@@ -20,6 +20,7 @@ library(survey)
 library(pewmethods)
 library(qualtRics)
 library(excluder)
+library(readxl)
 library(naniar)
 ggplot2::theme_set(ggplot2::theme_bw())
 library(here)
@@ -116,6 +117,41 @@ accepted_aids <- gr$aid
 
 # mean(gr$gender == "Man")
 # c(mean(gr$age %in% c(18:37)), mean(gr$age %in% c(38:57)), mean(gr$age %in% c(58:100)))
+
+## Add UI Data
+
+# Replacement and Recipiency
+recipiency_2024 <- read_csv(here("0_raw_data", "UI", "recipiency_2024.csv"))
+
+recipiency_2024$state_name <- state.name[match(recipiency_2024$State,state.abb)]
+recipiency_2024$state_name[recipiency_2024$State == "DC"] <- "District of Columbia"
+recipiency_2024$state_name[recipiency_2024$State == "PR"] <- "Puerto Rico"
+
+recipiency_2024 <- select(recipiency_2024, -Year, -State)
+
+names(recipiency_2024)[1] <- "recipiency_2024_ui"
+
+gr <- left_join(gr, recipiency_2024, by = c("worksite" = "state_name"))
+
+replacement_2011 <- read_csv(here("0_raw_data", "UI", "replacement_2011.csv"))
+
+replacement_2011$state_name <- state.name[match(replacement_2011$State,state.abb)]
+replacement_2011$state_name[replacement_2011$State == "DC"] <- "District of Columbia"
+replacement_2011$state_name[replacement_2011$State == "PR"] <- "Puerto Rico"
+
+replacement_2011 <- select(replacement_2011, -Year, -State)
+
+names(replacement_2011)[1] <- "replacement_2011_ui"
+
+gr <- left_join(gr, replacement_2011, by = c("worksite" = "state_name"))
+
+# TANF Generosity
+tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated July 25 2022.xlsx"), 
+                                                          sheet = "Data") %>%
+  filter(year == "2016") %>%
+  select(State, WG_TANF)
+
+gr <- left_join(gr, tanf_gen, by = c("residence" = "State"))
 
 write.csv(gr, 
           file = here("0_raw_data", "general_retail", "general_retail_purged.csv"),

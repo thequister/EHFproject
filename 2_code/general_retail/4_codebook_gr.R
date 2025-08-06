@@ -184,6 +184,13 @@ attr(gr_clean$ehf_offer_ans, "description") <- "Number of companies for which re
 attr(gr_clean$ehf_offer_crct, "description") <- "Number of companies for which respondent correctly identified whether they offer an EHF."
 attr(gr_clean$ehf_offer_percent, "description") <- "Percentage of correct responses over all complete (non-DK) responses to whether a company offers an EHF."
 
+attr(gr_clean$WG_TANF, "source") <- "Fox, A.M., Feng, W., Reynolds, M. (2022). The Effect of Administrative Burden on State Safety-Net Participation: Evidence from food assistance, cash assistance and Medicaid, Public Administration Review"
+attr(gr_clean$WG_TANF, "description") <- "TANF Generosity Index, for 2016 which is the last year covered by the dataset. For more information, please see the original paper."
+
+
+attr(gr_clean$replacement_2011_ui, "description") <- "Replacement rate (proportion of workers wages replaced by unemployment insurance benefits is referred to as the replace rate) from the US Department of Labor. Latest year covered (2011)."
+attr(gr_clean$recipiency_2024_ui, "description") <- "Recipiency rate for Unemployment insurance, from the US Department of Labor. Latest year prior to survey covered (2024)."
+
 
 output_codebook <- codebook(
   df = gr_clean,
