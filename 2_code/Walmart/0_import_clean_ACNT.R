@@ -224,6 +224,18 @@ tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated 
 
 Walmart_complete <- left_join(Walmart_complete, tanf_gen, by = c("residence" = "State"))
 
+# Housing price index
+hpi <- read_excel("1_secondary_data/hpi_at_state.xlsx", 
+                  skip = 5) %>%
+  select(State, Year, `HPI with 2000 base`) %>%
+  filter(Year %in% c(2024, 2019)) %>%
+  pivot_wider(values_from = `HPI with 2000 base`, names_from = Year,
+              names_glue = "y_{Year}") %>%
+  mutate(hpi_5year = y_2024 - y_2019) %>%
+  select(State, hpi_5year)
+
+Walmart_complete <- left_join(Walmart_complete, hpi, by = c("residence" = "State"))
+
 write.csv(Walmart_complete,   # dataset of survey (near-)completers with raking weights  
           file = here("0_raw_data", "ACNT", "ACNT_full.csv"),
           row.names = FALSE)

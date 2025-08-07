@@ -159,9 +159,10 @@ attr(THD_clean$WG_TANF, "source") <- "Fox, A.M., Feng, W., Reynolds, M. (2022). 
 attr(THD_clean$WG_TANF, "description") <- "TANF Generosity Index, for 2016 which is the last year covered by the dataset. For more information, please see the original paper."
 
 
-attr(THD_clean$replacement_2024_ui, "description") <- "Replacement rate (proportion of workers wages replaced by unemployment insurance benefits is referred to as the replace rate) from the US Department of Labor. Latest year covered (2011)."
-attr(THD_clean$recipiency_2024_ui, "description") <- "Recipiency rate for Unemployment insurance, from the US Department of Labor. Latest year prior to survey covered (2024)."
+attr(THD_clean$replacement_2021_ui, "description") <- "Replacement rate (proportion of workers wages replaced by unemployment insurance benefits is referred to as the replace rate) from the US Department of Labor. Latest year covered (2021)."
+attr(THD_clean$recipiency_2021_ui, "description") <- "Recipiency rate for Unemployment insurance, from the US Department of Labor. Latest year prior to survey covered (2021)."
 
+attr(gr_clean$hpi_5year, "description") <- "Five year change in housing price index (2017-2022) calculated using 2000 prices as base."
 
 output_codebook <- codebookr::codebook(
   df = THD_clean,

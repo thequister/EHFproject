@@ -163,6 +163,18 @@ tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated 
 
 gr <- left_join(gr, tanf_gen, by = c("residence" = "State"))
 
+# Housing price index
+hpi <- read_excel("1_secondary_data/hpi_at_state.xlsx", 
+                           skip = 5) %>%
+  select(State, Year, `HPI with 2000 base`) %>%
+  filter(Year %in% c(2024, 2019)) %>%
+  pivot_wider(values_from = `HPI with 2000 base`, names_from = Year,
+              names_glue = "y_{Year}") %>%
+  mutate(hpi_5year = y_2024 - y_2019) %>%
+  select(State, hpi_5year)
+
+gr <- left_join(gr, hpi, by = c("residence" = "State"))
+
 write.csv(gr, 
           file = here("0_raw_data", "general_retail", "general_retail_purged.csv"),
           row.names = FALSE)  #dataset purged of all PII, irrelevant info

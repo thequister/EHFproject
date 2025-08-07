@@ -201,6 +201,7 @@ attr(ACNT_clean$WG_TANF, "description") <- "TANF Generosity Index, for 2016 whic
 attr(ACNT_clean$replacement_2024_ui, "description") <- "Replacement rate (proportion of workers wages replaced by unemployment insurance benefits is referred to as the replace rate) from the US Department of Labor. Latest year covered (2011)."
 attr(ACNT_clean$recipiency_2024_ui, "description") <- "Recipiency rate for Unemployment insurance, from the US Department of Labor. Latest year prior to survey covered (2024)."
 
+attr(gr_clean$hpi_5year, "description") <- "Five year change in housing price index (2019-2024) calculated using 2000 prices as base."
 
 output_codebook <- codebookr::codebook(
   df = ACNT_clean,

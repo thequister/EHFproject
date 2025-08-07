@@ -110,17 +110,17 @@ THD_complete <- THD_complete %>%
 ## Add UI Data
 
 # Replacement and Recipiency
-recipiency_2024 <- read_csv(here("0_raw_data", "UI", "recipiency_2024.csv"))
+recipiency_2021 <- read_csv(here("0_raw_data", "UI", "recipiency_2021.csv"))
 
-recipiency_2024$state_name <- state.name[match(recipiency_2024$State,state.abb)]
-recipiency_2024$state_name[recipiency_2024$State == "DC"] <- "District of Columbia"
-recipiency_2024$state_name[recipiency_2024$State == "PR"] <- "Puerto Rico"
+recipiency_2021$state_name <- state.name[match(recipiency_2021$State,state.abb)]
+recipiency_2021$state_name[recipiency_2021$State == "DC"] <- "District of Columbia"
+recipiency_2021$state_name[recipiency_2021$State == "PR"] <- "Puerto Rico"
 
-recipiency_2024 <- select(recipiency_2024, -Year, -State)
+recipiency_2021 <- select(recipiency_2021, -Year, -State)
 
-names(recipiency_2024)[1] <- "recipiency_2024_ui"
+names(recipiency_2021)[1] <- "recipiency_2021_ui"
 
-THD_complete <- left_join(THD_complete, recipiency_2024, by = c("Q2.5" = "state_name"))
+THD_complete <- left_join(THD_complete, recipiency_2021, by = c("Q2.5" = "state_name"))
 
 ui_files <- c("ui_replacement_1.csv", 
               "ui_replacement_2.csv", 
@@ -131,7 +131,7 @@ replacement <- c()
 
 for(i in 1:4){
   replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
-                         filter(Year == 2024) %>%
+                         filter(Year == 2021) %>%
                          select(State, `Replacement Ratio 1`)) 
 }
 
@@ -140,7 +140,7 @@ replacement$state_name[replacement$State == "DC"] <- "District of Columbia"
 
 replacement <- select(replacement, -State) 
 
-names(replacement)[1] <- "replacement_2024_ui"
+names(replacement)[1] <- "replacement_2021_ui"
 
 THD_complete <- left_join(THD_complete, replacement, by = c("Q2.5" = "state_name"))
 
@@ -151,6 +151,18 @@ tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated 
   select(State, WG_TANF)
 
 THD_complete <- left_join(THD_complete, tanf_gen, by = c("Q2.6" = "State"))
+
+# Housing price index
+hpi <- read_excel("1_secondary_data/hpi_at_state.xlsx", 
+                  skip = 5) %>%
+  select(State, Year, `HPI with 2000 base`) %>%
+  filter(Year %in% c(2022, 2017)) %>%
+  pivot_wider(values_from = `HPI with 2000 base`, names_from = Year,
+              names_glue = "y_{Year}") %>%
+  mutate(hpi_5year = y_2022 - y_2017) %>%
+  select(State, hpi_5year)
+
+THD_complete <- left_join(THD_complete, hpi, by = c("Q2.6" = "State"))
 
 write.csv(THD_complete,   # dataset of survey (near-)completers with raking weights  
           file = here("0_raw_data", "THD", "THD_completed.csv"),
