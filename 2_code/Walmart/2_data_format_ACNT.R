@@ -250,8 +250,7 @@ ACNT_uw <- ACNT_uw %>%
                                  "Never"),
                              ordered = T)),
   practice_religion_num = 
-    (as.numeric(practice_religion) - min(as.numeric(practice_religion)))/
-    (max(as.numeric(practice_religion))- min(as.numeric(practice_religion))),
+    (as.numeric(practice_religion) - 1)/4,
   practice_religion_bin = practice_religion != "Never", # binary, T if practice religion at all
   identify_religion_bin = religion != "Nothing in particular", # binary T if identifies with any religion
   home_ownership = factor(rent),
