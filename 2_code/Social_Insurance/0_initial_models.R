@@ -60,8 +60,9 @@ thd <- thd %>%
                                               "Conservative",
                                               "Extremely conservative"),
                                           ordered = T)),
-         ideology_conlib_num = ifelse(is.na(ideology_conlib), NA,
+         ideology_conlib_num_0 = ifelse(is.na(ideology_conlib), 0,
                                       (as.numeric(ideology_conlib) - 1)/4), 
+         no_ideology = is.na(ideology_conlib),
          age_clean = case_match(age, 
                                 2021 ~ NA,
                                 328 ~ 58,
@@ -76,7 +77,10 @@ thd <- thd %>%
                                                 "Never"),
                                             ordered = T)),
          practice_religion_num = 
-           (as.numeric(practice_religion) - 1)/5)
+           (as.numeric(practice_religion) - 1)/5, 
+         married = Q6.8 == "Married, living with a spouse", 
+         kids = !(Q6.10 == "None" & Q6.11 == "None"), 
+         treated = HDTreatment != "cntrl")
 
 note2 <- "Standard errors in parentheses. Errors clustered at the state level"
 
@@ -283,14 +287,14 @@ create_mods_walmart <- function(wal_data){
         wal_cov <- with(wal_data, lm(dv[[i]] ~ iv[[j]]
                                      + income_num + (home_ownership == "Own") + hpi_5year +
                                        (other_welfare == "Yes") + no_ideology + ideology_conlib_num_0 + age_clean + male +
-                                       college + practice_religion_num + nonwhite + tenure_num))
+                                       college + practice_religion_num + nonwhite + tenure_num + treatment_placebo))
         
         ## With interaction
         wal_int <- with(wal_data, lm(dv[[i]] ~ iv[[j]] + iv[[j]]:practice_religion_num + 
                                        hpi_5year*(home_ownership == "Own") +
                                        income_num + (other_welfare == "Yes") + 
                                        no_ideology + ideology_conlib_num_0 + age_clean + male +
-                                       college + practice_religion_num + nonwhite + tenure_num))
+                                       college + practice_religion_num + nonwhite + tenure_num + treatment_placebo))
         
       }
       
@@ -307,6 +311,8 @@ create_mods_walmart <- function(wal_data){
                      "collegeTRUE" = "college", 
                      "tenure_num" = "job tenure",
                      "age_clean" = "age",
+                     "treatment_placeboplacebo" = "placebo group",
+                     "treatment_placebotreatment" = "treatment group",
                      "iv[[j]]:practice_religion_num" = paste(iv_names_main[j], "x religiosity"), 
                      "iv[[j]]:ideology_conlib_num" = paste(iv_names_main[j], "x ideology"), 
                      'hpi_5year:home_ownership == "Own"TRUE' = "home owner x hpi"
@@ -349,7 +355,7 @@ create_mods_thd <- function(thd_data){
   dv_names_main <- c("awareness of EHF", "past donation to the EHF")
   iv_names_main <- c("replacement rate", "recipiency rate", "tanf generosity")
   
-  dv_names_file <- c("ehf_supp", "ehf_don_past", "ehf_don_new")
+  dv_names_file <- c("ehf_aware", "ehf_don_past")
   iv_names_file <- c("_repl", "_recip", "_tanf")
   
   modsums_out <- list()
@@ -362,27 +368,34 @@ create_mods_thd <- function(thd_data){
       ## With covs
       thd_cov <- with(thd_data, lm(dv[[i]] ~ iv[[j]]
                                    + income_num + (home_ownership == "Own") + hpi_5year +
-                                     (other_welfare == "Yes") + ideology_conlib_num + age_clean + male +
-                                     college + practice_religion_num + nonwhite))
+                                     (other_welfare == "Yes") + no_ideology + ideology_conlib_num_0 + age_clean + male +
+                                     college + practice_religion_num + nonwhite + tenure_num +
+                                     kids + married + treated))
       
       ## With interaction
       thd_int <- with(thd_data, lm(dv[[i]] ~ iv[[j]] + iv[[j]]:practice_religion_num + 
-                                     iv[[j]]:ideology_conlib_num + hpi_5year*(home_ownership == "Own") +
+                                     hpi_5year*(home_ownership == "Own") +
                                      income_num + (other_welfare == "Yes") + 
-                                     ideology_conlib_num + age_clean + male +
-                                     college + practice_religion_num + nonwhite))
+                                     no_ideology + ideology_conlib_num_0 + age_clean + male +
+                                     college + practice_religion_num + nonwhite + tenure_num +
+                                     kids + married + treated))
       
       coef_maps <- c("iv[[j]]" = iv_names_main[j],
                      "income_num" = "income",
                      'home_ownership == "Own"TRUE' = "home owner",
                      "hpi_5year" = "five year hpi",
-                     'other_welfare == "Yes"TRUE' = "welfare recipient",
-                     "ideology_conlib_num" = "ideology",
+                     'other_welfare == "Yes"TRUE' = "welfare recipient",                     
+                     "no_ideologyTRUE" = "not thought about ideology",
+                     "ideology_conlib_num_0" = "ideology [responded]",
                      "practice_religion_num" = "religiosity",
+                     "tenure_num" = "job tenure",
                      "maleTRUE" = "male",
                      "nonwhiteTRUE" = "nonwhite",
                      "collegeTRUE" = "college", 
+                     "kidsTRUE" = "has children",
+                     "marriedTRUE" = "is married",
                      "age_clean" = "age",
+                     "treatedTRUE" = "treatment group",
                      "iv[[j]]:practice_religion_num" = paste(iv_names_main[j], "x religiosity"), 
                      "iv[[j]]:ideology_conlib_num" = paste(iv_names_main[j], "x ideology"), 
                      'hpi_5year:home_ownership == "Own"TRUE' = "home owner x hpi"
