@@ -1,7 +1,7 @@
 ###
 #created on:
-#last updated: 1/24/22
-#updated by: JSA
+#last updated: 8/14/25
+#updated by: TNT
 ###
 # Purpose: This code loads raw qualtrics data from the October 2021 THD survey
 ## it then does a first pass at cleaning the data and removing PII, creating treatment IDs,
@@ -23,6 +23,7 @@ library(excluder)
 library(naniar)
 ggplot2::theme_set(ggplot2::theme_bw())
 library(here)
+library(readxl)
 here()
 
 #setting up data
@@ -132,7 +133,7 @@ replacement <- c()
 for(i in 1:4){
   replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
                          filter(Year == 2021) %>%
-                         select(State, `Replacement Ratio 1`)) 
+                         select(State, `Replacement Ratio 1`))
 }
 
 replacement$state_name <- state.name[match(replacement$State,state.abb)]
@@ -153,7 +154,7 @@ tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated 
 THD_complete <- left_join(THD_complete, tanf_gen, by = c("Q2.6" = "State"))
 
 # Housing price index
-hpi <- read_excel("1_secondary_data/hpi_at_state.xlsx", 
+hpi <- read_excel(here("0_raw_data","hpi_at_state.xlsx"), 
                   skip = 5) %>%
   select(State, Year, `HPI with 2000 base`) %>%
   filter(Year %in% c(2022, 2017)) %>%

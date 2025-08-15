@@ -5,10 +5,23 @@ ui_lm_uw <- lm(gov_ui_num ~ HDTreatment,
                data = THD_comp_uw)
 ui_lm_int_uw <- lm(gov_ui_num ~ HDTreatment*EHF_aware_list, 
                    data = THD_comp_uw)
-ui_lm_c_uw <- lm(gov_ui_num ~ 
+ui_lm_c_pregreg_uw <- lm(gov_ui_num ~ 
                    HDTreatment*EHF_aware_list + rk_age + male +
                    main_job + tenure_num + nonwhite + fulltime +
                    hourly+ college, data = THD_comp_uw)
+ui_lm_c_1_uw <- lm_robust(gov_ui_num ~ 
+                           HDTreatment*EHF_aware_list + rk_age + male +
+                           main_job + tenure_num + nonwhite + fulltime +
+                           hourly+ college + 
+                     WG_TANF, data = THD_comp_uw)
+
+ui_lm_c_1_uw <- lm_robust(gov_ui_num ~ 
+                            HDTreatment*EHF_aware_list + rk_age + male +
+                            main_job + tenure_num + nonwhite + fulltime +
+                            hourly+ college + I(home_ownership=="Own"):hpi_5year +
+                            WG_TANF, data = THD_comp_uw)
+
+
 ui_ol_int_uw <- MASS::polr(gov_ui~ HDTreatment*EHF_aware_list,
                            data = THD_comp_uw, Hess = TRUE)
 

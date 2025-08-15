@@ -58,6 +58,7 @@ genpop_w<- genpop  |>
 
 Big literature on government spending crowding out savings and charity.  Another literature on how more private resources reduce support for the welfare state and redistribution.  Policy feedback literature too. No work that actively studies how variation in employer-provided benefits might relate to political attitudes and activities.  This is shocking, given the tremendous leeway firms have to introduce, revise, and eliminate everything from   Simlarly, there is no work on whether government social spending affects support for workplace benefits ^[There is some work that looks at whether having workplace benefits like health insurance affects support for reforms such as the affordable care act. (cites) ] 
 
+EHFs great because they are workplace programs that combine both insurance and charitable aspects.
 
 In the contemporary United States, unions are vanishing and the welfare and social insurance systems are creaking. Temporary and other "non-standard" employment relationships are increasingly widespread [@abraham_measuring_2018].  Yet such work arrangements fail to provide access to traditional social insurance and labor market protections. Americans in the lower half of the education and earnings distributions have seen years of stagnating wages while also bearing more economic risk [@hacker_great_2019].  Precarious employment, "fissured" workplaces, and distributed supply chains make it more difficult for workers to develop the occupational identities and dense networks of coworkers that supported the organization-building of the past [@ahlquist_research_2018;@thelen_american_2019;@naidu_is_nodate;@weil_fissured_2014].  
 
@@ -72,7 +73,7 @@ In this paper, we examine whether EHFs
 
 # The "substitution hypothesis," two ways
 
-This paper builds on two largely disconnected literatures, both of which concern whether private resources and public welfare and social insurance programs substitute for one another.  The first stems from an argument dating back to at least the 18th Century, in which government spending---especially on poor relief, welfare, and social insurance---crowds out private charitable giving and private savings.  The second, more recent literature, works in the opposite direction, linking improved access to private financial resources---credit, appreciating assets, insurance---to reduced voter support for public welfare and social insurance programs.  
+This paper builds on two largely disconnected literatures, both of which are concerned with whether private resources and public welfare and social insurance substitute for one another.  The first originates from claims, dating from at least the 18th Century, about how government spending on poor relief, welfare, and social insurance crowds out private charitable giving and private savings.  The second and more recent literature works in the opposite direction.  It focuses on the links between improved access to private financial resources---credit, appreciating assets, insurance---and reduced voter support for public welfare and social insurance programs.  
 
 These versions of the substitution hypothesis do bear some resemblance to the policy feedback literature---long a staple of American politics---in which "policies make politics" [@schattschneiderPoliticsPressureTarriff1935; @campbellPolicyMakesMass2012].  Nevertheless, the substitution hypothesis literatures I draw on here are. Importantly, none of these various strands of though has looked squarely at workplace charitable programs and benefits and their connections to government spending and welfare. 
 
@@ -121,7 +122,7 @@ I collect the main hypotheses in Table \@ref(tab:tab-hypotheses) for ease of ref
 
 hypotheses <- tribble(
   ~"Hypothesis", ~"Description", ~"Study"
-  "H1", "Workers in states with more generous social spending regimes will be less supportive of EHFs.", "1",
+  "H1", "Workers in states with more generous social spending regimes will be less supportive of EHFs and less willing to donate.", "1",
 "H1a", "The correlation with state spending will be stronger among conservatives", "1",  
   "H2", "Exposure to EHF messaging reduces support for government spending on social insurance and welfare.", "2 \& 3",
   "H2a", "Effects should be bigger among those unaware of the EHF before treatment.", "2 \& 3",
@@ -241,7 +242,45 @@ knitr::include_graphics( c(
 
 
 
-#### gov't aid/responsibility
+#### Attitudes toward government social insurance
+
+In examining social insurance, we take a question battery from the General Social Survey that asks respondents to report how much responsibility the government should have for ensuring the welfare of different constituencies.  Here I examine responses for "the unemployed" (4-category response ranging from "none at all" to "a lot").  This is a commonly used question for gauging attitudes toward government social insurance in general [find cites].  We refer to other responses in this same battery below.
+
+Overall, workers in the Home Depot sample are quite supportive of unemployment insurance, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.  We see that the video treatment substantially reduces the proportion of responses in the "none" category in favor of the two positive categories.  The EHF video treatment made respondents *more* rather than less supportive of government-provided social insurance, contrary to the substitution hypothesis.  The text treatment, on the other hand, does not appear to have any detectable treatment effect on average.
+
+```{r tab-ui,eval=TRUE, echo = FALSE, tab.cap="Support for UI regression models" }
+temp<-here::here('2_code', 'THD', '9_ui_models.R')
+source(temp)
+rm(temp)
+ui_tab
+
+```
+
+Table \@ref(tab:tab-ui) displays regression estimates for UI support.  Results here confirm a positive average treatment effect for the video treatment of about `r round(coef(ui_lm_uw)[3]/sd(THD_comp_uw$gov_ui_num,na.rm=T),2)` standard deviations.  We see no large or statistically discernible difference between the pre-exposed and unaware in average support for UI.  We also see no treatment effects among the unaware, although there are treatment effects among the _pre-exposed_, especially for the video treatment.
+
+To interpret this more easily, Figure \@ref(fig:fig-uieff) displays treatment effects by respondent pre-exposure to the EHF.  In the case of UI, we see that treatment effects are entirely concentrated among those _already_ aware of the Home Depot's EHF.  Contrary to expectations, both the text and video treatments _increase_ support for UI, although only the latter is a significant effect by conventional standards.  This finding deserves more exploration, but it consistent with author interviews with EHF professionals in which they indicate that EHFs are meant to supplement or provide a bridge to public benefits, rather than supplant them.   
+
+```{r fig-uieff, eval=TRUE, echo=FALSE, fig.cap="Interpreting treatment effects from UI models"}
+ui_eff_plot
+
+```
+
+Is unemployment insurance the appropriate policy to link with the EHF?  After all, the EHF is designed to provide benefits while having a job with this employer whereas UI is designed to help when a job is lost.^[The pre-exposed may better appreciate this distinction, which may help explain the unexpected findings.]  There are two pieces of evidence that UI is a reasonable policy domain to link with EHF benefits.  First, although EHF benefits are not available to someone who loses her job with an employer, benefits are often available when a worker's immediate family member loses a job.  Second, the UI question was asked as part of a battery of questions asking about UI was well as two other policy areas: pensions for the elderly and the provision of childcare for working parents.  These two questions can constitute "placebos" since EHFs have no connection with either policy area.  Parameter estimates from regressing support for these alternative policy areas on the EHF treatments and EHF awareness appear in Appendix Table \@ref(tab:tab-placebo).  I find no evidence for any relationship between the EHF treatments and support for government involvement in either old age pensions or childcare, regardless of whether the respondent was aware of the EHF going into the survey.
+
+Finally, we look at social insurance policies.  In the Walmart survey we again asked respondents the level of responsibility the government has for the elderly and the unemployed.  To further directly examine the substitution hypothesis, I also asked respondents about government responsibility for "people confronting short-term hardships."  As Table \@ref(tab:tab-ui-hard-wmt) displays, we find no evidence of any treatment effect for any of these policy areas among Walmart workers; pre-exposure to the ACNT makes no difference in this conclusion.  Across both the Home Depot and Walmart surveys, we see no evidence that "private welfare" in the form of EHFs has any negative effect on support for government-directed social support, whether for childcare, the unemployed, the elderly, or those experiencing sudden hardship.
+
+```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)"}
+
+ui_hard_tab_wmt
+```
+
+
+Findings related to the "substitution hypothesis"--the claim that private benefits and resources reduce support for government-provided programs--were another area of agreement across Studies 2 and 3.  Specifically, the video treatment shows no evidence of a negative effect on respondent support for government unemployment insurance or aid to those in temporary hardship.  In the Home Depot sample, the treatment induced a modest but significant _increase_ in support for government-provided UI.  This outcome may be the result of Home Depot workers having a better understanding of the EHF program (and its limitations).  Findings in these surveys are inconsistent with a simple "private options crowd out public benefits" story. 
+ 
+ 
+ 
+ 
+ 
  SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
 
 #### COVID experiment (?)
@@ -574,40 +613,7 @@ Even before COVID-19, there was plenty of evidence that the existing social insu
  
 
 
-### Attitudes toward government social insurance
 
-In examining social insurance, I take a question battery from the General Social Survey that asks the extent to which the respondent thinks the government has a responsibility to provide for different constituencies.  Here I examine responses for "the unemployed" (4-category response ranging from "none at all" to "a lot").
-
-Compared to unionization, workers in this sample are far more supportive of unemployment insurance, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.  We see that the video treatment substantially reduces the proportion of responses in the "none" category in favor of the two positive categories.  The EHF video treatment made respondents more rather than less supportive of government-provided social insurance, contrary to expectations.  The text treatment, on the other hand, does not appear to have any detectable treatment effect on average.
-
-```{r tab-ui,eval=TRUE, echo = FALSE, tab.cap="Support for UI regression models" }
-temp<-here::here('2_code', 'THD', '9_ui_models.R')
-source(temp)
-rm(temp)
-ui_tab
-
-```
-
-Table \@ref(tab:tab-ui) displays regression estimates for UI support.  Results here confirm a positive average treatment effect for the video treatment of about `r round(coef(ui_lm_uw)[3]/sd(THD_comp_uw$gov_ui_num,na.rm=T),2)` standard deviations.  In contrast to all of the outcomes studied above, we see no large or statistically discernible difference between the pre-exposed and unaware in average support for UI.  We also see no treatment effects among the unaware, although there are treatment effects among the _pre-exposed_, especially for the video treatment.
-
-To interpret this more easily, Figure \@ref(fig:fig-uieff) displays treatment effects by respondent pre-exposure to the EHF.  In the case of UI, we see that treatment effects are entirely concentrated among those _already_ aware of the Home Depot's EHF.  Contrary to expectations, both the text and video treatments _increase_ support for UI, although only the latter is a significant effect by conventional standards.  This finding deserves more exploration, but it consistent with author interviews with EHF professionals in which they indicate that EHFs are meant to supplement or provide a bridge to public benefits, rather than supplant them.   
-
-```{r fig-uieff, eval=TRUE, echo=FALSE, fig.cap="Interpreting treatment effects from UI models"}
-ui_eff_plot
-
-```
-
-Is unemployment insurance the appropriate policy to link with the EHF?  After all, the EHF is designed to provide benefits while having a job with this employer whereas UI is designed to help when a job is lost.^[The pre-exposed may better appreciate this distinction, which may help explain the unexpected findings.]  There are two pieces of evidence that UI is a reasonable policy domain to link with EHF benefits.  First, although EHF benefits are not available to someone who loses her job with an employer, benefits are often available when a worker's immediate family member loses a job.  Second, the UI question was asked as part of a battery of questions asking about UI was well as two other policy areas: pensions for the elderly and the provision of childcare for working parents.  These two questions can constitute "placebos" since EHFs have no connection with either policy area.  Parameter estimates from regressing support for these alternative policy areas on the EHF treatments and EHF awareness appear in Appendix Table \@ref(tab:tab-placebo).  I find no evidence for any relationship between the EHF treatments and support for government involvement in either old age pensions or childcare, regardless of whether the respondent was aware of the EHF going into the survey.
-
-Finally, we look at social insurance policies.  In the Walmart survey we again asked respondents the level of responsibility the government has for the elderly and the unemployed.  To further directly examine the substitution hypothesis, I also asked respondents about government responsibility for "people confronting short-term hardships."  As Table \@ref(tab:tab-ui-hard-wmt) displays, we find no evidence of any treatment effect for any of these policy areas among Walmart workers; pre-exposure to the ACNT makes no difference in this conclusion.  Across both the Home Depot and Walmart surveys, we see no evidence that "private welfare" in the form of EHFs has any negative effect on support for government-directed social support, whether for childcare, the unemployed, the elderly, or those experiencing sudden hardship.
-
-```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)"}
-
-ui_hard_tab_wmt
-```
-
-
-Findings related to the "substitution hypothesis"--the claim that private benefits and resources reduce support for government-provided programs--were another area of agreement across Studies 2 and 3.  Specifically, the video treatment shows no evidence of a negative effect on respondent support for government unemployment insurance or aid to those in temporary hardship.  In the Home Depot sample, the treatment induced a modest but significant _increase_ in support for government-provided UI.  This outcome may be the result of Home Depot workers having a better understanding of the EHF program (and its limitations).  Findings in these surveys are inconsistent with a simple "private options crowd out public benefits" story.
 
 
 
