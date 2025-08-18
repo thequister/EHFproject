@@ -180,6 +180,24 @@ Walmart_complete <- Walmart_complete %>%
                                  .default = rk_dei_og)) # Weights trimmed according to PAP
 
 ## Add UI Data
+# Brookings Data
+library(haven)
+
+brookings <- read_dta(here("0_raw_data", "UI", "sna_v1_1", "sna_styr_s_v2_1.dta")) %>%
+  slice(-1) %>%
+  filter(year == "2022") %>%
+  select(state, cashfood, cashfood_rs, st_directed) %>%
+  mutate(state = fips(state,to='Name'))
+
+Walmart_complete <- left_join(Walmart_complete, brookings, by = c("residence" = "state"))
+
+# UI Weeks
+ui_weeks <- read_csv(here("0_raw_data", "UI", "ui_weeks.txt")) %>%
+  select(State, `Maximum number of weeks of benefits available`) %>%
+  rename("max_ui_weeks" = "Maximum number of weeks of benefits available") %>%
+  mutate(max_ui_weeks = as.numeric(str_sub(max_ui_weeks, 1, 2)))
+
+Walmart_complete <- left_join(Walmart_complete, ui_weeks, by = c("worksite" = "State"))
 
 # Replacement and Recipiency
 recipiency_2024 <- read_csv(here("0_raw_data", "UI", "recipiency_2024.csv"))
@@ -204,15 +222,19 @@ replacement <- c()
 for(i in 1:4){
   replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
                          filter(Year == 2024) %>%
-                         select(State, `Replacement Ratio 1`)) 
+                         select(State, `Replacement Ratio 1`, 
+                                `Replacement Ratio 2`, `Average WBA`)) 
 }
 
 replacement$state_name <- state.name[match(replacement$State,state.abb)]
 replacement$state_name[replacement$State == "DC"] <- "District of Columbia"
 
-replacement <- select(replacement, -State) 
-
-names(replacement)[1] <- "replacement_2024_ui"
+replacement <- replacement %>%
+  select(-State) %>%
+  mutate(`Average WBA` = as.double(str_sub(`Average WBA`, 2, ))) %>%
+  rename("replacement_2024_ui_1" = "Replacement Ratio 1", 
+         "replacement_2024_ui_2" = "Replacement Ratio 2",
+         "avg_wba" = "Average WBA")
 
 Walmart_complete <- left_join(Walmart_complete, replacement, by = c("worksite" = "state_name"))
 
@@ -220,7 +242,7 @@ Walmart_complete <- left_join(Walmart_complete, replacement, by = c("worksite" =
 tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated July 25 2022.xlsx"), 
                        sheet = "Data") %>%
   filter(year == "2016") %>%
-  select(State, WG_TANF)
+  select(State, WG_TANF, WG_TANF_Benefit)
 
 Walmart_complete <- left_join(Walmart_complete, tanf_gen, by = c("residence" = "State"))
 

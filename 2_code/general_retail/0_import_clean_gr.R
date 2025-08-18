@@ -16,6 +16,7 @@ library(MASS)
 library(tidyverse)
 library(codebook)
 library(survey)
+library(cdlTools)
 # devtools::install_github("pewresearch/pewmethods", build_vignettes = TRUE)
 library(pewmethods)
 library(qualtRics)
@@ -120,6 +121,17 @@ accepted_aids <- gr$aid
 
 ## Add UI Data
 
+# Brookings Data
+library(haven)
+
+brookings <- read_dta(here("0_raw_data", "UI", "sna_v1_1", "sna_styr_s_v2_1.dta")) %>%
+  slice(-1) %>%
+  filter(year == "2022") %>%
+  select(state, cashfood, cashfood_rs, st_directed) %>%
+  mutate(state = fips(state,to='Name'))
+
+gr <- left_join(gr, brookings, by = c("residence" = "state"))
+
 # UI Weeks
 ui_weeks <- read_csv(here("0_raw_data", "UI", "ui_weeks.txt")) %>%
   select(State, `Maximum number of weeks of benefits available`) %>%
@@ -171,7 +183,7 @@ gr <- left_join(gr, replacement, by = c("worksite" = "state_name"))
 tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated July 25 2022.xlsx"), 
                                                           sheet = "Data") %>%
   filter(year == "2016") %>%
-  select(State, WG_TANF)
+  select(State, WG_TANF, WG_TANF_Benefit)
 
 gr <- left_join(gr, tanf_gen, by = c("residence" = "State"))
 

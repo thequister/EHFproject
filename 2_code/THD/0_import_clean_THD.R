@@ -110,6 +110,26 @@ THD_complete <- THD_complete %>%
 
 ## Add UI Data
 
+# Brookings Data
+library(haven)
+
+brookings <- read_dta(here("0_raw_data", "UI", "sna_v1_1", "sna_styr_s_v2_1.dta")) %>%
+  slice(-1) %>%
+  filter(year == "2021") %>%
+  select(state, cashfood, cashfood_rs, st_directed) %>%
+  mutate(state = fips(state,to='Name'))
+
+THD_complete <- left_join(THD_complete, brookings, by = c("Q2.6" = "state"))
+
+# UI Weeks
+ui_weeks <- read_csv(here("0_raw_data", "UI", "ui_weeks.txt")) %>%
+  select(State, `Maximum number of weeks of benefits available`) %>%
+  rename("max_ui_weeks" = "Maximum number of weeks of benefits available") %>%
+  mutate(max_ui_weeks = as.numeric(str_sub(max_ui_weeks, 1, 2)))
+
+THD_complete <- left_join(THD_complete, ui_weeks, by = c("Q2.5" = "State"))
+
+
 # Replacement and Recipiency
 recipiency_2021 <- read_csv(here("0_raw_data", "UI", "recipiency_2021.csv"))
 
@@ -133,15 +153,19 @@ replacement <- c()
 for(i in 1:4){
   replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
                          filter(Year == 2021) %>%
-                         select(State, `Replacement Ratio 1`))
+                         select(State, `Replacement Ratio 1`, 
+                                `Replacement Ratio 2`, `Average WBA`)) 
 }
 
 replacement$state_name <- state.name[match(replacement$State,state.abb)]
 replacement$state_name[replacement$State == "DC"] <- "District of Columbia"
 
-replacement <- select(replacement, -State) 
-
-names(replacement)[1] <- "replacement_2021_ui"
+replacement <- replacement %>%
+  select(-State) %>%
+  mutate(`Average WBA` = as.double(str_sub(`Average WBA`, 2, ))) %>%
+  rename("replacement_2021_ui_1" = "Replacement Ratio 1", 
+         "replacement_2021_ui_2" = "Replacement Ratio 2",
+         "avg_wba" = "Average WBA")
 
 THD_complete <- left_join(THD_complete, replacement, by = c("Q2.5" = "state_name"))
 
@@ -149,12 +173,12 @@ THD_complete <- left_join(THD_complete, replacement, by = c("Q2.5" = "state_name
 tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated July 25 2022.xlsx"), 
                        sheet = "Data") %>%
   filter(year == "2016") %>%
-  select(State, WG_TANF)
+  select(State, WG_TANF, WG_TANF_Benefit)
 
 THD_complete <- left_join(THD_complete, tanf_gen, by = c("Q2.6" = "State"))
 
 # Housing price index
-hpi <- read_excel(here("0_raw_data","hpi_at_state.xlsx"), 
+hpi <- read_excel(here("1_secondary_data", "hpi_at_state.xlsx"), 
                   skip = 5) %>%
   select(State, Year, `HPI with 2000 base`) %>%
   filter(Year %in% c(2022, 2017)) %>%
