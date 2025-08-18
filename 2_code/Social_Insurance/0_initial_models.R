@@ -1,5 +1,4 @@
 library(here)
-library(sjPlot)
 source(here::here('2_code', '1_libraries_and_settings_global.R'))
 here::i_am("2_code/Social_Insurance/0_initial_models.R")
 
@@ -39,20 +38,20 @@ create_mods_gr_EHF <- function(gr_data){
       
       ## With covs
       gr_cov <- with(gr_data, lm(dv[[i]] ~ iv[[j]]
-                                  + income_num + (home_ownership == "Own") + hpi_5year +
+                                  + income_num + home_ownership + hpi_5year +
                                     (other_welfare == "Yes") + no_ideology + ideology_conlib_num_0 + age_clean + male +
                                     college + practice_religion_num + nonwhite + tenure_num))
       
       ## With interaction
       gr_int <- with(gr_data, lm(dv[[i]] ~ iv[[j]] + iv[[j]]:practice_religion_num + 
                                          no_ideology + ideology_conlib_num_0 +
-                                         hpi_5year*(home_ownership == "Own") +
+                                         hpi_5year*home_ownership +
                                          income_num + (other_welfare == "Yes") + age_clean + male +
                                          college + practice_religion_num + nonwhite + tenure_num))
       
       coef_maps <- c("iv[[j]]" = iv_names_main[j],
                      "income_num" = "income",
-                     'home_ownership == "Own"TRUE' = "home owner",
+                     'home_ownershipTRUE' = "home owner",
                      "hpi_5year" = "five year hpi",
                      'other_welfare == "Yes"TRUE' = "welfare recipient",
                      "practice_religion_num" = "religiosity",
@@ -65,7 +64,7 @@ create_mods_gr_EHF <- function(gr_data){
                      "age_clean" = "age",
                      "iv[[j]]:practice_religion_num" = paste(iv_names_main[j], "x religiosity"), 
                      #"iv[[j]]:ideology_conlib_num" = paste(iv_names_main[j], "x ideology"), 
-                     'hpi_5year:home_ownership == "Own"TRUE' = "home owner x hpi"
+                     'hpi_5year:home_ownershipTRUE' = "home owner x hpi"
                      )
       
       support.models_gr <- list(gr_ncov, gr_cov, gr_int)
@@ -112,34 +111,33 @@ create_mods_gr_noEHF <- function(gr_data){
       
       ## With covs
       gr_cov <- with(gr_data, lm(dv[[i]] ~ iv[[j]]
-                                 + income_num + (home_ownership == "Own") + hpi_5year +
+                                 + income_num + home_ownership + hpi_5year +
                                    (other_welfare == "Yes") + no_ideology + ideology_conlib_num_0 + age_clean + male +
                                    college + practice_religion_num + nonwhite + tenure_num))
       
       ## With interaction
       gr_int <- with(gr_data, lm(dv[[i]] ~ iv[[j]] + iv[[j]]:practice_religion_num + 
                                    no_ideology + ideology_conlib_num_0 +
-                                   hpi_5year*(home_ownership == "Own") +
+                                   hpi_5year*home_ownership +
                                    income_num + (other_welfare == "Yes") + age_clean + male +
                                    college + practice_religion_num + nonwhite + tenure_num))
       
-      
       coef_maps <- c("iv[[j]]" = iv_names_main[j],
                      "income_num" = "income",
-                     'home_ownership == "Own"TRUE' = "home owner",
+                     'home_ownershipTRUE' = "home owner",
                      "hpi_5year" = "five year hpi",
                      'other_welfare == "Yes"TRUE' = "welfare recipient",
                      "practice_religion_num" = "religiosity",
-                     "no_ideologyTRUE" = "not thought about ideology",
-                     "ideology_conlib_num_0" = "ideology [responded]",
                      "maleTRUE" = "male",
                      "nonwhiteTRUE" = "nonwhite",
-                     "collegeTRUE" = "college", 
+                     "no_ideologyTRUE" = "not thought about ideology",
+                     "ideology_conlib_num_0" = "ideology [responded]",
+                     "collegeTRUE" = "college",
                      "tenure_num" = "job tenure",
                      "age_clean" = "age",
                      "iv[[j]]:practice_religion_num" = paste(iv_names_main[j], "x religiosity"), 
                      #"iv[[j]]:ideology_conlib_num" = paste(iv_names_main[j], "x ideology"), 
-                     'hpi_5year:home_ownership == "Own"TRUE' = "home owner x hpi"
+                     'hpi_5year:home_ownershipTRUE' = "home owner x hpi"
       )
       
       support.models_gr <- list(gr_ncov, gr_cov, gr_int)
@@ -196,13 +194,13 @@ create_mods_walmart <- function(wal_data){
       
       ## With covs
       wal_cov <- with(wal_data, lm(dv[[i]] ~ iv[[j]]
-                                  + income_num + (home_ownership == "Own") + hpi_5year +
+                                  + income_num + home_ownership + hpi_5year +
                                     (other_welfare == "Yes") + no_ideology + ideology_conlib_num_0 + age_clean + male +
                                     college + practice_religion_num + nonwhite + tenure_num))
       
       ## With interaction
       wal_int <- with(wal_data, lm(dv[[i]] ~ iv[[j]] + iv[[j]]:practice_religion_num + 
-                                    hpi_5year*(home_ownership == "Own") +
+                                    hpi_5year*home_ownership +
                                     income_num + (other_welfare == "Yes") + 
                                     no_ideology + ideology_conlib_num_0 + age_clean + male +
                                     college + practice_religion_num + nonwhite + tenure_num))
@@ -213,13 +211,13 @@ create_mods_walmart <- function(wal_data){
         
         ## With covs
         wal_cov <- with(wal_data, lm(dv[[i]] ~ iv[[j]]
-                                     + income_num + (home_ownership == "Own") + hpi_5year +
+                                     + income_num + home_ownership + hpi_5year +
                                        (other_welfare == "Yes") + no_ideology + ideology_conlib_num_0 + age_clean + male +
                                        college + practice_religion_num + nonwhite + tenure_num + treatment_placebo))
         
         ## With interaction
         wal_int <- with(wal_data, lm(dv[[i]] ~ iv[[j]] + iv[[j]]:practice_religion_num + 
-                                       hpi_5year*(home_ownership == "Own") +
+                                       hpi_5year*home_ownership +
                                        income_num + (other_welfare == "Yes") + 
                                        no_ideology + ideology_conlib_num_0 + age_clean + male +
                                        college + practice_religion_num + nonwhite + tenure_num + treatment_placebo))
@@ -228,7 +226,7 @@ create_mods_walmart <- function(wal_data){
       
       coef_maps <- c("iv[[j]]" = iv_names_main[j],
                      "income_num" = "income",
-                     'home_ownership == "Own"TRUE' = "home owner",
+                     'home_ownershipTRUE' = "home owner",
                      "hpi_5year" = "five year hpi",
                      'other_welfare == "Yes"TRUE' = "welfare recipient",                     
                      "no_ideologyTRUE" = "not thought about ideology",
@@ -243,7 +241,7 @@ create_mods_walmart <- function(wal_data){
                      "treatment_placebotreatment" = "treatment group",
                      "iv[[j]]:practice_religion_num" = paste(iv_names_main[j], "x religiosity"), 
                      "iv[[j]]:ideology_conlib_num" = paste(iv_names_main[j], "x ideology"), 
-                     'hpi_5year:home_ownership == "Own"TRUE' = "home owner x hpi"
+                     'hpi_5year:home_ownershipTRUE' = "home owner x hpi"
       )
       
       support.models_gr <- list(wal_ncov, wal_cov, wal_int)
@@ -295,22 +293,22 @@ create_mods_thd <- function(thd_data){
       
       ## With covs
       thd_cov <- with(thd_data, lm(dv[[i]] ~ iv[[j]]
-                                   + income_num + (home_ownership == "Own") + hpi_5year +
+                                   + income_num + home_ownership + hpi_5year +
                                      (other_welfare == "Yes") + no_ideology + ideology_conlib_num_0 + age_clean + male +
                                      college + practice_religion_num + nonwhite + tenure_num +
-                                     kids + married + treated))
+                                     kids + cohabit + treated))
       
       ## With interaction
       thd_int <- with(thd_data, lm(dv[[i]] ~ iv[[j]] + iv[[j]]:practice_religion_num + 
-                                     hpi_5year*(home_ownership == "Own") +
+                                     hpi_5year*home_ownership +
                                      income_num + (other_welfare == "Yes") + 
                                      no_ideology + ideology_conlib_num_0 + age_clean + male +
                                      college + practice_religion_num + nonwhite + tenure_num +
-                                     kids + married + treated))
+                                     kids + cohabit + treated))
       
       coef_maps <- c("iv[[j]]" = iv_names_main[j],
                      "income_num" = "income",
-                     'home_ownership == "Own"TRUE' = "home owner",
+                     'home_ownershipTRUE' = "home owner",
                      "hpi_5year" = "five year hpi",
                      'other_welfare == "Yes"TRUE' = "welfare recipient",                     
                      "no_ideologyTRUE" = "not thought about ideology",
@@ -321,12 +319,12 @@ create_mods_thd <- function(thd_data){
                      "nonwhiteTRUE" = "nonwhite",
                      "collegeTRUE" = "college", 
                      "kidsTRUE" = "has children",
-                     "marriedTRUE" = "is married",
+                     "cohabitTRUE" = "cohabiting",
                      "age_clean" = "age",
                      "treatedTRUE" = "treatment group",
                      "iv[[j]]:practice_religion_num" = paste(iv_names_main[j], "x religiosity"), 
                      "iv[[j]]:ideology_conlib_num" = paste(iv_names_main[j], "x ideology"), 
-                     'hpi_5year:home_ownership == "Own"TRUE' = "home owner x hpi"
+                     'hpi_5year:home_ownershipTRUE' = "home owner x hpi"
       )
       
       support.models_gr <- list(thd_ncov, thd_cov, thd_int)

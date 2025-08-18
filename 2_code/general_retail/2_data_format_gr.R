@@ -198,7 +198,7 @@ gr <- gr %>%
     (max(as.numeric(practice_religion))- min(as.numeric(practice_religion))),
   practice_religion_bin = practice_religion != "Never", # binary, T if practice religion at all
   identify_religion_bin = religion != "Nothing in particular", # binary T if identifies with any religion
-  home_ownership = factor(rent),
+  home_ownership = rent == "Own",
   healthcare = (health_ins == "Yes"),
   income = factor(income, levels = 
                     c("Prefer not to state", "$150,000 or more per year",
@@ -211,14 +211,14 @@ gr <- gr %>%
                       "Less than $15,000 per year"),
                   ordered = T),
   income_num = case_match(income,
-                          "$150,000 or more per year" ~ 150,
-                          "At least $100,000 but less than $150,000 per year" ~ 100,
-                          "At least 75,000 but less than $100,000 per year" ~ 75,
-                          "At least $50,000 but less than $75,000 per year" ~ 50,
-                          "At least $35,000 but less than $50,000 per year" ~ 35,
-                          "At least $25,000 but less than $35,000 per year" ~ 25,
-                          "At least $15,000 but less than $25,000 per year" ~ 15,
-                          "Less than $15,000 per year"~ 0, .default = NA),
+                          "$150,000 or more per year" ~ 200,
+                          "At least $100,000 but less than $150,000 per year" ~ 125,
+                          "At least 75,000 but less than $100,000 per year" ~ 87.5,
+                          "At least $50,000 but less than $75,000 per year" ~ 62.5,
+                          "At least $35,000 but less than $50,000 per year" ~ 42.5,
+                          "At least $25,000 but less than $35,000 per year" ~ 30,
+                          "At least $15,000 but less than $25,000 per year" ~ 20,
+                          "Less than $15,000 per year"~ 7.5, .default = NA),
   ehf_support_new = factor(ehf_support_new, levels = 
                                c("Not at all supportive",
                                  "Moderately supportive",
@@ -289,7 +289,9 @@ gr$attachment_index <- pca_pr$x[,1]
 # Ammendments
 gr <- gr %>%
   mutate(no_ideology = is.na(ideology_answered), 
-         ideology_conlib_num_0 = (1 - no_ideology)*replace_na(ideology_conlib_num, 0))
+         ideology_conlib_num_0 = ifelse(is.na(ideology_conlib), -1,
+                                        (as.numeric(ideology_conlib) - 1)/6), 
+         religious = (religion != "Nothing in particular"))
 
 gr$ehf_donate_exist_num <- gr$ehf_donate_exist == "Yes"
 gr$ehf_donate_new_num <- gr$ehf_donate_new == "Yes"

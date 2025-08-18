@@ -120,6 +120,14 @@ accepted_aids <- gr$aid
 
 ## Add UI Data
 
+# UI Weeks
+ui_weeks <- read_csv(here("0_raw_data", "UI", "ui_weeks.txt")) %>%
+  select(State, `Maximum number of weeks of benefits available`) %>%
+  rename("max_ui_weeks" = "Maximum number of weeks of benefits available") %>%
+  mutate(max_ui_weeks = as.numeric(str_sub(max_ui_weeks, 1, 2)))
+
+gr <- left_join(gr, ui_weeks, by = c("worksite" = "State"))
+
 # Replacement and Recipiency
 recipiency_2024 <- read_csv(here("0_raw_data", "UI", "recipiency_2024.csv"))
 
@@ -143,15 +151,19 @@ replacement <- c()
 for(i in 1:4){
   replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
                          filter(Year == 2024) %>%
-                         select(State, `Replacement Ratio 1`)) 
+                         select(State, `Replacement Ratio 1`, 
+                                `Replacement Ratio 2`, `Average WBA`)) 
 }
 
 replacement$state_name <- state.name[match(replacement$State,state.abb)]
 replacement$state_name[replacement$State == "DC"] <- "District of Columbia"
 
-replacement <- select(replacement, -State) 
-
-names(replacement)[1] <- "replacement_2024_ui"
+replacement <- replacement %>%
+  select(-State) %>%
+  mutate(`Average WBA` = as.double(str_sub(`Average WBA`, 2, ))) %>%
+  rename("replacement_2024_ui_1" = "Replacement Ratio 1", 
+         "replacement_2024_ui_2" = "Replacement Ratio 2",
+         "avg_wba" = "Average WBA")
 
 gr <- left_join(gr, replacement, by = c("worksite" = "state_name"))
 

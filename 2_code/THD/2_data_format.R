@@ -27,6 +27,7 @@ THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
          HF_mgr = factor(Q3.16),
          HF_received = factor(Q3.19),
          HF_donate = factor(Q3.24),
+         ehf_donation_num = HF_donate == "Yes",
          nonwhite = (Q6.3 != "White"),
          main_job = (Q2.7 == "Yes"),
          tenure_fac = factor(Q2.9, levels = 
@@ -136,12 +137,18 @@ THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
                                                 "Seldom",
                                                 "Never"),
                                             ordered = T)),
+         age_clean = case_match(age, 
+                                2021 ~ NA,
+                                328 ~ 58,
+                                121 ~ NA,
+                                .default = age), 
          practice_religion_num = 
            (as.numeric(practice_religion) - 1)/5,
          religious = (Q6.7 != "Nothing in particular"),
          cohabit = (Q6.8 %in% c("Married, living with a spouse", "Living with a partner")), 
          kids = !(Q6.10 == "None" & Q6.11 == "None"),
-         welfare = (Q4.10 == "Yes")
+         other_welfare = (Q4.10 == "Yes"),
+         treated = HDTreatment != "cntrl"
          ) 
 
 pca_att_dt2 <- THD_comp_uw  |> 
@@ -165,3 +172,4 @@ THD_comp_uw$attachment_index <- -pca_pr_knn$x[,1]
 THD_comp <- THD_comp_uw %>%
   srvyr::as_survey_design(ids = 1, weights = rk_wgt)
 
+#write.csv(THD_comp, here("3_cleaned_data", "THD_clean.csv"))
