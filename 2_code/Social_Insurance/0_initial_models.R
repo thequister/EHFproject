@@ -4,83 +4,11 @@ source(here::here('2_code', '1_libraries_and_settings_global.R'))
 here::i_am("2_code/Social_Insurance/0_initial_models.R")
 
 ## Read in the data
-gr_clean <- read.csv(here("3_cleaned_data", "general_retail_clean.csv")) %>%
-  mutate(no_ideology = is.na(ideology_answered), 
-         ideology_conlib_num_0 = (1 - no_ideology)*replace_na(ideology_conlib_num, 0))
+gr_clean <- read.csv(here("3_cleaned_data", "general_retail_clean.csv"))
 
-wal <- read.csv(here("3_cleaned_data", "ACNT_clean.csv")) %>%
-  mutate(no_ideology = ideology == "Haven’t thought much about this", 
-         ideology_conlib_num_0 = (1 - no_ideology)*replace_na(ideology_conlib_num, 0))
+wal <- read.csv(here("3_cleaned_data", "ACNT_clean.csv"))
 
-
-thd <- read.csv(here("3_cleaned_data", "THD_clean.csv")) %>% 
-  mutate(no_ideology = Q5.3 == "Haven’t thought much about this")
-
-
-gr_clean$ehf_donate_exist_num <- gr_clean$ehf_donate_exist == "Yes"
-gr_clean$ehf_donate_new_num <- gr_clean$ehf_donate_new == "Yes"
-
-wal$ehf_donation_num <- wal$ehf_donation == "Yes"
-wal$ehf_donation_post <- wal$donate == "YES I would like to learn how to donate"
-
-# THD additional data format
-
-thd$ehf_donation_num <- thd$Q3.12 == "Yes"
-
-thd <- thd %>%
-  mutate(income = factor(Q6.14, levels = 
-                           c("Prefer not to state", "$150,000 or more per year",
-                             "At least $100,000 but less than $150,000 per year",
-                             "At least 75,000 but less than $100,000 per year",
-                             "At least $50,000 but less than $75,000 per year",
-                             "At least $35,000 but less than $50,000 per year",
-                             "At least $25,000 but less than $35,000 per year",
-                             "At least $15,000 but less than $25,000 per year",
-                             "Less than $15,000 per year"),
-                         ordered = T),
-         income_num = case_match(income,
-                                 "$150,000 or more per year" ~ 150,
-                                 "At least $100,000 but less than $150,000 per year" ~ 100,
-                                 "At least 75,000 but less than $100,000 per year" ~ 75,
-                                 "At least $50,000 but less than $75,000 per year" ~ 50,
-                                 "At least $35,000 but less than $50,000 per year" ~ 35,
-                                 "At least $25,000 but less than $35,000 per year" ~ 25,
-                                 "At least $15,000 but less than $25,000 per year" ~ 15,
-                                 "Less than $15,000 per year"~ 0, .default = NA), 
-         other_welfare = grepl("Unemployment insurance", Q3.18) | 
-           grepl("Public assistance (SNAP, food stamps, cash welfare)", Q3.18) |
-           grepl("Disability insurance or worker’s compensation", Q3.18), 
-         ideology_conlib = fct_rev(factor(Q5.3, 
-                                          levels = 
-                                            c("Extremely liberal",
-                                              "Liberal",
-                                              "Slightly Liberal", 
-                                              "Moderate",
-                                              "Slightly Conservative",
-                                              "Conservative",
-                                              "Extremely conservative"),
-                                          ordered = T)),
-         ideology_conlib_num_0 = ifelse(is.na(ideology_conlib), 0,
-                                      (as.numeric(ideology_conlib) - 1)/4), 
-         no_ideology = is.na(ideology_conlib),
-         age_clean = case_match(age, 
-                                2021 ~ NA,
-                                328 ~ 58,
-                                121 ~ NA,
-                                .default = age), 
-         practice_religion = fct_rev(factor(Q6.6, levels =
-                                              c("At least once per week",
-                                                "Once a week",
-                                                "Once or twice a month",
-                                                "A few times a year",
-                                                "Seldom",
-                                                "Never"),
-                                            ordered = T)),
-         practice_religion_num = 
-           (as.numeric(practice_religion) - 1)/5, 
-         married = Q6.8 == "Married, living with a spouse", 
-         kids = !(Q6.10 == "None" & Q6.11 == "None"), 
-         treated = HDTreatment != "cntrl")
+thd <- read.csv(here("3_cleaned_data", "THD_clean.csv"))
 
 note2 <- "Standard errors in parentheses. Errors clustered at the state level"
 

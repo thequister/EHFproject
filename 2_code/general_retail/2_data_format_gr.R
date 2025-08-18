@@ -286,5 +286,13 @@ pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
 
 gr$attachment_index <- pca_pr$x[,1]
 
+# Ammendments
+gr <- gr %>%
+  mutate(no_ideology = is.na(ideology_answered), 
+         ideology_conlib_num_0 = (1 - no_ideology)*replace_na(ideology_conlib_num, 0))
+
+gr$ehf_donate_exist_num <- gr$ehf_donate_exist == "Yes"
+gr$ehf_donate_new_num <- gr$ehf_donate_new == "Yes"
+
 write.csv(gr, here("3_cleaned_data", "general_retail_clean.csv"))
 

@@ -295,6 +295,15 @@ pca_att_dt <- ACNT_uw %>%
 pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
 
 ACNT_uw$attachment_index <- pca_pr$x[,1]
+
+## Ammendments
+ACNT_uw <- ACNT_uw %>%
+  mutate(no_ideology = ideology == "Haven’t thought much about this", 
+         ideology_conlib_num_0 = (1 - no_ideology)*replace_na(ideology_conlib_num, 0))
+
+ACNT_uw$ehf_donation_num <- ACNT_uw$ehf_donation == "Yes"
+ACNT_uw$ehf_donation_post <- ACNT_uw$donate == "YES I would like to learn how to donate"
+
 write_csv(ACNT_uw, here("0_raw_data", "ACNT", "ACNT_clean_main.csv"))
 
 
