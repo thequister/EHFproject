@@ -187,7 +187,7 @@ fielded an original survey using the Cloud Research incentivized panel, targetin
 ## Survey & Measurement
 ## Results
 Genpop:
- EHF awareness/support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status + religiousity )
+ EHF support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status + religiousity )
   - interact SG with religioisty, conservatism.
   - interact home ownership with state-level home price appreciation
   - hierarchial specification needed.  
@@ -197,9 +197,9 @@ Genpop:
 
 Studies 2 and 3 focus on workers at two "big box" US retailers with well-established EHF programs, The Home Depot and Walmart, respectively.  These firms compete to some degree in both product and labor markets and both have seen union activism. They are extremely large employers, which makes recruiting a survey sample feasible.   By concentrating on two specific firms I can address detailed questions about EHF awareness and engagement as well as conduct survey-based experiments tailored to specific programs.  The differences between their EHFs are potentially instructive about variation in EHF effects.   
 
-The Home Depot's EHF---The Homer Fund---is managed in-house and has been in continuous operation since 1999.  The Homer Fund is among the most generous EHFs, with a maximum grant amount of \$10,000 per event, eligibility from the first day of employment, and the ability to apply repeatedly (conditional on a new qualifying event).  The Homer Fund is sizable, reporting disbursements of \$21.2 million to over 12,000 workers in the 2022 fiscal year [@thehomedepotEnvironmentalSocialGovernance2023], the year of the survey.  Importantly, the Home Depot aggressively promotes the Homer Fund to encourage worker engagement, especially donations.  The Homer Fund has a dedicated website and YouTube channel with numerous professional-quality testimonial videos, along with active social media accounts aimed at workers.  The Home Depot runs regular Homer Fund donation drives in which different stores compete with one another.  The Homer Fund prides itself on worker participation, claiming that a "majority of contributions" come from associates.^[[https://corporate.homedepot.com/page/homer-fund-0](https://corporate.homedepot.com/page/homer-fund-0).  See Appendix \@ref(app-THD-suggcont) for Home Depot's menu of suggested donation rates to the Homer Fund by rank.]  
+The Home Depot's EHF---The Homer Fund---is managed in-house and has been in continuous operation since 1999.  The Homer Fund is among the most generous EHFs, with a maximum grant amount of \$10,000 per event, eligibility from the first day of employment, and the ability to apply repeatedly (conditional on a new qualifying event).  The Homer Fund is sizable, reporting disbursements of \$21.2 million to over 12,000 workers in the 2022 fiscal year [@thehomedepotEnvironmentalSocialGovernance2023], the year of the survey.  Importantly, the Home Depot aggressively promotes the Homer Fund to encourage worker engagement, especially donations.  The Homer Fund has a dedicated website and YouTube channel with numerous professional-quality testimonial videos, along with active social media accounts aimed at workers.  The Home Depot runs regular Homer Fund donation drives in which different stores compete with one another. 
 
-As with the Homer Fund, Walmart's ACNT Together Fund is over 20 years old and managed in-house.  The EHF is available to both full- and part-time workers who have been at Walmart for at least 90 days.^[Based on a retail industry monthly separation rate of 4% [@usbureauoflaborstatisticsJobOpeningLabor2025], I expect about 12% of new Walmart hires to leave before becoming eligible to apply for an ACNT grant.] But the ACNT is substantially less generous than the Homer Fund, with a maximum grant of \$1500 in a rolling 5-year period, regardless of how many qualifying events occur. The ACNT Together Fund has minimal presence on social media and there is no evidence of any donation drives or promotional efforts similar to those at the Home Depot.  Interestingly, Walmart matches employee donations to the Walmart political action committee 2:1 with corporate donations to the Together Fund.^[In 2015, the Federal Election Commission rejected a challenge to this practice.  In our sample, fewer than 1% of respondents reported making a contribution to the Walmart PAC.]    
+As with the Homer Fund, Walmart's ACNT Together Fund is over 20 years old and managed in-house.  The EHF is available to both full- and part-time workers who have been at Walmart for at least 90 days. But the ACNT is substantially less generous than the Homer Fund, with a maximum grant of \$1500 in a rolling 5-year period, regardless of how many qualifying events occur. The ACNT Together Fund has minimal presence on social media and there is no evidence of any donation drives or promotional efforts similar to those at the Home Depot.  Interestingly, Walmart matches employee donations to the Walmart political action committee 2:1 with corporate donations to the Together Fund.^[In 2015, the Federal Election Commission rejected a challenge to this practice.  In our sample, fewer than 1% of respondents reported making a contribution to the Walmart PAC.]    
 
 ## The samples and survey
 
@@ -207,7 +207,7 @@ To independently construct matched worker-employer survey samples, I follow @sch
 
 Survey recruitment for the Home Depot sample occurred between 7 September and 15 October 2021.  In the end, 515 individuals completed the survey, passed an attention check, and confirmed their Home Depot employment status.  The Walmart survey was in the field from October 23 to December 4, 2024 and produced `r nrow(wmt.hq)` complete responses that passed similar screening and attention checks.  Summary statistics for all variables by treatment condition appear in Appendices \@ref(app-survsum-uw), \@ref(app-survsum-w), and \@ref(app-wmt-survsum).
 
-The surveys in Studies 2 and 3 were very similar in question wording and ordering, but Study 3 had several extensions to Study 2, including a behavioral measure of donation to the EHF (clicking on a link to a donation page). In Study 3 I expanded the EHF survey experiment by including a placebo condition. 
+The surveys in Studies 2 and 3 were very similar in question wording and ordering, but Study 3 had several extensions to Study 2, including a behavioral measure of donation to the EHF (clicking on a link to a donation page). In Study 3 I expanded the EHF survey experiment by including a placebo video condition. 
 
 ```{r summary-calcs, echo=FALSE}
 summary_tab_uw<-summarise(THD_comp_uw, 
@@ -231,8 +231,6 @@ summary_tab_uw_c<-summarise(cntrls,
 ```
 
 
-
-Something about Walmart and incentives to give to PAC; low level of PAC giving from frontline; political value of corporate foundations citations.
 ## Study 2
 ### Specifics of survey details
 ### Awareness and Donation willingness
@@ -297,16 +295,9 @@ ui_eff_plot
 
 Is unemployment insurance the appropriate policy to link with the EHF?  After all, the EHF is designed to provide benefits while having a job with this employer whereas UI is designed to help when a job is lost.^[The pre-exposed may better appreciate this distinction, which may help explain the unexpected findings.]  There are two pieces of evidence that UI is a reasonable policy domain to link with EHF benefits.  First, although EHF benefits are not available to someone who loses her job with an employer, benefits are often available when a worker's immediate family member loses a job.  Second, the UI question was asked as part of a battery of questions asking about UI was well as two other policy areas: pensions for the elderly and the provision of childcare for working parents.  These two questions can constitute "placebos" since EHFs have no connection with either policy area.  Parameter estimates from regressing support for these alternative policy areas on the EHF treatments and EHF awareness appear in Appendix Table \@ref(tab:tab-placebo).  I find no evidence for any relationship between the EHF treatments and support for government involvement in either old age pensions or childcare, regardless of whether the respondent was aware of the EHF going into the survey.
 
-Finally, we look at social insurance policies.  In the Walmart survey we again asked respondents the level of responsibility the government has for the elderly and the unemployed.  To further directly examine the substitution hypothesis, I also asked respondents about government responsibility for "people confronting short-term hardships."  As Table \@ref(tab:tab-ui-hard-wmt) displays, we find no evidence of any treatment effect for any of these policy areas among Walmart workers; pre-exposure to the ACNT makes no difference in this conclusion.  Across both the Home Depot and Walmart surveys, we see no evidence that "private welfare" in the form of EHFs has any negative effect on support for government-directed social support, whether for childcare, the unemployed, the elderly, or those experiencing sudden hardship.
-
-```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)"}
-
-ui_hard_tab_wmt
-```
 
 
-Findings related to the "substitution hypothesis"--the claim that private benefits and resources reduce support for government-provided programs--were another area of agreement across Studies 2 and 3.  Specifically, the video treatment shows no evidence of a negative effect on respondent support for government unemployment insurance or aid to those in temporary hardship.  In the Home Depot sample, the treatment induced a modest but significant _increase_ in support for government-provided UI.  This outcome may be the result of Home Depot workers having a better understanding of the EHF program (and its limitations).  Findings in these surveys are inconsistent with a simple "private options crowd out public benefits" story. 
- 
+
  
  
  
@@ -317,8 +308,6 @@ Findings related to the "substitution hypothesis"--the claim that private benefi
 
 ## Study 3
 ### Specifics of survey details
-### Awareness and Donation willingness
-EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + religiousity )
 
 ### Study 3 experiment 
 
@@ -329,6 +318,18 @@ In Study 3, respondents were randomly assigned with equal probability to either 
 
 #### gov't aid/responsibility
  SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
+
+## Study 3
+Finally, we look at social insurance policies.  In the Walmart survey we again asked respondents the level of responsibility the government has for the elderly and the unemployed.  To further directly examine the substitution hypothesis, I also asked respondents about government responsibility for "people confronting short-term hardships."  As Table \@ref(tab:tab-ui-hard-wmt) displays, we find no evidence of any treatment effect for any of these policy areas among Walmart workers; pre-exposure to the ACNT makes no difference in this conclusion.  Across both the Home Depot and Walmart surveys, we see no evidence that "private welfare" in the form of EHFs has any negative effect on support for government-directed social support, whether for childcare, the unemployed, the elderly, or those experiencing sudden hardship.
+
+```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)"}
+
+ui_hard_tab_wmt
+```
+
+
+Findings related to the "substitution hypothesis"--the claim that private benefits and resources reduce support for government-provided programs--were another area of agreement across Studies 2 and 3.  Specifically, the video treatment shows no evidence of a negative effect on respondent support for government unemployment insurance or aid to those in temporary hardship.  In the Home Depot sample, the treatment induced a modest but significant _increase_ in support for government-provided UI.  This outcome may be the result of Home Depot workers having a better understanding of the EHF program (and its limitations).  Findings in these surveys are inconsistent with a simple "private options crowd out public benefits" story. 
+ 
 
 #### donation action
 

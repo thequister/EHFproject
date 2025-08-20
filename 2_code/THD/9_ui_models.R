@@ -9,6 +9,22 @@ ui_lm_c_pregreg_uw <- lm(gov_ui_num ~
                    HDTreatment*EHF_aware_list + rk_age + male +
                    main_job + tenure_num + nonwhite + fulltime +
                    hourly+ college, data = THD_comp_uw)
+
+ui_lm_c_expand_uw <- update(ui_lm_c_pregreg_uw, .~. + other_welfare + 
+                              cohabit + 
+                             income_num + 
+                             religious +
+                             ideology_conservative +
+                             as.numeric(home_ownership):hpi_5year)
+ui_lm_c_uiwks_uw <- update(ui_lm_c_pregreg_uw, . ~. + max_ui_weeks)
+ui_lm_c_uiwba_uw <- update(ui_lm_c_pregreg_uw, . ~. + avg_wba)
+ui_lm_c_uiwba_uw <- update(ui_lm_c_pregreg_uw, . ~. + replacement_2021_ui_1)
+ui_lm_c_uitanf_uw <- update(ui_lm_c_pregreg_uw, . ~. + WG_TANF)
+ui_lm_c_uitanfb_uw <- update(ui_lm_c_pregreg_uw, . ~. + WG_TANF_Benefit)
+ui_lm_c_uistd_uw <- update(ui_lm_c_pregreg_uw, . ~. + st_directed)
+ui_lm_c_uicf_uw <- update(ui_lm_c_pregreg_uw, . ~. + cashfood)
+
+
 ui_lm_c_1_uw <- lm_robust(gov_ui_num ~ 
                            HDTreatment*EHF_aware_list + rk_age + male +
                            main_job + tenure_num + nonwhite + fulltime +
@@ -90,6 +106,24 @@ cc_lm_int_uw <- lm(gov_childcare_num ~ HDTreatment*EHF_aware_list,
                    data = THD_comp_uw)
 placebo.models.uw <- list(pension_lm_int_uw, cc_lm_int_uw)
 names(placebo.models.uw) <- c("Pension", "Childcare")
+
+
+
+pension_lm_c_expand_uw <- update(pension_lm_int_uw, .~. + other_welfare + 
+                              cohabit + 
+                              income_num + 
+                              religious +
+                              ideology_conservative +
+                              as.numeric(home_ownership):hpi_5year)
+pension_lm_c_pensionwks_uw <- update(pension_lm_c_pregreg_uw, . ~. + max_pension_weeks)
+pension_lm_c_pensionwba_uw <- update(pension_lm_c_pregreg_uw, . ~. + avg_wba)
+pension_lm_c_pensionwba_uw <- update(pension_lm_c_pregreg_uw, . ~. + replacement_2021_pension_1)
+pension_lm_c_pensiontanf_uw <- update(pension_lm_c_pregreg_uw, . ~. + WG_TANF)
+pension_lm_c_pensiontanfb_uw <- update(pension_lm_c_pregreg_uw, . ~. + WG_TANF_Benefit)
+pension_lm_c_pensionstd_uw <- update(pension_lm_c_pregreg_uw, . ~. + st_directed)
+pension_lm_c_pensioncf_uw <- update(pension_lm_c_pregreg_uw, . ~. + cashfood)
+
+
 
 
 placebo_tab<-modelsummary(placebo.models.uw,

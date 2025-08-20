@@ -128,7 +128,8 @@ THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
                                               "Extremely conservative"),
                                           ordered = T)),
          ideology_conlib_num_0 = ifelse(is.na(ideology_conlib), -1,
-                                        (as.numeric(ideology_conlib) - 1)/6), 
+                                        (as.numeric(ideology_conlib) - 1)/6),
+         ideology_conservative = ifelse(ideology_conlib %in% c("Extremely conservative", "Conservative",  "Slightly Conservative"),1,0),
          practice_religion = fct_rev(factor(Q6.6, levels =
                                               c("At least once per week",
                                                 "Once a week",

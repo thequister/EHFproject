@@ -24,6 +24,9 @@ library(naniar)
 ggplot2::theme_set(ggplot2::theme_bw())
 library(here)
 library(readxl)
+library(haven)
+library(cdlTools)
+
 here()
 
 #setting up data
@@ -111,7 +114,6 @@ THD_complete <- THD_complete %>%
 ## Add UI Data
 
 # Brookings Data
-library(haven)
 
 brookings <- read_dta(here("0_raw_data", "UI", "sna_v1_1", "sna_styr_s_v2_1.dta")) %>%
   slice(-1) %>%
@@ -178,7 +180,7 @@ tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated 
 THD_complete <- left_join(THD_complete, tanf_gen, by = c("Q2.6" = "State"))
 
 # Housing price index
-hpi <- read_excel(here("1_secondary_data", "hpi_at_state.xlsx"), 
+hpi <- read_excel(here("0_raw_data", "hpi_at_state.xlsx"), 
                   skip = 5) %>%
   select(State, Year, `HPI with 2000 base`) %>%
   filter(Year %in% c(2022, 2017)) %>%
