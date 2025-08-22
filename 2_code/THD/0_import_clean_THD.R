@@ -110,86 +110,37 @@ rk_targets<-list(tibble(rk_gender_age = fb_thd_dems$rk_gender_age,
 THD_complete <- THD_complete %>%
   mutate(rk_wgt = rake_survey(THD_complete, pop_margins = rk_targets))
 
-
 ## Add UI Data
 
-# Brookings Data
+state_ui <- read_csv(here('3_cleaned_data', 'state_year_benefits.csv'))
 
-brookings <- read_dta(here("0_raw_data", "UI", "sna_v1_1", "sna_styr_s_v2_1.dta")) %>%
-  slice(-1) %>%
+# Brookings Data
+brookings <- state_ui %>%
   filter(year == "2021") %>%
-  select(state, cashfood, cashfood_rs, st_directed) %>%
-  mutate(state = fips(state,to='Name'))
+  select(state, cashfood, cashfood_rs, st_directed)
 
 THD_complete <- left_join(THD_complete, brookings, by = c("Q2.6" = "state"))
 
 # UI Weeks
-ui_weeks <- read_csv(here("0_raw_data", "UI", "ui_weeks.txt")) %>%
-  select(State, `Maximum number of weeks of benefits available`) %>%
-  rename("max_ui_weeks" = "Maximum number of weeks of benefits available") %>%
-  mutate(max_ui_weeks = as.numeric(str_sub(max_ui_weeks, 1, 2)))
+ui_weeks <- state_ui %>%
+  filter(year == 2021) %>%
+  select(state, max_ui_weeks)
 
-THD_complete <- left_join(THD_complete, ui_weeks, by = c("Q2.5" = "State"))
+THD_complete <- left_join(THD_complete, ui_weeks, by = c("Q2.5" = "state"))
 
+# Replacement, Recipiency, hpi
+rep <- state_ui %>%
+  filter(year == 2021) %>%
+  select(hpi_5year, replacement_ui_1, replacement_ui_2, recipiency_ui, avg_wba, state)
 
-# Replacement and Recipiency
-recipiency_2021 <- read_csv(here("0_raw_data", "UI", "recipiency_2021.csv"))
-
-recipiency_2021$state_name <- state.name[match(recipiency_2021$State,state.abb)]
-recipiency_2021$state_name[recipiency_2021$State == "DC"] <- "District of Columbia"
-recipiency_2021$state_name[recipiency_2021$State == "PR"] <- "Puerto Rico"
-
-recipiency_2021 <- select(recipiency_2021, -Year, -State)
-
-names(recipiency_2021)[1] <- "recipiency_2021_ui"
-
-THD_complete <- left_join(THD_complete, recipiency_2021, by = c("Q2.5" = "state_name"))
-
-ui_files <- c("ui_replacement_1.csv", 
-              "ui_replacement_2.csv", 
-              "ui_replacement_3.csv", 
-              "ui_replacement_4.csv")
-
-replacement <- c()
-
-for(i in 1:4){
-  replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
-                         filter(Year == 2021) %>%
-                         select(State, `Replacement Ratio 1`, 
-                                `Replacement Ratio 2`, `Average WBA`)) 
-}
-
-replacement$state_name <- state.name[match(replacement$State,state.abb)]
-replacement$state_name[replacement$State == "DC"] <- "District of Columbia"
-
-replacement <- replacement %>%
-  select(-State) %>%
-  mutate(`Average WBA` = as.double(str_sub(`Average WBA`, 2, ))) %>%
-  rename("replacement_2021_ui_1" = "Replacement Ratio 1", 
-         "replacement_2021_ui_2" = "Replacement Ratio 2",
-         "avg_wba" = "Average WBA")
-
-THD_complete <- left_join(THD_complete, replacement, by = c("Q2.5" = "state_name"))
+THD_complete <- left_join(THD_complete, rep, by = c("Q2.5" = "state"))
 
 # TANF Generosity
-tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated July 25 2022.xlsx"), 
-                       sheet = "Data") %>%
-  filter(year == "2016") %>%
-  select(State, WG_TANF, WG_TANF_Benefit)
+tanf_gen <- state_ui %>%
+  filter(year == 2016) %>%
+  select(state, WG_TANF, WG_TANF_Benefit)
 
-THD_complete <- left_join(THD_complete, tanf_gen, by = c("Q2.6" = "State"))
-
-# Housing price index
-hpi <- read_excel(here("0_raw_data", "hpi_at_state.xlsx"), 
-                  skip = 5) %>%
-  select(State, Year, `HPI with 2000 base`) %>%
-  filter(Year %in% c(2022, 2017)) %>%
-  pivot_wider(values_from = `HPI with 2000 base`, names_from = Year,
-              names_glue = "y_{Year}") %>%
-  mutate(hpi_5year = y_2022 - y_2017) %>%
-  select(State, hpi_5year)
-
-THD_complete <- left_join(THD_complete, hpi, by = c("Q2.6" = "State"))
+THD_complete <- left_join(THD_complete, tanf_gen, by = c("Q2.6" = "state"))
 
 write.csv(THD_complete,   # dataset of survey (near-)completers with raking weights  
           file = here("0_raw_data", "THD", "THD_completed.csv"),

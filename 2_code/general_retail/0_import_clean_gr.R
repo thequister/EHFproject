@@ -121,83 +121,35 @@ accepted_aids <- gr$aid
 
 ## Add UI Data
 
-# Brookings Data
-library(haven)
+state_ui <- read_csv(here('3_cleaned_data', 'state_year_benefits.csv'))
 
-brookings <- read_dta(here("0_raw_data", "UI", "sna_v1_1", "sna_styr_s_v2_1.dta")) %>%
-  slice(-1) %>%
+# Brookings Data
+brookings <- state_ui %>%
   filter(year == "2022") %>%
-  select(state, cashfood, cashfood_rs, st_directed) %>%
-  mutate(state = fips(state,to='Name'))
+  select(state, cashfood, cashfood_rs, st_directed)
 
 gr <- left_join(gr, brookings, by = c("residence" = "state"))
 
 # UI Weeks
-ui_weeks <- read_csv(here("0_raw_data", "UI", "ui_weeks.txt")) %>%
-  select(State, `Maximum number of weeks of benefits available`) %>%
-  rename("max_ui_weeks" = "Maximum number of weeks of benefits available") %>%
-  mutate(max_ui_weeks = as.numeric(str_sub(max_ui_weeks, 1, 2)))
+ui_weeks <- state_ui %>%
+  filter(year == 2022) %>%
+  select(state, max_ui_weeks)
 
-gr <- left_join(gr, ui_weeks, by = c("worksite" = "State"))
+gr <- left_join(gr, ui_weeks, by = c("worksite" = "state"))
 
-# Replacement and Recipiency
-recipiency_2024 <- read_csv(here("0_raw_data", "UI", "recipiency_2024.csv"))
+# Replacement, Recipiency, hpi
+rep <- state_ui %>%
+  filter(year == 2024) %>%
+  select(hpi_5year, replacement_ui_1, replacement_ui_2, recipiency_ui, avg_wba, state)
 
-recipiency_2024$state_name <- state.name[match(recipiency_2024$State,state.abb)]
-recipiency_2024$state_name[recipiency_2024$State == "DC"] <- "District of Columbia"
-recipiency_2024$state_name[recipiency_2024$State == "PR"] <- "Puerto Rico"
-
-recipiency_2024 <- select(recipiency_2024, -Year, -State)
-
-names(recipiency_2024)[1] <- "recipiency_2024_ui"
-
-gr <- left_join(gr, recipiency_2024, by = c("worksite" = "state_name"))
-
-ui_files <- c("ui_replacement_1.csv", 
-             "ui_replacement_2.csv", 
-             "ui_replacement_3.csv", 
-             "ui_replacement_4.csv")
-
-replacement <- c()
-
-for(i in 1:4){
-  replacement <- rbind(replacement, read_csv(here("0_raw_data", "UI", ui_files[i])) %>%
-                         filter(Year == 2024) %>%
-                         select(State, `Replacement Ratio 1`, 
-                                `Replacement Ratio 2`, `Average WBA`)) 
-}
-
-replacement$state_name <- state.name[match(replacement$State,state.abb)]
-replacement$state_name[replacement$State == "DC"] <- "District of Columbia"
-
-replacement <- replacement %>%
-  select(-State) %>%
-  mutate(`Average WBA` = as.double(str_sub(`Average WBA`, 2, ))) %>%
-  rename("replacement_2024_ui_1" = "Replacement Ratio 1", 
-         "replacement_2024_ui_2" = "Replacement Ratio 2",
-         "avg_wba" = "Average WBA")
-
-gr <- left_join(gr, replacement, by = c("worksite" = "state_name"))
+gr <- left_join(gr, rep, by = c("worksite" = "state"))
 
 # TANF Generosity
-tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated July 25 2022.xlsx"), 
-                                                          sheet = "Data") %>%
-  filter(year == "2016") %>%
-  select(State, WG_TANF, WG_TANF_Benefit)
+tanf_gen <- state_ui %>%
+  filter(year == 2016) %>%
+  select(state, WG_TANF, WG_TANF_Benefit)
 
-gr <- left_join(gr, tanf_gen, by = c("residence" = "State"))
-
-# Housing price index
-hpi <- read_excel("1_secondary_data/hpi_at_state.xlsx", 
-                           skip = 5) %>%
-  select(State, Year, `HPI with 2000 base`) %>%
-  filter(Year %in% c(2024, 2019)) %>%
-  pivot_wider(values_from = `HPI with 2000 base`, names_from = Year,
-              names_glue = "y_{Year}") %>%
-  mutate(hpi_5year = y_2024 - y_2019) %>%
-  select(State, hpi_5year)
-
-gr <- left_join(gr, hpi, by = c("residence" = "State"))
+gr <- left_join(gr, tanf_gen, by = c("residence" = "state"))
 
 write.csv(gr, 
           file = here("0_raw_data", "general_retail", "general_retail_purged.csv"),

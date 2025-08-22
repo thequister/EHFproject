@@ -9,7 +9,7 @@ corr_data_wrk <- gr_clean %>%
   unique()
 
 corr_data_res <- gr_clean %>%
-  select(WG_TANF, WG_TANF_Benefit, residence) %>%
+  select(WG_TANF, WG_TANF_Benefit, cashfood, cashfood_rs, st_directed, residence) %>%
   unique()
 
 corr_data <- left_join(corr_data_wrk, corr_data_res, by = c("worksite" = "residence")) %>%
