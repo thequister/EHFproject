@@ -296,5 +296,11 @@ gr <- gr %>%
 gr$ehf_donate_exist_num <- gr$ehf_donate_exist == "Yes"
 gr$ehf_donate_new_num <- gr$ehf_donate_new == "Yes"
 
+# Amendments 2: single coding for support/donate
+gr <- gr %>%
+  mutate(has_ehf = !is.na(ehf_type_exist), 
+         ehf_support_both_num = ifelse(has_ehf, ehf_support_exist_num, ehf_support_new_num), 
+         ehf_donate_both_num = ifelse(has_ehf, ehf_donate_exist_num, ehf_donate_new_num))
+
 write.csv(gr, here("3_cleaned_data", "general_retail_clean.csv"))
 

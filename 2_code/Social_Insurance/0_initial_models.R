@@ -11,6 +11,29 @@ thd <- read.csv(here("3_cleaned_data", "THD_clean.csv"))
 
 note2 <- "Standard errors in parentheses. Errors clustered at the state level"
 
+### Simple bivariate models playground ----
+gr_dv <- gr %>%
+  select(st_directed, cashfood, WG_TANF, WG_TANF_Benefit, 
+         max_ui_weeks, avg_wba, replacement_ui_1, recipiency_ui) %>%
+  mutate(max_ui_weeks = max_ui_weeks >= 26)
+
+gr_iv <- gr %>%
+  select(ehf_support_both_num, ehf_donate_both_num)
+
+adj_rsqs <- matrix(rep(0, 24), nrow = 8)
+
+for(i in 1:length(gr_dv)){
+  for(j in 1:length(gr_iv)){
+    a <- summary(lm(gr_iv[[j]] ~ gr_dv[[i]]))
+    
+    print(a)
+    
+    adj_rsqs[i, j] <- a$adj.r.squared
+    
+    adj_rsqs[i, 3] <- names(gr_dv)[i]
+  }
+}
+
 ### General Population Models --------
 
 create_mods_gr_EHF <- function(gr_data){
@@ -347,3 +370,5 @@ create_mods_thd <- function(thd_data){
 }
 
 create_mods_thd(thd)
+
+
