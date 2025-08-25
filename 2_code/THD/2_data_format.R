@@ -149,7 +149,9 @@ THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
          cohabit = (Q6.8 %in% c("Married, living with a spouse", "Living with a partner")), 
          kids = !(Q6.10 == "None" & Q6.11 == "None"),
          other_welfare = (Q4.10 == "Yes"),
-         treated = HDTreatment != "cntrl"
+         treated = HDTreatment != "cntrl",
+         state_wk = as.factor(Q2.6),
+         state_lv = as.factor(Q2.5),
          ) 
 
 pca_att_dt2 <- THD_comp_uw  |> 
@@ -173,4 +175,6 @@ THD_comp_uw$attachment_index <- -pca_pr_knn$x[,1]
 THD_comp <- THD_comp_uw %>%
   srvyr::as_survey_design(ids = 1, weights = rk_wgt)
 
+THD_comp_svyuw <- THD_comp_uw %>%
+  srvyr::as_survey_design(ids = 1)  #for ease of use
 #write.csv(THD_comp, here("3_cleaned_data", "THD_clean.csv"))

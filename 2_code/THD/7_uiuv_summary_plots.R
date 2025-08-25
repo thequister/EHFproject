@@ -1,6 +1,7 @@
 #source("1_libraries_and_settings.R")
 #source("2_data_format.R")
 
+dodge <- position_dodge(width=0.9)
 
 unionvote.out<-THD_comp %>% 
   drop_na(union_vote) %>%
@@ -9,18 +10,35 @@ unionvote.out<-THD_comp %>%
     vartype="ci", na.rm=TRUE),
             n = unweighted(n()))
 
-ui.out<-THD_comp %>% 
+ui.out.w<-THD_comp %>% 
+  group_by(HDTreatment, gov_ui) %>%
+  summarise(ui = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+ui.out.w$ui_num <- as.numeric(ui.out.w$gov_ui)
+
+pension.out.w<-THD_comp %>% 
+  group_by(HDTreatment, gov_pension) %>%
+  summarise(pension = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+
+cc.out.w<-THD_comp %>% 
+  group_by(HDTreatment, gov_childcare) %>%
+  summarise(childcare = survey_mean(proportion=TRUE, vartype="ci"),
+            n = unweighted(n()))
+
+
+ui.out <-THD_comp_svyuw %>% 
   group_by(HDTreatment, gov_ui) %>%
   summarise(ui = survey_mean(proportion=TRUE, vartype="ci"),
             n = unweighted(n()))
 ui.out$ui_num <- as.numeric(ui.out$gov_ui)
 
-pension.out<-THD_comp %>% 
+pension.out<-THD_comp_svyuw %>% 
   group_by(HDTreatment, gov_pension) %>%
   summarise(pension = survey_mean(proportion=TRUE, vartype="ci"),
             n = unweighted(n()))
 
-cc.out<-THD_comp %>% 
+cc.out<-THD_comp_svyuw %>% 
   group_by(HDTreatment, gov_childcare) %>%
   summarise(childcare = survey_mean(proportion=TRUE, vartype="ci"),
             n = unweighted(n()))
@@ -70,7 +88,7 @@ ui_plot <- ui_plot + geom_col(position = dodge, alpha = 0.2) +
                      labels = c("1" ="none",
                                 "2"="", "3" = "",
                                 "4"="a lot")) +
-  labs(#title = "Support for UI by EHF treatment",
+  labs(title = "Home Depot",
        x = NULL, y = "% treatment group") +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
   scale_fill_discrete(name="EHF treatment", 
@@ -79,9 +97,14 @@ ui_plot <- ui_plot + geom_col(position = dodge, alpha = 0.2) +
   scale_color_discrete(name = "EHF treatment", 
                        labels=c("Control", "Text", "Video")) +
   #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
-  theme(legend.position = "none",
+  #theme(legend.position = "none",
+   #     panel.grid = element_blank()) + 
+  theme(legend.position = "top",
         panel.grid = element_blank())
 
+ggsave(filename = 'ui_plot_thd.png',
+       plot = ui_plot,
+       path = here('4_output', 'plots'))
 #gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
 #pdf("ui_uv.pdf")
 #gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)

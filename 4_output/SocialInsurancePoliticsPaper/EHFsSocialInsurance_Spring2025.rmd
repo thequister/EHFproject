@@ -133,12 +133,12 @@ I collect the main hypotheses in Table \@ref(tab:tab-hypotheses) for ease of ref
 #library(tibble)
 
 hypotheses <- tribble(
-  ~"Hypothesis", ~"Description", ~"Study"
-  "H1", "Workers in states with more generous social spending regimes will be less supportive of EHFs and less willing to donate.", "1",
+  ~"Hypothesis", ~"Description", ~"Study",
+  "H1", "Workers in states with more generous social spending regimes will be less supportive of EHFs and less willing to donate.", "1 \\& 3",
 "H1a", "The correlation with state spending will be stronger among conservatives", "1",  
-  "H2", "Exposure to EHF messaging reduces support for government spending on social insurance and welfare.", "2 \& 3",
-  "H2a", "Effects should be bigger among those unaware of the EHF before treatment.", "2 \& 3",
-  "H2b", "Effects should be bigger where the EHF is more generous.", "2 \& 3"
+  "H2", "Exposure to EHF messaging reduces support for government spending on social insurance and welfare.", "2 \\& 3",
+  "H2a", "Effects should be bigger among those unaware of the EHF before treatment.", "2 \\& 3",
+  "H2b", "Effects should be bigger where the EHF is more generous.", "2 \\& 3"
 )
 
 hypotheses %>%
@@ -166,6 +166,11 @@ fielded an original survey using the Cloud Research incentivized panel, targetin
 
 ## Research design
 ## Survey & Measurement
+
+In measuring variation in the state-level safety net, we rely on the simulated benefit levels produced by @schmidtStateSafetyNet2024.  In our main specifications, we use the "state directed" portion of these benefits, to better isolate differences across states.^[Our findings do not hinge on this decision.  Using the "cash and food" benefits estimates in @schmidtStateSafetyNet2024 or the measure of TANF benefit generosity from @foxEffectAdministrativeBurden2023 produce similar results.  Measure of UI geneosity, including maximum weeks of benefits and average weekly benefit amounts show no relationship with EHF support or donation.]
+
+Based on findings that appreciating real estate assets may depress support for the welfare state, we produce a measure of home price increases.  Specifically, we multiply an indicator for home ownership with the 5-year change in the state-level home price index produced by the US Federal Housing Finance Agency.  
+
 ## Results
 Genpop:
  EHF support/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + age + race + gender + ed + marital status + religiousity )
@@ -176,7 +181,7 @@ Genpop:
 # Studies 2 & 3
 ## Case selection
 
-Studies 2 and 3 focus on workers at two "big box" US retailers with well-established EHF programs, The Home Depot and Walmart, respectively.  These firms compete to some degree in both product and labor markets and both have seen union activism. They are extremely large employers, which makes recruiting a survey sample feasible.   By concentrating on two specific firms I can address detailed questions about EHF awareness and engagement as well as conduct survey-based experiments tailored to specific programs.  The differences between their EHFs are potentially instructive about variation in EHF effects.   
+Studies 2 and 3 focus on workers at two "big box" US retailers with well-established EHF programs, The Home Depot and Walmart.  These firms compete to some degree in both product and labor markets.  By looking at two large firms in the same industry, we can hold industry considerations constant.  Retail is attractive as it is employs over 15 million Americans, with that number growing in the last decade.  Retail is also known for low wages and unpredictable scheduling. We focus on these two firms for X reasons.  First, they are both extremely large employers , making our independent survey recruitment strategy feasible (more below).   By concentrating on two specific firms I can conduct survey-based experiments tailored to specific EHF programs.  Second, both firms have in-house EHFs of similar vintage. Third, the Home Depot and Walmart EHFs differ markedly in both their generosity and in the level of worker engagement, allowing us to compare findings across contexts to see whether program differences matter.  We briefly outline the two programs. 
 
 The Home Depot's EHF---The Homer Fund---is managed in-house and has been in continuous operation since 1999.  The Homer Fund is among the most generous EHFs, with a maximum grant amount of \$10,000 per event, eligibility from the first day of employment, and the ability to apply repeatedly (conditional on a new qualifying event).  The Homer Fund is sizable, reporting disbursements of \$21.2 million to over 12,000 workers in the 2022 fiscal year [@thehomedepotEnvironmentalSocialGovernance2023], the year of the survey.  Importantly, the Home Depot aggressively promotes the Homer Fund to encourage worker engagement, especially donations.  The Homer Fund has a dedicated website and YouTube channel with numerous professional-quality testimonial videos, along with active social media accounts aimed at workers.  The Home Depot runs regular Homer Fund donation drives in which different stores compete with one another. 
 
@@ -184,11 +189,11 @@ As with the Homer Fund, Walmart's ACNT Together Fund is over 20 years old and ma
 
 ## The samples and survey
 
-To independently construct matched worker-employer survey samples, I follow @schneiderWhatFacebookTool2019 and recruit participants using ads on the Meta platforms (Facebook, Instagram, Threads) targeted at users 18 and older with Meta-reported status as Home Depot and Walmart employees, respectively.  Those completing the survey were offered entry into a raffle for a free iPad Mini or Visa gift card.  @schneiderWhatFacebookTool2019 show that this strategy has considerable promise, producing accurate estimates of the employee population in the retail industry.  But the social media recruitment strategy has the obvious drawback of potentially biased sample selection.  Although selection concerns are unavoidable to some degree,  I follow @schneiderWhatFacebookTool2019 and construct raking weights using the Facebook-reported gender and age distributions for Facebook/Instagram users who report employment at the Home Depot and Walmart, respectively.  @growFacebookAdvertisingDataforthcoming show that Facebook-reported age and gender appear quite accurate. I use raking weights when reporting descriptive quantities, but unweighted data when analyzing the survey experiment.
+To independently construct matched worker-employer survey samples, we recruit participants using ads on the Meta platforms (Facebook, Instagram, Threads) targeted at users 18 and older with Meta-reported status as Home Depot and Walmart employees, respectively [@schneiderWhatFacebookTool2019].  Those completing the survey were offered entry into a raffle for a free iPad Mini or Visa gift card.  @schneiderWhatFacebookTool2019 show that this strategy has considerable promise, producing accurate estimates of the employee population in the retail industry.  But the social media recruitment strategy has the obvious drawback of potentially biased sample selection.  Selection concerns are unavoidable to some degree,  but @schneiderWhatFacebookTool2019 demonstrate that this strategy can still recover good estimates of known firm-level quantities.  As we are reporting and construct raking weights using the Facebook-reported gender and age distributions for Facebook/Instagram users who report employment at the Home Depot and Walmart, respectively.  @growFacebookAdvertisingDataforthcoming show that Facebook-reported age and gender appear quite accurate. We use raking weights when reporting descriptive quantities, but unweighted data when analyzing the survey experiment.
 
 Survey recruitment for the Home Depot sample occurred between 7 September and 15 October 2021.  In the end, 515 individuals completed the survey, passed an attention check, and confirmed their Home Depot employment status.  The Walmart survey was in the field from October 23 to December 4, 2024 and produced `r nrow(wmt.hq)` complete responses that passed similar screening and attention checks.  Summary statistics for all variables by treatment condition appear in Appendices \@ref(app-survsum-uw), \@ref(app-survsum-w), and \@ref(app-wmt-survsum).
 
-The surveys in Studies 2 and 3 were very similar in question wording and ordering, but Study 3 had several extensions to Study 2, including a behavioral measure of donation to the EHF (clicking on a link to a donation page). In Study 3 I expanded the EHF survey experiment by including a placebo video condition. 
+The surveys in Studies 2 and 3 were very similar in question wording and ordering, but Study 3 had several extensions to Study 2, including a behavioral measure of donation to the EHF (clicking on a link to a donation page). Study 3 also included an expanded the EHF survey experiment that included a placebo video condition. 
 
 ```{r summary-calcs, echo=FALSE}
 summary_tab_uw<-summarise(THD_comp_uw, 
@@ -212,36 +217,28 @@ summary_tab_uw_c<-summarise(cntrls,
 ```
 
 
-## Study 2
-### Specifics of survey details
-### Awareness and Donation willingness
-EHF awareness/donation ~ state generosity (+ income + home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure  + religiousity )
-  
+## EHF survey experiments
 
-### Survey experiments
+In both studies 2 and 3, we randomly exposed respondents to messages about their employer's EHF to test HX and XX.  The main quantities of interest are the average treatment effects (ATE) for each of the EHF treatments relative to control for each of the outcome variables.  I present graphical displays as well as regression-based estimates.  
 
-## EHF experiments
+Importantly, we are randomly assigning informational videos, not program access or benefits.  Some workers arrive in the survey with prior exposure to information about their employer's EHF.  These "pre-exposed" may be less responsive to the treatment messages than those unaware of the EHF prior to the survey.^[I will use the terms "aware" and "pre-exposed" interchangeably.]  To the extent we are interested in the effect of informing a previously uniformed worker about the EHF, the ATEs could be subject to "pre-exposure bias" [@druckmanLearningMorePolitical2012a; @ferrariMethodologicalApproachCausal2023].  I therefore also consider heterogeneity in treatment effects based on pre-exposure to the EHF.
 
-In both studies 2 and 3, I included experiments that randomly exposed respondents to messages about their employer's EHF to test HX and XX.
-
-The main quantities of interest are the average treatment effects (ATE) for each of the EHF treatments relative to control for each of the outcome variables.  I present graphical displays as well as regression-based estimates.  But we are randomly assigning informational videos, not program access or benefits.  Some workers arrive in the survey with prior exposure to information about their EHF.  These "pre-exposed" may be less responsive to the treatment messages than those unaware of the EHF prior to the survey.^[I will use the terms "aware" and "pre-exposed" interchangeably.]  To the extent we are interested in the effect of informing a previously uniformed worker about the EHF, the ATEs could be subject to "pre-exposure bias" [@druckmanLearningMorePolitical2012a; @ferrariMethodologicalApproachCausal2023].  I therefore also consider heterogeneity in treatment effects based on pre-exposure to the EHF.
-
-Using the approach described above, I measure EHF awareness before encountering the treatment.  The assumption needed to sustain a causal interpretation of the treatment is that pre-exposure to information about the EHF is independent of potential outcomes, conditional on treatment and relevant pre-treatment covariates.^[Pre-exposure can also be viewed through the lens of compliance with treatment assignment; the pre-exposed are "always takers" while the un-exposed are "compliers".  Since we have direct measures of pre-exposure, however, the heterogeneous effects approach is more natural.]
+We measure EHF awareness before encountering the treatment by asking respondents to check which of a list of job amenities they have access to.  We code a positive response to "emergency cash to help in times of need" as indicating awareness of the EHF program.^[See @ahlquist2025 for a detailed discussion of this measurement stategy and comparison with other measures of EHF awareness in the survey.]  The assumption needed to sustain a causal interpretation of the treatment is that pre-exposure to information about the EHF is independent of potential outcomes, conditional on treatment and relevant pre-treatment covariates.^[Pre-exposure can also be viewed through the lens of compliance with treatment assignment; the pre-exposed are "always takers" while the un-exposed are "compliers".  Since we have direct measures of pre-exposure, however, the heterogeneous effects approach is more natural.]
  For outcome $j$, the relevant heterogeneous effects can be estimated using the following approach: 
 \begin{equation}
 \mathbb{E}[Y_{ij}] = f(\alpha + \beta_1 T_i + \beta_2 P_i + \beta_3 T_iP_i + \beta_4 X_i)
 (\#eq:reg)
 \end{equation}
-where $T_i$ and denote treatment condition and $P_i$ denotes whether $i$ is coded as pre-exposed to her employer's EHF. If $f(x) = x$, then we can estimate \@ref(eq:reg) using OLS, in which case $\beta_1$ is the "average information effect" [@ferrariMethodologicalApproachCausal2023], i.e., the effects of the treatments among those who were previously unexposed.  The quantity $(\beta_1+\beta_3)$ represent the treatment effect among those who were aware of the EHF prior to the survey experiment. In the analysis that follows, I report three models for each outcome: one that includes only the experimental treatment indicators, providing ATE estimates; one that adds a treatment-by-awareness interaction term, and a third that also includes a suite of pre-treatment covariates.^[Full reporting of the covariate coefficient estimates appears in Appendix \@ref(app-cov)]
+where $T_i$ and denote treatment condition and $P_i$ denotes whether $i$ is coded as pre-exposed to her employer's EHF. If $f(x) = x$, then we can estimate \@ref(eq:reg) using OLS, in which case $\beta_1$ is the "average information effect" [@ferrariMethodologicalApproachCausal2023], i.e., the effects of the treatments among those who were previously unexposed.  The quantity $(\beta_1+\beta_3)$ represent the treatment effect among those who were aware of the EHF prior to the survey experiment. In the analysis that follows, we report four models for each outcome: one that includes only the experimental treatment indicators, providing ATE estimates; one that adds a treatment-by-awareness interaction term, a third that also includes a suite of pre-treatment covariates,^[These are age, gender, race, college degree status, tenure at their job, whether this job is their primary job, and whether they work full-time. @ahlquist2025 shows that job tenure and full-time status are the primary predictors of pre-exposure to the EHF.] and a fourth "expanded" model that includes additional covariates that were not pre-registered but that the substitution hypothesis literatures have identified as potentially relevant.  The set of expanded covariates includes household income, whether the respondent is co-habiting with a partner, whether the respondent identifies as politically conservative,  a measure of religiosity, our measure of home value appreciation, and the saftey net generosity in the respondent's state of residence.
 
-One might object that the measurement of EHF awareness is itself a form of priming or pre-exposure in the survey. There are two reasons why this is not a serious concern here.  First, the elicitation of EHF awareness is subtle, embedded in longer list of potential job benefits, and avoids using the program's name.  The risk of actual priming is low.  Second, if there were a meaningful priming effect from the EHF awareness question, we would expect to see minimal differences between the aware and un-aware.  This is not what we observe below. The pre-exposed Study 2 respondents are systematically different in terms of mean outcome levels and treatment effects from the un-exposed.  Third, to the extent that there is a priming or contamination from the EHF awareness question, it would reduce any detectable treatment effects or differences between the aware and unaware respondents. Thus my estimates are, if anything, downward biased and my conclusions are conservative.
 
 ### Study 2 experiment
 
 The experiment in Study 2 consisted of a control condition and two treatment arms, referred to as the _text_ and _video_ treatments, respectively.  Respondents in the control arm saw no prompt or mention of the EHF.  Those in the text treatment saw a brief, neutral statement describing their employer's EHF.^[The prompt was "Your employer, The Home Depot, maintains a program called the Homer Fund.   The Homer Fund combines donations from workers like you with money from The Home Depot corporation.  The Homer Fund uses this money to offer cash grants of up to \$10,000 to Home Depot employees in times of unexpected financial hardship like a natural disaster, illness, or death in the family."]  
 
-Neutral textual descriptions do not reflect how employers actually communicate with their employees.  Fortunately, the Home Depot maintains a YouTube channel that includes high-quality video testimonials from purported Homer Fund grant recipients. Study 2 respondents in the video treatment were asked to watch the video displayed in Figure \@ref(fig:fig-ray), panel (a).^[The video can be found here: [https://www.youtube.com/watch?v=qF-HBoySMe](https://www.youtube.com/watch?v=qF-HBoySMe) and here: [https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story](https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story).  The summary text appearing on the Home Depot website is: "When Ray, a retired Army veteran and proud Home Depot associate, fell severely ill, his family needed help covering expenses such as food and gas. With the help the Homer Fund and his fellow associates’ generosity, he and his family were able to recover. The Homer Fund, a nonprofit exclusively for Home Depot associates, celebrates 20 years of giving in 2019. Established by our co-founders Bernie Marcus, Arthur Blank and Ken Langone, it has awarded $176 million to more than 138,000 Home Depot families facing unforeseen hardships. For Ray and his family, The Fund’s help came at a critical time. Ray spent six weeks in an induced coma. The Homer Fund stepped in to help his family secure necessities so they could focus their energy on Ray’s recovery. The Fund’s impact on Ray’s family reminded him of the comradery of his Army days. 'You know you have a brother and sister to your left or to your right. And you look out for them and they look out for you,' Ray says."  This text was not presented to survey respondents, but is presented here to provide a summary of video contents.  The video was 2:41 in length.]   Later in the survey respondents answered a battery of questions taken from the General Social Survey.  asks respondents to report how much responsibility the government should have for ensuring the welfare of different constituencies.  Here I examine responses for "the unemployed" (4-category response ranging from "none at all" to "a lot").  This is a commonly used question for gauging attitudes toward government social insurance in general [find cites].
+Neutral textual descriptions do not reflect how employers actually communicate with their employees.  Fortunately, the Home Depot maintains a YouTube channel that includes high-quality video testimonials from purported Homer Fund grant recipients. Study 2 respondents in the video treatment were asked to watch the video displayed in Figure \@ref(fig:fig-ray), panel (a).^[The video can be found here: [https://www.youtube.com/watch?v=qF-HBoySMe](https://www.youtube.com/watch?v=qF-HBoySMe) and here: [https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story](https://corporate.homedepot.com/news/foundation-and-community/homer-fund-celebrates-20-years-giving-rays-story).  The summary text appearing on the Home Depot website is: "When Ray, a retired Army veteran and proud Home Depot associate, fell severely ill, his family needed help covering expenses such as food and gas. With the help the Homer Fund and his fellow associates’ generosity, he and his family were able to recover. The Homer Fund, a nonprofit exclusively for Home Depot associates, celebrates 20 years of giving in 2019. Established by our co-founders Bernie Marcus, Arthur Blank and Ken Langone, it has awarded $176 million to more than 138,000 Home Depot families facing unforeseen hardships. For Ray and his family, The Fund’s help came at a critical time. Ray spent six weeks in an induced coma. The Homer Fund stepped in to help his family secure necessities so they could focus their energy on Ray’s recovery. The Fund’s impact on Ray’s family reminded him of the comradery of his Army days. 'You know you have a brother and sister to your left or to your right. And you look out for them and they look out for you,' Ray says."  This text was not presented to survey respondents, but is presented here to provide a summary of video contents.  The video was 2:41 in length.]   
 
+Our key outcomes of interest in Study 2 comes from a battery of questions asking respondents to report how much responsibility the government should have for ensuring the welfare of different constituencies.  Here I examine responses for "the unemployed" (4-category response ranging from "none at all" to "a lot").  This question format, taken from the General Social Survey, is also part of the ISSP "role of government" module and is widely used question for gauging attitudes toward government social insurance and welfare activities [@blekesaunePublicAttitudesWelfare2003;@beanComparisonMassAttitudes1998; @rehmInsecureAlliancesRisk2012; @deemingPoliticsFracturedSolidarity2018].
 
 ```{r fig-ray, echo=FALSE, fig.cap = "Screen stills of the video treatments", fig.subcap = c("Home Depot", "Walmart"), out.width="50%", fig.align = "center"}
 knitr::include_graphics( c(
@@ -252,78 +249,95 @@ knitr::include_graphics( c(
 ```
 
 
+#### Attitudes toward social insurance
 
-#### Attitudes toward government social insurance
+The left panel of Figure \@ref(fig:fig-ui) displays the distribution of responses by EHF treatment status for the Home Depot sample. Overall, workers in the Home Depot sample are quite favorable toward government support for the unemployed, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.  The video treatment clearly *reduces* the proportion of responses in the "none" category in favor of the two positive categories.  The EHF video treatment made respondents *more* rather than less supportive of government-provided social insurance, contrary to the substitution hypothesis.  The text treatment, on the other hand, does not appear to have any detectable treatment effect on average.
 
-Overall, workers in the Home Depot sample are quite supportive of unemployment insurance, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.  We see that the video treatment substantially reduces the proportion of responses in the "none" category in favor of the two positive categories.  The EHF video treatment made respondents *more* rather than less supportive of government-provided social insurance, contrary to the substitution hypothesis.  The text treatment, on the other hand, does not appear to have any detectable treatment effect on average.
+```{r fig-ui, echo=FALSE, fig.cap = "Government responsibility for supporting the unemployed, by EHF treatment status", fig.subcap = c("Home Depot", "Walmart"), out.width="50%", fig.align = "center"}
+temp<-here::here('2_code', 'THD', '7_uiuv_summary_plots.R')
+source(temp)
+rm(temp)
 
-```{r tab-ui,eval=TRUE, echo = FALSE, tab.cap="Support for UI regression models" }
+temp<-here::here('2_code', 'Walmart', '11_uiuv_summary_plots_WMT.R')
+source(temp)
+rm(temp)
+
+knitr::include_graphics( c(
+  here('4_output', 'plots','ui_plot_thd.png' ),
+  here('4_output', 'plots','ui_plot_wmt.png')
+  )
+)
+
 temp<-here::here('2_code', 'THD', '9_ui_models.R')
 source(temp)
 rm(temp)
+
+```
+
+In Table \@ref(tab:tab-ui), we display estimates from a series of linear regression models on UI support.  The first model, including only experimental treatments, confirms a positive average treatment effect for the video treatment of about `r round(coef(ui_lm_uw)[3]/sd(THD_comp_uw$gov_ui_num,na.rm=T),2)` standard deviations.  Looking at the second model that accounts for pre-exposure, we find that respondents pre-exposed to the Home Depot EHF are `r round(coef(ui_lm_int_uw)[4]/sd(THD_comp_uw$gov_ui_num,na.rm=T), 2)` standard deviations less supportive of UI than the unaware ($p<0.1$), but we find no treatment effects among the unaware.  Contrary to the substitution hypothesis, we do find positive treatment effects among the _pre-exposed_, especially for the video treatment.  Including pre-registered covariates, including those that predict EHF pre-exposure (the third model), does not meaningfully alter interpretation.  The final model in Table \@ref(tab:tab-ui) includes a whole series of predictors connected to the substitution hypothesis, entered as linear terms.^[There was no evidence that the the treatment effect was moderated by state-level welfare generosity or respondent conservativeness.]  Unsurprisingly, more conservative respondents are less supportive of government unemployment insurance.  Cohabitation, income, past use of welfare benefits, religiosity, increased home values are all unrelated to support for UI.  But those living in state with more generous safety nets are also more positive about government support for the unemployed, suggesting that unemployment insurance and the broader safety net are connected in respondents' minds.
+
+```{r tab-ui,eval=TRUE, echo = FALSE, tab.cap="Support for UI regression models" }
+#temp<-here::here('2_code', 'THD', '9_ui_models.R')
+#source(temp)
+#rm(temp)
 ui_tab
 
 ```
 
-Table \@ref(tab:tab-ui) displays regression estimates for UI support.  Results here confirm a positive average treatment effect for the video treatment of about `r round(coef(ui_lm_uw)[3]/sd(THD_comp_uw$gov_ui_num,na.rm=T),2)` standard deviations.  We see no large or statistically discernible difference between the pre-exposed and unaware in average support for UI.  We also see no treatment effects among the unaware, although there are treatment effects among the _pre-exposed_, especially for the video treatment.
-
-To interpret this more easily, Figure \@ref(fig:fig-uieff) displays treatment effects by respondent pre-exposure to the EHF.  In the case of UI, we see that treatment effects are entirely concentrated among those _already_ aware of the Home Depot's EHF.  Contrary to expectations, both the text and video treatments _increase_ support for UI, although only the latter is a significant effect by conventional standards.  This finding deserves more exploration, but it consistent with author interviews with EHF professionals in which they indicate that EHFs are meant to supplement or provide a bridge to public benefits, rather than supplant them.   
+To interpret the heterogeneous treatment effects more easily, Figure \@ref(fig:fig-uieff) displays treatment effects by respondent pre-exposure to the EHF, derived from the second model.  In the case of support for the unemployed, we see that treatment effects are entirely concentrated among those _already_ aware of the Home Depot's EHF.  Contrary to expectations, both the text and video treatments _increase_ support for UI, although only the latter is a significant effect by conventional standards.  This finding deserves more exploration, but it consistent with author interviews with EHF professionals in which they indicate that EHFs are meant to supplement or provide a bridge to public benefits, rather than supplant them.   
 
 ```{r fig-uieff, eval=TRUE, echo=FALSE, fig.cap="Interpreting treatment effects from UI models"}
 ui_eff_plot
 
 ```
 
-Is unemployment insurance the appropriate policy to link with the EHF?  After all, the EHF is designed to provide benefits while having a job with this employer whereas UI is designed to help when a job is lost.^[The pre-exposed may better appreciate this distinction, which may help explain the unexpected findings.]  There are two pieces of evidence that UI is a reasonable policy domain to link with EHF benefits.  First, although EHF benefits are not available to someone who loses her job with an employer, benefits are often available when a worker's immediate family member loses a job.  Second, the UI question was asked as part of a battery of questions asking about UI was well as two other policy areas: pensions for the elderly and the provision of childcare for working parents.  These two questions can constitute "placebos" since EHFs have no connection with either policy area.  Parameter estimates from regressing support for these alternative policy areas on the EHF treatments and EHF awareness appear in Appendix Table \@ref(tab:tab-placebo).  I find no evidence for any relationship between the EHF treatments and support for government involvement in either old age pensions or childcare, regardless of whether the respondent was aware of the EHF going into the survey.
+Is unemployment support the appropriate policy to link with the EHF?  After all, the EHF is designed to provide benefits while having a job with this employer whereas UI is designed to help when a job is lost.^[The pre-exposed may better appreciate this distinction, which may help explain the unexpected findings.]  There are two pieces of evidence that UI is a reasonable policy domain to link with EHF benefits.  First, although EHF benefits are not available to someone who loses her job with her employer, workers are often eligible for EHF grants when a member of their immediate family member loses their job.  Second, the UI question was asked as part of a battery of questions asking about UI was well as two other policy areas: pensions for the elderly and the provision of childcare for working parents.  These two questions can constitute "placebos" since EHFs have no connection with either policy area.  Parameter estimates from regressing support for these alternative policy areas on the EHF treatments and EHF awareness appear in Appendix Table \@ref(tab:tab-placebo).  There is no evidence for any relationship between the EHF treatments and support for government involvement in either old age pensions or childcare, regardless of whether the respondent was aware of the EHF going into the survey and adjusting for predictors of awareness as well as predictors relevant to the substitution hypothesis.
 
-
-
-
- 
- 
- 
- 
- SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
-
-#### COVID experiment (?)
-
-## Study 3
-### Specifics of survey details
+In Study 2, we see no evidence consistent with the hypothesis that employer-provided "private welfare" crowds out support for the social saftey net.  If anything, the EHF treatment increases support for government action to support the unemployed.
 
 ### Study 3 experiment 
 
-Based on results from the Home Depot survey, Study 3 concentrates on a video vignette treatment for the Walmart sample, omitting the text treatment.  Unfortunately, Walmart does not produce video or other testimonials about the ACNT.  To construct a comparable treatment for the Walmart sample, We produced an original video using the Homer Fund treatment as both script and audio-visual template.  We adapted the video to the Walmart context and used a paid actor; Figure \@ref(fig:fig-ray), panel (b) displays a still image from the beginning of the video.^[The paid actor exhibited the same gender (male) and racial (white) expression as in the Homer Fund video.  The actor was also viewed as approximately the same age as the spokesperson in the Homer Fund video, according to mTurk coders. The ACNT-adapted video was 41 seconds shorter than the Homer Fund video.  We achieved this by shortening or removing some interstitial and panning shots, not through any reduction in the spoken script beyond those parts that were only relevant to the Home Depot.] To address concerns that findings from Study 2 might be a "video effect", as opposed the effect of an EHF message, Study 3 includes a placebo arm.  Respondents in the placebo condition watched a video in which the same hired actor reads a Walmart press release about the company's acquisition of Vizio.^[Videos can be seen here: [placebo video](https://tinyurl.com/EHF-Study3-placebo); [treatment (solidarity card)](https://tinyurl.com/EHFStudy3-solidarity); [treatment (charity card)](https://tinyurl.com/EHF-Study3-charity).]    
+The survey experiment for the Walmart sample is similar to that from Study 2 the Home Depot in several ways. We pre-registered a plan to examine whether treatment effects differ based on pre-exposure to the ACNT, measured using the same question format as in Study 2.  Nevertheless, we modified the Home Depot experiment for Study 3.  First, based on weak performance of the text treatment from the Home Depot,  we use only video vignettes for the Walmart sample, omitting the text treatment.  Unfortunately, Walmart does not produce video or other testimonials about the ACNT.  To construct a comparable treatment for the Walmart sample, we produced an original video using the Homer Fund treatment as both script and audio-visual template.  We adapted the video to the Walmart context and used a paid actor; Figure \@ref(fig:fig-ray), panel (b) displays a still image from the beginning of the video.^[The paid actor exhibited the same gender (male) and racial (white) expression as in the Homer Fund video.  The actor was also viewed as approximately the same age as the spokesperson in the Homer Fund video, according to mTurk coders. The ACNT-adapted video was 41 seconds shorter than the Homer Fund video.  We achieved this by shortening or removing some interstitial and panning shots, not through any reduction in the spoken script beyond those parts that were only relevant to the Home Depot.] 
 
-In Study 3, respondents were randomly assigned with equal probability to either treatment or control.  Within the control condition, respondents were randomly divided between the pure control and the placebo.  The pure controls saw no additional information, just as in Study 2.^[As part of Study 3, I pre-registered a sub-experiment in which I randomly vary the initial framing of the treatment video.  Specifically, the "card" visible on the screen before the respondent clicks "play" differs, with the _solidarity_ framing displaying text emphasizing supporting other Walmart workers and the and the _charity_ framing displaying text emphasizing charitable donations to help those in need. The content of the video vignette was otherwise identical across treatment groups; see previous footnote for links to both versions of the treatment video.  There were no detectable differences between the two different framings of the treatment video, so I do not report on this in the main text.  Regression results demonstrating this for key outcomes appears in Appendix \@ref(app-framing).]  Manipulation checks (see Appendix \@ref(app-manip-wmt)) confirm that the video treatment did indeed increase respondent awareness of the ACNT, as expected whereas the placebo had no effect.   Thus we display results for binary treatment/control in the analysis below.  Based on the findings in the Home Depot sample, I pre-registered a plan to examine whether treatment effects differ based on pre-exposure to the ACNT, measured using the same question format as in the Home Depot survey. 
+Second, to address concerns that findings from Study 2 might be a "video effect", as opposed the effect of messages about the EHF, Study 3 includes a placebo arm.  Respondents in the placebo condition watched a video in which the same hired actor reads a Walmart press release about the company's acquisition of Vizio.^[Videos can be seen here: [placebo video](https://tinyurl.com/EHF-Study3-placebo); [treatment (solidarity card)](https://tinyurl.com/EHFStudy3-solidarity); [treatment (charity card)](https://tinyurl.com/EHF-Study3-charity).]  In Study 3, respondents were randomly assigned with equal probability to either treatment or control.  Within the control condition, respondents were randomly divided between the pure control and the placebo.  The pure controls saw no additional information, just as in Study 2.^[As part of Study 3, we pre-registered a sub-experiment in which we randomly vary the initial framing of the treatment video.  Specifically, the "card" visible on the screen before the respondent clicks "play" differs, with the _solidarity_ framing displaying text emphasizing supporting other Walmart workers and the and the _charity_ framing displaying text emphasizing charitable donations to help those in need. The content of the video vignette was otherwise identical across treatment groups; see previous footnote for links to both versions of the treatment video.  There were no detectable differences between the two different framings of the treatment video, so we do not report on this in the main text.  Regression results demonstrating this for key outcomes appears in Appendix \@ref(app-framing).]  Manipulation checks (see Appendix \@ref(app-manip-wmt)) confirm that the video treatment did indeed increase respondent awareness of the ACNT, as expected, whereas the placebo had no effect.   Thus we display results for binary treatment/control in the analysis below.   
+
+Third, we modified the outcomes we study in two ways.  In the Walmart survey we again used the GSS question battery and asked respondents about the level of responsibility the government has for ensuring living standards for various social groups.  As in Study 2, the survey in Study 3 asks about the elderly and the unemployed.  To more closely link outcome measurement with EHFs in Study 3 we substituted a question asking about government responsibility for "people confronting short-term hardships" for the childcare question in Study 2.  We also created a behavioral indicator of donation willingness to the Walmart EHF.  At the end of Study 3, respondents had the opportunity to click on a link to take them to a page where they could donate to the ACNT. Based on past research, we expect those exposed to the emotional appeal in the video to be more willing to donate [@andreoniPowerAskingHow2011; @bekkersLiteratureReviewEmpirical2011].  We will examine whether the generosity of the state safety net moderates this treatment effect.
+
+#### Attitudes toward social insurance and emergency government aid
+
+The right panel of Figure \@ref{tab-ui} displays the Study 3 response distribution for the unemployment support outcome while the left panel of Figure \@ref{fig-emerg-donate} displays the response distribution for the emergency aid outcome.  Over 80% of the Walmart sample agreed that the government should take at least some responsibility for the living standards of the unemployed, a much higher rate than among the Home Depot workers. The Walmart sample exhibited a similar level of support for government aid to those facing hardship.  Among the Walmart sample, there is no treatment effect apparent for either outcome.       
+  
+```{r fig-emerg-donate, echo=FALSE, fig.cap = "Additional Walmart outcomes, by EHF treatment status", out.width="50%", fig.subcap = c("emergency aid", "ACNT donation"), fig.align = "center"}
+temp<-here::here('2_code', 'Walmart', '14_donate_models_WMT.R')
+source(temp)
+rm(temp)
+
+knitr::include_graphics( c(
+  here('4_output', 'plots','emerg_plot_wmt.png'),
+  here('4_output', 'plots','donate_wmt.png')
+  )
+)
+```
 
 
-#### gov't aid/responsibility
- SI support ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
+As Table \@ref(tab:tab-ui-hard-wmt) displays, we find no evidence of any treatment effect for any of these policy areas among Walmart workers; pre-exposure to the ACNT makes no difference in this conclusion.  Across both the Home Depot and Walmart surveys, we see no evidence that "private welfare" in the form of EHFs has any negative effect on support for government-directed social support, whether for childcare, the unemployed, the elderly, or those experiencing sudden hardship.
 
-## Study 3
-Finally, we look at social insurance policies.  In the Walmart survey we again asked respondents the level of responsibility the government has for the elderly and the unemployed.  To further directly examine the substitution hypothesis, I also asked respondents about government responsibility for "people confronting short-term hardships."  As Table \@ref(tab:tab-ui-hard-wmt) displays, we find no evidence of any treatment effect for any of these policy areas among Walmart workers; pre-exposure to the ACNT makes no difference in this conclusion.  Across both the Home Depot and Walmart surveys, we see no evidence that "private welfare" in the form of EHFs has any negative effect on support for government-directed social support, whether for childcare, the unemployed, the elderly, or those experiencing sudden hardship.
-
-```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)"}
+```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)", results='asis'}
+temp<-here::here('2_code', 'Walmart', '13_ui_models_WMT.R')
+source(temp)
+rm(temp)
 
 ui_hard_tab_wmt
 ```
 
 
-Findings related to the "substitution hypothesis"--the claim that private benefits and resources reduce support for government-provided programs--were another area of agreement across Studies 2 and 3.  Specifically, the video treatment shows no evidence of a negative effect on respondent support for government unemployment insurance or aid to those in temporary hardship.  In the Home Depot sample, the treatment induced a modest but significant _increase_ in support for government-provided UI.  This outcome may be the result of Home Depot workers having a better understanding of the EHF program (and its limitations).  Findings in these surveys are inconsistent with a simple "private options crowd out public benefits" story. 
- 
+#### Willingness to donate to the Walmart EHF
 
-#### donation action
-
-
- click donate ~ treatment (* awareness) (+ home ownership + past use of welfare benefits + partisanship/ideology/Trump + job tenure + age + race + gender + ed + marital status + religiousity )
 
 ```{r, results = 'asis'}
-temp<-here::here('2_code', 'Walmart', '14_donate_models_WMT.R')
-source(temp)
-rm(temp)
+donation_tab_wmt
 ```
 
-At the end of Study 3, respondents had the opportunity to click on a link to take them to a page where they could donate to the ACNT. Based on past research, we expect those exposed to the emotional appeal in the video to be more willing to donate  [@andreoniPowerAskingHow2011; @bekkersLiteratureReviewEmpirical2011].  
 
 In the Walmart sample, we see a low baseline willingness to click on the link of `r round(100*donation_summary$prop[1])`%.  Nevertheless, those seeing the EHF video were about 4 percentage points (or 35\%, $p < 0.05$) more likely to take an action to donate. Table \@ref(tab:tab-donate-models-wmt-app) presents regression-based estimates of treatment effects, using OLS and logistic regression.  We also include Firth regression to address concerns with rare events.  Treatment significantly increases willingness to take an action to donate.
 
@@ -335,6 +349,11 @@ donation_tab_app
 
 
 # Discussion and Conclusion
+
+Findings related to the "substitution hypothesis"--the claim that private benefits and resources reduce support for government-provided programs--were another area of agreement across Studies 2 and 3.  Specifically, the video treatment shows no evidence of a negative effect on respondent support for government unemployment insurance or aid to those in temporary hardship.  In the Home Depot sample, the treatment induced a modest but significant _increase_ in support for government-provided UI.  This outcome may be the result of Home Depot workers having a better understanding of the EHF program (and its limitations).  Findings in these surveys are inconsistent with a simple "private options crowd out public benefits" story. 
+ 
+EHFs new, uncertain.  Interest in EHFs may reflect pessimism about the fraying safety net in the US
+
 
 Finally, the literature has given limited attention to how knowledge and awareness of government programs affects private charitable behavior, despite theoretical reasons to expect that information constraints may moderate crowding out effects. This represents an important avenue for future research, particularly relevant to understanding how employee knowledge of government programs might affect participation in workplace charitable mechanisms.
 
@@ -622,24 +641,6 @@ EHF may be viewed as "private insurance", which could dampen support for social 
 
 Even before COVID-19, there was plenty of evidence that the existing social insurance and welfare systems were stigmatizing, encumbered with numerous "administrative burdens" [@herd_administrative_2019], and straining to deliver to those in need.  Several informants suggested that EHFs may present a private, partial complement to a weakening or slow public system.  By locating mutual aid programs in the firm, program participation might be higher and the EHF can benefit from corporate resources.  Applying for an EHF grant may be easier or less stigmatizing than applying for government assistance and the turn around time for benefits could be much faster in times of acute need.^[The Home Depot claims that grants are processed within 7 business days of application receipt, far faster than welfare or unemployment benefits, which also require waiting periods in many states.]
 
-
-
- 
-
-
-
-
-
-
-# References {-}
-
-<div id="refs"></div>
-
-\newpage
-
-# (APPENDIX) Appendix {-}
-
-\newpage
 
 # Placebos for UI support (Home Depot) {#app-placebo}
 ```{r tab-placebo, echo=FALSE, tab.cap="Placebo regressions for UI"}

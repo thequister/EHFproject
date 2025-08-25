@@ -16,7 +16,7 @@ unionvote_pretr_trbin <- wmt %>%
     ci_high = unlist(map(ci, ~.x$upper))
   )  |> 
   select(-ci)
-print(unionvote_pretr_trbin)
+#print(unionvote_pretr_trbin)
 
 unionvote_pretr_trbin_hq <- wmt.hq %>%
   group_by(treatment_bin, ehf_aware_pretr, union_elec) %>%
@@ -31,7 +31,7 @@ unionvote_pretr_trbin_hq <- wmt.hq %>%
     ci_high = unlist(map(ci, ~.x$upper))
   )  |> 
   select(-ci)
-print(unionvote_pretr_trbin_hq)
+#print(unionvote_pretr_trbin_hq)
 
 
 
@@ -48,33 +48,32 @@ unionvote_pretr_trplacebo <- wmt %>%
     ci_high = unlist(map(ci, ~.x$upper))
   )  |> 
   select(-ci)
-print(unionvote_pretr_trplacebo)
+#print(unionvote_pretr_trplacebo)
 
 
-
-
-
-
-ui.out<-THD_comp %>% 
-  group_by(HDTreatment, gov_ui) %>%
+ui.out.wmt<-wmt.hq_unwgt %>% 
+  group_by(treatment_bin, govt_responsib_unemp_num) %>%
   summarise(ui = survey_mean(proportion=TRUE, vartype="ci"),
             n = unweighted(n()))
-ui.out$ui_num <- as.numeric(ui.out$gov_ui)
+ui.out.wmt$govt_responsib_unemp_num <- 4*as.numeric(ui.out.wmt$govt_responsib_unemp_num)
 
-pension.out<-THD_comp %>% 
-  group_by(HDTreatment, gov_pension) %>%
+pension.out.wmt<-wmt.hq_unwgt %>% 
+  group_by(treatment_bin, govt_responsib_elder_num) %>%
   summarise(pension = survey_mean(proportion=TRUE, vartype="ci"),
             n = unweighted(n()))
+pension.out.wmt$govt_responsib_elder_num <- 4*as.numeric(pension.out.wmt$govt_responsib_elder_num)
 
-cc.out<-THD_comp %>% 
-  group_by(HDTreatment, gov_childcare) %>%
-  summarise(childcare = survey_mean(proportion=TRUE, vartype="ci"),
+
+emerg.out.wmt<-wmt.hq_unwgt %>% 
+  group_by(treatment_bin, govt_responsib_hardship_num) %>%
+  summarise(emerg = survey_mean(proportion=TRUE, vartype="ci"),
             n = unweighted(n()))
+emerg.out.wmt$govt_responsib_hardship_num <- 4*as.numeric(emerg.out.wmt$govt_responsib_hardship_num)
 
 
 
 #plots
-uv_plot <- ggplot(data = unionvote_pretr_trbin,
+uv_plot_wmt <- ggplot(data = unionvote_pretr_trbin,
                           mapping = aes(x = union_elec, y = proportion,
                                         ymin = ci_low,
                                         ymax = ci_high,
@@ -82,7 +81,7 @@ uv_plot <- ggplot(data = unionvote_pretr_trbin,
                                         color = treatment_bin,
                                         group = treatment_bin))
 
-uv_plot <- uv_plot + geom_col(position = dodge, alpha = 0.2) +
+uv_plot_wmt <- uv_plot_wmt + geom_col(position = dodge, alpha = 0.2) +
   geom_errorbar(position = dodge, width = 0.2) +
   facet_wrap(~ ehf_aware_pretr) +
   #scale_x_continuous(name=NULL, 
@@ -132,34 +131,78 @@ uv_plot_placebo <- uv_plot_placebo + geom_col(position = dodge, alpha = 0.2) +
   theme(legend.position = "top",
         panel.grid = element_blank())
 
-ui_plot <- ggplot(data = ui.out,
-            mapping = aes(x = ui_num, y = ui,
+
+## UI plot
+
+ui_plot_wmt <- ggplot(data = ui.out.wmt,
+            mapping = aes(x = govt_responsib_unemp_num, y = ui,
                           ymin = ui_low,
                           ymax = ui_upp,
-                          fill = HDTreatment,
-                          color = HDTreatment,
-                          group = HDTreatment))
+                          fill = treatment_bin,
+                          color = treatment_bin,
+                          group = treatment_bin))
 
-ui_plot <- ui_plot + geom_col(position = dodge, alpha = 0.2) +
+ui_plot_wmt <- ui_plot_wmt + geom_col(position = dodge, alpha = 0.2) +
     geom_errorbar(position = dodge, width = 0.2) +
     scale_x_continuous(name=NULL, 
                      breaks = 1:4,
                      labels = c("1" ="none",
                                 "2"="", "3" = "",
                                 "4"="a lot")) +
-  labs(title = "Support for UI by EHF treatment",
+  labs(#title = "Support for UI by EHF treatment",
        x = NULL, y = "% treatment group") +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
   scale_fill_discrete(name="EHF treatment", 
-                      breaks=c("cntrl", "txt", "vid"),
-                      labels=c("Control", "Text", "Video")) +
+                      breaks=c(FALSE, TRUE),
+                      labels=c("Untreated", "Treated")) +
   scale_color_discrete(name = "EHF treatment", 
-                       labels=c("Control", "Text", "Video")) +
+                       labels=c("Untreated", "Treated")) +
   #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
-  theme(legend.position = "none",
+  theme(legend.position = "top",
         panel.grid = element_blank())
 
-gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
+ggsave(filename = 'ui_plot_wmt.png',
+       plot = ui_plot_wmt,
+       path = here('4_output', 'plots'))
+
+#gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
 #pdf("ui_uv.pdf")
 #gridExtra::grid.arrange(uv_plot, ui_plot, nrow = 2)
 #dev.off()
+
+emerg_plot_wmt <- ggplot(data = emerg.out.wmt,
+                      mapping = aes(x = govt_responsib_hardship_num, y = emerg,
+                                    ymin = emerg_low,
+                                    ymax = emerg_upp,
+                                    fill = treatment_bin,
+                                    color = treatment_bin,
+                                    group = treatment_bin))
+
+emerg_plot_wmt <- emerg_plot_wmt + geom_col(position = dodge, alpha = 0.2) +
+  geom_errorbar(position = dodge, width = 0.2) +
+  scale_x_continuous(name=NULL, 
+                     breaks = 1:4,
+                     labels = c("1" ="none",
+                                "2"="", "3" = "",
+                                "4"="a lot")) +
+  labs(#title = "Support for UI by EHF treatment",
+    x = NULL, y = "% treatment group") +
+  scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
+  scale_fill_discrete(name="EHF treatment", 
+                      breaks=c(FALSE, TRUE),
+                      labels=c("Untreated", "Treated")) +
+  scale_color_discrete(name = "EHF treatment", 
+                       labels=c("Untreated", "Treated")) +
+  #scale_color_brewer(type = "qual", palette = "Dark2", aesthetics = c("colour", "fill")) +
+  theme(legend.position = "top",
+        panel.grid = element_blank())
+
+ggsave(filename = 'emerg_plot_wmt.png',
+       plot = emerg_plot_wmt,
+       path = here('4_output', 'plots'))
+
+#gridExtra::grid.arrange(uv_plot, emerg_plot, nrow = 2)
+#pdf("emerg_uv.pdf")
+#gridExtra::grid.arrange(uv_plot, emerg_plot, nrow = 2)
+#dev.off()
+

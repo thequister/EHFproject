@@ -181,8 +181,6 @@ Walmart_complete <- Walmart_complete %>%
 
 ## Add UI Data
 
-## Add UI Data
-
 state_ui <- read_csv(here('3_cleaned_data', 'state_year_benefits.csv'))
 
 # Brookings Data

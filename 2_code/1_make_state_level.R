@@ -63,7 +63,7 @@ tanf_gen <- read_excel(here("0_raw_data", "UI", "TANF Codebook and Data_updated 
 state_ui <- full_join(state_ui, tanf_gen, by = c("state" = "State", "year"))
 
 # Housing price index
-hpi <- read_excel("1_secondary_data/hpi_at_state.xlsx", 
+hpi <- read_excel(here("1_secondary_data", "hpi_at_state.xlsx"), 
                   skip = 5) %>%
   group_by(State) %>%
   mutate(hpi_5year = `HPI with 2000 base` - lag(`HPI with 2000 base`, 5))

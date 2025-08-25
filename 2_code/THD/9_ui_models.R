@@ -1,62 +1,66 @@
 #OLS
 
 
-ui_lm_uw <- lm(gov_ui_num ~ HDTreatment, 
+ui_lm_uw <- lm_robust(gov_ui_num ~ HDTreatment, 
                data = THD_comp_uw)
-ui_lm_int_uw <- lm(gov_ui_num ~ HDTreatment*EHF_aware_list, 
+ui_lm_int_uw <- lm_robust(gov_ui_num ~ HDTreatment*EHF_aware_list, 
                    data = THD_comp_uw)
-ui_lm_c_pregreg_uw <- lm(gov_ui_num ~ 
+ui_ols_int_uw <- lm(gov_ui_num ~ HDTreatment*EHF_aware_list, 
+                          data = THD_comp_uw)
+ui_lm_c_pregreg_uw <- lm_robust(gov_ui_num ~ 
                    HDTreatment*EHF_aware_list + rk_age + male +
                    main_job + tenure_num + nonwhite + fulltime +
                    hourly+ college, data = THD_comp_uw)
+
+ui_lmer_uw <- lme4::lmer(gov_ui_num ~ HDTreatment + 
+                           HDTreatment:st_directed +
+                           + (1 + HDTreatment| state_lv), 
+               data = THD_comp_uw)  #no evidence of state-level random slope on treatment (singular variance)
+
 
 ui_lm_c_expand_uw <- update(ui_lm_c_pregreg_uw, .~. + other_welfare + 
                               cohabit + 
                              income_num + 
                              religious +
                              ideology_conservative +
-                             as.numeric(home_ownership):hpi_5year)
-ui_lm_c_uiwks_uw <- update(ui_lm_c_pregreg_uw, . ~. + max_ui_weeks)
+                              st_directed + 
+                              as.numeric(home_ownership):hpi_5year, 
+                            clusters = state_lv)
+
+ 
+ui_lm_c_uiwks_uw <- update(ui_lm_c_expand_uw, . ~. -st_directed + I(max_ui_weeks<26))
 ui_lm_c_uiwba_uw <- update(ui_lm_c_pregreg_uw, . ~. + avg_wba)
 ui_lm_c_uiwba_uw <- update(ui_lm_c_pregreg_uw, . ~. + replacement_2021_ui_1)
-ui_lm_c_uitanf_uw <- update(ui_lm_c_pregreg_uw, . ~. + WG_TANF)
-ui_lm_c_uitanfb_uw <- update(ui_lm_c_pregreg_uw, . ~. + WG_TANF_Benefit)
-ui_lm_c_uistd_uw <- update(ui_lm_c_pregreg_uw, . ~. + st_directed)
-ui_lm_c_uicf_uw <- update(ui_lm_c_pregreg_uw, . ~. + cashfood)
-
-
-ui_lm_c_1_uw <- lm_robust(gov_ui_num ~ 
-                           HDTreatment*EHF_aware_list + rk_age + male +
-                           main_job + tenure_num + nonwhite + fulltime +
-                           hourly+ college + 
-                     WG_TANF, data = THD_comp_uw)
-
-ui_lm_c_1_uw <- lm_robust(gov_ui_num ~ 
-                            HDTreatment*EHF_aware_list + rk_age + male +
-                            main_job + tenure_num + nonwhite + fulltime +
-                            hourly+ college + I(home_ownership=="Own"):hpi_5year +
-                            WG_TANF, data = THD_comp_uw)
+ui_lm_c_uitanf_uw <- update(ui_lm_c_expand_uw, . ~. - st_directed + WG_TANF)
+ui_lm_c_uitanfb_uw <- update(ui_lm_c_expand_uw, . ~. - st_directed + WG_TANF_Benefit)
+ui_lm_c_uicf_uw <- update(ui_lm_c_expand_uw, . ~. - st_directed + cashfood)
 
 
 ui_ol_int_uw <- MASS::polr(gov_ui~ HDTreatment*EHF_aware_list,
                            data = THD_comp_uw, Hess = TRUE)
 
-ui.models.uw <- list(ui_lm_uw, ui_lm_int_uw, ui_lm_c_uw)
-names(ui.models.uw) <- c("Base", "Pre-exposure", "Covariates")
+ui.models.uw <- list(ui_lm_uw, ui_lm_int_uw, ui_lm_c_pregreg_uw, ui_lm_c_expand_uw)
+names(ui.models.uw) <- c("Base", "Pre-exposure", "Pre-registered", "Expanded")
 
 coef_maps <- c("HDTreatmenttxt" = "Text treatment",
                "HDTreatmentvid" = "Video treatment",
                "EHF_aware_listTRUE" = "Pre-exposed",
                "HDTreatmenttxt:EHF_aware_listTRUE" = "Text x pre-exposed",
-               "HDTreatmentvid:EHF_aware_listTRUE" = "Video x pre-exposed")
+               "HDTreatmentvid:EHF_aware_listTRUE" = "Video x pre-exposed",
+               "other_welfareTRUE" = "Past welfare",
+               "cohabitTRUE" = "co-habiting",
+               "income_num" = "HH income",
+               "religiousTRUE" = "Religiosity",
+               "st_directed" = "State safety net generosity",
+               "ideology_conservative" = "Conservative",
+               "as.numeric(home_ownership):hpi_5year" = "house appreciation")
 
 rows<-tribble(
-  ~"term", ~"Base", ~"Preexposure",  ~"Covariates",
-  "Covariates?", "No", "No", "Yes")
-attr(rows, 'position') <- c(12)
+  ~"term", ~"Base", ~"Preexposure",  ~"Pre-registered", ~"Expanded",
+  "SE", "robust", "robust", "robust", "state-clustered")
+attr(rows, 'position') <- c(26)
 
-note1 <- "Robust standard errors in parentheses.\n Covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
-
+note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
 
 gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
@@ -65,23 +69,23 @@ gm <- list(
 
 ui_tab<-modelsummary(ui.models.uw,
              coef_map = coef_maps,
-            title = "Support for Unemployment Insurance \\label{tab:tab-ui}",
+            title = "Support for Unemployment Insurance (Home Depot sample) \\label{tab:tab-ui}",
             gof_map = gm,
-            vcov = "robust",
+           # vcov = "robust",
             add_rows = rows, 
             notes = list(note1),
             threeparttable=TRUE,
-            stars = c('*' = .05, '**' = .01),
+            stars = c('*' = .1, '**' = .05, "***" = 0.01),
             escape = FALSE
 )
 
 ui_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 
-    ui_lm_int_uw,
-    vcov = sandwich::vcovHC(ui_lm_int_uw),     
+    ui_ols_int_uw,
+    vcov = sandwich::vcovHC(ui_ols_int_uw),     
     se = TRUE)
 
 ui_eff_plot <- plot(ui_eff,
-     main = "Treament effect on UI support\n by pre-exposure status",
+     main = "Treament effect on UI support\n by EHF pre-exposure status",
      xlab = "Experimental condition",
      axes = list(
        y = list(type = "response",
@@ -107,6 +111,10 @@ cc_lm_int_uw <- lm(gov_childcare_num ~ HDTreatment*EHF_aware_list,
 placebo.models.uw <- list(pension_lm_int_uw, cc_lm_int_uw)
 names(placebo.models.uw) <- c("Pension", "Childcare")
 
+pension_lm_c_pregreg_uw <- lm_robust(gov_pension_num ~ 
+                                  HDTreatment*EHF_aware_list + rk_age + male +
+                                  main_job + tenure_num + nonwhite + fulltime +
+                                  hourly+ college, data = THD_comp_uw)
 
 
 pension_lm_c_expand_uw <- update(pension_lm_int_uw, .~. + other_welfare + 
@@ -115,9 +123,9 @@ pension_lm_c_expand_uw <- update(pension_lm_int_uw, .~. + other_welfare +
                               religious +
                               ideology_conservative +
                               as.numeric(home_ownership):hpi_5year)
-pension_lm_c_pensionwks_uw <- update(pension_lm_c_pregreg_uw, . ~. + max_pension_weeks)
+pension_lm_c_pensionwks_uw <- update(pension_lm_c_pregreg_uw, . ~. + max_ui_weeks)
 pension_lm_c_pensionwba_uw <- update(pension_lm_c_pregreg_uw, . ~. + avg_wba)
-pension_lm_c_pensionwba_uw <- update(pension_lm_c_pregreg_uw, . ~. + replacement_2021_pension_1)
+pension_lm_c_pensionwba_uw <- update(pension_lm_c_pregreg_uw, . ~. + replacement_2021_ui_1)
 pension_lm_c_pensiontanf_uw <- update(pension_lm_c_pregreg_uw, . ~. + WG_TANF)
 pension_lm_c_pensiontanfb_uw <- update(pension_lm_c_pregreg_uw, . ~. + WG_TANF_Benefit)
 pension_lm_c_pensionstd_uw <- update(pension_lm_c_pregreg_uw, . ~. + st_directed)
