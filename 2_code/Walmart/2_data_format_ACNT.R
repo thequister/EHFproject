@@ -301,11 +301,14 @@ ACNT_uw <- ACNT_uw %>%
   mutate(no_ideology = ideology == "Haven’t thought much about this", 
          ideology_conlib_num_0 = ifelse(is.na(ideology_conlib), -1,
                                         (as.numeric(ideology_conlib) - 1)/6), 
-         religious = (religion != "Nothing in particular"))
+         religious = (religion != "Nothing in particular"),
+         ideology_conservative = ifelse(ideology_conlib %in% c("Extremely conservative", "Conservative",  "Slightly Conservative"),1,0),
+         welfare = (other_welfare=="Yes")
+         )
 
 ACNT_uw$ehf_donation_num <- ACNT_uw$ehf_donation == "Yes"
 ACNT_uw$ehf_donation_post <- ACNT_uw$donate == "YES I would like to learn how to donate"
 
-write_csv(ACNT_uw, here("0_raw_data", "ACNT", "ACNT_clean_main.csv"))
+write_csv(ACNT_uw, here("3_cleaned_data", "ACNT_clean_main.csv"))
 
 

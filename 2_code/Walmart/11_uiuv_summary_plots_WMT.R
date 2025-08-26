@@ -149,7 +149,7 @@ ui_plot_wmt <- ui_plot_wmt + geom_col(position = dodge, alpha = 0.2) +
                      labels = c("1" ="none",
                                 "2"="", "3" = "",
                                 "4"="a lot")) +
-  labs(#title = "Support for UI by EHF treatment",
+  labs(title = "Walmart",
        x = NULL, y = "% treatment group") +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
   scale_fill_discrete(name="EHF treatment", 
@@ -185,7 +185,7 @@ emerg_plot_wmt <- emerg_plot_wmt + geom_col(position = dodge, alpha = 0.2) +
                      labels = c("1" ="none",
                                 "2"="", "3" = "",
                                 "4"="a lot")) +
-  labs(#title = "Support for UI by EHF treatment",
+  labs(title = "Walmart",
     x = NULL, y = "% treatment group") +
   scale_y_continuous(labels = scales::label_percent(accuracy=1L)) +
   scale_fill_discrete(name="EHF treatment", 

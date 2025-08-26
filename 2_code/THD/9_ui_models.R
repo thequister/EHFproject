@@ -19,7 +19,6 @@ ui_lmer_uw <- lme4::lmer(gov_ui_num ~ HDTreatment +
 
 
 ui_lm_c_expand_uw <- update(ui_lm_c_pregreg_uw, .~. + other_welfare + 
-                              cohabit + 
                              income_num + 
                              religious +
                              ideology_conservative +
@@ -48,7 +47,7 @@ coef_maps <- c("HDTreatmenttxt" = "Text treatment",
                "HDTreatmenttxt:EHF_aware_listTRUE" = "Text x pre-exposed",
                "HDTreatmentvid:EHF_aware_listTRUE" = "Video x pre-exposed",
                "other_welfareTRUE" = "Past welfare",
-               "cohabitTRUE" = "co-habiting",
+               #"cohabitTRUE" = "co-habiting",
                "income_num" = "HH income",
                "religiousTRUE" = "Religiosity",
                "st_directed" = "State safety net generosity",
@@ -65,7 +64,7 @@ note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age
 gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
   list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
-  list("raw" = "F", "clean" = "$F$", "fmt" = 2))
+  list("raw" = "aic", "clean" = "AIC", "fmt" = 1))
 
 ui_tab<-modelsummary(ui.models.uw,
              coef_map = coef_maps,

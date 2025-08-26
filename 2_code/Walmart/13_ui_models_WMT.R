@@ -1,11 +1,11 @@
 #OLS
 
 
-ui_lm_wmt <- lm(govt_responsib_unemp_num ~ treatment_bin, 
+ui_lm_wmt <- lm_robust(govt_responsib_unemp_num ~ treatment_bin, 
                data = wmt.hq)
-ui_lm_int_wmt <- lm(govt_responsib_unemp_num ~ treatment_bin*ehf_aware_pretr, 
+ui_lm_int_wmt <- lm_robust(govt_responsib_unemp_num ~ treatment_bin*ehf_aware_pretr, 
                     data = wmt.hq)
-ui_lm_c_wmt <- lm(govt_responsib_unemp_num ~ 
+ui_lm_c_wmt <- lm_robust(govt_responsib_unemp_num ~ 
                    treatment_bin+ 
                    age_clean + 
                    male +
@@ -16,50 +16,94 @@ ui_lm_c_wmt <- lm(govt_responsib_unemp_num ~
                    hourly+
                    college,
                  data = wmt.hq)
-ui_lm_c_int_wmt <- lm(govt_responsib_unemp_num ~ 
-                   treatment_bin*ehf_aware_pretr+ 
-                   age_clean + 
-                   male +
-                   main_job +
-                   tenure_num +
-                   nonwhite +
-                   fulltime +
-                   hourly+
-                   college,
-                 data = wmt.hq)
+ui_lm_prereg_wmt <- lm_robust(govt_responsib_unemp_num ~ 
+                                treatment_bin*ehf_aware_pretr +
+                                age_clean +
+                                male +
+                                main_job +
+                                tenure_num +
+                                nonwhite +
+                                fulltime +
+                                hourly+
+                                college,
+                              data = wmt.hq)
+
+ui_lm_expanded_wmt <- lm_robust(govt_responsib_unemp_num ~ 
+                                  treatment_bin*ehf_aware_pretr +
+                                  age_clean +
+                                  male +
+                                  main_job +
+                                  tenure_num +
+                                  nonwhite +
+                                  fulltime +
+                                  hourly+
+                                  college +
+                                  welfare + 
+                                  income_num + 
+                                  religious +
+                                  ideology_conservative +
+                                  st_directed + 
+                                  as.numeric(home_ownership):hpi_5year, 
+                                clusters = residence,
+                                data = wmt.hq)
+
+ui_lmer_uw_wmt <- lme4::lmer(govt_responsib_unemp_num ~ ehf_aware_pretr + 
+                               treatment_bin:st_directed +
+                           + (1 + treatment_bin| residence), 
+                         data = wmt.hq)  #no evidence of state-level random slope on treatment (singular variance)
 
 
 ui_ol_int_wmt <- MASS::polr(ordered(govt_responsib_unemp_num) ~treatment_bin*ehf_aware_pretr,
                            data = wmt.hq, Hess = TRUE)
 
 
-hard_lm_wmt <- lm(govt_responsib_hardship_num ~ treatment_bin, 
-                data = wmt.hq)
-hard_lm_int_wmt <- lm(govt_responsib_hardship_num ~ treatment_bin*ehf_aware_pretr, 
-                    data = wmt.hq)
-hard_lm_c_wmt <- lm(govt_responsib_hardship_num ~ 
-                    treatment_bin+ 
-                    age_clean + 
-                    male +
-                    main_job +
-                    tenure_num +
-                    nonwhite +
-                    fulltime +
-                    hourly+
-                    college,
-                  data = wmt.hq)
+hard_lm_wmt <- lm_robust(govt_responsib_hardship_num ~ treatment_bin, 
+                       data = wmt.hq)
+hard_lm_int_wmt <- lm_robust(govt_responsib_hardship_num ~ treatment_bin*ehf_aware_pretr, 
+                           data = wmt.hq)
+hard_lm_c_wmt <- lm_robust(govt_responsib_hardship_num ~ 
+                           treatment_bin+ 
+                           age_clean + 
+                           male +
+                           main_job +
+                           tenure_num +
+                           nonwhite +
+                           fulltime +
+                           hourly+
+                           college,
+                         data = wmt.hq)
+hard_lm_prereg_wmt <- lm_robust(govt_responsib_hardship_num ~ 
+                                treatment_bin*ehf_aware_pretr +
+                                age_clean +
+                                male +
+                                main_job +
+                                tenure_num +
+                                nonwhite +
+                                fulltime +
+                                hourly+
+                                college,
+                              data = wmt.hq)
 
-hard_lm_c_int_wmt <- lm(govt_responsib_hardship_num ~ 
-                        treatment_bin*ehf_aware_pretr+ 
-                        age_clean + 
-                        male +
-                        main_job +
-                        tenure_num +
-                        nonwhite +
-                        fulltime +
-                        hourly+
-                        college,
-                      data = wmt.hq)
+hard_lm_expanded_wmt <- lm_robust(govt_responsib_hardship_num ~ 
+                                  treatment_bin*ehf_aware_pretr +
+                                  age_clean +
+                                  male +
+                                  main_job +
+                                  tenure_num +
+                                  nonwhite +
+                                  fulltime +
+                                  hourly+
+                                  college +
+                                  welfare + 
+                                  income_num + 
+                                  religious +
+                                  ideology_conservative +
+                                  st_directed + 
+                                  as.numeric(home_ownership):hpi_5year, 
+                                clusters = residence,
+                                data = wmt.hq)
+
+
 
 
 hard_ol_int_wmt <- MASS::polr(ordered(govt_responsib_hardship_num) ~treatment_bin*ehf_aware_pretr,
@@ -69,26 +113,41 @@ hard_ol_int_wmt <- MASS::polr(ordered(govt_responsib_hardship_num) ~treatment_bi
 
 
 ui.hard.models.wmt <- list(
-  ui_lm_wmt,
-  ui_lm_int_wmt,
-  ui_lm_c_int_wmt,
-  hard_lm_wmt,
-  hard_lm_int_wmt,
-  hard_lm_c_int_wmt)
-names(ui.hard.models.wmt) <- c("UI", "UI", "UI", 
-                         "Emergency", "Emergency", "Emergency")
+  "DV: Unemployed" = list(
+  "Base" = ui_lm_wmt,
+  "Pre-exposed" = ui_lm_int_wmt,
+  "Pre-registered" = ui_lm_prereg_wmt,
+  "Expanded" = ui_lm_expanded_wmt),
+  "DV: Emergency" = list(
+  "Base" = hard_lm_wmt,
+  "Pre-exposed" = hard_lm_int_wmt,
+  "Pre-registered" = hard_lm_prereg_wmt,
+  "Expanded" = hard_lm_expanded_wmt)
+)
+#names(ui.hard.models.wmt) <- c("UI", "UI", "UI", "UI", 
+#                         "Emergency", "Emergency", "Emergency", "Emergency")
+#names(ui.hard.models.wmt) <- c("Base", "Pre-exposed", "Pre-registered", "Expanded", 
+#                               "Base", "Pre-exposed", "Pre-registered", "Expanded")
 
-coef_maps <- c(
-  "treatment_binTRUE" = "Treated",
-  "ehf_aware_pretrTRUE" = "Pre-exposed",
-  "treatment_binTRUE:ehf_aware_pretrTRUE" = "Treated x pre-exposed")
+
+coef_maps <- c("treatment_binTRUE" = "Treated",
+                 "ehf_aware_pretrTRUE" = "Pre-exposed",
+                 "treatment_binTRUE:ehf_aware_pretrTRUE" = "Treated x pre-exposed",
+                 "welfareTRUE" = "Past welfare",
+                 "income_num" = "HH income",
+                 "religiousTRUE" = "Religiosity",
+                 "st_directed" = "State safety net generosity",
+                 "ideology_conservative" = "Conservative",
+                 "as.numeric(home_ownership):hpi_5year" = "house appreciation")
 
 rows<-tribble(
-  ~"term", ~"Base", ~"Preexposure",  ~"Covariates",~"Base", ~"Preexposure",  ~"Covariates",
-  "Covariates?", "No", "No", "Yes","No", "No", "Yes")
-attr(rows, 'position') <- c(7)
+  ~"term", ~"Base", ~"Pre-exposed",  ~"Pre-registered", ~"Expanded",
+  "SE", "robust", "robust", "robust", "state-clustered",
+  "SE", "robust", "robust", "robust", "state-clustered")
+attr(rows, 'position') <- c(17, 37)
 
-note1 <- "Robust standard errors in parentheses. Covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
+
+note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
 
 
 gm <- list(
@@ -98,13 +157,14 @@ gm <- list(
 
 ui_hard_tab_wmt<-modelsummary(ui.hard.models.wmt,
              coef_map = coef_maps,
-            title = "Support for unemployment insurance and emergency government support  \\label{tab:tab-ui-hard-wmt}",
+            title = "Support for unemployment insurance and emergency government aid (Walmart)  \\label{tab:tab-ui-hard-wmt}",
             gof_map = gm,
-            vcov = "robust",
+            #vcov = "robust",
             add_rows = rows, 
             notes = list(note1),
             threeparttable=TRUE,
-            stars = c('*' = .05, '**' = .01),
+            stars = c('*' = .1, '**' = .05, '***' = .01),
+            shape = "rbind",
             escape = FALSE
 )
 
