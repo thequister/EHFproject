@@ -56,10 +56,10 @@ coef_maps <- c("HDTreatmenttxt" = "Text treatment",
 
 rows<-tribble(
   ~"term", ~"Base", ~"Preexposure",  ~"Pre-registered", ~"Expanded",
-  "SE", "robust", "robust", "robust", "state-clustered")
-attr(rows, 'position') <- c(26)
+  "Std. Errors", "robust", "robust", "robust", "state-clustered")
+attr(rows, 'position') <- c(24)
 
-note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
+note1 <- "Standard errors in parentheses.\n Pre-registered covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
 
 gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
@@ -68,7 +68,7 @@ gm <- list(
 
 ui_tab<-modelsummary(ui.models.uw,
              coef_map = coef_maps,
-            title = "Support for Unemployment Insurance (Home Depot sample) \\label{tab:tab-ui}",
+            title = "Government support for the unemployed (Home Depot) \\label{tab:tab-ui}",
             gof_map = gm,
            # vcov = "robust",
             add_rows = rows, 

@@ -58,7 +58,7 @@ coef_maps <- c("treatment_binTRUE" = "Treated",
 
 rows<-tribble(
   ~"term", ~"Base", ~"State", ~"Pre-exposed",  ~"Pre-registered", ~"Expanded",
-  "SE", "robust", "state-clustered", "robust", "robust", "state-clustered")
+  "Std Errors", "robust", "state-clustered", "robust", "robust", "state-clustered")
 attr(rows, 'position') <- c(21)
 gm <- list(
   list("raw" = "nobs", "clean" = "N", "fmt" = 0),

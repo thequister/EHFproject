@@ -142,9 +142,9 @@ coef_maps <- c("treatment_binTRUE" = "Treated",
 
 rows<-tribble(
   ~"term", ~"Base", ~"Pre-exposed",  ~"Pre-registered", ~"Expanded",
-  "SE", "robust", "robust", "robust", "state-clustered",
-  "SE", "robust", "robust", "robust", "state-clustered")
-attr(rows, 'position') <- c(17, 37)
+  "Std Errors", "robust", "robust", "robust", "state-clustered",
+  "Std Errors", "robust", "robust", "robust", "state-clustered")
+attr(rows, 'position') <- c(19, 39)
 
 
 note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
@@ -153,7 +153,7 @@ note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age
 gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
   list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
-  list("raw" = "F", "clean" = "$F$", "fmt" = 2))
+  list("raw" = "aic", "clean" = "AIC", "fmt" = 1))
 
 ui_hard_tab_wmt<-modelsummary(ui.hard.models.wmt,
              coef_map = coef_maps,
