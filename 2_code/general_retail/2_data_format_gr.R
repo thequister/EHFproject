@@ -292,18 +292,26 @@ gr <- gr %>%
          ideology_conlib_num_0 = ifelse(is.na(ideology_conlib), -1,
                                         (as.numeric(ideology_conlib) - 1)/6), 
          religious = (religion != "Nothing in particular"), 
-         conservative = (ideology == "Conservative"))
+         conservative = (ideology == "Conservative"), 
+         ehf_donate_new = factor(ehf_donate_new, levels = 
+                                   c("I would not donate at all",
+                                     "A one-time donation of less than $20",
+                                     "A one-time donation of more than $20", 
+                                     "A regular donation of less than $20", 
+                                     "A regular donation of more than $20"),
+                                 ordered= TRUE),
+         ehf_donate_new_num = 
+           (as.numeric(ehf_donate_new) - 1)/4)
 
 gr$ehf_donate_exist_num <- gr$ehf_donate_exist == "Yes"
-gr$ehf_donate_new_num <- gr$ehf_donate_new == "Yes"
 
 # Amendments 2: single coding for support/donate
 gr <- gr %>%
   mutate(has_ehf = !is.na(ehf_type_exist), 
          ehf_support_both = ifelse(has_ehf, ehf_support_exist, ehf_support_new), 
-         ehf_donate_both = ifelse(has_ehf, ehf_donate_exist, ehf_donate_new),
-         ehf_support_both_num = ifelse(has_ehf, ehf_support_exist_num, ehf_support_new_num), 
-         ehf_donate_both_num = ifelse(has_ehf, ehf_donate_exist_num, ehf_donate_new_num))
+         #ehf_donate_both = ifelse(has_ehf, ehf_donate_exist, ehf_donate_new),
+         ehf_support_both_num = ifelse(has_ehf, ehf_support_exist_num, ehf_support_new_num))
+         #ehf_donate_both_num = ifelse(has_ehf, ehf_donate_exist_num, ehf_donate_new_num))
 
 write.csv(gr, here("3_cleaned_data", "general_retail_clean.csv"))
 

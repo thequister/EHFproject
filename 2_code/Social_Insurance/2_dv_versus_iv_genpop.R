@@ -1,19 +1,14 @@
-library(here)
-source(here::here('2_code', '1_libraries_and_settings_global.R'))
-here::i_am("2_code/Social_Insurance/2_dv_versus_iv_genpop.R")
+#library(here)
+#source(here::here('2_code', '1_libraries_and_settings_global.R'))
+#here::i_am("2_code/Social_Insurance/2_dv_versus_iv_genpop.R")
 
 gr_clean <- read.csv(here("3_cleaned_data", "general_retail_clean.csv")) %>%
   mutate()
 
-gr_plot <- gr_clean %>%
-  select(st_directed, WG_TANF_Benefit, cashfood, ehf_support_both_num, ehf_donate_both_num) %>%
-  pivot_longer(cols = c("ehf_support_both_num", "ehf_donate_both_num"), names_to = "dv_vars", values_to = "dv_vals")
-
-
 p_supp_st <- ggplot(gr_clean) +
-  geom_point(aes(y = ehf_support_both_num, x = st_directed)) +
-  geom_smooth(aes(y = ehf_support_both_num, x = st_directed), method = "lm", se = FALSE) +
-  labs(x = "State safety net generosity", title = "EHF support Level by State safety net generosity", y = "") +
+  geom_point(aes(y = ehf_support_both_num, x = st_directed*1000), size = 5, shape=1) +
+  geom_smooth(aes(y = ehf_support_both_num, x = st_directed*1000), method = "lm", se = FALSE) +
+  labs(x = "State safety net generosity (USD)", title = "EHF support level by State generosity", y = "") +
   scale_y_continuous(
     labels = c("Not at all supportive", "Moderately supportive", "Very supportive"), 
     breaks = c(0, 0.5, 1),
@@ -28,15 +23,18 @@ p_supp_st <- ggplot(gr_clean) +
 p_supp_st <- ggMarginal(p_supp_st, size=5, alpha = 0.3, type = "histogram", margins = "both", 
                         fill = "slateblue")
 
-ggsave(here("4_output", "plots", "socins_gr_supp_st_directed.pdf"))
+ggsave(filename = 'ui_plot_gr_supp.png',
+       plot = p_supp_st,
+       path = here('4_output', 'plots'))
 
 p_don_st <- ggplot(gr_clean) +
-  geom_point(aes(y = as.numeric(ehf_donate_both_num), x = st_directed)) +
-  geom_smooth(aes(y = as.numeric(ehf_donate_both_num), x = st_directed), method = "lm", se = FALSE) +
-  labs(x = "State safety net generosity", title = "Willingness to donate to EHF by State safety net generosity", y = "") +
+  geom_point(aes(y = as.numeric(ehf_donate_new_num), x = st_directed*1000), size = 5, shape=1) +
+  geom_smooth(aes(y = as.numeric(ehf_donate_new_num), x = st_directed*1000), method = "lm", se = FALSE) +
+  labs(x = "State safety net generosity (USD)", title = "Willingness to donate to EHF by State generosity", y = "") +
   scale_y_continuous(
-    labels = c("Would not donate", "Would donate"),
-    breaks = c(0, 1),
+    labels = c("Would not donate", "One time <$20", 
+               "One time >$20", "Recurring <$20", "Recurring >$20"),
+    breaks = c(0, .25, .5, .75, 1),
     limits = c(0, 1)
   ) +
   coord_cartesian(ylim = c(-0.1, 1.1)) +  # ← Zoom in/out by adjusting these values
@@ -48,6 +46,6 @@ p_don_st <- ggplot(gr_clean) +
 p_don_st <- ggMarginal(p_don_st, size=5, alpha = 0.3, type = "histogram", margins = "both", 
                         fill = "slateblue")
 
-ggsave(here("4_output", "plots", "socins_gr_donate_st_directed.pdf"))
-
-
+ggsave(filename = 'ui_plot_gr_don.png',
+       plot = p_supp_st,
+       path = here('4_output', 'plots'))

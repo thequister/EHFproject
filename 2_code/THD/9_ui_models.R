@@ -29,7 +29,7 @@ ui_lm_c_expand_uw <- update(ui_lm_c_pregreg_uw, .~. + other_welfare +
  
 ui_lm_c_uiwks_uw <- update(ui_lm_c_expand_uw, . ~. -st_directed + I(max_ui_weeks<26))
 ui_lm_c_uiwba_uw <- update(ui_lm_c_pregreg_uw, . ~. + avg_wba)
-ui_lm_c_uiwba_uw <- update(ui_lm_c_pregreg_uw, . ~. + replacement_2021_ui_1)
+ui_lm_c_uiwba_uw <- update(ui_lm_c_pregreg_uw, . ~. + replacement_ui_1)
 ui_lm_c_uitanf_uw <- update(ui_lm_c_expand_uw, . ~. - st_directed + WG_TANF)
 ui_lm_c_uitanfb_uw <- update(ui_lm_c_expand_uw, . ~. - st_directed + WG_TANF_Benefit)
 ui_lm_c_uicf_uw <- update(ui_lm_c_expand_uw, . ~. - st_directed + cashfood)
@@ -124,7 +124,7 @@ pension_lm_c_expand_uw <- update(pension_lm_int_uw, .~. + other_welfare +
                               as.numeric(home_ownership):hpi_5year)
 pension_lm_c_pensionwks_uw <- update(pension_lm_c_pregreg_uw, . ~. + max_ui_weeks)
 pension_lm_c_pensionwba_uw <- update(pension_lm_c_pregreg_uw, . ~. + avg_wba)
-pension_lm_c_pensionwba_uw <- update(pension_lm_c_pregreg_uw, . ~. + replacement_2021_ui_1)
+pension_lm_c_pensionwba_uw <- update(pension_lm_c_pregreg_uw, . ~. + replacement_ui_1)
 pension_lm_c_pensiontanf_uw <- update(pension_lm_c_pregreg_uw, . ~. + WG_TANF)
 pension_lm_c_pensiontanfb_uw <- update(pension_lm_c_pregreg_uw, . ~. + WG_TANF_Benefit)
 pension_lm_c_pensionstd_uw <- update(pension_lm_c_pregreg_uw, . ~. + st_directed)
