@@ -1,8 +1,8 @@
 #library(here)
 #source(here::here('2_code', '1_libraries_and_settings_global.R'))
-#here::i_am("2_code/Social_Insurance/2_hierarchical_models.R")
 
-gr_clean <- read.csv(here("3_cleaned_data", "general_retail_clean.csv"))
+gr_clean <- read.csv(here("3_cleaned_data", "general_retail_clean.csv")) %>%
+  mutate(home_appreciation = home_ownership*hpi_5year)
 
 ## EHF Support Models
 model_1 <- lm(ehf_support_both_num ~ st_directed + age_clean + nonwhite +
@@ -11,7 +11,7 @@ model_1 <- lm(ehf_support_both_num ~ st_directed + age_clean + nonwhite +
 
 model_2 <- lm(ehf_support_both_num ~ st_directed + age_clean + nonwhite +
                 male + college + tenure_num + fulltime + hourly + main_job + 
-                religious + conservative + income_num + has_ehf,
+                religious + conservative + income_num + has_ehf + home_appreciation,
               data = gr_clean)
 
 rob_1_alt_supp <- coeftest(model_1, vcov. = vcovCL(model_1, cluster = gr_clean$residence))
@@ -25,7 +25,7 @@ hier_1_supp <- with(gr_clean, lmer(ehf_support_both_num ~ st_directed + age_clea
 hier_2_supp <- with(gr_clean, lmer(ehf_support_both_num ~ st_directed + age_clean + nonwhite +
                                      male + college + tenure_num + fulltime + hourly + main_job + 
                                      religious + conservative + income_num + (other_welfare == "Yes") +
-                                     conservative:st_directed +
+                                     conservative:st_directed + home_appreciation +
                                      has_ehf + (1 + conservative|residence)))
 
 hier_3_supp <- with(gr_clean, lmer(ehf_support_both_num ~ st_directed + age_clean + nonwhite +
@@ -72,7 +72,7 @@ gm <- list(
 mod_tab_supp <-modelsummary(supp_mods,
                                    #shape = term + response ~ statistic,
                                    coef_map = coef_maps,
-                                   title = "Support for EHF among retail workers by state level safety net generosity models. There is no detected state level variation.  \\label{tab:tab-genpop-ui-models}",
+                                   title = "Support for EHF among retail workers by state level safety net generosity models. There is no detected state level variation.  \\label{tab:tab-genpop-ui-supp}",
                                    gof_map = gm,
                                    add_rows = rows,
                                    notes = list(note1),
@@ -90,20 +90,20 @@ model_1 <- lm(ehf_donate_new_num ~ st_directed + age_clean + nonwhite +
               data = gr_clean)
 
 model_2 <- lm(ehf_donate_new_num ~ st_directed + age_clean + nonwhite +
-                male + college + tenure_num + fulltime + hourly + main_job + 
-                religious + conservative + income_num,
+                male + college + tenure_num + fulltime + hourly + main_job + home_appreciation +
+                religious + conservative + income_num ,
               data = gr_clean)
 
 rob_1_alt_don <- coeftest(model_1, vcov. = vcovCL(model_1, cluster = gr_clean$residence))
 rob_2_alt_don <- coeftest(model_2, vcov. = vcovCL(model_2, cluster = gr_clean$residence))
 
 hier_1_don <- with(gr_clean, lmer(ehf_donate_new_num ~ st_directed + age_clean + nonwhite +
-                                    male + college + tenure_num + fulltime + hourly + main_job + 
+                                    male + college + tenure_num + fulltime + hourly + main_job + home_appreciation +
                                     (other_welfare == "Yes") +
                                     religious + conservative + income_num + (1|residence)))
 
 hier_2_don <- with(gr_clean, lmer(ehf_donate_new_num ~ st_directed + age_clean + nonwhite +
-                                    male + college + tenure_num + fulltime + hourly + main_job + 
+                                    male + college + tenure_num + fulltime + hourly + main_job + home_appreciation +
                                     religious + conservative + income_num + conservative:st_directed +
                                     (other_welfare == "Yes") +
                                     (1 + conservative|residence)))
@@ -151,7 +151,7 @@ gm <- list(
 mod_tab_don <-modelsummary(supp_mods,
                             #shape = term + response ~ statistic,
                             coef_map = coef_maps,
-                            title = "Willingness to donate to EHF among retail workers who do not have an EHF, by state level safety net generosity models. There is no detected state level variation.  \\label{tab:tab-genpop-ui-models}",
+                            title = "Willingness to donate to EHF among retail workers who do not have an EHF, by state level safety net generosity models. There is no detected state level variation.  \\label{tab:tab-genpop-ui-don}",
                             gof_map = gm,
                             add_rows = rows,
                             notes = list(note1),

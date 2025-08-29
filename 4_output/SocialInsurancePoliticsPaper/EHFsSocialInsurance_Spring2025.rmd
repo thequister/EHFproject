@@ -161,12 +161,33 @@ In measuring variation in the state-level safety net, we rely on the simulated b
 
 ## Results
 
-Figure \@()  displays the distributions of both EHF outcomes against our measure of safety net generosity.  Inspection of the graphs suggests that there is no relationship between saftey net generosity and either support for and EHF or willingness to donate. 
+Figure \@() displays the distributions of both EHF outcomes against safety net generosity, measured in US dollars. Inspection of the graphs suggests that there is no relationship between safety net generosity and either support for or willingness to donate to an EHF. 
 
-INSERT DV PLOTS HERE.
+```{r fig-ui-genretail, echo=FALSE, fig.cap = "EHF support and willingness to donate to a potential new EHF, by State level welfare benefits in USD. Marginal distributions of the variables are included as blue histograms.", fig.subcap = c("Support", "Willingness to Donate"), out.width="50%", fig.align = "center"}
+temp<-here::here('2_code', 'Social_Insurance', '2_dv_versus_iv_genpop.R')
+source(temp)
+rm(temp)
 
+knitr::include_graphics( c(
+  here('4_output', 'plots','ui_plot_gr_supp.png' ),
+  here('4_output', 'plots','ui_plot_gr_don.png')
+  )
+)
+```
 
-We explore these relationships further using both linear regression and hierarchical linear models allowing for random intercepts as well as cross-state variation in the effect of political conservatism, both as a function of state-level safety net generosity. In addition to state safety net variables, we also include a variety of other covariates connected to charitable giving propensity and the substitution hypothesis.  These include whether the respondent has used welfare in the past, religiosity, and whether the respondent identifies as politically conservative [@brooksWhoReallyCares2006; @bekkersWhoGivesLiterature2011; @wiepkingWhoGivesLiterature2012; @andreoniCharitableGiving2013].^[describe religiosity and conservative variables]. Because appreciating real estate assets may depress support for the welfare state, we produce a measure of home price increases.  Specifically, we multiply an indicator for home ownership with the 5-year change in the state-level home price index produced by the US Federal Housing Finance Agency.  We also condition and race, gender, age, education, and household income.
+We explore these relationships further using both linear regression and hierarchical linear models allowing for random intercepts as well as cross-state variation in the effect of political conservatism, both as a function of state-level safety net generosity. In addition to state safety net variables, we also include a variety of other covariates connected to charitable giving propensity and the substitution hypothesis.  These include whether the respondent has used welfare in the past, religiosity, and whether the respondent identifies as politically conservative [@brooksWhoReallyCares2006; @bekkersWhoGivesLiterature2011; @wiepkingWhoGivesLiterature2012; @andreoniCharitableGiving2013].^[Religiosity is a binary variable measuring if a respondent declared affiliation with any religion. Conservatism is also a binary variable, measuring whether the respondent placed themselves as "Conservative" or "Leaning Conservative" in a question about ideological identification.]. Because appreciating real estate assets may depress support for the welfare state, we produce a measure of home price increases.  Specifically, we multiply an indicator for home ownership with the 5-year change in the state-level home price index produced by the US Federal Housing Finance Agency. We also use the disaggregated version of these two variables in Model E. We condition on race, gender, age, education, and household income.
+
+```{r tab-ui-genpop,eval=TRUE, echo = FALSE, tab.cap="EHF support and willingness to donate regression tables" }
+temp<-here::here('2_code', 'Social_insurance', '3_hierarchical_models.R')
+source(temp)
+rm(temp)
+
+mod_tab_supp
+mod_tab_don
+
+```
+
+In Tables \@ref(tab:tab-genpop-ui-supp) and \@ref(tab:tab-genpop-ui-don) we present five models, of increasing complexity, that regress EHF support and willingness to donate to an EHF on state level generosity. The first two models are cluster robust standard error OLS models, which find no significant effects for state generosity. The latter three are hierarchical models which should be able to detect any state level variation either in the intercept or the slope of key variables. These variances are close to zero, which given the [0, 1] range of the response, signify that no additional variance is explained by the hierarchical structure. This is also clear when examining model performance. As our models become more complex, AIC values increase, indicating that the overall model fit is deteriorating. The results, therefore, indicate no evidence in favor of either version of the substitution hypothesis. There is little to no variation in terms of state level effects on EHF support and willingness to donate that is explained through State-level variation in benefit generosity.
 
 # Studies 2 & 3 {#sec-study2-3}
 ## Case selection
