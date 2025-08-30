@@ -47,5 +47,5 @@ p_don_st <- ggMarginal(p_don_st, size=5, alpha = 0.3, type = "histogram", margin
                         fill = "slateblue")
 
 ggsave(filename = 'ui_plot_gr_don.png',
-       plot = p_supp_st,
+       plot = p_don_st,
        path = here('4_output', 'plots'))
