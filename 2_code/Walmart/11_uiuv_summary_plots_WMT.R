@@ -1,4 +1,4 @@
-#source("1_libraries_and_settings.R")
+#source(here::here("2_code", "1_libraries_and_settings_global.R"))
 #source("2_data_format.R")
 
 
@@ -50,6 +50,17 @@ unionvote_pretr_trplacebo <- wmt %>%
   select(-ci)
 #print(unionvote_pretr_trplacebo)
 
+
+union_coworker <-wmt.hq |>
+  group_by(treatment_bin) %>%
+  summarise(
+    n = n(),
+    mean_val = mean(union_coworkers_6, na.rm = TRUE),
+    sd_val = sd(union_coworkers_6, na.rm = TRUE),
+    ci_lower = t.test(union_coworkers_6, conf.level = 0.95)$conf.int[1],
+    ci_upper = t.test(union_coworkers_6, conf.level = 0.95)$conf.int[2],
+    .groups = "drop"
+  )
 
 ui.out.wmt<-wmt.hq_unwgt %>% 
   group_by(treatment_bin, govt_responsib_unemp_num) %>%
@@ -131,6 +142,25 @@ uv_plot_placebo <- uv_plot_placebo + geom_col(position = dodge, alpha = 0.2) +
   theme(legend.position = "top",
         panel.grid = element_blank())
 
+
+# coworker plot
+
+union_coworker_plot <-  ggplot(union_coworker, 
+  aes(factor(treatment_bin, levels = c(FALSE, TRUE), labels = c("control", "treated")),
+   y = mean_val)) +
+  ylim(45, 60) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.1) +
+  labs(
+    x = NULL,
+    y = "% coworkers voting for union",
+    title = "Treatment effect on expected union support"
+  ) +
+  theme_minimal()
+ggsave(filename = 'coworker_plot_wmt.png',
+       plot = union_coworker_plot,
+       path = here('4_output', 'plots'),
+       bg = "white")
 
 ## UI plot
 
