@@ -2,7 +2,7 @@
 title: "Private Welfare as Corporate Governance"
 subtitle: "Evidence from Employee Hardship Funds"
 #author: 
-#   - John S. Ahlquist^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, Theodoros Ntounias, and Yuchen Wang provided research assistance.  Versions of this research were presented at the APSA, LERA, CAPE and EPSA meetings as well as seminars at Columbia, Duke, IE-Madrid, Universitat de Barcelona, Wisconsin, and Yale. Kate Bronfenbrenner, Daniel Galvin, Jake Grumbach, Tom Kochan, Margaret Levi, Elizabeth Lyons, and Eric Thai provided helpful comments.  Shane Xuan assisted with Facebook.]
+#   - John S. Ahlquist^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, Theodoros Ntounias, and Yuchen Wang provided research assistance.  Versions of this research were presented at the APSA, LERA, CAPE and EPSA meetings as well as seminars at Columbia, Copenhagen Business School, Duke, IE-Madrid, Universitat de Barcelona, Wisconsin, and Yale. Kate Bronfenbrenner, Daniel Galvin, Jake Grumbach, Tom Kochan, Margaret Levi, Elizabeth Lyons, and Eric Thai provided helpful comments.  Shane Xuan assisted with Facebook.]
   
 #date: "`r format(Sys.time(), '%d %B, %Y')`"
 
@@ -26,6 +26,12 @@ header-includes:
    - \usepackage[normalem]{ulem}
    - \usepackage[figureposition=top,tableposition=top]{caption}
    - \captionsetup[subfigure]{position=bottom}
+   - \usepackage{pdflscape}
+   - \usepackage{booktabs}
+   - \usepackage{longtable}
+   - \usepackage{array}
+   - \usepackage{multirow}
+   - \usepackage{makecell}
 
 ---
 \begin{abstract}
@@ -698,7 +704,8 @@ study_table <- tibble(
       "Respondents were sent emails inviting them into the follow-up survey one week after completion, offering a second raffle entry. ",
       "They were contacted a maximum of three times. We received valid follow-up responses from ",
       followup_n, " (", followup_pct, "\\%) of those completing the main survey. ",
-      "Analysis appears below, but low response rates and small samples limit the power and reliability of results."
+      "There is no evidence that treatment in the main survey affected selection into the followup.",
+      "As the sample size is small and underpowered, we do not analyze the follow-up."
     )
   )
 )
@@ -736,111 +743,32 @@ knitr::include_graphics(here('4_output', 'plots', 'HF_donation_suggestions.png')
 ```
 
 \newpage
-# Home Depot Survey summary table (unweighted) {#app-survsum-uw}
+# Home Depot survey sample and correlation table (unweighted) {#app-survsum-uw}
 
-The unweighted sample is older and skewed slightly male relative to reported Facebook demographics for Home Depot workers.^[Our sample is `r 100*round(summary_tab_uw$male,2)`% male and has a median age of `r summary_tab_uw$age` compared to Facebook reported values of 53% male with a median age in the 30-39 interval.  The weighted sample is 52% male with a median age of 38.] The sample is `r 100*(1-round(summary_tab_uw$nonwhite,2))`% white. 
+```{r tab-desc-thd-uw, echo=FALSE, results = 'asis', tab.cap="Home Depot survey variable summaries"}
 
-```{r tab-sum-uw, echo=FALSE, tab.cap="Home Depot survey summary (unweighted)"}
-tbl_sum_1<- 
-  THD_comp_uw |> 
-  select(HDTreatment, EHF_aware_list, EHF_aware_simp, rk_age, male, main_job, 
-         tenure_fac, nonwhite, fulltime, hourly, college,  HF_know, HF_applied,
-         HF_received, HF_donate) |> 
-  gtsummary::tbl_summary(by = HDTreatment,
-                         missing_text = "(missing/not gathered)",
-                       label = list(#HDTreatment ~ "treatment", 
-                                    EHF_aware_list ~ "EHF awareness (list)", 
-                                    EHF_aware_simp ~ "EHF awareness (cntrl)",
-                                    rk_age ~ "age", male ~ "male",
-                                    main_job ~ "main job", tenure_fac ~ "job tenure",
-                                    nonwhite ~ "PoC/nonwhite", fulltime ~ "full time",
-                                    hourly ~ "hourly", college ~ "college degree",
-                                    HF_know ~ "knows EHF recipient", HF_applied ~"applied to EHF", 
-                                    HF_received ~ "received EHF grant", HF_donate ~"donated to EHF"
-                                    )
-) |>  
-  gtsummary::modify_caption("**Sample summary statistics by treatment group**") |> 
-  gtsummary::bold_labels() |> 
-  gtsummary::as_kable_extra()
+temp<-here::here('2_code', 'THD', '11_summary_corr_thd.R')
+source(temp)
 
-tbl_sum_1
+thd_desc_tab
 
+rm(temp)
 
-tbl_sum_2<- 
-  THD_comp_uw |> 
-  select(HDTreatment,wrk_loyal, emp_loyal, emp_reco, 
-         union_vote, gov_ui, gov_pension, gov_childcare) |>
-  gtsummary::tbl_summary(by = HDTreatment,
-                         missing_text = "(missing/not gathered)",
-                       label = list(
-                         #HDTreatment ~ "treatment",
-                         wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
-                                    emp_reco~"recommend employer", union_vote ~"union vote", 
-                                    gov_ui ~"UI support", gov_pension~"pension support", gov_childcare~"childcare support"
-                       )
-  )
-tbl_sum_2 |> 
-  gtsummary::modify_caption("*summary table (cont'd)*") |> 
-  gtsummary::bold_labels() |> 
-  gtsummary::as_kable_extra()
-                          
 ```
 
-\newpage
+We can compare the unweighted survey sample to Facebook-reported reported demographics for the targeted respondents.  The sample is older and skewed slightly male relative to reported Facebook demographics for Home Depot workers. Our sample is `r 100*round(summary_tab_uw$male,2)`% male and has a median age of `r summary_tab_uw$age` compared to Facebook reported values of 53% male with a median age in the 30-39 interval.  The weighted sample is 52% male with a median age of 38. The unweighted sample is `r 100*(1-round(summary_tab_uw$nonwhite,2))`% white. 
 
-# Home Depot Survey summary table (weighted){#app-survsum-w}
-
-```{r tab-sum-w, echo=FALSE, tab.cap="Home Depot survey summary (weighted)"}
-
-tbl_sum_1<- 
-  THD_comp |> 
-  select(HDTreatment, EHF_aware_list, EHF_aware_simp, rk_age, male, main_job, 
-         tenure_fac, nonwhite, fulltime, hourly, college,  HF_know, HF_applied,
-         HF_received, HF_donate) |> 
-  gtsummary::tbl_svysummary(by = HDTreatment,
-                         missing_text = "(missing/not gathered)",
-                       label = list(
-                         #HDTreatment ~ "treatment", 
-                         EHF_aware_list ~ "EHF awareness (list)", 
-                                    EHF_aware_simp ~ "EHF awareness (cntrl)",
-                                    rk_age ~ "age", male ~ "male",
-                                    main_job ~ "main job", tenure_fac ~ "job tenure",
-                                    nonwhite ~ "PoC/nonwhite", fulltime ~ "full time",
-                                    hourly ~ "hourly", college ~ "college degree",
-                                    HF_know ~ "knows EHF recipient", HF_applied ~"applied to EHF", 
-                                    HF_received ~ "received EHF grant", HF_donate ~"donated to EHF"
-                                    )
-) |>  
-  gtsummary::modify_caption("**Sample summary statistics by treatment group**") |> 
-  gtsummary::bold_labels() |> 
-  gtsummary::as_kable_extra()
-
-tbl_sum_1
+```{r tab-cor-thd-uw, echo=FALSE, results = 'asis', tab.cap="Home Depot survey correlation matrix"}
 
 
-tbl_sum_2<- 
-  THD_comp |> 
-  select(HDTreatment,wrk_loyal, emp_loyal, emp_reco, 
-         union_vote, gov_ui, gov_pension, gov_childcare) |>
-  gtsummary::tbl_svysummary(by = HDTreatment,
-                         missing_text = "(missing/not gathered)",
-                       label = list(
-                         #HDTreatment ~ "treatment",
-                         wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
-                                    emp_reco~"recommend employer", union_vote ~"union vote", 
-                                    gov_ui ~"UI support", gov_pension~"pension support", gov_childcare~"childcare support"
-                       )
-  )
-tbl_sum_2 |> 
-  gtsummary::modify_caption("*summary table (cont'd)*") |> 
-  gtsummary::bold_labels() |> 
-  gtsummary::as_kable_extra()
+thd_cor_tab
+
 
 ```
 
 \newpage
 
-# Walmart survey details {#app-wmt-survsum}
+# WalMart survey sample and correlation table (unweighted) {#app-wmt-survsum}
 
 ```{r tab-sum-wmt, echo=FALSE, tab.cap= "Walmart survey summary"}
  temp<-here::here('2_code', 'Walmart', '15_balance_check_WMT.R')
@@ -879,7 +807,7 @@ Control group respondents saw no information about the EHF in the survey.  One m
 
 When we look at the percent of respondents saying they know someone who received EHF money to those identifying the cash grant program from the list of benefits, we find that `r round(100*aware_know_xt["FALSE","Yes"]/sum(aware_know_xt[,"Yes"]),0)`% _failed_ to identify the cash grant program as one of their job benefits.
 
-These indicate that knowledge of the Homer Fund was "broad but thin."
+This set of discrepencies is consistent with the notion the Home Depot worker awareness was broad-but-thin:  they were aware of a program that provides some relief in need, but there is some confusion about whether this is a charitable program or a job benefit.
 
 \newpage
 
@@ -1216,26 +1144,3 @@ framing_test |>
   kable_styling(latex_options = c("hold_position"))
 ```
 
-\newpage
-
-# Follow-up survey (Walmart) {#app-followup-wmt}
-
-
-We sent an email invitation to a followup survey to all Walmart survey respondents who provided an email.  In the end, we received `r sum(!is.na(wmt.hq$age_f))` or `r round(100*sum(!is.na(wmt.hq$age_f)) /nrow(wmt.hq))`% of those completing the main survey.
-
-Table \@ref(tab:tab-fu-wmt) reports logistic regression estimates of selection into the followup survey based on binary and full treatment status in the main survey. There is no evidence the treatment in the main survey affected selection into the followup.
-
-```{r tab-fu-wmt, echo = FALSE, tab.cap = "Logit regression of selection into followup", results= 'asis'}
-temp<-here::here('2_code', 'Walmart', '16_followup_models_WMT.R')
-source(temp)
-rm(temp)
-
-logit_tab_followup
-```
-
-
-In Table \@ref(tab:tab-uv-models-fu-wmt),  I report mutinomial logistic regression results for the union support question, the only outcome from the main Walmart survey for which there was a detectable treatment effect included in the followup.   The base model compares the union vote outcomes for respondents in the followup survey based on their treatment status in the original survey.  The second model reports the same model employing stabilized IPW weights, as pre-registered.^[IPW weights were calculated using a full treatment $\times$ covariate interaction logistic regression.]  In neither case is there any detectable effect one week later, but small samples combined with the sensitivity of point estimates to the IPW weights suggests that the followup survey is too underpowered for any strong conclusions to be drawn.
-
-```{r tab-uv-models-fu-wmt, echo = FALSE, tab.cap = "Multinomial logit regression of union support in the Walmart followup", results= 'asis'}
-multinom_tab_followup
-```
