@@ -70,17 +70,43 @@ genpop_w<- genpop  |>
 
 ```
 
+It is now widely accepted that corporate social responsibility (CSR) initiatives can serve important corporate governance functions, especially around recruiting, motivating, and retaining workers [@ruppEmployeeReactionsCorporate2006; @turbanCorporateSocialPerformance1997; @bodeCorporateSocialInitiatives2015; @burbanoGettingGigWorkers2021; @bodeCorporateSocialInitiatives2015; @greeningCorporateSocialPerformance2000; @portocarreroEffectsShortTermCorporate2024; @toninCorporatePhilanthropyProductivity2015]. But the vast majority of research examines external CSR--charitable donations, volunteerism, environmental commitments directed outside the firm. Far less is known about how firms use CSR-like programs directed at their own employees.^[Existing studies generally conceive of ``internal CSR'' as covering standard issues of compensation, benefits, training and working conditions.  See @brammerContributionCorporateSocial2007a and @farooqMultiplePathwaysWhich2017, among others.] 
+
+This paper documents and analyzes a widespread but unstudied organizational practice: Employee Hardship Funds (EHFs). EHFs are employer-administered programs that provide emergency cash grants to workers facing unexpected crises--house fires, crime victimization, medical emergencies, natural disasters. What distinguishes EHFs from standard employee benefits is their structure: they are funded substantially through donations from workers themselves, creating a hybrid of corporate welfare and worker mutual aid. Many large US employers now operate EHFs. We have documented over 320 firms with active programs, including nine of the ten largest US retailers. Despite their prevalence, EHFs remain almost entirely absent from management research.
+
+EHFs sit at the intersection of three important organizational phenomena. First, they represent a contemporary form of welfare capitalism--employer-provided benefits designed to foster loyalty and attachment [@brandesAmericanWelfareCapitalism1976; @jacobyModernManorsWelfare1998]. Second, they incorporate elements of mutual aid: workers pooling resources to assist one another, historically associated with unions and fraternal organizations [@beitoMutualAidWelfare2000; @glennUnderstandingMutualBenefit2001; @dreyfusLabourMovementMutual1993; @webbHistoryTradeUnionism1920]. Third, they emerge in a US labor market context characterized by declining unionization, rising employment precarity, and weakened public safety nets [@hackerGreatRiskShift2019; @naiduThereAnyFuture2022; @thelenAmericanPrecariatCapitalism2019]. This combination raises fundamental questions: How do workers perceive and engage with these programs? Do EHFs function as the genuine support mechanisms they claim to be? And what are their effects on workplace attachment and labor relations?
+
+Drawing on three original, pre-registered studies, this paper provides the first systematic evidence on EHFs and their consequences.^[The study was pre-registered under osf.io/fhq93.  In appendix \@ref(app-PAP), I document where the execution, analysis, or reporting deviates from the pre-analysis plans.] Study 1 surveys US retail workers nationally to establish baseline awareness and attitudes. Despite EHFs being common at major retailers, only 23% of workers report their employer offers emergency cash assistance. Yet when explained, workers strongly value these programs—rating them as attractive as improved health insurance when considering job offers. Workers also prefer EHF designs that give them voice in program governance.
+
+Studies 2 and 3 examine workers at two large retailers with established but programmatically distinct EHFs: Home Depot and Walmart. Home Depot's Homer Fund is generous (grants up to \$10,000), heavily promoted through videos and donation drives, and integrated into a corporate culture emphasizing teamwork. Walmart's ACNT offers smaller grants (\$1,500 maximum), receives minimal promotion, and operates in a firm known for cost control rather than employee investment. Using survey experiments with independently recruited samples at each firm, I randomly expose workers to realistic information about their employer's EHF and measure effects on financial security, job attachment, and support for unionization.
+
+The findings reveal a striking paradox. EHF messaging increases worker attachment to employers and coworkers, but has no effect on subjective financial security, the programs' stated purpose. At Home Depot, exposure to EHF information significantly reduces support for unionization, particularly among workers previously unaware of the program. At Walmart, the same treatment produces opposite effects: reduced opposition to unions and increased perceptions that coworkers would support collective action. These divergent effects correspond to differences in program generosity, promotion, and alignment with broader corporate culture.  With only two firms, I cannot definitively identify what moderators EHF impacts, but findings suggest that 
+
+This research makes three contributions. First, it documents a widespread organizational practice that has escaped scholarly attention despite operating at scale across multiple industries. The descriptive findings alone—about awareness, engagement patterns, and worker preferences—establish important stylized facts about how contemporary firms blend private welfare with symbolic appeals to solidarity.
+
+Second, the experimental findings uncover a consequential paradox: EHFs can foster affective attachment without improving material security. This challenges assumptions that loyalty-building programs must deliver tangible benefits. Workers respond to symbolic welfare—the perception of care and mutual support—independent of whether programs actually enhance their economic position. This has implications for understanding how organizational practices shape attachment in the absence of substantive material gains.
+
+Third, the findings complicate narratives about corporate social responsibility and worker welfare. EHFs are not straightforwardly benevolent or manipulative. They address real needs (workers value them) but their governance effects depend on implementation and context. At their best, they may provide genuine emergency support while strengthening workplace community. At their worst, they may substitute symbolic gestures for meaningful security while discouraging collective action. The divergent effects at Home Depot and Walmart suggest these programs operate as tools of labor relations management, but in ways that are highly contingent and not yet fully predictable.
+
+These findings matter for several audiences. For scholars of CSR and human resources, EHFs reveal how firms use welfare-adjacent programs as governance mechanisms, extending our understanding to new areas of employer-employee relations. For labor relations researchers, EHFs may be part of union avoidance operating through cultural signaling rather than threats—and one that can backfire. For researchers studying the privatization of welfare, EHFs illustrate how corporations fill gaps left by weakened public safety nets, raising normative questions about whose interests these arrangements ultimately serve.
+
+The paper proceeds as follows. Section 1 describes EHFs in practice, documenting their growth and variation. Section 2 reviews relevant literatures on mutual aid, welfare capitalism, and CSR to develop hypotheses. Sections 3 and 4 present the three studies and results. Section 5 discusses implications and limitations.
+
+
+
+XXXXXX
+
 It is now widely accepted that corporate social responsibility (CSR) initiatives can serve important corporate governance functions, especially around recruiting, motivating, and retaining workers.  But everything we know about CSR effects comes from studies of outwardly-directed CSR activities: corporate philanthropy, volunteerism, and environmental sustainability efforts. What effect does *inward*-oriented CSR---voluntary charitable programs directed toward internal stakeholders---have on workplace culture and labor relations?
 
 A growing number of employers are sponsoring a novel form of inward-CSR: Employee Hardship Funds (EHFs). These programs offer emergency cash grants to workers facing unexpected crises, funded in part through donations from coworkers. Employers administer their EHFs directly or via third-party nonprofit partners.  EHFs are often promoted in ways that signal care and community among workers. Although EHFs are widespread in sectors like retail, EHFs (and inward CSR more generally) remain almost entirely unstudied in management research.  These program are all the more noteworthy in the contemporary US labor market, characterized by declining unionization, the rise of precarious employment, and weakened public safety nets. 
 
-This paper offers the first systematic investigation of EHFs as a tool of corporate governance. I argue that EHFs blend elements of employer-led welfare capitalism [@brandesAmericanWelfareCapitalism1976; @jacobyModernManorsWelfare1998] with worker mutual aid arrangements often associated with labor unions.  EHFs operate simultaneously as a workplace amenity, a signal of corporate culture, and a potential instrument of labor control. As such, EHFs provide a tractable setting for examining key questions at the intersection of CSR, corporate culture, and labor relations: Do worker-oriented CSR initiatives increase job attachment? Can they reduce support for unionization? And under what conditions are these effects more or less likely?  Before we can answer these questions, we first need to establish some basic facts about worker awareness and engagement with these programs. 
+This paper offers the first systematic investigation of EHFs as a tool of corporate governance. I argue that EHFs blend elements of employer-led welfare capitalism  with worker mutual aid arrangements often associated with labor unions.  EHFs operate simultaneously as a workplace amenity, a signal of corporate culture, and a potential instrument of labor control. As such, EHFs provide a tractable setting for examining key questions at the intersection of CSR, corporate culture, and labor relations: Do worker-oriented CSR initiatives increase job attachment? Can they reduce support for unionization? And under what conditions are these effects more or less likely?  Before we can answer these questions, we first need to establish some basic facts about worker awareness and engagement with these programs. 
 
-EHFs connect to the ongoing debate about whether and how CSR initiatives shape worker attitudes and behavior in large, geographically dispersed firms.  CSR programs can help attract value-aligned workers, foster attachment to the firm and to coworkers, reduce turnover, and even elicit increased, uncompensated work effort [@ruppEmployeeReactionsCorporate2006; @turbanCorporateSocialPerformance1997; @bodeCorporateSocialInitiatives2015; @burbanoGettingGigWorkers2021; @bodeCorporateSocialInitiatives2015; @greeningCorporateSocialPerformance2000; @portocarreroEffectsShortTermCorporate2024; @toninCorporatePhilanthropyProductivity2015]. Other work shows that these effects are contingent and depend on beliefs about managerial motivations and CSR consistency with broader employment practices  [@cassarIntentionsDoingGood2021; @burbanoMitigatingGigRemote2022; @listWhenCorporateSocial2021; @zhaoInfluenceCorporateSocial2022; @brisceseWhoBenefitsCorporate2021; @amengualTrueMotivesProsocial2021]. CSR efforts that appear inauthentic or inconsistent with internal culture may backfire.
+EHFs connect to the ongoing debate about whether and how CSR initiatives shape worker attitudes and behavior in large, geographically dispersed firms.  CSR programs can help attract value-aligned workers, foster attachment to the firm and to coworkers, reduce turnover, and even elicit increased, uncompensated work effort . Other work shows that these effects are contingent and depend on beliefs about managerial motivations and CSR consistency with broader employment practices  [@cassarIntentionsDoingGood2021; @burbanoMitigatingGigRemote2022; @listWhenCorporateSocial2021; @zhaoInfluenceCorporateSocial2022; @brisceseWhoBenefitsCorporate2021; @amengualTrueMotivesProsocial2021]. CSR efforts that appear inauthentic or inconsistent with internal culture may backfire.
 
 EHFs also provide a tractable and unexplored context for studying whether private governance initiatives benefit workers [@lockePromiseLimitsPrivate2013; @ahlquistFirmParticipationVoluntary2020; @distelhorstDoesLeanImprove2017; @brisceseWhoBenefitsCorporate2021] while connecting with the cross-disciplinary literature on worker support for unionization [@ahlquistRiseUnionCurious2024; @kochanWorkerVoiceAmerica2019a; @pezoldLaborMarketTightness2023; @naiduThereAnyFuture2022].
 
-I investigate these issues using three original, pre-registered studies.^[The study was pre-registered under osf.io/fhq93.  In appendix \@ref(app-PAP), I document where the execution, analysis, or reporting deviates from the pre-analysis plans.]  Study 1 presents results from a national survey of U.S. retail workers.  I document limited awareness of EHFs, but strong interest in having such a program at one’s current employer, especially if workers have influence over fund governance. Studies 2 and 3 are survey experiments conducted with independently gathered samples of workers at the Home Depot and Walmart, two large retailers with long-running but programatically distinct EHFs. In each study, I randomly assign exposure to employer-produced or adapted EHF video messages. I then examine effects on perceived financial security, job attachment, and support for unionization, accounting for workers who were already aware of the program prior to the survey experiment.
+I investigate these issues using three original, pre-registered studies.  Study 1 presents results from a national survey of U.S. retail workers.  I document limited awareness of EHFs, but strong interest in having such a program at one’s current employer, especially if workers have influence over fund governance. Studies 2 and 3 are survey experiments conducted with independently gathered samples of workers at the Home Depot and Walmart, two large retailers with long-running but programatically distinct EHFs. In each study, I randomly assign exposure to employer-produced or adapted EHF video messages. I then examine effects on perceived financial security, job attachment, and support for unionization, accounting for workers who were already aware of the program prior to the survey experiment.
 
 The findings break new empirical ground. I show that EHF exposure has no effect on perceived financial security in either study, contrary to the programs' purported intentions.  In some contexts, exposure to EHF messaging increases attachment to employers and coworkers. At the Home Depot, EHF messages significantly reduce support for unionization, especially among workers previously unaware of the fund. At Walmart, where the fund is less generous and less culturally embedded, EHF messaging has no effect on job attachment, but decreases opposition to unionization and increases workers’ perceptions that their coworkers would support a union. Just as with outwardly-oriented CSR, the effects of inward-oriented CSR on workers depend on both the nature of the EHF itself as well as other corporate practices, norms, and messages that form a corporate culture. While EHFs can function as tools of corporate governance, effects are neither automatic nor universal.
 
@@ -734,13 +760,13 @@ tbl_sum_genpop_1w
 tbl_sum_genpop_2w
 ```
 
-\newpage
+<!-- \newpage -->
 
-# Home Depot suggested Homer Fund contribution rates {#app-THD-suggcont}
+<!-- # Home Depot suggested Homer Fund contribution rates {#app-THD-suggcont} -->
 
-```{r fig-sugdon, echo=FALSE, fig.cap="Suggested Homer Fund donation levels as of 2025", out.width="60%", fig.pos='H'}
-knitr::include_graphics(here('4_output', 'plots', 'HF_donation_suggestions.png'))
-```
+<!-- ```{r fig-sugdon, echo=FALSE, fig.cap="Suggested Homer Fund donation levels as of 2025", out.width="60%", fig.pos='H'} -->
+<!-- knitr::include_graphics(here('4_output', 'plots', 'HF_donation_suggestions.png')) -->
+<!-- ``` -->
 
 \newpage
 # Home Depot survey sample and correlation table (unweighted) {#app-survsum-uw}
@@ -756,33 +782,51 @@ rm(temp)
 
 ```
 
-We can compare the unweighted survey sample to Facebook-reported reported demographics for the targeted respondents.  The sample is older and skewed slightly male relative to reported Facebook demographics for Home Depot workers. Our sample is `r 100*round(summary_tab_uw$male,2)`% male and has a median age of `r summary_tab_uw$age` compared to Facebook reported values of 53% male with a median age in the 30-39 interval.  The weighted sample is 52% male with a median age of 38. The unweighted sample is `r 100*(1-round(summary_tab_uw$nonwhite,2))`% white. 
+<!-- We can compare the unweighted survey sample to Facebook-reported reported demographics for the targeted respondents.  The sample is older and skewed slightly male relative to reported Facebook demographics for Home Depot workers. Our sample is `r 100*round(summary_tab_uw$male,2)`% male and has a median age of `r summary_tab_uw$age` compared to Facebook reported values of 53% male with a median age in the 30-39 interval.  The weighted sample is 52% male with a median age of 38. The unweighted sample is `r 100*(1-round(summary_tab_uw$nonwhite,2))`% white.  -->
 
 ```{r tab-cor-thd-uw, echo=FALSE, results = 'asis', tab.cap="Home Depot survey correlation matrix"}
 
 
-thd_cor_tab
+#thd_cor_tab
+thd_cor_tab_1
+thd_cor_tab_2
 
 
 ```
 
 \newpage
 
-# WalMart survey sample and correlation table (unweighted) {#app-wmt-survsum}
-
-```{r tab-sum-wmt, echo=FALSE, tab.cap= "Walmart survey summary"}
- temp<-here::here('2_code', 'Walmart', '15_balance_check_WMT.R')
+# Walmart survey sample and correlation table (unweighted) {#app-wmt-survsum}
+Correlation matrix using the binary treatment indicator
+```{r tab-sum-wmt, echo=FALSE, results = 'asis', tab.cap= "Walmart survey variable summaries"}
+temp<-here::here('2_code', 'Walmart', '17_summary_corr_wmt.R')
 source(temp)
+wmt_desc_tab
 rm(temp)
-
-tbl_sum_WMT_1
-tbl_sum_WMT_2
-tbl_sum_WMT_1w
-tbl_sum_WMT_2w
+wmt_cor_tab_1
+wmt_cor_tab_2
+wmt_cor_tab_3
 ```
 
 
+
+<!-- ```{r tab-sum-wmt, echo=FALSE, tab.cap= "Walmart survey summary"} -->
+<!--  temp<-here::here('2_code', 'Walmart', '15_balance_check_WMT.R') -->
+<!-- source(temp) -->
+<!-- rm(temp) -->
+
+<!-- tbl_sum_WMT_1 -->
+<!-- tbl_sum_WMT_2 -->
+<!-- tbl_sum_WMT_1w -->
+<!-- tbl_sum_WMT_2w -->
+<!-- ``` -->
+
+
 ```{r tab-bal-wmt, echo=FALSE, eval = FALSE, tab.cap= "Balance tests for Walmart survey sample"}
+temp<-here::here('2_code', 'Walmart', '15_balance_check_WMT.R')
+source(temp)
+rm(temp)
+
 bal_tbl <- tab$Balance[,1:3]
 
 bal_tbl %>%
@@ -791,15 +835,13 @@ bal_tbl %>%
     booktabs = TRUE,
     caption = "Covariate Balance Table \\label{tab:balance}"
   ) %>%
-  kable_styling(latex_options = c("striped", "hold_position"))
+  kable_styling(latex_options = c("hold_position"))
 
-#print(bal_tbl)
+print(bal_tbl)
 ```
 
 
-
 \newpage
-
 
 # Home Depot EHF awareness measures {#app-HFaware}
 
@@ -808,21 +850,6 @@ Control group respondents saw no information about the EHF in the survey.  One m
 When we look at the percent of respondents saying they know someone who received EHF money to those identifying the cash grant program from the list of benefits, we find that `r round(100*aware_know_xt["FALSE","Yes"]/sum(aware_know_xt[,"Yes"]),0)`% _failed_ to identify the cash grant program as one of their job benefits.
 
 This set of discrepencies is consistent with the notion the Home Depot worker awareness was broad-but-thin:  they were aware of a program that provides some relief in need, but there is some confusion about whether this is a charitable program or a job benefit.
-
-\newpage
-
-# Job attachment index components (Home Depot) {#app-HFattachment}
-
-Figures \@ref(fig:fig-loyalty) displays the distribution of responses by treatment groups across all three questions in the Home Depot attachment index.     
-
-```{r fig-loyalty, echo=FALSE, fig.height=12, fig.cap="Attachment to co-workers and employer (weighted)", fig.pos='H'}
-temp<-here::here('2_code', 'THD', '5_loyalty_summary_plots.R')
-source(temp)
-rm(temp)
-#sds <- c(sd(wrkloyal_reg_b$y), sd(employal_reg_b$y), sd(empreco_reg_b$y) )
-
-```
-
 
 \newpage
 
@@ -835,6 +862,78 @@ rm(temp)
 p.ord
 
 ```
+
+\newpage
+
+# Job attachment index components {#app-attachmentindex}
+## Home Depot {#app-HFattachment}
+
+```{r fa-plot-thd, eval=TRUE, echo=FALSE, }
+thd.jai.df<- THD_comp_uw[,c("wrk_loyal_num", "emp_loyal_num", "emp_reco_num")]
+nf.thd <- parameters::n_factors(thd.jai.df)
+plot(nf.thd, type="line")
+```
+
+```{r fa-tab-thd, eval=TRUE, echo=FALSE, results='asis'}
+
+fa.thd<-parameters::factor_analysis(thd.jai.df)
+fa.thd.tab <- fa.thd |> 
+  kable(
+  format = "latex",
+    booktabs = TRUE,
+  digits = 2,
+  col.names = c("Variable", "MR1", "Complexity", "Uniqueness"),
+  caption = "Factor loadings and uniqueness from one-factor solution"
+)
+
+fa.thd.tab
+
+```
+
+
+Figures \@ref(fig:fig-loyalty) displays the distribution of responses by treatment groups across all three questions in the Home Depot attachment index.     
+
+```{r fig-loyalty, echo=FALSE, fig.height=12, fig.cap="Job attachment index components by treatment", fig.pos='H'}
+temp<-here::here('2_code', 'THD', '5_loyalty_summary_plots.R')
+source(temp)
+rm(temp)
+#sds <- c(sd(wrkloyal_reg_b$y), sd(employal_reg_b$y), sd(empreco_reg_b$y) )
+
+```
+
+## Walmart {#app-indexcomps-wmt}
+
+```{r fa-plot-wmt, eval=TRUE, echo=FALSE, }
+wmt.jai.df<- wmt.hq[,c("wrk_loyal_num", "emp_loyal_num", "emp_reco_num", "new_job_num")]
+nf.wmt <- parameters::n_factors(wmt.jai.df)
+plot(nf.wmt, type="line")
+```
+
+
+```{r fa-tab-wmt, eval=TRUE, echo=FALSE, results='asis'}
+
+fa.wmt<-parameters::factor_analysis(wmt.jai.df)
+fa.wmt.tab <- fa.wmt |> 
+  kable(
+  format = "latex",
+    booktabs = TRUE,
+  digits = 2,
+  col.names = c("Variable", "MR1", "Complexity", "Uniqueness"),
+  caption = "Factor loadings and uniqueness from one-factor solution"
+)
+fa.wmt.tab
+```
+
+Figure \@ref(fig:fig-attachmentparts-wmt) displays the distribution of responses by treatment groups across all four items in the Walmart job attachment index. 
+
+```{r fig-attachmentparts-wmt, eval=TRUE, echo = FALSE, fig.cap="Job attachment (Walmart)", fig.pos='H'}
+
+newjob.p
+wk.loyal_wmt
+emp.loyal_wmt
+emp.reco_wmt
+```
+
 \newpage
 
 # Reporting full covariate results (Home Depot) {#app-cov}
@@ -955,17 +1054,6 @@ donation_tab_app
 
 \newpage
 
-# Attachment index components (Walmart) {#app-indexcomps-wmt}
-
-```{r fig-attachmentparts-wmt, eval=TRUE, echo = FALSE, fig.cap="Job attachment (Walmart)"}
-
-newjob.p
-wk.loyal_wmt
-emp.loyal_wmt
-emp.reco_wmt
-```
-
-\newpage
 
 # Full covariate results (Walmart) {#app-full-wmt}
 
