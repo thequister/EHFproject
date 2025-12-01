@@ -38,3 +38,32 @@ p.ord <- p.ord + geom_col(position = dodge, alpha = 0.2) +
   theme(legend.position = "top",
         panel.grid = element_blank())
 
+
+bill_base <- lm(bills_num ~ HDTreatment,
+                data = THD_comp_uw)
+
+bill_int <- lm(bills_num ~ HDTreatment*EHF_aware_list,
+                data = THD_comp_uw)
+bill_cov <- lm(bills_num ~ HDTreatment*EHF_aware_list +
+                 rk_age + male + main_job + tenure_num +
+                 nonwhite + fulltime + college,
+                data = THD_comp_uw)
+
+bills.models<-list( bill_base, bill_int, bill_cov)
+names(uv.models.uw) <- c("Base", "Pre-exposure", "Covariates")
+coef_maps <- c("HDTreatmenttxt" = "Text treatment",
+               "HDTreatmentvid" = "Video treatment",
+               "EHF_aware_listTRUE" = "Pre-exposed",
+               "HDTreatmenttxt:EHF_aware_listTRUE" = "Text x pre-exposed",
+               "HDTreatmentvid:EHF_aware_listTRUE" = "Video x pre-exposed")
+
+bills_tab <- modelsummary(bills.models,
+                          coef_map = coef_maps,
+                          title = "OLS regression on difficulty paying bills (Home Depot) \\label{tab:tab-bills}",
+                          gof_map = gm,
+                          vcov = "robust",
+                          notes = list(note1),
+                          threeparttable=TRUE, 
+                          stars = c('*' = .05, '**' = .01),
+                          escape = FALSE
+)

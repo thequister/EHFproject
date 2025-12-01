@@ -3,7 +3,7 @@
 
 
 #datasets
-wmt <- read_csv(here("3_cleaned_data", "ACNT_clean_main.csv"))
+wmt <- read_csv(here("3_cleaned_data", "ACNT_clean.csv"))
 wmt <- wmt |> 
   mutate(
     treatment_placebo_ref = relevel(as.factor(treatment_placebo), ref="placebo"),
@@ -13,7 +13,7 @@ wmt <- wmt |>
 wmt.hq<-wmt |> 
   filter(quality == "high")
 wmt.hqnp<-wmt |> 
-  filter(quality == "high", treatment_full != "vid0")  #appears that placebo failed
+  filter(quality == "high", treatment_full != "vid0") 
 
 wmt_wgt_f <- wmt %>%
   as_survey_design(ids = 1, weights = rk_wgt_trim)
@@ -88,22 +88,23 @@ mc_bin_hq <-lm_robust(ehf_exist=="Yes" ~ treatment_bin,
 mc_full_hq <-lm_robust(ehf_exist=="Yes" ~ treatment_full, 
                     data = subset(wmt, quality =="high"),
                     se_type = "HC3")
-mc_bin_hq_pe <-lm_robust(ehf_exist=="Yes" ~ treatment_bin*ehf_aware_pretr, 
+mc_bin_hq_int <-lm_robust(ehf_exist=="Yes" ~ treatment_bin*ehf_aware_pretr, 
                       data = subset(wmt, quality =="high"), 
                       se_type = "HC3")
-mc_full_hq_pe <-lm_robust(ehf_exist=="Yes" ~ treatment_full*ehf_aware_pretr, 
+mc_full_hq_int <-lm_robust(ehf_exist=="Yes" ~ treatment_full*ehf_aware_pretr, 
                        data = subset(wmt, quality =="high"),
                        se_type = "HC3")
 
 
 mc_all <- list(mc_bin, mc_full, mc_bin_pe, mc_full_pe, 
-               mc_bin_hq, mc_full_hq, mc_bin_hq_pe, mc_full_hq_pe)
+               mc_bin_hq, mc_full_hq, mc_bin_hq_int, mc_full_hq_int)
 names(mc_all) <-  rep(c("binary", "detailed "),4 )
 
 coef_maps <- c("treatment_binTRUE" = "treated",
                "treatment_fullvid0" = "placebo",
                "treatment_fullvidChar" = "charity treatment",
                "treatment_fullvidSolid" = "solidarity treatment",
+               "ehf_aware_pretrTRUE" = "pre-exposed",
                "treatment_binTRUE:ehf_aware_pretrTRUE" = "treat x pre-exposed",
                "treatment_fullvid0:ehf_aware_pretrTRUE" = "placebo x pre-exposed",
                "treatment_fullvidChar:ehf_aware_pretrTRUE" = "charity x pre-exposed",
@@ -141,7 +142,7 @@ manip_model_print<- modelsummary::modelsummary( mc_all,
                             escape = FALSE
 )
 
-mc_c <- list(mc_bin_hq, mc_full_hq, mc_bin_hq_pe, mc_full_hq_pe)
+mc_c <- list(mc_bin_hq, mc_full_hq, mc_bin_hq_int, mc_full_hq_int)
 extra_row_c <- data.frame(
   term =  "Sample",
   one = "high quality",

@@ -20,6 +20,8 @@ THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
            FALSE,
            TRUE),
          bills = factor(Q6.15),
+         bills_num = (as.numeric(bills) - min(as.numeric(bills), na.rm=T))/
+           (max(as.numeric(bills), na.rm=T)- min(as.numeric(bills), na.rm=T)),
          EHF_aware_list = grepl("Cash", Q2.15, fixed=T), #asked of all respondents
          EHF_aware_simp = as.factor(Q3.10),  #asked only of control group
          HF_know = factor(Q3.12), # VARNAMES HERE DIFFERENT FROM ACNT
@@ -168,9 +170,11 @@ pca_att_dt_knn<-bake(rec, new_data = NULL)
 
 #pca_pr <- prcomp(pca_att_dt2, scale = T, center=T)
 pca_pr_knn <- prcomp(pca_att_dt_knn, scale = T, center=T)
+fa_pr_knn <- psych::fa(pca_att_dt_knn, nfactors = 1, scores = "regression")
 #pca_pr_knn$rotation # 1PC is negatively loading on all items so reverse scaling
 
-THD_comp_uw$attachment_index <- -pca_pr_knn$x[,1]
+THD_comp_uw$attachment_index_pca <- -pca_pr_knn$x[,1]
+THD_comp_uw$attachment_index <- as.numeric(fa_pr_knn$scores)
 
 THD_comp <- THD_comp_uw %>%
   srvyr::as_survey_design(ids = 1, weights = rk_wgt)

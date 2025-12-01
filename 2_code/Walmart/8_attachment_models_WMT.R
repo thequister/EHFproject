@@ -134,12 +134,6 @@ nj_lm_cfull_wmt <- lm(new_job_num ~
                             college, 
                           data = wmt)
 
-##HQ sample
-
-nj_lm_wmt_hq<- update(nj_lm_wmt, .~., data = wmt.hq)
-nj_lm_int_wmt_hq <- update(nj_lm_int_wmt, .~., data = wmt.hq)
-nj_lm_c_wmt_hq <- update(nj_lm_c_wmt, .~., data = wmt.hq)
-nj_lm_cfull_wmt.hq <- update(nj_lm_cfull_wmt, .~., data = wmt.hq)
 
 
 # loyalty to coworkers
@@ -189,22 +183,32 @@ employal_ol_int_uw_wmt <- MASS::polr(as.ordered(emp_loyal_num)~ treatment_bin*eh
 #                      data = wmt.hq)
 # empreco_lm_int_uw <- lm(emp_reco_num ~ treatment_bin*ehf_aware_pretr, 
 #                          data = wmt.hq)
-# empreco_lm_c_uw <- lm(emp_reco_num ~ 
-#                         treatment_bin*ehf_aware_pretr+
-#                         age_clean +
-#                         male +
-#                         main_job +
-#                         tenure_num +
-#                         nonwhite +
-#                         fulltime +
-#                         hourly+
-#                         college, 
-#                       data = wmt.hq)
+ empreco_wmt_lm_c_uw <- lm(emp_reco_num ~ 
+                         treatment_bin*ehf_aware_pretr+
+                         age_clean +
+                         male +
+                         main_job +
+                         tenure_num +
+                         nonwhite +
+                         fulltime +
+                         hourly+
+                         college, 
+                       data = wmt.hq)
 # empreco_ol_int_uw <- MASS::polr(as.ordered(emp_reco)~ treatment_bin*ehf_aware_pretr,
 #                                  data = wmt.hq)
 # 
 # er.models.uw <- list(empreco_lm_uw, empreco_lm_int_uw, empreco_lm_c_uw)
 # names(el.models.uw) <- c("Base", "Pre-exposure", "Covariates")
+
+
+##HQ sample
+
+nj_lm_wmt_hq<- update(nj_lm_wmt, .~., data = wmt.hq)
+nj_lm_int_wmt_hq <- update(nj_lm_int_wmt, .~., data = wmt.hq)
+nj_lm_c_wmt_hq <- update(nj_lm_c_wmt, .~., data = wmt.hq)
+nj_lm_cfull_wmt.hq <- update(nj_lm_cfull_wmt, .~., data = wmt.hq)
+wrkloyal_lm_c_wmt.hq <- update(wrkloyal_lm_c_wmt, .~., data = wmt.hq)
+employal_lm_c_wmt.hq <- update(employal_lm_c_wmt, .~., data = wmt.hq)
 
 
 # coef_maps <- c("HDTreatmenttxt" = "Text treatment",

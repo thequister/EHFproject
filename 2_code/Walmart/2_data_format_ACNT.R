@@ -293,8 +293,10 @@ pca_att_dt <- ACNT_uw %>%
 #             CV = FALSE)  #produces results almost identical to prcomp
 
 pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
+fa_pr <- psych::fa(pca_att_dt, nfactors = 1, scores = "regression")
 
-ACNT_uw$attachment_index <- pca_pr$x[,1]
+ACNT_uw$attachment_index <- as.numeric(fa_pr$scores)
+ACNT_uw$attachment_index_pca <- pca_pr$x[,1]
 
 ## Ammendments
 ACNT_uw <- ACNT_uw %>%

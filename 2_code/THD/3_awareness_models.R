@@ -57,6 +57,18 @@ received_reg <- svyglm(HF_received =="Yes" ~
                   design = THD_comp,
                   family = quasibinomial)
 
+received_reg_trt <- svyglm(HF_received =="Yes" ~
+                         rk_age + male +
+                         main_job +
+                         tenure_num +
+                         nonwhite +
+                         fulltime +
+                         hourly+
+                         college, 
+                       design = THD_comp,
+                       family = quasibinomial,
+                       subset = HDTreatment != "cntrl")
+
 donate_reg <- svyglm(HF_donate=="Yes" ~
                     rk_age + male +
                     main_job +
@@ -67,6 +79,19 @@ donate_reg <- svyglm(HF_donate=="Yes" ~
                     college, 
                   design = THD_comp,
                   family = quasibinomial)
+
+
+donate_reg_trt <- svyglm(HF_donate=="Yes" ~
+                       rk_age + male +
+                       main_job +
+                       tenure_num +
+                       nonwhite +
+                       fulltime +
+                       hourly+
+                       college, 
+                     design = THD_comp,
+                     family = quasibinomial,
+                     subset = HDTreatment != "cntrl")
 
 
 #sg_mods<-stargazer(aware_reg_list, know_reg, applied_reg, received_reg,donate_reg,
