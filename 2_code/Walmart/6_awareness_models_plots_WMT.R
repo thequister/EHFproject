@@ -1,8 +1,6 @@
 #source(here::here('2_code', 'Walmart', '1_libraries_and_settings_ACNT.R'))
 #source(here::here('2_code', 'Walmart',"5_sample_desc.R"))
 
-#still need HQ sample analysis
-
 aware_reg_list_wmt<-svyglm(ehf_aware_pretr ~
                     age_clean +
                     male +
@@ -64,6 +62,12 @@ donate_reg_wmt <- svyglm(ehf_donation=="Yes" ~
                        college, 
                      design = wmt.hq_wgt_f,
                      family = quasibinomial)
+
+
+
+mfx_aware_wmt <- marginaleffects::avg_slopes(aware_reg_list_wmt, variables = c("tenure_num", "male"), type = "response")
+mfx_donate_wmt <- marginaleffects::avg_slopes(donate_reg_wmt, variables = c("tenure_num", "male"), type = "response")
+
 
 
 #sg_mods<-stargazer(aware_reg_list, know_reg, applied_reg, received_reg,donate_reg,

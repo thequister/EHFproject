@@ -94,6 +94,9 @@ donate_reg_trt <- svyglm(HF_donate=="Yes" ~
                      subset = HDTreatment != "cntrl")
 
 
+mfx_aware_thd <- marginaleffects::avg_slopes(aware_reg_list, variables = c("tenure_num", "male"), type = "response")
+
+
 #sg_mods<-stargazer(aware_reg_list, know_reg, applied_reg, received_reg,donate_reg,
 #          title = "Weighted logistic regression of EHF awareness \\& engagement",
 #          covariate.labels = c("age", "male", "main job",
