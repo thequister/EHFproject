@@ -8,7 +8,8 @@ wmt <- wmt |>
   mutate(
     treatment_placebo_ref = relevel(as.factor(treatment_placebo), ref="placebo"),
     treatment_framing_ref = relevel(as.factor(treatment_framing), ref="cntrl"),
-    residence = as.factor(residence)
+    residence = as.factor(residence),
+    donate_yes = as.integer(ehf_donation == "Yes")
   )
 wmt.hq<-wmt |> 
   filter(quality == "high")

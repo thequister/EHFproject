@@ -51,7 +51,7 @@ received_reg_wmt <- svyglm(ehf_received_all =="Yes" ~
                        maxit = 50,
                   family = quasibinomial)
 
-donate_reg_wmt <- svyglm(ehf_donation=="Yes" ~
+donate_reg_wmt <- svyglm(donate_yes ~
                        age_clean +
                        male +
                        main_job +
