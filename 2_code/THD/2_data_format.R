@@ -3,7 +3,6 @@
 #source(here::here('2_code', 'THD', '1_libraries_and_settings.R'))
 #here::i_am("1_code/THD/2_data_format.R")
 
-set.seed(123)
 THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
   mutate(emergency_expense = factor(Q3.4, levels = 
                                            c("I am certain I could not come up with $400",
