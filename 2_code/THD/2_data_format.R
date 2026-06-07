@@ -28,6 +28,33 @@ THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
          HF_mgr = factor(Q3.16),
          HF_received = factor(Q3.19),
          HF_donate = factor(Q3.24),
+         HF_coverage = fct_rev(factor(Q3.21, levels = 
+                                        c("It covered all my emergency needs",
+                                          "It covered more than ½ but not all of my emergency needs",
+                                          "It covered about ½ of my emergency needs",
+                                          "It made some difference but covered less than ½ of my emergency needs",
+                                          "It did not make much difference for my emergency needs"),
+                                      ordered = TRUE)),
+         HF_coverage_num = 
+           (as.numeric(HF_coverage) - min(as.numeric(HF_coverage), na.rm = TRUE)) /
+           (max(as.numeric(HF_coverage), na.rm = TRUE) - min(as.numeric(HF_coverage), na.rm = TRUE)),
+         HF_coverage_bin = Q3.21 %in% c(
+           "It covered all my emergency needs",
+           "It covered more than ½ but not all of my emergency needs",
+           "It covered about ½ of my emergency needs"),
+         HF_delay = factor(Q3.22, levels = 
+                             c("Less than 48 hours",
+                               "Between 2 and 7 days",
+                               "Between 1 and 2 weeks",
+                               "More than 2 weeks"),
+                           ordered = TRUE),
+         HF_delay_num = case_match(Q3.22,
+                                   "Less than 48 hours"      ~ 0,
+                                   "Between 2 and 7 days"    ~ 2,
+                                   "Between 1 and 2 weeks"   ~ 7,
+                                   "More than 2 weeks"       ~ 14),
+         HF_delay_week_or_less  = Q3.22 %in% c("Less than 48 hours", "Between 2 and 7 days"),
+         HF_followup = Q3.23 == "Yes",
          ehf_donation_num = HF_donate == "Yes",
          nonwhite = (Q6.3 != "White"),
          main_job = (Q2.7 == "Yes"),
@@ -154,6 +181,8 @@ THD_comp_uw<-read_csv(here("0_raw_data", "THD", "THD_completed.csv")) %>%
          state_wk = as.factor(Q2.6),
          state_lv = as.factor(Q2.5),
          ) 
+
+
 
 pca_att_dt2 <- THD_comp_uw  |> 
   select(emp_loyal_num, wrk_loyal_num, emp_reco_num)  

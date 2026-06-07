@@ -143,10 +143,10 @@ ACNT_uw <- ACNT_uw %>%
                          "It did not make much difference for my emergency needs"),
                      ordered = T)),
   ehf_coverage_num = 
-    (as.numeric(ehf_coverage) - min(as.numeric(ehf_coverage)))/
-    (max(as.numeric(ehf_coverage))- min(as.numeric(ehf_coverage))), 
+    (as.numeric(ehf_coverage) - min(as.numeric(ehf_coverage), na.rm=T))/
+    (max(as.numeric(ehf_coverage), na.rm=T)- min(as.numeric(ehf_coverage), na.rm=T)), 
   ehf_coverage_bin = ifelse(  #binary variable; T if at least half covered
-    recommend %in% c("It covered all my emergency needs",
+    ehf_coverage %in% c("It covered all my emergency needs",
                      "It covered more than ½ but not all of my emergency needs",
                      "It covered about ½ of my emergency needs"),
     TRUE,
@@ -161,6 +161,8 @@ ACNT_uw <- ACNT_uw %>%
                          "Between 2 and 7 days" ~ 2,
                          "Between 1 and 2 weeks" ~ 7,
                          "More than 2 weeks" ~ 14),
+  ehf_delay_week_or_less = ehf_delay %in% c("Less than 48 hours", "Between 2 and 7 days"),
+  ehf_followup_bin       = ehf_followup == "Yes",
   ehf_received_all = case_when(ehf_received == "Yes" ~ T, 
                                ehf_exist == "No" ~ NA, 
                                .default = F),
