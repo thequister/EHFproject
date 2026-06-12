@@ -73,9 +73,9 @@ donation_tab_wmt<-modelsummary(d_mods,
                                        # vcov = "robust",
                                        add_rows = rows, 
                                        notes = list(note1),
-                                       threeparttable=TRUE,
-                                       stars = c('*' = .1, '**' = .05, "***" = 0.01),
-                                       escape = FALSE
+                                       #threeparttable=TRUE,
+                                       stars = c('*' = .1, '**' = .05, "***" = 0.01)#,
+                                       #escape = FALSE
 )
 
 
@@ -112,8 +112,8 @@ donation_tab_app <- modelsummary(d_mods_app,
                                #add_rows = rows,
                                notes = "Robust standard errors for OLS model",
                                #threeparttable=TRUE, 
-                               stars = c('+' = 0.1, '*' = .05, '**' = .01),
-                               escape = FALSE
+                               stars = c('+' = 0.1, '*' = .05, '**' = .01)#,
+                               #escape = FALSE
 )
 
 

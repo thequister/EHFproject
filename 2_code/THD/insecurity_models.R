@@ -42,7 +42,8 @@ model_print_uw<- modelsummary( ee.models.uw,
                                      #add_rows = rows,
                                      title = "OLS regression estimates of treatment effects on subjective financial security (Home Depot sample) \\label{tab:tab-finsec}",
                                      notes = list(note2),
-                                     output = "kableExtra",
+                               #output = "flextable",
+                               output = "kableExtra",
                                      threeparttable=TRUE,
                                      stars = c('*' = .05, '**' = .01),
                                escape = FALSE
@@ -75,6 +76,7 @@ model_print_weighted_insecurity<- modelsummary( ee.models.w,
               title = "Ability to meet $400 emergency expense; weighted OLS estimates",
               notes = list(note2),
               output = "kableExtra",
+              #output = "flextable",
               threeparttable = TRUE,
               stars = c('*' = .05, '**' = .01)
 )

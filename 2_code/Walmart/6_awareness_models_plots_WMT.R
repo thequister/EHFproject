@@ -112,11 +112,12 @@ model_print_aware_wmt<- modelsummary::modelsummary( engage.models_wmt,
                                #vcov = "robust",
                                #add_rows = rows,
                                title = "Weighted logistic regression of Walmart EHF awareness and engagement \\label{tab:tab-awareness-model-wmt}",
-                               output = "kableExtra",
+                               output = "flextable",
+                               #output = "kableExtra",
                                notes = list(note2),
                                stars = c('*' = .05, '**' = .01),
-                               threeparttable = TRUE,
-                               escape = FALSE
+                               #threeparttable = TRUE,
+                               #escape = FALSE
 )
 
 
@@ -214,10 +215,11 @@ model_print_aware_wmt_dei<- modelsummary::modelsummary( engage.models_wmt_dei,
                                                     #vcov = "robust",
                                                     #add_rows = rows,
                                                     title = "Weighted logistic regression of EHF awareness and engagement \\label{tab:awareness-model}",
-                                                    output = "kableExtra",
+                                                    output = "flextable",
+                                                    #output = "kableExtra",
                                                     notes = list(note2),
                                                     stars = c('*' = .05, '**' = .01),
-                                                    threeparttable = TRUE
+                                                    #threeparttable = TRUE
 )
 
 

@@ -93,6 +93,7 @@ model_print_attachment_hq<- modelsummary::modelsummary( attachment.models.wmt.hq
                                      vcov = "robust",
                                      #add_rows = rows,
                                      title = "OLS regression estimates of treatment effects on Walmart job attachment \\label{tab:tab-attachment-models-wmt}",
+                                     #output = "flextable",
                                      output = "kableExtra",
                                      notes = list(note1),
                                      stars = c('*' = .05, '**' = .01),

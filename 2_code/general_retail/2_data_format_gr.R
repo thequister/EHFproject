@@ -97,6 +97,9 @@ gr <- gr %>%
     union_vote %in% c("For the union", "Leaning toward voting for the union"),
     TRUE,
     FALSE),
+  union_elec = factor(union_elec, 
+                      levels = c("For the union", "Not sure", "Against the union")
+                      ),
   emp_reco = fct_rev(factor(recommend, levels = 
                             c("Certainly would recommend",
                               "Might recommend",
@@ -283,8 +286,11 @@ pca_att_dt <- gr %>%
   mutate(new_job_num = 1 - new_job_num)
 
 pca_pr <- prcomp(pca_att_dt, scale = T, center=T)
+fa_pr <- psych::fa(pca_att_dt, nfactors = 1, scores = "regression")
 
-gr$attachment_index <- pca_pr$x[,1]
+gr$attachment_index <- as.numeric(fa_pr$scores)
+
+gr$attachment_index_pca <- pca_pr$x[,1]
 
 # Ammendments
 gr <- gr %>%
