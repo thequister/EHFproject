@@ -42,8 +42,8 @@ d_wmt_expand <- lm_robust(ehf_donation_post ~
                        data = wmt.hq)
 
 
-d_mods<-list(d_wmt_ols, d_wmt_st_int, d_wmt_int, d_wmt_pregreg, d_wmt_expand)
-names(d_mods)<-c("Base", "State Generosity", "Pre-exposure", "Pre-registered", "Expanded")
+d_mods <- list(d_wmt_ols, d_wmt_st_int, d_wmt_int, d_wmt_pregreg, d_wmt_expand)
+names(d_mods) <- c("Base", "State Generosity", "Pre-exposure", "Pre-registered", "Expanded")
 
 coef_maps <- c("treatment_binTRUE" = "Treated",
                "ehf_aware_pretrTRUE" = "Pre-exposed",
@@ -56,26 +56,51 @@ coef_maps <- c("treatment_binTRUE" = "Treated",
                "ideology_conservative" = "Conservative",
                "as.numeric(home_ownership):hpi_5year" = "house appreciation")
 
-rows<-tribble(
-  ~"term", ~"Base", ~"State", ~"Pre-exposed",  ~"Pre-registered", ~"Expanded",
-  "Std Errors", "robust", "state-clustered", "robust", "robust", "state-clustered")
+rows <- tribble(
+  ~"term",      ~"Base",  ~"State",          ~"Pre-exposed", ~"Pre-registered", ~"Expanded",
+  "Std Errors", "robust", "state-clustered", "robust",       "robust",          "state-clustered")
 attr(rows, 'position') <- c(21)
+
 gm <- list(
-  list("raw" = "nobs", "clean" = "N", "fmt" = 0),
-  list("raw" = "aic", "clean" = "AIC", "fmt" = 1))
+  list("raw" = "nobs", "clean" = "N",   "fmt" = 0),
+  list("raw" = "aic",  "clean" = "AIC", "fmt" = 1))
+
 note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
 
+donation_tab_wmt <- modelsummary(
+  d_mods,
+  coef_map = coef_maps,
+  title    = "ACNT donation willingness (Walmart sample) \\label{tab:tab-donate-wmt}",
+  gof_map  = gm,
+  add_rows = rows,
+  notes    = list(note1),
+  threeparttable = TRUE,
+  stars    = c('*' = .1, '**' = .05, "***" = 0.01),
+  escape   = FALSE,
+  output   = "kableExtra"
+) |>
+  kableExtra::kable_styling(
+    latex_options = c("hold_position"),  # scale_down handled manually below to keep notes aligned
+    font_size = 8
+  )
 
-donation_tab_wmt<-modelsummary(d_mods,
-                               coef_map = coef_maps,
-                               title = "ACNT donation willingness (Walmart sample) \\label{tab:tab-donate-wmt}",
-                                       gof_map = gm,
-                                       # vcov = "robust",
-                                       add_rows = rows, 
-                                       notes = list(note1),
-                                       #threeparttable=TRUE,
-                                       stars = c('*' = .1, '**' = .05, "***" = 0.01)#,
-                                       #escape = FALSE
+# Match notes font size to table body
+donation_tab_wmt <- gsub(
+  "\\\\begin\\{tablenotes\\}",
+  "\\\\begin{tablenotes}\n\\\\small",
+  donation_tab_wmt
+)
+
+# Wrap the whole threeparttable (table + notes) in \resizebox so both scale together
+donation_tab_wmt <- gsub(
+  "\\\\begin\\{threeparttable\\}",
+  "\\\\resizebox{\\\\textwidth}{!}{\\\\begin{threeparttable}",
+  donation_tab_wmt
+)
+donation_tab_wmt <- gsub(
+  "\\\\end\\{threeparttable\\}",
+  "\\\\end{threeparttable}}",
+  donation_tab_wmt
 )
 
 
@@ -111,7 +136,8 @@ donation_tab_app <- modelsummary(d_mods_app,
                                gof_map = gm,
                                #add_rows = rows,
                                notes = "Robust standard errors for OLS model",
-                               #threeparttable=TRUE, 
+                               threeparttable=TRUE, 
+                               output = "kableExtra",
                                stars = c('+' = 0.1, '*' = .05, '**' = .01)#,
                                #escape = FALSE
 )

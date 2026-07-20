@@ -130,43 +130,43 @@ ui.hard.models.wmt <- list(
 #                               "Base", "Pre-exposed", "Pre-registered", "Expanded")
 
 
-coef_maps <- c("treatment_binTRUE" = "Treated",
-                 "ehf_aware_pretrTRUE" = "Pre-exposed",
-                 "treatment_binTRUE:ehf_aware_pretrTRUE" = "Treated x pre-exposed",
-                 "welfareTRUE" = "Past welfare",
-                 "income_num" = "HH income",
-                 "religiousTRUE" = "Religiosity",
-                 "st_directed" = "State safety net generosity",
-                 "ideology_conservative" = "Conservative",
-                 "as.numeric(home_ownership):hpi_5year" = "house appreciation")
-
-rows<-tribble(
-  ~"term", ~"Base", ~"Pre-exposed",  ~"Pre-registered", ~"Expanded",
-  "Std Errors", "robust", "robust", "robust", "state-clustered",
-  "Std Errors", "robust", "robust", "robust", "state-clustered")
-attr(rows, 'position') <- c(19, 39)
-
-
-note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
-
-
-gm <- list(
-  list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
-  list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
-  list("raw" = "aic", "clean" = "AIC", "fmt" = 1))
-
-ui_hard_tab_wmt<-modelsummary(ui.hard.models.wmt,
-             coef_map = coef_maps,
-            title = "Support for unemployment insurance and emergency government aid (Walmart)  \\label{tab:tab-ui-hard-wmt}",
-            gof_map = gm,
-            #vcov = "robust",
-            add_rows = rows, 
-            notes = list(note1),
-            threeparttable=TRUE,
-            stars = c('*' = .1, '**' = .05, '***' = .01),
-            shape = "rbind",
-            escape = FALSE
-)
+# coef_maps <- c("treatment_binTRUE" = "Treated",
+#                  "ehf_aware_pretrTRUE" = "Pre-exposed",
+#                  "treatment_binTRUE:ehf_aware_pretrTRUE" = "Treated x pre-exposed",
+#                  "welfareTRUE" = "Past welfare",
+#                  "income_num" = "HH income",
+#                  "religiousTRUE" = "Religiosity",
+#                  "st_directed" = "State safety net generosity",
+#                  "ideology_conservative" = "Conservative",
+#                  "as.numeric(home_ownership):hpi_5year" = "house appreciation")
+# 
+# rows<-tribble(
+#   ~"term", ~"Base", ~"Pre-exposed",  ~"Pre-registered", ~"Expanded",
+#   "Std Errors", "robust", "robust", "robust", "state-clustered",
+#   "Std Errors", "robust", "robust", "robust", "state-clustered")
+# attr(rows, 'position') <- c(19, 39)
+# 
+# 
+# note1 <- "Standard errors in parentheses.\n Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job."
+# 
+# 
+# gm <- list(
+#   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0),
+#   list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
+#   list("raw" = "aic", "clean" = "AIC", "fmt" = 1))
+# 
+# ui_hard_tab_wmt<-modelsummary(ui.hard.models.wmt,
+#              coef_map = coef_maps,
+#             title = "Support for unemployment insurance and emergency government aid (Walmart)  \\label{tab:tab-ui-hard-wmt}",
+#             gof_map = gm,
+#             #vcov = "robust",
+#             add_rows = rows, 
+#             notes = list(note1),
+#             threeparttable=TRUE,
+#             stars = c('*' = .1, '**' = .05, '***' = .01),
+#             shape = "rbind",
+#             escape = FALSE
+# )
 
 # ui_eff<-Effect(c("HDTreatment", "EHF_aware_list"), 
 #     ui_lm_int_uw,
@@ -298,3 +298,77 @@ ui_hard_tab_wmt<-modelsummary(ui.hard.models.wmt,
 #                     hourly+
 #                     college , 
 #                   design = THD_comp)
+
+coef_maps <- c("treatment_binTRUE" = "Treated",
+               "ehf_aware_pretrTRUE" = "Pre-exposed",
+               "treatment_binTRUE:ehf_aware_pretrTRUE" = "Treated x pre-exposed",
+               "welfareTRUE" = "Past welfare",
+               "income_num" = "HH income",
+               "religiousTRUE" = "Religiosity",
+               "st_directed" = "State safety net generosity",
+               "ideology_conservative" = "Conservative",
+               "as.numeric(home_ownership):hpi_5year" = "House appreciation")
+
+ui.hard.models.wmt <- list(
+  "Base"            = ui_lm_wmt,
+  "Pre-exposed"     = ui_lm_int_wmt,
+  "Pre-registered"  = ui_lm_prereg_wmt,
+  "Expanded"        = ui_lm_expanded_wmt,
+  "Base "           = hard_lm_wmt,
+  "Pre-exposed "    = hard_lm_int_wmt,
+  "Pre-registered " = hard_lm_prereg_wmt,
+  "Expanded "       = hard_lm_expanded_wmt
+)
+
+gm <- list(
+  list("raw" = "nobs",      "clean" = "$N$",   "fmt" = 0),
+  list("raw" = "r.squared", "clean" = "$R^2$", "fmt" = 2),
+  list("raw" = "aic",       "clean" = "AIC",   "fmt" = 1)
+)
+
+rows <- tribble(
+  ~"term",      ~"Base",  ~"Pre-exposed", ~"Pre-registered", ~"Expanded", ~"Base ",  ~"Pre-exposed ", ~"Pre-registered ", ~"Expanded ",
+  "Std Errors", "robust", "robust",       "robust",          "state-clustered", "robust", "robust", "robust", "state-clustered"
+)
+
+attr(rows, "position") <- (length(coef_maps) * 2) + length(gm) - 2
+
+note1 <- "Standard errors in parentheses. Pre-registered covariates include age, gender, race, job tenure, hourly status, full-time status, college degree, and main job. Both DV panels report identical specifications."
+
+ui_hard_tab_wmt <- modelsummary(
+  ui.hard.models.wmt,
+  coef_map   = coef_maps,
+  title      = "Support for unemployment insurance and emergency government aid (Walmart) \\label{tab:tab-ui-hard-wmt}",
+  gof_map    = gm,
+  add_rows   = rows,
+  notes      = list(note1),
+  threeparttable = TRUE,
+  stars      = c('*' = .1, '**' = .05, '***' = .01),
+  escape     = FALSE,
+  output     = "kableExtra"
+) |>
+  kableExtra::add_header_above(c(" " = 1, "DV: Unemployed" = 4, "DV: Emergency" = 4)) |>
+  kableExtra::column_spec(5, border_right = TRUE) |>
+  kableExtra::kable_styling(
+    latex_options = c("hold_position"),  # scale_down removed
+    font_size = 7
+  )
+
+# Insert \footnotesize into the notes block
+ui_hard_tab_wmt <- gsub(
+  "\\\\begin\\{tablenotes\\}",
+  "\\\\begin{tablenotes}\n\\\\footnotesize",
+  ui_hard_tab_wmt
+)
+
+# so both scale together and stay aligned
+ui_hard_tab_wmt <- gsub(
+  "\\\\begin\\{threeparttable\\}",
+  "\\\\resizebox{\\\\textwidth}{!}{\\\\begin{threeparttable}",
+  ui_hard_tab_wmt
+)
+ui_hard_tab_wmt <- gsub(
+  "\\\\end\\{threeparttable\\}",
+  "\\\\end{threeparttable}}",
+  ui_hard_tab_wmt
+)

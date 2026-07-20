@@ -100,6 +100,7 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \usepackage{setspace}\onehalfspacing
+\usepackage{placeins}
 \usepackage{hyperref}
 \usepackage{bbm}
 \usepackage{subfig}
@@ -501,71 +502,48 @@ The right panel of Figure \ref{fig:fig-ui} displays the Study 3 response distrib
 
 Table \ref{tab:tab-ui-hard-wmt} displays regression results that reinforce the null relationship in Figures \ref{fig:fig-ui} and \ref{fig:fig-emerg-donate}. There is no evidence of a treatment effect for either outcome. Pre-exposure to the ACNT and additional covariates make no difference in this conclusion. In the ``expanded'' model we continue to see that conservatives are less supportive of government activity to support the unemployed and those facing temporary hardship. Walmart workers who have seen their home values appreciate are less supportive of UI but there is no relationship between home appreciation and support for government aid to those facing temporary hardship. More religious respondents are significantly less supportive of aid to those in temporary need. The generosity of the State-level safety net has no connection to respondents attitudes for either outcome.
 
-\begin{table}
+\begin{table}[!h]
+\centering\centering
+\caption{\label{tab:tab-ui-hard-wmt}Support for unemployment insurance and emergency government aid (Walmart) \label{tab:tab-ui-hard-wmt}}
 \centering
-\begin{talltblr}[         %% tabularray outer open
-caption={Support for unemployment insurance and emergency government aid (Walmart)  \label{tab:tab-ui-hard-wmt}},
-note{}={* p \num{< 0.1}, ** p \num{< 0.05}, *** p \num{< 0.01}},
-note{ }={Standard errors in parentheses.
- Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job.},
-]                     %% tabularray outer close
-{                     %% tabularray inner open
-colspec={Q[]Q[]Q[]Q[]Q[]},
-hline{2}={1-5}{solid, black, 0.05em},
-hline{1}={1-5}{solid, black, 0.08em},
-hline{48}={1-5}{solid, black, 0.08em},
-column{2-5}={}{halign=c},
-cell{1,3-24,26-47}{1}={}{halign=l},
-cell{2,25}{1}={c=5}{halign=l},
-}                     %% tabularray inner close
-& Base & Pre-exposed & Pre-registered & Expanded \\
-DV: Unemployed & DV: Unemployed & DV: Unemployed & DV: Unemployed & DV: Unemployed \\
-Treated & 0.016 & 0.018 & 0.016 & 0.007 \\
-& (0.014) & (0.017) & (0.018) & (0.016) \\
-Pre-exposed &  & 0.003 & 0.007 & -0.001 \\
-&  & (0.020) & (0.020) & (0.014) \\
-Treated x pre-exposed &  & -0.005 & -0.005 & 0.006 \\
-&  & (0.028) & (0.028) & (0.028) \\
-Past welfare &  &  &  & 0.013 \\
-&  &  &  & (0.016) \\
-HH income &  &  &  & -0.000 \\
-&  &  &  & (0.000) \\
-Religiosity &  &  &  & 0.003 \\
-&  &  &  & (0.013) \\
-State safety net generosity &  &  &  & -0.008 \\
-&  &  &  & (0.006) \\
-Conservative &  &  &  & -0.061*** \\
-&  &  &  & (0.017) \\
-house appreciation &  &  &  & -0.000*** \\
-&  &  &  & (0.000) \\
-Std Errors & robust & robust & robust & state-clustered \\
-$N$ & 980 & 980 & 980 & 913 \\
-$R^2$ & 0.00 & 0.00 & 0.01 & 0.05 \\
-AIC & -222.9 & -219.0 & -216.2 & -209.3 \\
-DV: Emergency & DV: Emergency & DV: Emergency & DV: Emergency & DV: Emergency \\
-Treated & 0.019 & 0.012 & 0.012 & -0.002 \\
-& (0.013) & (0.017) & (0.017) & (0.015) \\
-Pre-exposed &  & -0.007 & -0.005 & -0.015 \\
-&  & (0.019) & (0.020) & (0.020) \\
-Treated x pre-exposed &  & 0.017 & 0.014 & 0.026 \\
-&  & (0.027) & (0.027) & (0.025) \\
-Past welfare &  &  &  & 0.016 \\
-&  &  &  & (0.017) \\
-HH income &  &  &  & -0.000 \\
-&  &  &  & (0.000) \\
-Religiosity &  &  &  & -0.017 \\
-&  &  &  & (0.011) \\
-State safety net generosity &  &  &  & -0.004 \\
-&  &  &  & (0.007) \\
-Conservative &  &  &  & -0.057*** \\
-&  &  &  & (0.020) \\
-Std Errors & robust & robust & robust & state-clustered \\
-house appreciation &  &  &  & -0.000 \\
-&  &  &  & (0.000) \\
-$N$ & 980 & 980 & 980 & 913 \\
-$R^2$ & 0.00 & 0.00 & 0.01 & 0.04 \\
-AIC & -320.9 & -317.3 & -313.4 & -299.2 \\
-\end{talltblr}
+\resizebox{\textwidth}{!}{\begin{threeparttable}
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{lccc>{}c|cccc}
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{4}{c}{DV: Unemployed} & \multicolumn{4}{c}{DV: Emergency} \\
+\cmidrule(l{3pt}r{3pt}){2-5} \cmidrule(l{3pt}r{3pt}){6-9}
+  & Base & Pre-exposed & Pre-registered & Expanded & Base  & Pre-exposed  & Pre-registered  & Expanded \\
+\midrule
+Treated & \num{0.016} & \num{0.018} & \num{0.016} & \num{0.007} & \num{0.019} & \num{0.012} & \num{0.012} & \num{-0.002}\\
+ & (\num{0.014}) & (\num{0.017}) & (\num{0.018}) & (\num{0.016}) & (\num{0.013}) & (\num{0.017}) & (\num{0.017}) & (\num{0.015})\\
+Pre-exposed &  & \num{0.003} & \num{0.007} & \num{-0.001} &  & \num{-0.007} & \num{-0.005} & \num{-0.015}\\
+ &  & (\num{0.020}) & (\num{0.020}) & (\num{0.014}) &  & (\num{0.019}) & (\num{0.020}) & (\num{0.020})\\
+Treated x pre-exposed &  & \num{-0.005} & \num{-0.005} & \num{0.006} &  & \num{0.017} & \num{0.014} & \num{0.026}\\
+ &  & (\num{0.028}) & (\num{0.028}) & (\num{0.028}) &  & (\num{0.027}) & (\num{0.027}) & (\num{0.025})\\
+Past welfare &  &  &  & \num{0.013} &  &  &  & \num{0.016}\\
+ &  &  &  & (\num{0.016}) &  &  &  & (\num{0.017})\\
+HH income &  &  &  & \num{-0.000} &  &  &  & \num{-0.000}\\
+ &  &  &  & (\num{0.000}) &  &  &  & \vphantom{1} (\num{0.000})\\
+Religiosity &  &  &  & \num{0.003} &  &  &  & \num{-0.017}\\
+ &  &  &  & (\num{0.013}) &  &  &  & (\num{0.011})\\
+State safety net generosity &  &  &  & \num{-0.008} &  &  &  & \num{-0.004}\\
+ &  &  &  & (\num{0.006}) &  &  &  & (\num{0.007})\\
+Conservative &  &  &  & \num{-0.061}*** &  &  &  & \num{-0.057}***\\
+ &  &  &  & (\num{0.017}) &  &  &  & (\num{0.020})\\
+House appreciation &  &  &  & \num{-0.000}*** &  &  &  & \num{-0.000}\\
+ &  &  &  & (\num{0.000}) &  &  &  & (\num{0.000})\\
+\midrule
+Std Errors & robust & robust & robust & state-clustered & robust & robust & robust & state-clustered\\
+$N$ & \num{980} & \num{980} & \num{980} & \num{913} & \num{980} & \num{980} & \num{980} & \num{913}\\
+$R^2$ & \num{0.00} & \num{0.00} & \num{0.01} & \num{0.05} & \num{0.00} & \num{0.00} & \num{0.01} & \num{0.04}\\
+AIC & \num{-222.9} & \num{-219.0} & \num{-216.2} & \num{-209.3} & \num{-320.9} & \num{-317.3} & \num{-313.4} & \num{-299.2}\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item * p $<$ 0.1, ** p $<$ 0.05, *** p $<$ 0.01 Standard errors in parentheses. Pre-registered covariates include age, gender, race, job tenure, hourly status, full-time status, college degree, and main job. Both DV panels report identical specifications.
+\end{tablenotes}
+\end{threeparttable}}
 \end{table}
 
 Walmart has a substantially less generous EHF than the Home Depot. Given the findings in Studies 1 and 2, the null findings in Study 3 are unsurprising. Exposing Walmart workers to videos about their employers' EHF had no effect on their attitudes toward unemployment benefits or government emergency aid, although Walmart workers were, overall, much more supportive of these programs.
@@ -574,48 +552,48 @@ Walmart has a substantially less generous EHF than the Home Depot. Given the fin
 
 Study 3 included an opportunity to click a link to donate to the ACNT. As the right panel in Figure \ref{fig:fig-emerg-donate} shows, there is a low baseline willingness to take this action of 8\% in the Walmart sample. Nevertheless, those seeing the EHF video were about 4 percentage points (or 35\%, \(p < 0.05\)) more likely to take an action to donate.
 
-\begin{table}
+\begin{table}[!h]
+\centering\centering
+\caption{\label{tab:fig-emerg-donate}ACNT donation willingness (Walmart sample) \label{tab:tab-donate-wmt}}
 \centering
-\begin{talltblr}[         %% tabularray outer open
-caption={ACNT donation willingness (Walmart sample) \textbackslash{}label\{tab:tab-donate-wmt\}},
-note{}={* p \num{< 0.1}, ** p \num{< 0.05}, *** p \num{< 0.01}},
-note{ }={Standard errors in parentheses.
- Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job.},
-]                     %% tabularray outer close
-{                     %% tabularray inner open
-colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
-hline{2}={1-6}{solid, black, 0.05em},
-hline{22}={1-6}{solid, black, 0.05em},
-hline{1}={1-6}{solid, black, 0.08em},
-hline{25}={1-6}{solid, black, 0.08em},
-column{2-6}={}{halign=c},
-column{1}={}{halign=l},
-}                     %% tabularray inner close
-& Base & State Generosity & Pre-exposure & Pre-registered & Expanded \\
-Treated & \num{0.038}** & \num{0.075}** & \num{0.031} & \num{0.033} & \num{0.027} \\
-& (\num{0.019}) & (\num{0.036}) & (\num{0.025}) & (\num{0.025}) & (\num{0.030}) \\
-Pre-exposed &  &  & \num{-0.021} & \num{-0.017} & \num{-0.024} \\
-&  &  & (\num{0.024}) & (\num{0.024}) & (\num{0.021}) \\
-Treated x pre-exposed &  &  & \num{0.017} & \num{0.011} & \num{0.019} \\
-&  &  & (\num{0.039}) & (\num{0.038}) & (\num{0.045}) \\
-State safety net generosity &  & \num{0.011} &  &  & \num{-0.006} \\
-&  & (\num{0.013}) &  &  & (\num{0.011}) \\
-Treated x generosity &  & \num{-0.029} &  &  &  \\
-&  & (\num{0.023}) &  &  &  \\
-Past welfare &  &  &  &  & \num{-0.005} \\
-&  &  &  &  & (\num{0.022}) \\
-HH income &  &  &  &  & \num{0.000} \\
-&  &  &  &  & (\num{0.000}) \\
-Religiosity &  &  &  &  & \num{0.037}* \\
-&  &  &  &  & (\num{0.022}) \\
-Conservative &  &  &  &  & \num{-0.039}* \\
-&  &  &  &  & (\num{0.021}) \\
-house appreciation &  &  &  &  & \num{-0.000} \\
-&  &  &  &  & (\num{0.000}) \\
-Std Errors & robust & state-clustered & robust & robust & state-clustered \\
-N & \num{980} & \num{980} & \num{980} & \num{980} & \num{913} \\
-AIC & \num{386.8} & \num{388.9} & \num{390.2} & \num{389.6} & \num{409.9} \\
-\end{talltblr}
+\resizebox{\textwidth}{!}{\begin{threeparttable}
+\fontsize{8}{10}\selectfont
+\begin{tabular}[t]{lccccc}
+\toprule
+  & Base & State Generosity & Pre-exposure & Pre-registered & Expanded\\
+\midrule
+Treated & \num{0.038}** & \num{0.075}** & \num{0.031} & \num{0.033} & \num{0.027}\\
+ & (\num{0.019}) & (\num{0.036}) & (\num{0.025}) & (\num{0.025}) & (\num{0.030})\\
+Pre-exposed &  &  & \num{-0.021} & \num{-0.017} & \num{-0.024}\\
+ &  &  & (\num{0.024}) & (\num{0.024}) & (\num{0.021})\\
+Treated x pre-exposed &  &  & \num{0.017} & \num{0.011} & \num{0.019}\\
+ &  &  & (\num{0.039}) & (\num{0.038}) & (\num{0.045})\\
+State safety net generosity &  & \num{0.011} &  &  & \num{-0.006}\\
+ &  & (\num{0.013}) &  &  & (\num{0.011})\\
+Treated x generosity &  & \num{-0.029} &  &  & \\
+ &  & (\num{0.023}) &  &  & \\
+Past welfare &  &  &  &  & \num{-0.005}\\
+ &  &  &  &  & \vphantom{1} (\num{0.022})\\
+HH income &  &  &  &  & \num{0.000}\\
+ &  &  &  &  & \vphantom{1} (\num{0.000})\\
+Religiosity &  &  &  &  & \num{0.037}*\\
+ &  &  &  &  & (\num{0.022})\\
+Conservative &  &  &  &  & \num{-0.039}*\\
+ &  &  &  &  & (\num{0.021})\\
+house appreciation &  &  &  &  & \num{-0.000}\\
+ &  &  &  &  & (\num{0.000})\\
+\midrule
+Std Errors & robust & state-clustered & robust & robust & state-clustered\\
+N & \num{980} & \num{980} & \num{980} & \num{980} & \num{913}\\
+AIC & \num{386.8} & \num{388.9} & \num{390.2} & \num{389.6} & \num{409.9}\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item * p $<$ 0.1, ** p $<$ 0.05, *** p $<$ 0.01 Standard errors in parentheses.
+ Pre-registerd covariates include age, gender race, job tenure, hourly status, full time status, college degree, and main job.
+\end{tablenotes}
+\end{threeparttable}}
 \end{table}
 
 Table \ref{tab:tab-donate-wmt} presents regression-based estimates of treatment effects, using linear probability models.\footnote{See \ref{app-wmt-altdonate} for estimates using logistic regression and Firth regression to address concerns with rare events. Estimated treatment effects are quite similar across models.} Treatment significantly increases willingness to take an action to donate. There is no evidence that either state-level generosity or ACNT pre-exposure moderates these treatment effects.\footnote{Hierarchical logit models including state-level random effects and random slopes produce the same conclusion.} The inclusion of additional covariates does nothing to alter these conclusions.
@@ -935,6 +913,8 @@ Study 3 & Framing results not reported in main text & We pre-registered a framin
 \bottomrule
 \end{longtable}
 
+\FloatBarrier
+
 \section{General retail survey survey details}\label{app-genpop-survsum}
 
 \begin{table}
@@ -1099,6 +1079,7 @@ Study 3 & Framing results not reported in main text & We pre-registered a framin
 \end{tabular}
 \end{table}
 
+\FloatBarrier
 \newpage
 
 \section{Home Depot suggested Homer Fund contribution rates}\label{app-THD-suggcont}
@@ -1107,6 +1088,7 @@ Study 3 & Framing results not reported in main text & We pre-registered a framin
 \includegraphics[width=0.6\linewidth]{../plots/HF_donation_suggestions} \caption{Suggested Homer Fund donation levels as of 2025}\label{fig:fig-sugdon}
 \end{figure}
 
+\FloatBarrier
 \newpage
 
 \section{Home Depot Survey summary table (unweighted)}\label{app-survsum-uw}
@@ -1285,6 +1267,7 @@ The unweighted sample is older and skewed slightly male relative to reported Fac
 \end{tabular}
 \end{table}
 
+\FloatBarrier
 \newpage
 
 \section{Walmart survey details}\label{app-wmt-survsum}
@@ -1605,9 +1588,15 @@ The unweighted sample is older and skewed slightly male relative to reported Fac
 \end{tabular}
 \end{table}
 
+\FloatBarrier
+
 \section{Alternative specifications \& Study 1}\label{alternative-specifications-study-1}
 
+\FloatBarrier
+
 \section{Alternative specifications \& Study 2}\label{alternative-specifications-study-2}
+
+\FloatBarrier
 
 \section{Manipulation check Study 3}\label{app-wmt-manip}
 
@@ -1647,33 +1636,37 @@ $N$ & \num{980} & \num{980} & \num{980} & \num{980}\\
 \end{tabular}
 \end{table}
 
+\FloatBarrier
+
 \section{Alternative models for ACNT donation}\label{app-wmt-altdonate}
 
 \begin{table}
 \centering
-\begin{talltblr}[         %% tabularray outer open
-caption={Regression of ACNT donation on treatment  \textbackslash{}label\{tab:tab-donate-models-wmt-app\}},
-note{}={+ p \num{< 0.1}, * p \num{< 0.05}, ** p \num{< 0.01}},
-note{ }={Robust standard errors for OLS model},
-]                     %% tabularray outer close
-{                     %% tabularray inner open
-colspec={Q[]Q[]Q[]Q[]},
-hline{2}={1-4}{solid, black, 0.05em},
-hline{4}={1-4}{solid, black, 0.05em},
-hline{1}={1-4}{solid, black, 0.08em},
-hline{6}={1-4}{solid, black, 0.08em},
-column{2-4}={}{halign=c},
-column{1}={}{halign=l},
-}                     %% tabularray inner close
-& LPM & logit & Firth \\
-Treated & \num{0.038}* & \num{0.440}* & \num{0.437}* \\
-& (\num{0.019}) & (\num{0.219}) & (\num{0.218}) \\
-N & \num{980} & \num{980} & \num{980} \\
-AIC & \num{386.8} & \num{619.3} &  \\
-\end{talltblr}
+\caption{\label{tab:fig-emerg-donate}Regression of ACNT donation on treatment  \textbackslash{}label\{tab:tab-donate-models-wmt-app\}}
+\centering
+\begin{threeparttable}
+\begin{tabular}[t]{lccc}
+\toprule
+  & LPM & logit & Firth\\
+\midrule
+Treated & \num{0.038}* & \num{0.440}* & \num{0.437}*\\
+ & (\num{0.019}) & (\num{0.219}) & (\num{0.218})\\
+\midrule
+N & \num{980} & \num{980} & \num{980}\\
+AIC & \num{386.8} & \num{619.3} & \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item + p $<$ 0.1, * p $<$ 0.05, ** p $<$ 0.01 Robust standard errors for OLS model
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
 
+\FloatBarrier
+
 \section{Alternative specifications \& Study 3}\label{alternative-specifications-study-3}
+
+\FloatBarrier
 
 \section{Placebos for UI support (Home Depot)}\label{app-placebo}
 

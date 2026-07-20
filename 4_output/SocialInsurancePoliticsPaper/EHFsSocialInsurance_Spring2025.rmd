@@ -22,6 +22,7 @@ link-citations: true
 classoption: [11pt, oneside]
 header-includes:
    - \usepackage{setspace}\onehalfspacing
+   - \usepackage{placeins}
 
 ---
 \begin{abstract}
@@ -422,6 +423,8 @@ study_table %>%
 
 ```
 
+\FloatBarrier
+
 # General retail survey survey details {#app-genpop-survsum}
 
 ```{r tab-sum-gr, echo=FALSE, tab.cap="General retail survey summary"}
@@ -432,6 +435,7 @@ tbl_sum_genpop_1w
 tbl_sum_genpop_2w
 ```
 
+\FloatBarrier
 \newpage
 
 # Home Depot suggested Homer Fund contribution rates {#app-THD-suggcont}
@@ -440,6 +444,7 @@ tbl_sum_genpop_2w
 knitr::include_graphics(here('4_output', 'plots', 'HF_donation_suggestions.png'))
 ```
 
+\FloatBarrier
 \newpage
 # Home Depot Survey summary table (unweighted) {#app-survsum-uw}
 
@@ -491,7 +496,7 @@ tbl_sum_2 |>
                           
 ```
 
-
+\FloatBarrier
 \newpage
 
 # Walmart survey details {#app-wmt-survsum}
@@ -522,16 +527,26 @@ bal_tbl %>%
 #print(bal_tbl)
 ```
 
+\FloatBarrier
 
 # Alternative specifications & Study 1
+
+\FloatBarrier
+
 # Alternative specifications & Study 2
+
+\FloatBarrier
+
 # Manipulation check Study 3 {#app-wmt-manip}
+
 In the Walmart sample, treatment significantly increased the probability that a respondent would correctly state that Walmart has an EHF. 
 ```{r tab-manip-check, echo=FALSE, tab.cap="manipulation check"}
 
 manip_model_print_compact
 
 ```
+
+\FloatBarrier
 
 # Alternative models for ACNT donation {#app-wmt-altdonate}
 
@@ -540,6 +555,7 @@ manip_model_print_compact
 donation_tab_app
 ```
 
+\FloatBarrier
 
 # Alternative specifications & Study 3
 
@@ -585,6 +601,7 @@ EHF may be viewed as "private insurance", which could dampen support for social 
 
 --->
 
+\FloatBarrier
 
 # Placebos for UI support (Home Depot) {#app-placebo}
 ```{r tab-placebo, echo=FALSE, tab.cap="Placebo regressions for UI"}
