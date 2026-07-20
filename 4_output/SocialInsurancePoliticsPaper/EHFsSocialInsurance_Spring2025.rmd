@@ -16,8 +16,8 @@ output:
     extra_dependencies: ["hyperref", "bbm", "subfig", "flafter"]
 #biblio-style: "`r here::here('inputs', 'apsr.bst')`"
 bibliography: 
-   - "`r here::here('inputs', 'EHFbib4.bib')`"
-   - "`r here::here('inputs', 'EHFbib5.bib')`"
+   - "../../inputs/EHFbib4.bib"
+   - "../../inputs/EHFbib5.bib"
 link-citations: true
 classoption: [11pt, oneside]
 header-includes:
@@ -34,9 +34,11 @@ There is a long-standing claim that government social spending crowds out privat
 \end{abstract}
 
 ```{r setup, include=FALSE}
+here::i_am("4_output/SocialInsurancePoliticsPaper/EHFsSocialInsurance_Spring2025.rmd")
+
 #loading THD, WMT, and genpop data
 temp<-here::here('2_code', '1_libraries_and_settings_global.R')
-source(file = temp, local = knitr::knit_global())
+source(file = temp)
 
 temp<-here::here('2_code', 'THD', '2_data_format.R')
 source(file = temp)
@@ -46,7 +48,7 @@ temp<-here::here('2_code','Walmart', '5_sample_desc.R')
 source(file = temp)
 rm(temp)
 
-genpop <- read_csv(here("3_cleaned_data", "general_retail_clean.csv"))
+genpop <- read_csv(here::here("3_cleaned_data", "general_retail_clean.csv"))
 
 genpop_w<- genpop  |>  
   as_survey_design(ids = 1, weights = acs_weight_trim)

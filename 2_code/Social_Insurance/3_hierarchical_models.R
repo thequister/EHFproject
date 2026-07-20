@@ -45,7 +45,6 @@ coef_maps <- c(
   "conservativeTRUE" = "Conservative", 
   'st_directed:conservativeTRUE' = "Generosity x Conservative",
   "home_ownershipTRUE" = "Home owner",
-  "home_ownershipFALSE:hpi_5year" = "Not a home owner x house appreciation", 
   "home_ownershipTRUE:hpi_5year" = "Home owner x house appreciation",
   "SD (Intercept residence)"= "Var: intercept",
   "SD (Observations)" = "Var: residual",
@@ -59,7 +58,7 @@ AIC <- str_sub(as.character(sapply(list(rob_1_alt_supp, rob_2_alt_supp, hier_1_s
 
 rows<-tribble(
   ~"",~"",~"",~"",~"",~"",
-  "Model Type", "Cluster-robust", "Cluster-robust", "HLM", "HML","HLM", 
+  "Model Type", "Cluster-robust", "Cluster-robust", "HLM", "HLM","HLM", 
   "AIC", AIC[1], AIC[2], AIC[3], AIC[4], AIC[5])
 attr(rows, 'position') <- c(19)
 
@@ -124,7 +123,6 @@ coef_maps <- c(
   "conservativeTRUE" = "Conservative", 
   'st_directed:conservativeTRUE' = "Generosity x Conservative",
   "home_ownershipTRUE" = "Home owner",
-  "home_ownershipFALSE:hpi_5year" = "Not a home owner x house appreciation", 
   "home_ownershipTRUE:hpi_5year" = "Home owner x house appreciation",
   "SD (Intercept residence)"= "Var: intercept",
   "SD (Observations)" = "Var: residual",
@@ -138,9 +136,9 @@ AIC <- str_sub(as.character(sapply(list(rob_1_alt_don, rob_2_alt_don, hier_1_don
 
 rows<-tribble(
   ~"",~"",~"",~"",~"",~"",
-  "Model Type", "Cluster-robust", "Cluster-robust", "HLM", "HML","HLM", 
+  "Model Type", "Cluster-robust", "Cluster-robust", "HLM", "HLM","HLM", 
   "AIC", AIC[1], AIC[2], AIC[3], AIC[4], AIC[5])
-attr(rows, 'position') <- c(19)
+attr(rows, 'position') <- c(17)
 
 note1 <- "Additional covariates include age, gender race, job tenure, hourly and full time status, college degree, main job, income, religiosity."
 #note2 <- "Robust standard errors in parentheses."
@@ -148,7 +146,7 @@ note1 <- "Additional covariates include age, gender race, job tenure, hourly and
 gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0))
 
-mod_tab_don <-modelsummary(supp_mods,
+mod_tab_don <-modelsummary(don_mods,
                             #shape = term + response ~ statistic,
                             coef_map = coef_maps,
                             title = "Willingness to donate to EHF among retail workers who do not have an EHF, by state level safety net generosity models. There is no detected state level variation.  \\label{tab:tab-genpop-ui-don}",
