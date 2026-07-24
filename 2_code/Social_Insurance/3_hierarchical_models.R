@@ -60,7 +60,7 @@ rows<-tribble(
   ~"",~"",~"",~"",~"",~"",
   "Model Type", "Cluster-robust", "Cluster-robust", "HLM", "HLM","HLM", 
   "AIC", AIC[1], AIC[2], AIC[3], AIC[4], AIC[5])
-attr(rows, 'position') <- c(19)
+attr(rows, 'position') <- c(17)
 
 note1 <- "Additional covariates include age, gender race, job tenure, hourly and full time status, college degree, main job, income, religiosity."
 #note2 <- "Robust standard errors in parentheses."
@@ -80,8 +80,6 @@ mod_tab_supp <-modelsummary(supp_mods,
                                    #stars = c('*' = .05, '**' = .01),
                                    escape = FALSE
 )
-
-
 
 ## EHF Donation Models
 model_1 <- lm(ehf_donate_new_num ~ st_directed + age_clean + nonwhite +
@@ -138,7 +136,7 @@ rows<-tribble(
   ~"",~"",~"",~"",~"",~"",
   "Model Type", "Cluster-robust", "Cluster-robust", "HLM", "HLM","HLM", 
   "AIC", AIC[1], AIC[2], AIC[3], AIC[4], AIC[5])
-attr(rows, 'position') <- c(17)
+attr(rows, 'position') <- c(15)
 
 note1 <- "Additional covariates include age, gender race, job tenure, hourly and full time status, college degree, main job, income, religiosity."
 #note2 <- "Robust standard errors in parentheses."

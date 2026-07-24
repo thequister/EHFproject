@@ -153,8 +153,8 @@
 }
 \makeatother
 \subtitle{employee harship funds and the `substitution hypothesis'}
-\author{John S. Ahlquist\footnote{Professor, School of Global Policy and Strategy, UC San Diego. \href{mailto:jahlquist@ucsd.edu}{\nolinkurl{jahlquist@ucsd.edu}}. This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center. Keng-Chi Chiang, Ofri Mantell, and Yuchen Wang provided research assistance. Shane Xuan assisted with Facebook.} \and Theodoros Ntounias\footnote{PhD Candidate, department of political science, UC San Diego}}
-\date{24 July, 2026 Prepared for APSA 2025}
+\author{John S. Ahlquist\footnote{Professor, School of Global Policy and Strategy, UC San Diego. \href{mailto:jahlquist@ucsd.edu}{\nolinkurl{jahlquist@ucsd.edu}}. This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center. Keng-Chi Chiang, Ofri Mantell, and Yuchen Wang provided research assistance. Shane Xuan assisted with Facebook.} \and Theodoros Ntounias\footnote{Postdoctoral Researcher, Skalny Center for Polish and Central European Studies, University of Rochester. \href{mailto:tntounias@pm.me}{\nolinkurl{tntounias@pm.me}}}}
+\date{24 July, 2026}
 
 \begin{document}
 \maketitle
@@ -307,8 +307,6 @@ Var: conservative &  &  &  & \num{0.004} & \\
 Var: residual &  &  & \num{0.277} & \num{0.278} & \num{0.275}\\
 \midrule
 Model Type & Cluster-robust & Cluster-robust & HLM & HLM & HLM\\
-NA & NA & NA & NA & NA & \vphantom{1} NA\\
-NA & NA & NA & NA & NA & NA\\
 $N$ & \num{1008} & \num{988} & \num{989} & \num{988} & \num{988}\\
 AIC & 297 & 301 & 406 & 434 & 453\\
 \bottomrule
@@ -344,8 +342,6 @@ Var: conservative &  &  &  & \num{0.090} & \\
 Var: residual &  &  & \num{0.304} & \num{0.302} & \num{0.303}\\
 \midrule
 Model Type & Cluster-robust & Cluster-robust & HLM & HLM & HLM\\
-NA & NA & NA & NA & NA & \vphantom{1} NA\\
-NA & NA & NA & NA & NA & NA\\
 $N$ & \num{811} & \num{792} & \num{792} & \num{792} & \num{792}\\
 AIC & 395 & 382 & 496 & 505 & 520\\
 \bottomrule
@@ -380,13 +376,13 @@ The surveys in Studies 2 and 3 were very similar in question wording and orderin
 
 \subsection{EHF survey experiments}\label{ehf-survey-experiments}
 
-In both studies 2 and 3, we randomly exposed respondents to messages about their employer's EHF to test H2, 2a, and 2b. The main quantities of interest are the average treatment effects (ATE) for each of the EHF treatments relative to control for each of the outcome variables. We present graphical displays as well as regression-based estimates.
+In both studies 2 and 3, we randomly exposed respondents to messages about their employer's EHF to test H2, 2a, and 2b. The main quantities of interest are the average treatment effects (ATE) for each of the EHF treatments relative to control for each of the outcome variables; specifics on the treatments and outcomes of interest are presented in the following sections. For each, we present graphical displays as well as regression-based estimates.
 
 Importantly, we are randomly assigning information, not program access or benefits. Some workers arrive in the survey with prior exposure to information about their employer's EHF. These ``pre-exposed'' may be less responsive to the treatment messages than those unaware of the EHF prior to the survey.\footnote{We use the terms ``aware'' and ``pre-exposed'' interchangeably.} To the extent we are interested in the effect of informing a previously uniformed worker about the EHF, the ATEs could be subject to ``pre-exposure bias'' (\citeproc{ref-druckmanLearningMorePolitical2012a}{Druckman and Leeper 2012}; \citeproc{ref-ferrariMethodologicalApproachCausal2023}{Ferrari 2023}). We therefore consider heterogeneity in treatment effects based on pre-exposure to the EHF.
 
 We measure prior awareness of the employer's EHF by presenting them with a list of job amenities and asking them to select all of the ones they have access to. We code a positive response to ``emergency cash to help in times of need'' as indicating awareness of the EHF program.\footnote{See Ahlquist (\citeproc{ref-ahlquistPrivateWelfareCorporate2025}{2025}) for a detailed discussion of this measurement strategy and comparison with other measures of EHF awareness in the survey.} We ask this question of all respondents before they encounter the experimental treatment. The assumption needed to sustain a causal interpretation of the treatment is that pre-exposure to information about the EHF is independent of potential outcomes, conditional on treatment and relevant pre-treatment covariates.\footnote{Pre-exposure can also be viewed through the lens of compliance with treatment assignment; the pre-exposed are ``always takers'' while the un-exposed are ``compliers''. Since we have direct measures of pre-exposure, however, the heterogeneous effects approach is more natural.}
 
-In the analysis that follows, we report four models for each outcome. The first includes only the experimental treatment indicators, providing ATE estimates. The second adds a treatment-by-awareness interaction term. The third includes a suite of pre-registered pre-treatment covariates.\footnote{These are age, gender, race, college degree status, tenure at their job, whether this job is their primary job, and whether they work full-time. Ahlquist (\citeproc{ref-ahlquistPrivateWelfareCorporate2025}{2025}) shows that job tenure and full-time status are the primary predictors of pre-exposure to the EHF.} The fourth, ``expanded'' model then adds additional covariates that were not pre-registered but that are relevant to the substitution hypothesis literatures. The set of expanded covariates includes household income, whether the respondent identifies as politically conservative, religiosity, home value appreciation, and the safety net generosity in the respondent's state of residence. Following the pre-registered plan, we report linear regression models in the main text, employing robust or clustered standard errors, as appropriate. Models employing different distributional assumptions appear in the appendix.
+In the analysis that follows, we report four models for each outcome. The first includes only the experimental treatment indicators, providing ATE estimates. The second adds a treatment-by-awareness interaction term. The third includes a suite of pre-registered pre-treatment covariates.\footnote{These are age, gender, race, college degree status, tenure at their job, whether this job is their primary job, and whether they work full-time. Ahlquist (\citeproc{ref-ahlquistPrivateWelfareCorporate2025}{2025}) shows that job tenure and full-time status are the primary predictors of pre-exposure to the EHF.} The fourth, ``expanded'' model then adds additional covariates that were not pre-registered but that are relevant to the substitution hypothesis literatures. The set of expanded covariates includes household income, whether the respondent identifies as politically conservative, religiosity, safety net generosity in the respondent's state of residence (\citeproc{ref-schmidtStateSafetyNet2024}{Schmidt, Shore-Sheppard, and Watson 2024}), and home value appreciation calculated using the Federal Housing Finance Agency's House Price Index. Following the pre-registered plan, we report linear regression models in the main text, employing robust or clustered standard errors, as appropriate. Models employing different distributional assumptions appear in the appendix.
 
 \subsubsection{Study 2}\label{study-2}
 
@@ -599,6 +595,14 @@ AIC & \num{386.8} & \num{388.9} & \num{390.2} & \num{389.6} & \num{409.9}\\
 Table \ref{tab:tab-donate-wmt} presents regression-based estimates of treatment effects, using linear probability models.\footnote{See \ref{app-wmt-altdonate} for estimates using logistic regression and Firth regression to address concerns with rare events. Estimated treatment effects are quite similar across models.} Treatment significantly increases willingness to take an action to donate. There is no evidence that either state-level generosity or ACNT pre-exposure moderates these treatment effects.\footnote{Hierarchical logit models including state-level random effects and random slopes produce the same conclusion.} The inclusion of additional covariates does nothing to alter these conclusions.
 
 The ACNT treatment did significantly increase willingness to donate, as expected, indicating that the treatment did work. But there is no evidence to support the claim that welfare generosity has any effect on the willingness of workers to donate to an EHF program. Across all three studies, we see no evidence consistent with either H1 or H2.
+
+\subsection{Threats to Inference and Interpretation}\label{threats-to-inference-and-interpretation}
+
+Workers seem to like EHFs and value them in employers. Especially for THD EHF.
+
+Is it null or just very small? Limitations of study but low power not one of them.
+
+Etc.
 
 \section{Discussion and Conclusion}\label{sec-conclusion}
 
