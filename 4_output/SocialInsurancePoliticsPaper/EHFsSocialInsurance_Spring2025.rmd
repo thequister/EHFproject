@@ -16,8 +16,8 @@ output:
     extra_dependencies: ["hyperref", "bbm", "subfig", "flafter"]
 #biblio-style: "`r here::here('inputs', 'apsr.bst')`"
 bibliography: 
-   - "../../inputs/EHFbib4.bib"
-   - "../../inputs/EHFbib5.bib"
+   - "`r here::here('inputs', 'EHFbib4.bib')`"
+   - "`r here::here('inputs', 'EHFbib5.bib')`"
 link-citations: true
 classoption: [11pt, oneside]
 header-includes:
@@ -35,7 +35,7 @@ There is a long-standing claim that government social spending crowds out privat
 \end{abstract}
 
 ```{r setup, include=FALSE}
-here::i_am("4_output/SocialInsurancePoliticsPaper/EHFsSocialInsurance_Spring2025.rmd")
+#here::i_am("4_output/SocialInsurancePoliticsPaper/EHFsSocialInsurance_Spring2025.rmd")
 
 #loading THD, WMT, and genpop data
 temp<-here::here('2_code', '1_libraries_and_settings_global.R')
