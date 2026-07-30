@@ -1418,6 +1418,22 @@ genpop_ja_ols_tab
 genpop_uv_mnl_tab
 ```
 
+# Video treatment and placebo similarities {#app-vidsim}
+
+Here we use both text and dynamic video embeddings to describe the multimodal similarties between the placebo and treatment videos for Walmart as well as between the Home Depot and Walmart treatment videos.  [@reimersSentenceBERTSentenceEmbeddings2019, @radfordLearningTransferableVisual2021].^[For the video embedding, we selected 200 frames for the CLIP algorithm.]  As designed, the placebo and treatment videos display high video similarity but low semantic content similarity. The Home Depot and Walmart treatment videos show quite good cosine similarity in both video an semantic content. 
+
+```{r, echo=FALSE, out.width="80%", fig.cap="Multimodal Similarity: Walmart Treatment vs. Walmart Placebo", fig.align="center"}
+knitr::include_graphics(
+  here("4_output", "plots", "compare_charity_placebo_summary.png")
+  )
+```
+
+```{r, echo=FALSE, out.width="80%", fig.cap="Multimodal Similarity: Walmart Treatment vs. Walmart Placebo", fig.align="center"}
+knitr::include_graphics(
+  here("4_output", "plots", "compare_trt_charity_summary.png")
+  )
+```
+
 
 # Difficulty paying bills (Home Depot) {#app-bills}
 As a second indicator, Study 2 included the question "In a typical month, how difficult is it for you to cover your expenses and pay all your bills?" , with responses "Not at all difficult", "Somewhat difficult", "Very difficult".
