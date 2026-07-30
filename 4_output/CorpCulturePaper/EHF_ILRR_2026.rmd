@@ -1420,7 +1420,9 @@ genpop_uv_mnl_tab
 
 # Video treatment and placebo similarities {#app-vidsim}
 
-Here we use both text and dynamic video embeddings to describe the multimodal similarties between the placebo and treatment videos for Walmart as well as between the Home Depot and Walmart treatment videos.  [@reimersSentenceBERTSentenceEmbeddings2019, @radfordLearningTransferableVisual2021].^[For the video embedding, we selected 200 frames for the CLIP algorithm.]  As designed, the placebo and treatment videos display high video similarity but low semantic content similarity. The Home Depot and Walmart treatment videos show quite good cosine similarity in both video an semantic content. 
+Here we use text, acoustic, and dynamic video embeddings to describe the multimodal similarties between (i) the placebo and treatment videos for Walmart and (ii) the Home Depot and Walmart treatment videos.  We assessed treatment video comparability using CLIP ViT-B/32 [@radfordLearningTransferableVisual2021], implemented via OpenCLIP on 200 frames per file.  For acoustic similarity, we segmented audio tracks into overlapping 10-second windows and encoded them with CLAP [@wuLargeScaleContrastiveLanguageAudio2023].  For transcript comparability we used Sentence-BERT embeddings [@reimersSentenceBERTSentenceEmbeddings2019] for semantic similarity of the narrated content.  In each case, we report the cosine similarity of the mean embeddings as the video-level similarity score.
+
+Exactly as designed, the placebo and treatment videos display high video similarity and acoustic similarlity but low semantic content similarity. The Home Depot and Walmart treatment videos show very high cosine similarity in video, audio, and semantic content. 
 
 ```{r, echo=FALSE, out.width="80%", fig.cap="Multimodal Similarity: Walmart Treatment vs. Walmart Placebo", fig.align="center"}
 knitr::include_graphics(
