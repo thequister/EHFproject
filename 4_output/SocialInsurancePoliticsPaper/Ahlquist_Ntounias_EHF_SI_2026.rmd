@@ -1,0 +1,642 @@
+---
+title: "Private Welfare in the Workplace"
+subtitle: "employee harship funds and the 'substitution hypothesis'"
+author: 
+   - John S. Ahlquist^[Professor, School of Global Policy and Strategy, UC San Diego. jahlquist@ucsd.edu.  This project was pre-registered under osf.io/fhq93. This research received grant support from the Russell Sage Foundation, UCSD's Cowhey Center for Global Transformation, and the UCSD Yankelovitch Center.  Keng-Chi Chiang, Ofri Mantell, and Yuchen Wang provided research assistance.  Shane Xuan assisted with Facebook.]
+   - Theodoros Ntounias^[Postdoctoral Researcher, Skalny Center for Polish and Central European Studies, University of Rochester. tntounias@pm.me]
+  
+date: "`r paste(format(Sys.time(), '%d %B, %Y'))`"
+
+output: 
+  bookdown::pdf_document2:
+    latex_engine: xelatex
+    keep_tex: true
+    toc: false
+    #citation_package: natbib
+    extra_dependencies: ["hyperref", "bbm", "subfig", "flafter"]
+#biblio-style: "`r here::here('inputs', 'apsr.bst')`"
+bibliography: 
+   - "`r here::here('inputs', 'EHFbib4.bib')`"
+   - "`r here::here('inputs', 'EHFbib5.bib')`"
+link-citations: true
+classoption: [11pt, oneside]
+header-includes:
+   - \usepackage{setspace}\onehalfspacing
+   - \usepackage{placeins}
+
+---
+\begin{abstract}
+\begin{singlespace} 
+
+There is a long-standing claim that government social spending crowds out private savings and charity. There is also a newer set of arguments claiming that access to private resources (home equity, credit, insurance, charity) dampen voters' support for social insurance and redistributive spending. These claims have not been jointly investigated nor has the literature connected workplace programs and benefits with either outcome.  We investigate both sides of the ``substitution hypothesis'' in the context of an unstudied set of workplace private welfare programs: Employee Hardship Funds (EHFs). EHFs enable employers to distribute emergency cash to their workers using donations pooled from employees themselves. Using use three original surveys, we find that state-level variation in the social safety net is unrelated to worker support for or willingness to donate to EHFs. Experimental manipulation of EHF salience among workers at two large retailers indicates that EHFs do not displace support for public unemployment insurance or government emergency aid, regardless of the generosity of the EHF program.  Workplace-based private welfare programs like EHFs appear unconnected with government social insurance programs in the minds of workers.\\
+
+
+\end{singlespace}
+\end{abstract}
+
+```{r setup, include=FALSE}
+#loading THD, WMT, and genpop data
+temp<-here::here('2_code', '1_libraries_and_settings_global.R')
+source(file = temp)
+
+temp<-here::here('2_code', 'THD', '2_data_format.R')
+source(file = temp)
+
+#WMT data with sample descriptives for appendix.
+temp<-here::here('2_code','Walmart', '5_sample_desc.R')
+source(file = temp)
+rm(temp)
+
+genpop <- read_csv(here::here("3_cleaned_data", "general_retail_clean.csv"))
+
+genpop_w<- genpop  |>  
+  as_survey_design(ids = 1, weights = acs_weight_trim)
+
+```
+
+
+For centuries, pundits and scholars have debated whether government spending crowds out private savings and charity [@townsendDissertationPoorLaws1786; @friedmanCapitalismFreedom2002; @andreoniImpureAltruismDonations1990; @bredtmannDoesGovernmentSpending2023; @lehmann-hasemeyerDoesSocialSecurity2018].  More recently, scholars of comparative political economy have studied how "private welfare" and "self-insurance" undermine support for social insurance and redistribution [@ansellPoliticalEconomyOwnership2014; @wiedemannHowCreditMarkets2022; @ahlquistTakingCreditRedistribution2017; @prasadLandTooMuch2012; @busemeyerWelfareStatePrivate2020].  Almost entirely absent from these discussions are large firms, which have tremendous leeway to introduce, revise, and eliminate employee health and life insurance coverage, retirement programs, transportation and childcare subsidies, and charitable initiatives.  Does employer-based "private welfare" feed back into the political system, reducing support for government spending on these same activities?  Does government welfare effort affect worker interest in firm-driven private welfare and charitable programs? 
+
+In this paper, we focus on one unstudied type of workplace program that combines *both* private welfare and charitable activities: Employee Hardship Funds (EHFs).  These now-widespread programs---operating largely in the US---are set up by corporations as tax-exempt charities. Employers solicit donations from their own employees to fund cash grants to their workers during times of unexpected personal hardship.  As essentially scaled up, tax-advantaged versions of "passing the hat", EHFs echo the long tradition of worker mutual aid.  We use them to study both directions of the "substitution hypothesis." As a form of corporate charitable activity, we can examine whether worker interest in and donation to EHF programs varies as a function of government welfare effort.  As a form of private welfare, we can examine whether EHF salience affect workers' support for government programs to aid the unemployed and those in need.  
+
+We fielded three pre-registered surveys. In Study 1, an original survey of US retail workers, we ask whether variation across US States in welfare effort predicts worker interest in and willingness to donate to EHFs. In Study 2 and 3, we fielded two original, independent surveys of workers at two large US retailers with long-standing EHF programs of widely differing generosity. We experimentally manipulate worker awareness of their employer's EHF by randomly assigning some workers to watch employer-produced or adapted testimonial videos from EHF grant recipients.  We ask whether exposure to these messages about a form of private welfare affects support for government programs aiding the unemployed and those in need.^[A companion paper [@ahlquistPrivateWelfareWorkplace2026] uses these same underlying data to study different outcomes: job attachment and unionization interest. Because both papers rely on the same programs, surveys, and experiments, we necessarily share some description of EHFs, case selection, and research design; we keep that material to the minimum needed here and refer readers to @ahlquistPrivateWelfareWorkplace2026 for the fullest account of program histories, recruitment, and measurement.]  In the end, we find that our EHF treatments do *not* reduce support for government social insurance among workers at either firm, regardless of program generosity.  Even though our EHF treatment increases worker willingness to donate to the EHF, this effect is not moderated by state-level welfare generosity or individual-level considerations such as religiosity and partisanship. Using hierarchical models, we also find no detectable relationship between state-level welfare regimes and broader worker interest in EHF programs. Taken together, these findings suggest that  EHFs and government social insurance programs are unconnected in the minds of workers.  In short, we find no evidence consistent with either version of the substitution hypothesis with respect to workplace programs. 
+
+Our findings make five contributions.  First we highlight how workplace benefits have been excluded from broader debates about private welfare and the crowd out between government spending and private initiatives.  Second, we show how researchers can exploit variation in workplace benefits to speak to broader social science debates.  Third, we highlight EHFs as curious, understudied workplace programs.   Fourth, in the case of EHFs, we fail to uncover evidence that this workplace program connects meaningfully with political attitudes.  This lack of connection may be because EHFs are too new or too small to matter, but future research will be needed. Finally, there are policy stakes. EHFs connect to several areas of concern in the contemporary American political economy, including notable inequities across workers as well as increased employer leverage over workers in an era of monopsonistic local labor markets, weak unions, and strained safety nets.  For example,  EHFs, as with all workplace benefits, are conditional on employment with a specific firm, potentially exacerbating inequality across workers at different firms or in different sectors.  EHFs may also increase employer power over workers when they are most vulnerable, similar to the "welfare capitalism" of the past [@brandesAmericanWelfareCapitalism1976; @jacobyModernManorsWelfare1998]. EHFs, as with many job-related benefits, lack formal mechanisms for worker input and accountability, beyond worker quits.  On the positive side, workers appear to value emergency aid and corporations may be more efficient at delivering immediate cash assistance than governments, at least to the families of the employed.
+
+In the next section we go into both forms of the substitution hypothesis in more detail, highlighting the absence of any real consideration of workplace programs and benefits.  Section \@ref(sec-ehf-bkgrnd) provides the necessary background on EHFs and summarizes the main hypotheses we examine here.  Section \@ref(sec-genpop) describes the research design and results for Study 1 while Section \@ref(sec-study2-3) describes the case selection, survey experiments, and results from Studies 2 and 3.  Section \@ref(sec-conclusion) concludes.
+
+# The "substitution hypothesis," two ways {#sec-lit}
+
+This paper builds on two largely disconnected literatures concerned with whether private resources and public welfare or social insurance substitute for one another.  The first literature stems from arguments emerging as far back as the 18th Century (at least), claiming that government spending on poverty relief, welfare, and social insurance crowds out private charitable giving and private savings.  The second and more recent literature works in the opposite direction.  It focuses on the links between improved access to private financial resources---credit, appreciating assets, insurance---and reduced voter support for public welfare and social insurance programs.  Both of these versions of the substitution hypothesis bear some resemblance to the policy feedback literature, long a staple of American politics, in which "policies make politics" [@schattschneiderPoliticsPressureTarriff1935; @campbellPolicyMakesMass2012].  Nevertheless, the substitution hypothesis literatures we draw on are less concerned with how government policies create organized constituencies to reinforce or undermine that policy. Importantly, none of these various strands of thought has looked squarely at whether workplace benefits and charitable programs might relate to voter attitudes toward government welfare efforts. 
+
+## Government spending crowds out of private savings and charity
+
+Almost as soon as governments began systematically spending tax money in support of the poor, aged, and infirm, arguments emerged that such spending is actually counterproductive.^[@defoeGivingAlmsNo1893 is the first we could uncover in the British tradition.] The reasons given often had much to do with purported moral failings among the laboring classes, but political economy arguments eventually emerged. @townsendDissertationPoorLaws1786 may have been the first to articulate the claim that tax-funded social spending will depress *both* private savings and private charity.^[Townsend says "Let the same [generous, charitable] man be straitened in his circumstances, let him be burthened with taxes...and he will have little inclination to seek for objects of distress, or to visit the sequestered cottage of the silent sufferer...If, agreeable to the general practice of the labouring poor, a man...has made no provision for his future wants; if all, to whom he might naturally look for aid, are in the same circumstances with himself; and if the charity of those among his neighbours, who are distinguished for benevolence, nay of all who have the common feelings of humanity, is exhausted; if they who are most willing are least able to relieve him; we must expect to see distress and poverty even among those who are worthy of compassion."]  @malthusEssayPrinciplePopulation1798 claims that "The poor laws of England may therefore be said to diminish both the power and the will to save among the common people" (Ch. 5).  @detocquevilleAlexisTocquevillesMemoir1997 created a distinction between "private" and "legal" charity, arguing in favor of the former over the latter.^[He states that "any permanent, regular, administrative system whose aim will be to provide for the needs of the poor, will breed more miseries than it can cure, will deprave the population that it wants to help and comfort, will in time reduce the rich to being no more than the tenant-farmers of the poor, will dry up the sources of savings, will stop the accumulation of capital, will retard the development of trade, will benumb human industry and activity, and will culminate by bringing about a violent revolution in the State, when the number of those who receive alms will have become as large as those who give it, and the indigent, no longer being able to take from the impoverished rich the means of providing for his needs, will find it easier to plunder them of all their property at one stroke than to ask for their help."]
+
+As the welfare state expanded dramatically in the post-War period, these arguments revived [@friedmanCapitalismFreedom2002], along with empirical scrutiny.  @feldsteinSocialSecurityInduced1974 argued that Social Security depressed household private savings by 30-50%, spawning an ongoing debate about the scale of substitution and its consequences [@alessiePensionWealthHousehold2013; @lehmann-hasemeyerDoesSocialSecurity2018].  Several theoretical models, based on the assumption that charities provide public goods, imply that government spending will crowd out private charity to some degree [@andreoniImpureAltruismDonations1990; @warrParetoOptimalRedistribution1982; @bergstromPrivateProvisionPublic1986].  Subsequent empirical work focused on determining whether government spending crowds out private giving dollar-for-dollar (as in models of "pure altruism") or at some lesser rate ("impure altruism").  A variety of empirical contexts and research designs produced widely varying estimates, including some evidence of "crowding in" [@dewitGovernmentSupportCharitable2016; @bredtmannDoesGovernmentSpending2023; @andreoniCharitableGiving2013].^[Crowding-in is most frequently observed in studies of government grants to specific charities, in which government support may signal need or charity quality, a line of reasoning irrelevant to this paper.  A more relevant possibility is that both government spending and private charity are signals (or byproducts) of broader cultural or institutional dispositions toward collective support [@dewitGovernmentExpendituresShift2018a].  Lab experimental studies tend to provide the largest estimates of crowding out.] The weight of evidence suggests that government spending *can* crowd out some proportion of charity and savings, but the scale is unclear and the details matter.    
+
+Most relevant to this study, @hungermanAreChurchState2005a and @gruberFaithbasedCharityCrowdout2007 exploit variation across US States in spending for social support, estimating that government social welfare spending reduces charitable relief from churches by about 30%. @paarlbergPoliticsDonationsAre2019 lack an identification strategy, but find that counties with lower tax burdens and higher proportions of Republican voters also donate more to charity.  In some of the more well-identified studies, charitable organizations take in donations and then provide services.  This complicates interpretation as fundraising effort responds strategically to government support [@andreoniCrowdingOutDue2011].  @panjwaniCausesConsequencesMedical2023 show that health-related crowdfunding campaigns (i.e., demand for charity) declined after expansions in medical insurance coverage due to the  Affordable Care Act.  @leeNewDigitalSafety2022 show that areas with poor private insurance coverage and fewer social associations see greater crowdfunding campaign initiation rates, but campaigns in these same areas are *less* likely to be successful (i.e., charitable capacity or norms might be weaker).  @bernardOutCrowdingEffects2025 show that crowdfunding projects with low excludability (i.e., you do not need to donate to enjoy benefits, should the project go forward) exhibit the most crowding out.  EHFs are non-excludable in this regard.    
+
+In attempting to estimate the crowd out rate, existing empirical work often relies actual government social spending as the measure of effort, as opposed to indicators of the spending "regime" [@esping-andersenThreeWorldsWelfare1990].  This is a problematic conflation for at least three reasons. First, spending levels at any point in time are endogenous to conditions that may also affect savings and charitable giving.^[There are several clever empirical strategies for addressing this, but they produce different estimates of crowd out from very different contexts [@boberg-fazlicDoesWelfareSpending2017; @hungermanAreChurchState2005a; @gruberFaithbasedCharityCrowdout2007; @andreoniGrantsCharitiesCrowd2014]]  Second, citizens' beliefs about government spending in specific areas are only weakly connected to actual spending levels (which fluctuates more than opinion) [@dewitHeterogeneityCrowdingoutWhen2017].  Voter knowledge about the level of government support directed to particular intermediary charities is even more meager [@horneCharitableDonorsKnow2005].  Voter beliefs about government spending levels, however, are connected to their pre-existing partisan identities [@bullockPartisanBiasFactual2015; @mettlerSubmergedState2011].  @kleinteeselinkPartisanshipPoliticalAlignment2025 show that co-partisans of the US President reduce their charitable donations independently of any changes to the level and composition of actual spending, likely because they are more confident in the efficacy of government when their preferred party is in power.  Third, expectations about the adequacy of *future* spending should matter when forming opinions or making donations.  As such, the adequacy and credibility of social spending *regimes* would be more relevant than actual spending levels at any moment in time, as @esping-andersenThreeWorldsWelfare1990 noted decades ago.^["Expenditures are epiphenomenal to the theoretical substance of welfare states."  p.19]  We take this seriously in our measurement choices below.   
+
+Firms are significant sources of charitable funding across a range of causes.  Firm-directed funding can take the form of corporate donations to specific charities or even individuals.  But firms also actively organize their employees to donate their private resources, sometimes using matching or other incentives [@meierSubsidiesIncreaseCharitable2007]. Firms appear to give for different reasons than individuals [@brammerCorporateReputationPhilanthropy2005; @bertrandHallMirrorsCorporate2021], but workplace philanthropic fundraising is significant [@rimesGivingWorkExploring2019; @shakerGiveOfficeReview2019].  Political scientists have studied employer-organized political donations [@hertel-fernandezPoliticsWork2018; @stuckatzHowWorkplaceAffects2022], which do appear to partially crowd out other charitable contributions [@yildirimArePoliticalCharitable2024].  But, as yet, there is no work examining any link between the government safety net and workplace giving, especially when the beneficiaries of workplace charity are other workers.  We provide the first such test looking at EHF programs.
+
+## Private resources crowd out support for a public safety net
+
+A newer, smaller, and largely parallel literature has emerged, documenting how shocks to private resources affect voter support for public social programs.  Most obviously, governments sometimes step in when private resources are diminished.  @margalitExplainingSocialPolicy2013 uses panel data around the Great Recession and finds that people who lose their job become more supportive of government support for the unemployed, but when the need dissipates, so does their support for government unemployment insurance, especially among Republican voters.  As an historical matter, government administered, tax-funded unemployment insurance grew out of the repeated collapse (and ad hoc bailouts) of privately-organized welfare and mutual aid pools [@socialsecurityadministrationSocialSecurityHistory2023; @westernClassMarketPrinceton1997].  
+
+Recently, scholars have asked whether improvements in private resources can crowd out support for government social insurance and welfare programs. The logic is simple: voters who perceive an improved financial position are more confident in their ability to "self-insure" against negative income shocks while also becoming less willing to pay taxes into the public system from which they perceive a reduced benefit.  Real estate (especially housing) is a key, politically relevant asset and source of savings [@ansellPoliticsHousing2019].  @ansellPoliticalEconomyOwnership2014 finds that American and British voters with appreciating real estate assets are less supportive of social insurance.  @wiedemannHowCreditMarkets2022 and @ahlquistTakingCreditRedistribution2017 focus on easy access to credit (related to home ownership and real estate prices) as a key private resource that can reduce pressure for redistributive policy and social spending.  Where real estate is more financialized (i.e., more tied to credit markets), home owners are less supportive of redistributive social policies [@andreHomeOwnershipSupport2016].  
+
+Beyond housing and credit, economic risk and access to insurance has been a major area of interest.  Those able to "self-insure" through higher wealth and incomes are less worried about negative economic shocks and less supportive of government spending to help the unemployed, infirm, and aged [@rehmInsecureAlliancesRisk2012; @hackerInsecureAmericanEconomic2013]. @busemeyerWelfareStatePrivate2020 provide a theoretical account and empirical data illustrating how the presence of private insurance options reduces high-income voters' support for unemployment and pension spending.  Increasingly fine-grained data combined with growing income inequality increase the scope for private insurance options to emerge, weakening support for "solidaristic" government policies [@iversenBigDataWelfare2022].^[@hadziabdicPrivateSpannerPublic2022, using German panel data, finds no robust relationship between taking out life insurance and broad attitudes around social spending and government activity.]  
+ 
+Private charity is also relevant here.  @werfelDoesCharitableGiving2018 uses survey experiments to manipulate beliefs about the degree of private charitable funding directed at specific needs.  In the area of social services, greater perceived charitable activity significantly reduced support among conservatives and moderates for government spending in that same area.
+
+Again, however, there is a dearth of research that explores how variation in employer-provided amenities and insurance as well as corporate charitable efforts affect voter attitudes and behavior.  This is remarkable, as there is considerable variation across firms and over time and space in workplace amenities as well as corporate charitable initiatives.  Insofar as EHFs are a form of private emergency aid, increased program awareness could blunt support for social insurance or government aid programs in times of emergency (e.g., COVID-19).  This paper seeks to determine whether we can observe this effect among US retail workers.
+
+# Employee Hardship Funds {#sec-ehf-bkgrnd}
+## Background
+
+In the contemporary United States, unions are vanishing and the welfare and social insurance systems are strained. Temporary and other "non-standard" work arrangements have spread [@abrahamMeasuringGigEconomy2021; @weilFissuredWorkplace2014] without providing access to traditional social insurance and labor-market protections [@thelenAmericanPrecariatCapitalism2019]. Americans in the lower half of the education and earnings distributions have seen wages stagnate even as they bear more economic risk [@hackerGreatRiskShift2019].
+
+Against this backdrop, many US employers have set up programs ostensibly designed to provide emergency aid to their workers.  For example, two of the largest retailers in the world, the Home Depot and Walmart maintain, respectively, the Homer Fund and Associates in Critical Need Trust (ACNT).^[ACNT has since been renamed the ACNT Together Fund.] Both programs are incorporated as non-profit charities (501(c)(3)) that make cash grants to employees facing emergency expenses.  These grants are funded by tax-deductible donations solicited directly from corporate and front-line employees alike; grants to workers are tax-exempt. We describe the two programs, which differ substantially in generosity and promotion, in Section \@ref(sec-study2-3).
+
+The Homer Fund and ACNT are examples of *Employee Hardship Funds* (EHFs), which blend features of charity with the job amenities of private "welfare capitalism". Workers are both asked to donate to these funds while hearing that their employer intends to help in times of unexpected hardship. Moreover, the structure and generosity of these programs varies significantly across employers. 
+
+Despite operating at hundreds of large firms, EHFs remain virtually unstudied outside a small practitioner literature [@associationofdisasterrelieffundsandemployeehardshipfundsEnvironmentalScanDisaster2013; @employeerelieffundeducationgroupEnvironmentalScanDisaster2019;@aspeninstituteIlluminatingHiddenSafety2019; @rodriguezEmployeeHardshipFunds2020;@rodriguezEveryCompanyShould2020],^[@amorimScheduleUnpredictabilityHighCost2022 and @reichWorkingRespectCommunity2018 are the only peer-reviewed pieces we know of that even mention EHFs.] There is no central registry exists. We have nonetheless documented over 320 firms across many sectors operating EHFs as of January 2025, including nine of the ten largest US retailers by revenue. Corporate interest in EHFs has been sufficient to support a cottage industry of third-party entities that create and manage EHFs on behalf of their clients.  The largest of these appears to be the Employee Assistance Foundation (EAF), which reports over 400 corporate clients and distributed more than \$86 million in grants in 2020.
+
+EHF activity appears to be growing. Levi Strauss reported a threefold rise in EHF applications in 2020 [@rodriguezEveryCompanyShould2020], with a further spike once federal pandemic aid lapsed, and EAF reported more than a tenfold jump in applications over historical averages in the first half of 2020 alongside 140 new client programs [@employeeassistancefoundationDecadeAssistanceOffering2022]. Home Depot suspended employee fundraising and expedited grants during the pandemic. In May 2020, amid criticism of its workplace-safety record and nascent unionization at its warehouses, Amazon launched a \$25 million EHF, which it closed in August 2022.
+
+Figure \@ref(fig:fig-HfACNTcomps) compares the Home Depot and Walmart programs using IRS Form 990 data. The left panel plots net assets of each firm's nonprofit foundation;^[For tax purposes each EHF sits within the larger Home Depot and Walmart corporate foundation, respectively.] both grew strongly after 2010, but the Homer Fund runs at more than double ACNT's size. The right panel plots grants to domestic individuals, our preferred measure of EHF activity.^[Large foundations mostly disburse to other nonprofits rather than individuals. The Homer Fund website reports \$17 million in 2023 EHF grants against the \$19.1 million in individual grants in the Home Depot foundation's 2023 Form 990.] The Homer Fund made \$15--25 million in annual individual grants between 2008 and 2022, versus typically under \$10 million for ACNT, despite Walmart's far larger workforce. Over their lifetimes the Homer Fund reports more than \$267 million to over 183,000 individuals and ACNT more than \$142 million to over 145,000.
+
+```{r fig-HfACNTcomps, fig.show="hold", out.width="50%", fig.cap ="EHF assets and grant activity at the Home Depot and Walmart."}
+temp<-here::here('2_code', "IRS_filings.R")
+source(file = temp)
+rm(temp)
+
+net_assets_plot
+grants_plot
+```
+
+These two programs illustrate a broader pattern: EHFs differ across firms on nearly every dimension---longevity, eligibility, generosity, funding, administration, and the intensity of employer promotion---variation we exploit in Studies 2 and 3.
+
+## Hypotheses 
+
+Connecting EHFs to both forms of the substitution hypothesis is straight forward.  If the first form of the substitution hypothesis holds, we expect workers in places with stronger government safety nets to be less interested in and less willing to donate to EHFs.  Existing work also suggests that political conservatives may be more attentive to these ostensible trade-offs. In the US, there is considerable variation across states in the generosity of unemployment and welfare benefits as well as in the administrative burdens workers face in accessing benefits when needed.  We exploit this cross-state variation below.  
+
+In the other direction, workers exposed to information about their employer's EHFs should see that they have access to additional resources should they encounter certain emergencies.  As their employer is now intervening, workers will be less supportive of government programs to support people in times of hardship.  The more generous the EHF, the less a worker may perceive a need for public programs.   
+
+We collect these hypotheses in Table \@ref(tab:tab-hypotheses) for ease of reference.
+
+```{r tab-hypotheses, echo=FALSE, message=FALSE, results='asis'}
+#library(kableExtra)
+#library(tibble)
+
+hypotheses <- tribble(
+  ~"Hypothesis", ~"Description", ~"Study",
+  "H1", "Workers in states with more generous social spending regimes will be less supportive of EHFs and less willing to donate.", "1, 3",
+"H1a", "The correlation with state spending will be stronger among conservatives", "1",  
+  "H2", "Exposure to EHF messaging reduces support for government spending on social insurance and welfare.", "2, 3",
+  "H2a", "Effects should be bigger among those unaware of the EHF before treatment.", "2, 3",
+  "H2b", "Effects should be bigger where the EHF is more generous.", "2, 3"
+)
+
+hypotheses %>%
+  kbl(booktabs = TRUE, caption = "Summary of Empirical Hypotheses",
+      label = "tab-hypotheses",  # This is the LaTeX label
+    escape = TRUE) %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE) |> 
+  column_spec(2, width = "10cm")  # Adjust width as needed
+```
+
+# Study 1 {#sec-genpop}
+
+Study 1 addresses H1 and H1a. We fielded an original survey of US retail workers probing their knowledge of and experience with EHFs---whether their employer offers one, and how much they support such programs. Concentrating on a single industry holds cross-industry variation fixed. Retail is a natural choice: it employs over 15 million Americans, a number that has grown over the past decade, and is characterized by low wages, limited human-capital investment, and unpredictable scheduling---conditions under which EHF-style benefits might be especially valued.
+
+The survey ran on the CloudResearch incentivized panel, targeting US retail workers aged 18 and over, in the field 12--22 February 2025, yielding `r nrow(genpop)` valid responses.^[Following our pre-registratioin, we analyze only respondents with US IP addresses who passed a retail-employment screen and two attention checks; duplicate IP addresses reporting identical demographics were also excluded.] Using 2024 American Community Survey demographics for US retail workers, we built post-stratification weights on gender, race, and education. Sample descriptives appear in Appendix \@ref(app-genpop-survsum).
+
+## Research design
+
+In the US, virtually all social safety net and labor market benefits for working age citizens are managed at the state level.^[Social Security, Medicare, and veterans' benefits are the primary programs that are run directly by the federal government.]  Consequently, there is significant variation across states in both the generosity of the social safety net and the ease of accessing the benefits that are available [@herdAdministrativeBurdenPolicymaking2019; @foxEffectAdministrativeBurden2023]. For example, in normal economic times, most states offer up to 26 weeks of unemployment insurance benefits, with some states offering as little as 12 while Montana provides 28.  The main cash welfare program, Temporary Assistance to Needy Families (TANF), provides a maximum monthly benefit of \$915 in New Hampshire but only \$162 in Arkansas for a single parent of one child of in 2023 [@falkTemporaryAssistanceNeedy2024].
+
+In Study 1, we rely on cross-state variation in the robustness of their social safety nets to look at two specific outcomes: the degree of support for an EHF at the respondent's current retail employer and the stated willingness to donate to the EHF.  Both outcomes are ordered categorical variables.^[Outcome categories for the donation question were \{nothing at all, one time donation less than $20, one time donation more than $20, regular donation of less than $20, regular donation of more than $20\}.]  Question wording varied slightly based on whether a respondent reported an employer with an EHF so we condition on whether the respondent claims to have an EHF.^[We were not in a position to verify whether respondent reports were accurate, so this represents perceptions only.]  
+
+In measuring variation in the state-level safety net, we rely on the standardized benefit levels produced by @schmidtStateSafetyNet2024.  In our main specifications, we use the "state directed" portion of these benefits, to better isolate differences across states.^[Our findings do not hinge on this decision.  Using the "cash and food" benefits estimates in @schmidtStateSafetyNet2024 or the measure of TANF benefit generosity from @foxEffectAdministrativeBurden2023 produce similar results.  Measure of UI generosity, including maximum weeks of benefits and average weekly benefit amounts also show no relationship with EHF support or donation.] 
+
+## Results
+
+Figure \@ref(fig:fig-ehf-genretail) displays the distributions of both EHF outcomes against safety net generosity, measured in US dollars. Inspection of the graphs suggests that there is no relationship between safety net generosity and either support for or willingness to donate to an EHF. 
+
+```{r fig-ehf-genretail, echo=FALSE, fig.cap = "EHF support and willingness to donate to a potential new EHF, by State level welfare benefits in USD. Marginal distributions of the variables are included as blue histograms.", fig.subcap = c("Support", "Willingness to Donate"), out.width="50%", fig.align = "center"}
+temp<-here::here('2_code', 'Social_Insurance', '2_dv_versus_iv_genpop.R')
+source(temp)
+rm(temp)
+
+knitr::include_graphics( c(
+  here('4_output', 'plots','ui_plot_gr_supp.png' ),
+  here('4_output', 'plots','ui_plot_gr_don.png')
+  )
+)
+```
+
+We explore these relationships further using both linear regression and hierarchical linear models.  In the latter, we report three specifications, one allowing for random state-level intercepts and a second that admits cross-level interactions between respondent political conservatism and state-level safety net generosity. Because appreciating real estate assets may depress support for the welfare state, we fit a third model that includes a cross-level interaction between an indicator of homeownership and the 5-year change in the state-level home price index produced by the US Federal Housing Finance Agency. We include a slate of other individual-level covariates connected to charitable giving and the substitution hypothesis: whether the respondent has used welfare in the past, religiosity, and political conservatism [@brooksWhoReallyCares2006; @bekkersWhoGivesLiterature2011; @wiepkingWhoGivesLiterature2012; @andreoniCharitableGiving2013].^[Religiosity is a binary variable measuring if a respondent declared affiliation with any religion. We encode conservatism as binary variable, taking "1" if the respondent placed themselves as "Conservative" or "Leaning Conservative" on a 5-point ideological scale.].  We condition on race, gender, age, education, and household income but do not report parameter estimates for space considerations.
+
+```{r tab-ui-genpop,eval=TRUE, echo = FALSE, tab.cap="EHF support and willingness to donate regression tables" }
+temp<-here::here('2_code', 'Social_insurance', '3_hierarchical_models.R')
+source(temp)
+rm(temp)
+
+mod_tab_supp
+mod_tab_don
+
+```
+
+In Tables \@ref(tab:tab-genpop-ui-supp) and \@ref(tab:tab-genpop-ui-don) we present five models, of increasing complexity, that regress EHF support and willingness to donate to an EHF on state level generosity. The first two models are cluster robust standard error OLS models, which find no significant effects for state generosity. The latter three are hierarchical models which should be able to detect any state level variation either in the intercept or the slope of key variables. These variances are close to zero, which given the [0, 1] range of the response, signify that no additional variance is explained by the hierarchical structure. This is also clear when examining model performance. As our models become more complex, AIC values increase, suggesting the more complex specifications are not appreciably improving in-sample model fit. 
+
+Estimates across all the models provide no evidence consistent with either version of the substitution hypothesis. There is little to no variation in terms of state level effects on EHF support and willingness to donate that is explained through State-level variation in benefit generosity. Models B, D, and E turn provide no evidence that conservatives are more sensitive to state-level welfare spending, contrary to Hypothesis 1a. 
+
+# Studies 2 & 3 {#sec-study2-3}
+## Case selection
+
+Study 1 used a national sample and relied on respondent reports about their employer's EHF.  Studies 2 and 3 zoom on two specific firms with well-established EHFs: Home Depot and Walmart. Both firms are large, national "big box" retailers that compete to some degree in product and labor markets. Both are large enough to make our independent recruitment of a survey sample feasible. They are matched on the features most likely to confound a comparison---industry, national scale, program vintage, and in-house EHF management---but they differ sharply in EHF generosity and promotion. This supports an extreme-case logic [@seawrightCaseSelectionTechniques2008]: Home Depot operates one of the oldest, most generous, and most heavily promoted EHFs.  If a substitution effect exists, it should be easiest to detect among Home Depot workers. Walmart has a much smaller and lightly promoted EHF, which allows us to probe whether a modest EHF can move worker attitudes and lets us test whether program differences matter (H2b). With only two firms we cannot isolate *which* differences drive any divergence, but we can establish whether EHF effects appear consistently across contexts. We briefly outline the two programs.
+
+Home Depot has run the Homer Fund in-house since 1999. It is among the most generous EHFs: grants reach \$10,000 per qualifying event, eligibility begins on the first day of employment, and workers may apply repeatedly for new events. The program is substantial, disbursing \$21.2 million to more than 12,000 workers in fiscal 2022 [@thehomedepotEnvironmentalSocialGovernance2023], the survey year. Home Depot also promotes the fund heavily through a dedicated website, a YouTube channel of professional testimonial videos, and active worker-facing social media.  Home Depot regularly runs Homer Fund donation drives in which stores compete to generate donations.
+
+Walmart's ACNT is likewise over two decades old and managed in-house, open to full- and part-time workers with at least 90 days' tenure. It is far less generous: grants are capped at \$1,500 across a rolling five-year window, regardless of how many qualifying events occur. Promotion appears minimal; there is little social-media presence and no evidence of donation drives comparable to Home Depot's.^[Walmart does match employee donations to its political action committee \$2:1 with corporate donations to the Together Fund. Fewer than 1% of our survey respondents reported contributing to the Walmart PAC.]
+
+## The samples and surveys
+
+We follow @schneiderWhatFacebookTool2019 and build matched worker--employer samples by recruiting respondents through targeted ads on Meta platforms (Facebook, Instagram, Threads), aimed at users 18 and older whom Meta identified as Home Depot or Walmart employees. Respondents who completed the survey were entered in a raffle for an iPad Mini or a Visa gift card. @schneiderWhatFacebookTool2019 show that this approach generates samples that recover accurate estimates of firm-level workforce quantities in retail.^[See also @growFacebooksAdvertisingData2022]  Others have shown that this recruitment method performs well in similar contexts [@zhangQuotaSamplingUsing2020; @neundorfHowImproveRepresentativeness2023]. Like any social-media recruitment strategy, there are concerns about  selection bias. Because our quantities of interest are in-sample treatment effects (SATE) and we condition on the covariates on which we might construct weights, we do not apply survey weights in the experimental analysis. Targeted social media recruitment is currently the cost-effective method for generating large matched worker-employer samples in the US.
+
+The Home Depot survey was fielded 7 September--15 October 2021, yielding 515 completed responses that passed an attention check and confirmed Home Depot employment. The Walmart survey ran 23 October--4 December 2024, producing `r nrow(wmt.hq)` comparable responses. Summary statistics by treatment condition appear in Appendices \@ref(app-survsum-uw) and \@ref(app-wmt-survsum).
+
+The two surveys were closely matched in wording and ordering, with Study 3 adding several extensions, most importantly a behavioral donation measure (a click-through to a donation page at the end) and a placebo video condition in the experiment.
+
+```{r summary-calcs, echo=FALSE}
+summary_tab_uw<-summarise(THD_comp_uw, 
+          male = mean(male, na.rm=T), 
+          age = median(rk_age, na.rm=T),
+          nonwhite = mean(nonwhite, na.rm=T),
+          prounion = table(THD_comp_uw$union_vote)["For the union"]/sum(!is.na(THD_comp_uw$union_vote)),
+          antiunion = table(THD_comp_uw$union_vote)["Against the union"]/sum(!is.na(THD_comp_uw$union_vote))
+          )
+
+cntrls<-subset(THD_comp_uw, HDTreatment =="cntrl")
+
+summary_tab_uw_c<-summarise(cntrls, 
+          male = mean(male, na.rm=T), 
+          age = median(rk_age, na.rm=T),
+          nonwhite = mean(nonwhite, na.rm=T),
+          prounion = table(cntrls$union_vote)["For the union"]/sum(!is.na(cntrls$union_vote)),
+          antiunion = table(cntrls$union_vote)["Against the union"]/sum(!is.na(cntrls$union_vote))
+          )
+
+```
+
+
+## EHF survey experiments
+
+In both studies 2 and 3, we randomly exposed respondents to messages about their employer's EHF to test H2, 2a, and 2b.  The main quantities of interest are the average treatment effects (ATE) for each of the EHF treatments relative to control for each of the outcome variables; specifics on the treatments and outcomes of interest are presented in the following sections. For each, we present graphical displays as well as regression-based estimates.  
+
+Because we randomize *information* rather than program access, some respondents arrive already aware of their employer's EHF. These "pre-exposed" workers may be less respondsive to the treatment than those learning of the program for the first time, so the ATE may understate the effect of informing a previously uninformed worker---a form of pre-exposure bias [@druckmanLearningMorePolitical2012a; @ferrariMethodologicalApproachCausal2023]. We therefore examine treatment-effect heterogeneity by prior awareness.^[We use "aware" and "pre-exposed" interchangeably.]
+
+We measure prior awareness before treatment: respondents select, from a list of job amenities, those they believe they have access to. We code selection of "emergency cash to help in times of need" as EHF awareness.^[@ahlquistPrivateWelfareWorkplace2026 discusses this measure and compares it with alternative awareness measures.  He also discusses the correlates of pre-exposure, the most important of which is job tenure.] When conditioning on pre-exposure, a causal interpretation of the treatment requires that pre-exposure be independent of potential outcomes conditional on treatment and pre-treatment covariates.^[Equivalently, pre-exposure can be cast as treatment compliance---the pre-exposed as always-takers, the unaware as compliers---but because we measure pre-exposure directly, the heterogeneous-effects framing is more natural.]
+ 
+In the analysis that follows, we report four models for each outcome.  The first includes only the experimental treatment indicators, providing ATE estimates.  The second adds a treatment-by-awareness interaction term.  The third includes a suite of pre-registered pre-treatment covariates.^[These are age, gender, race, college degree status, tenure at their job, whether this job is their primary job, and whether they work full-time. @ahlquistPrivateWelfareWorkplace2026 shows that job tenure and full-time status are the primary predictors of pre-exposure to the EHF.] The fourth, "expanded" model then adds additional covariates that were not pre-registered but that are relevant to the substitution hypothesis literatures.  The set of expanded covariates includes household income, whether the respondent identifies as politically conservative,  religiosity, safety net generosity in the respondent's state of residence [@schmidtStateSafetyNet2024], and home value appreciation calculated using the Federal Housing Finance Agency's House Price Index.  Following the pre-registered plan, we report linear regression models in the main text, employing robust or clustered standard errors, as appropriate.
+
+
+### Study 2
+
+The experiment in Study 2 consisted of a control condition and two treatment arms, referred to as the _text_ and _video_ treatments, respectively.  Respondents in the control arm saw no prompt or mention of the Home Depot EHF.  Those in the text treatment saw a brief, neutral text description of the Homer Fund.^footnote[The wording of the text treatment was "Your employer, The Home Depot, maintains a program called the Homer Fund. The Homer Fund combines donations from workers like you with money from the Home Depot corporation. The Homer Fund uses this money to offer cash grants of up to $10,000 to Home Depot employees in times of unexpected financial hardship like a natural disaster, illness, or death in the family."]
+
+Neutral text descriptions do not reflect how employers actually communicate about these programs with their workers. Home Depot's YouTube channel hosts professional testimonial videos from purported grant recipients; respondents in the video arm watched the one shown in Figure \@ref(fig:fig-ray), panel (a), a 2:41 testimonial from "Ray," a veteran and Home Depot worker whose family received Homer Fund support during a serious illness.^[The video is available at [https://www.youtube.com/watch?v=qF-HBoySMe](https://www.youtube.com/watch?v=qF-HBoySMe).]
+
+Our key outcomes of interest in Study 2 comes from a battery of questions asking respondents to report how much responsibility the government should have for ensuring the welfare of different groups, with responses in four categories ranging from "none at all" to "a lot".  Here we examine responses for "the unemployed".  This question format, taken from the General Social Survey, is also part of the ISSP "role of government" module and is widely used for gauging attitudes toward government social insurance and welfare activities [@blekesaunePublicAttitudesWelfare2003;@beanComparisonMassAttitudes1998; @rehmInsecureAlliancesRisk2012; @deemingPoliticsFracturedSolidarity2018].  We will interpret responses to this question as reflecting support for government-provided unemployment insurance (UI).
+
+```{r fig-ray, echo=FALSE, fig.cap = "Screen stills of the video treatments", fig.subcap = c("Home Depot", "Walmart"), out.width="50%", fig.align = "center"}
+knitr::include_graphics( c(
+  here('4_output', 'plots','RaysStory.jpeg' ),
+  here('4_output', 'plots','Rays_story_wmt.png')
+  )
+)
+```
+
+
+#### Attitudes toward social insurance
+
+The left panel of Figure \@ref(fig:fig-ui) displays the distribution of responses by EHF treatment status for Study 2. Overall, workers in the Home Depot sample are quite favorable toward government support for the unemployed, with a solid majority viewing the government as at least somewhat responsible for the welfare of the unemployed.  The video treatment clearly *reduces* the proportion of responses in the "none" category in favor of the two positive categories.  In other words, treatment made respondents *more* rather than less supportive of government-provided social insurance, contrary to the substitution hypothesis.  The text treatment, on the other hand, does not appear to have any detectable treatment effect on average.
+
+```{r fig-ui, echo=FALSE, fig.cap = "Government responsibility for supporting the unemployed, by EHF treatment status.  Vertical bars are 95% confidence intervals.", fig.subcap = c("Study 2", "Study 3"), out.width="50%", fig.align = "center"}
+temp<-here::here('2_code', 'THD', '7_uiuv_summary_plots.R')
+source(temp)
+rm(temp)
+
+temp<-here::here('2_code', 'Walmart', '11_uiuv_summary_plots_WMT.R')
+source(temp)
+rm(temp)
+
+knitr::include_graphics( c(
+  here('4_output', 'plots','ui_plot_thd.png' ),
+  here('4_output', 'plots','ui_plot_wmt.png')
+  )
+)
+
+temp<-here::here('2_code', 'THD', '9_ui_models.R')
+source(temp)
+rm(temp)
+
+```
+
+In Table \@ref(tab:tab-ui), we display estimates from a series of linear regression models on UI support.  The first model, including only experimental treatments, confirms a positive average treatment effect for the video treatment of about `r round(coef(ui_lm_uw)[3]/sd(THD_comp_uw$gov_ui_num,na.rm=T),2)` standard deviations.  Looking at the second model that accounts for pre-exposure, we find that respondents pre-exposed to the Home Depot EHF are `r round(coef(ui_lm_int_uw)[4]/sd(THD_comp_uw$gov_ui_num,na.rm=T), 2)` standard deviations less supportive of UI than the unaware ($p<0.1$), but we find no treatment effects among the unaware.  Contrary to the substitution hypothesis, we do find positive treatment effects among the _pre-exposed_, especially for the video treatment.  Adding pre-registered covariates, including those that predict EHF pre-exposure (the third model), does not meaningfully alter interpretation.  The final model in Table \@ref(tab:tab-ui) includes a whole series of predictors connected to the substitution hypothesis, entered as linear terms.^[There was no evidence that the the treatment effect was moderated by state-level welfare generosity or respondent conservativeness.]  More conservative respondents are less supportive of government support for the unemployed.  Income, past use of welfare benefits, religiosity, and increased home values are all unrelated to support for UI conditional on treatment.  Those living in states with more generous public safety nets are more positive about government support for the unemployed, even after conditioning on conservativeness, which may reflect some geographic sorting.
+
+```{r tab-ui,eval=TRUE, echo = FALSE, tab.cap="Support for UI regression models" }
+#temp<-here::here('2_code', 'THD', '9_ui_models.R')
+#source(temp)
+#rm(temp)
+ui_tab
+
+```
+
+To interpret the heterogeneous treatment effects more easily, Figure \@ref(fig:fig-uieff) displays treatment effects by respondent pre-exposure to the EHF, derived from the second model.  In the case of support for the unemployed, we see that treatment effects are entirely concentrated among those _already_ aware of the Home Depot's EHF.  Contrary to expectations, both the text and video treatments _increase_ support for UI, although only the latter crosses conventional significance thresholds.   
+
+```{r fig-uieff, eval=TRUE, echo=FALSE, fig.cap="Interpreting treatment effects on support for government aid to unemployed"}
+ui_eff_plot
+
+```
+
+Is unemployment support the appropriate policy to link with the EHF?  After all, the EHF is designed to provide benefits to workers at a particular firm, whereas UI is a cushion in the event of job loss.^[The pre-exposed may better appreciate this distinction, which may help explain the unexpected findings.]  Two pieces of evidence suggest that UI is a reasonable policy domain to link with EHFs.  First, although a Home Depot worker who loses her job can no longer apply for EHF support, workers are eligible for EHF grants if an immediate family member loses their job.  Second, the UI question was asked as part of a battery of questions asking about two other policy areas: government support for the elderly and the provision of childcare for working parents.  These two questions can constitute "placebos" since EHFs have no connection with either policy area.  Parameter estimates from regressing support for these alternative policy areas on the EHF treatments and EHF awareness appear in Appendix \@ref(app-placebo).  There is no evidence for any relationship between the EHF treatments and support for government involvement in either elder support or childcare, regardless of whether the respondent was aware of the EHF going into the survey and adjusting for predictors of awareness as well as predictors relevant to the substitution hypothesis.
+
+In sum:  Study 2 provides no evidence consistent with the substitution hypothesis.  Pre-exposed respondents reacted to treatment differently than the unexposed, but the effects observed were in the opposite the expected direction under H2.  We see no evidence consistent with the hypothesis that employer-provided "private welfare" crowds out support for the social safety net.  If anything, the EHF treatment increases support for government action to support the unemployed.
+
+### Study 3 
+
+Study 3's experiment parallels Study 2, with awareness of the ACNT measured using the same question format.  But study 3 includes three changes. First, because the text arm performed weakly at Home Depot, we used only a video treatment for Walmart.  Unfortunately Walmart produces analog to the Home Depot's testimonials, so we created our own. Using the Homer Fund video as script and audiovisual template, we hired a paid actor and adapted the video to the Walmart context; Figure \@ref(fig:fig-ray), panel (b) shows an opening still.^[The actor matched the Homer Fund spokesperson's gender (male) and race (white) and was judged to be of similar age by mTurk coders. The Walmart video ran 41 seconds shorter, achieved by trimming interstitial and panning shots and Home-Depot-specific passages rather than substantive script. Appendix \@ref(app-vidsim) provides multimodal (visual, acoustic, and semantic) similarity evidence that the two treatment videos are close analogs and that the placebo shares their audiovisual form but not their content.] 
+
+Second, to distinguish the effect of EHF messaging from a generic "video effect," Study 3 adds a placebo arm in which the same actor reads a Walmart press release about its Vizio acquisition.^[Videos: [placebo](https://tinyurl.com/EHF-Study3-placebo); [treatment, solidarity card](https://tinyurl.com/EHFStudy3-solidarity); [treatment, charity card](https://tinyurl.com/EHF-Study3-charity).] Respondents were assigned to treatment or control with equal probability, and controls were split between a pure control (no information, as in Study 2) and the placebo.^[We also pre-registered a sub-experiment varying the still "card" shown before the video plays: a *solidarity* framing emphasizing support for fellow Walmart workers versus a *charity* framing emphasizing donations to those in need. The video was otherwise identical across arms. We found no detectable difference between framings and so do not discuss it in the main text; see Appendix \@ref(app-framing).] Manipulation checks (Appendix \@ref(app-wmt-manip)) confirm the video raised ACNT awareness while the placebo did not, so we report binary treatment/control below.
+
+Third, we modified the outcomes we study in two ways.  In the Walmart survey we again used the GSS question battery and asked respondents about the level of government responsibility for ensuring the living standards of the unemployed. But to more closely link outcome measurement with EHFs, we substituted a question asking about government responsibility for "people confronting short-term hardships" for the childcare question in Study 2.  We also created a behavioral indicator of donation willingness to the Walmart EHF.  At the end of Study 3, respondents had the opportunity to click on a link to take them to a page where they could donate to the ACNT. Based on past research, we expect those exposed to the emotional appeal in the video to be more willing to donate [@andreoniPowerAskingHow2011; @bekkersLiteratureReviewEmpirical2011].  We examine whether the generosity of the state safety net moderates this treatment effect.
+
+#### Attitudes toward social insurance and emergency government aid
+
+The right panel of Figure \@ref(fig:fig-ui) displays the Study 3 response distribution for the unemployment support outcome while the left panel of Figure \@ref(fig:fig-emerg-donate) displays the response distribution for the emergency aid outcome.  Over 80% of the Walmart sample agreed that the government should take at least some responsibility for the living standards of the unemployed, a much higher rate than among the Home Depot workers. The Walmart sample exhibited a similar level of support for government aid to those facing hardship.  Among the Walmart sample, there is no treatment effect apparent for either outcome.  Although the pattern of responses for UI for Walmart is similar to Study 2: those in the treatment group were less likely to say that the government has no responsibility for the unemployed, contrary to the substitution hypothesis.           
+  
+```{r fig-emerg-donate, echo=FALSE, fig.cap = "Additional Walmart outcomes, by EHF treatment status.  Vertical bars are 95% confidence intervals.", out.width="50%", fig.subcap = c("emergency aid", "ACNT donation"), fig.align = "center"}
+temp<-here::here('2_code', 'Walmart', '14_donate_models_WMT.R')
+source(temp)
+rm(temp)
+
+knitr::include_graphics( c(
+  here('4_output', 'plots','emerg_plot_wmt.png'),
+  here('4_output', 'plots','donate_wmt.png')
+  )
+)
+```
+
+
+Table \@ref(tab:tab-ui-hard-wmt) displays regression results that reinforce the null relationship in Figures \@ref(fig:fig-ui) and \@ref(fig:fig-emerg-donate).  There is no evidence of a treatment effect for either outcome. Pre-exposure to the ACNT and additional covariates make no difference in this conclusion.  In the "expanded" model we continue to see that conservatives are less supportive of government activity to support the unemployed and those facing temporary hardship.  Walmart workers who have seen their home values appreciate are less supportive of UI but there is no relationship between home appreciation and support for government aid to those facing temporary hardship.  More religious respondents are significantly less supportive of aid to those in temporary need.  The generosity of the State-level safety net has no connection to respondents attitudes for either outcome.      
+
+```{r tab-ui-hard-wmt, eval=TRUE, echo = FALSE, tab.cap="Treatment effect on support for unionization (Walmart)", results='asis'}
+temp<-here::here('2_code', 'Walmart', '13_ui_models_WMT.R')
+source(temp)
+rm(temp)
+
+ui_hard_tab_wmt
+```
+
+Walmart has a substantially less generous EHF than the Home Depot.  Given the findings in Studies 1 and 2, the null findings in Study 3 are unsurprising.  Exposing Walmart workers to videos about their employers' EHF had no effect on their attitudes toward unemployment benefits or government emergency aid, although Walmart workers were, overall, much more supportive of these programs.  
+
+#### Willingness to donate to the Walmart EHF
+
+Study 3 included an opportunity to click a link to donate to the ACNT.  As the right panel in Figure \@ref(fig:fig-emerg-donate) shows, there is a low baseline willingness to take this action of `r round(100*donation_summary$prop[1])`% in the Walmart sample.  Nevertheless, those seeing the EHF video were about 4 percentage points (or 35\%, $p < 0.05$) more likely to take an action to donate. 
+
+```{r tab-donate-wmt, eval=TRUE, echo = FALSE, tab.cap="ACNT donation willingness (Walmart sample)", results = 'asis'}
+donation_tab_wmt
+```
+
+Table \@ref(tab:tab-donate-wmt) presents regression-based estimates of treatment effects, using linear probability models.^[See \@ref(app-wmt-altdonate) for estimates using logistic regression and Firth regression to address concerns with rare events.  Estimated treatment effects are quite similar across models.] Treatment significantly increases willingness to take an action to donate.  There is no evidence that either state-level generosity or ACNT pre-exposure moderates these treatment effects.^[Hierarchical logit models including state-level random effects and random slopes produce the same conclusion.]  The inclusion of additional covariates does nothing to alter these conclusions.
+
+The ACNT treatment did significantly increase willingness to donate, as expected, indicating that the treatment did work. But there is  no evidence to support the claim that welfare generosity has any effect on the willingness of workers to donate to an EHF program.  Across all three studies, we see no evidence consistent with either H1 or H2.
+
+## Threats to Inference and Interpretation
+
+Null effects like those we just presented are notoriously difficult to defend.  We briefly consider three inferential threats: that the experiments simply failed, that they were underpowered, and that workers are indifferent or antagonistic to EHFs. None survives scrutiny. 
+
+The experiments were not broken. Manipulation checks confirm that our treatments did what they were designed to do: exposure significantly raised awareness of the employer's EHF, while the Study 3 placebo moved awareness not at all. 
+
+Nor are the null results an artifact of insufficient power. In study 2, the experiment reliably detects treatment effects of about 0.11 on the 0–1 outcome scale (a minimum detectable effect of `r round((qnorm(.975)+qnorm(.80))*0.03813, 3)` at 80% power), roughly a third of a standard deviation.  The experiment did detect effects of that magnitude, only in the *wrong direction* relative to the substitution hypothesis.  In Study 3, the experiment can detect even smaller effects thanks to its larger sample size; the minimum detectable effect for the UI question falls to about 0.04 scale points or 0.17 standard deviations. Thus the research design is capable of ruling out an effect large enough to bear on the substitution hypothesis.
+
+Finally, the nulls do not reflect workers disliking or dismissing EHF programs. Evidence points the other way. The companion paper shows that retail workers view EHFs favorably once they learn of them and  EHF messaging can meaningfully increase attachment to the employer and dampen support for unionization. Workers do respond to EHF messages expressing approval, feeling more bound to their firm, and, when asked, donating at higher rates. What they do not do is revise their views about government responsibility for social insurance in response to a private program. The nulls we report are therefore a substantive finding: EHFs can move workers' orientation toward their employer without displacing their expectations of government.
+
+# Discussion and Conclusion {#sec-conclusion}
+
+There is a significant scholarly tradition arguing about whether private resources and charitable activities are substitutes for public welfare and social insurance.  These literatures have virtually ignored the workplace, even though employers have tremendous flexibility to introduce or modify benefit plans and workplace programs that address a variety of economic risks. EHFs are one such tax-incentivized program that has received virtually no systematic study.  This oversight is all the more remarkable as EHFs clearly echo both an earlier era of welfare capitalism and past mutual aid initiatives.  Do these programs influence workers'  attitudes and behaviors in ways consistent with the "substitution hypothesis"? 
+
+Based on three pre-registered studies, our answer is a definitive "no."  In Study 1, we found no evidence that state-level welfare effort predicts support for or donation willingness to EHFs.  In Studies 2 and 3, using survey experiments, there was no evidence that EHFs reduce support for government unemployment benefits or emergency aid, regardless of the substantial differences in generosity across the Home Depot and Walmart programs.  In the Home Depot sample, the treatment induced a modest but significant _increase_ in support for government-provided UI among workers already aware of the EHF.  This may be because these workers having a better understanding of the limitations of the EHF program.  In Study 3, the treatment effect on EHF donations did not vary by state welfare generosity, contrary to expectations.  Findings in these surveys are inconsistent with a simple "private options crowd out public benefits" story.  
+
+Our studies are not designed to speak to these mechanisms, but findings do point toward future research.  The lack of any substitution effect between EHFs and support for public assistance suggests that EHFs may represent a reconfiguration of the moral economy of low-wage work.  Strong worker interest in EHFs may reflect pessimism about the fraying safety net in the US.  Rather than a substitute for social insurance and assistance, EHFs may be low-cost signals of corporate values and selective benevolence.  Direct comparison between attitudes toward government- and employer-provided benefits would be instructive here. 
+
+An alternative interpretation is that EHFs are simply too new, too uncertain, or too small to matter yet.  More probing, perhaps through interviews or analysis of online worker forums could shed light here.   EHFs also emerged in the US, where the social safety net is particularly weak, inequality is stark, and regional variation in economic prospects continue to diverge.  Cross national research in worker interest in EHF-type programs might speak to interesting variation in this regard.
+
+Finally, political scientists have paid limited attention to how knowledge of government programs affects private charitable behavior, despite theoretical reasons to expect that information constraints may moderate crowding out effects. This represents an important avenue for future research, particularly relevant to understanding how employee knowledge of government programs might affect workplace charity.
+
+From a policy perspective, EHFs appear to answer a felt need among low-wage retail workers. They operate in the shadow of eroded public welfare institutions, yet draw part of their funding from favorable tax treatment, a private, partial complement to a slow public system. Employer-proved aid can have advantages: uptake may be higher and applying for a grant may be faster or less stigmatizing than seeking government assistance when the need is acute.^[The Home Depot claims that grants are processed within seven business days of application, far faster than the unemployment or welfare benefits that, in many states, also impose waiting periods.] But these same features raise questions this study cannot settle. Including whether EHF grants are in fact less stigmatizing, whether employers strategically deploy grants and whether the benefits EHFs provide justify their tax expenditures. What our results establish is narrower: EHFs shape how workers relate to their employer without displacing what they want from government.
+
+
+# References {-}
+
+<div id="refs"></div>
+
+\newpage
+
+# (APPENDIX) Appendix {-}
+
+# Deviations from pre-analysis plans {#app-PAP}
+
+The research in this paper was pre-registered with OSF as osf.io/fhq93 
+
+```{r study-pap-deviations, results='asis'}
+followup_n <- sum(!is.na(wmt.hq$age_f))
+followup_pct <- round(100 * followup_n / nrow(wmt.hq), 1)
+
+study_table <- tibble(
+  Study = c("All", "Study 1", "Study 2", "Study 3", "Study 3"),
+  Change = c(
+    "Covariate specifications", 
+    "Survey subjects",
+    "HTE by pre-exposure",
+    "Framing results not reported in main text",
+    "Follow-up survey"
+  ),
+  Rationale = c(
+    "In some of the covariate specifications, we include measures of partisanship, political ideology, home ownership, state of residence, marital status and dependency, and access to health insurance.  These are included in addition to pre-registered specifications to specifically connect with the existing literature.",
+    "In the PAP, we planned a survey of Costco workers, as Costco is the only top-10 retailer without an EHF. Recruiting a meaningful sample of Costco workers through social media proved impossible. I turned to a sample of general retail workers instead. Measurement and analysis of the survey follows the pre-registered plan.",
+    
+    "Analyzing HTE by pre-exposure (alternatively, analyzing compliers and always-takers) was not part of the initial PAP. Its importance to understanding the experiment is obvious so the analysis is included alongside the pre-registered analysis.",
+    
+    "We pre-registered a framing experiment within the treatment arm for Study 3. For those in the treatment arm, we randomized between two different text statements on the screen before the respondent pushes 'play'. These messages are the 'charity' and 'solidarity' framing, respectively. There were no detectable differences between charity and solidarity treatment groups for any outcome, so I omit discussion in the main text and pool all treated respondents.  See appendix S",
+    
+    paste0(
+      "Respondents were sent emails inviting them into the follow-up survey one week after completion, offering a second raffle entry. ",
+      "They were contacted a maximum of three times. We received valid follow-up responses from ",
+      followup_n, " (", followup_pct, "\\%) of those completing the main survey. ",
+      "Analysis appears below, but low response rates and small samples limit the power and reliability of results."
+    )
+  )
+)
+
+study_table %>%
+  kbl(format = "latex", booktabs = TRUE, longtable = TRUE,
+      caption = "Summary of Deviations from Pre-Analysis Plan", escape = FALSE) %>%
+  kable_styling(latex_options = c("striped", "hold_position", "scale_down")) %>%
+  column_spec(2, width = "4cm") %>%
+  column_spec(3, width = "9cm")
+
+```
+
+\FloatBarrier
+
+# General retail survey survey details {#app-genpop-survsum}
+
+```{r tab-sum-gr, echo=FALSE, tab.cap="General retail survey summary"}
+temp<-here::here('2_code', 'general_retail', '7_balance_check_gr.R')
+source(temp)
+rm(temp)
+tbl_sum_genpop_1w
+tbl_sum_genpop_2w
+```
+
+\FloatBarrier
+\newpage
+
+# Home Depot suggested Homer Fund contribution rates {#app-THD-suggcont}
+
+```{r fig-sugdon, echo=FALSE, fig.cap="Suggested Homer Fund donation levels as of 2025", out.width="60%", fig.pos='H'}
+knitr::include_graphics(here('4_output', 'plots', 'HF_donation_suggestions.png'))
+```
+
+\FloatBarrier
+\newpage
+# Home Depot Survey summary table (unweighted) {#app-survsum-uw}
+
+The unweighted sample is older and skewed slightly male relative to reported Facebook demographics for Home Depot workers.^[Our sample is `r 100*round(summary_tab_uw$male,2)`% male and has a median age of `r summary_tab_uw$age` compared to Facebook reported values of 53% male with a median age in the 30-39 interval.  The weighted sample is 52% male with a median age of 38.] The sample is `r 100*(1-round(summary_tab_uw$nonwhite,2))`% white. 
+
+```{r tab-sum-uw, echo=FALSE, tab.cap="Home Depot survey summary (unweighted)"}
+tbl_sum_1<- 
+  THD_comp_uw |> 
+  select(HDTreatment, EHF_aware_list, EHF_aware_simp, rk_age, male, main_job, 
+         tenure_fac, nonwhite, fulltime, hourly, college,  HF_know, HF_applied,
+         HF_received, HF_donate) |> 
+  gtsummary::tbl_summary(by = HDTreatment,
+                         missing_text = "(missing/not gathered)",
+                       label = list(#HDTreatment ~ "treatment", 
+                                    EHF_aware_list ~ "EHF awareness (list)", 
+                                    EHF_aware_simp ~ "EHF awareness (cntrl)",
+                                    rk_age ~ "age", male ~ "male",
+                                    main_job ~ "main job", tenure_fac ~ "job tenure",
+                                    nonwhite ~ "PoC/nonwhite", fulltime ~ "full time",
+                                    hourly ~ "hourly", college ~ "college degree",
+                                    HF_know ~ "knows EHF recipient", HF_applied ~"applied to EHF", 
+                                    HF_received ~ "received EHF grant", HF_donate ~"donated to EHF"
+                                    )
+) |>  
+  gtsummary::modify_caption("**Sample summary statistics by treatment group**") |> 
+  gtsummary::bold_labels() |> 
+  gtsummary::as_kable_extra()
+
+tbl_sum_1
+
+
+tbl_sum_2<- 
+  THD_comp_uw |> 
+  select(HDTreatment,wrk_loyal, emp_loyal, emp_reco, 
+         union_vote, gov_ui, gov_pension, gov_childcare) |>
+  gtsummary::tbl_summary(by = HDTreatment,
+                         missing_text = "(missing/not gathered)",
+                       label = list(
+                         #HDTreatment ~ "treatment",
+                         wrk_loyal ~"loyalty to coworkers", emp_loyal~"loyalty to employer",
+                                    emp_reco~"recommend employer", union_vote ~"union vote", 
+                                    gov_ui ~"UI support", gov_pension~"pension support", gov_childcare~"childcare support"
+                       )
+  )
+tbl_sum_2 |> 
+  gtsummary::modify_caption("*summary table (cont'd)*") |> 
+  gtsummary::bold_labels() |> 
+  gtsummary::as_kable_extra()
+                          
+```
+
+\FloatBarrier
+\newpage
+
+# Walmart survey details {#app-wmt-survsum}
+
+```{r tab-sum-wmt, echo=FALSE, tab.cap= "Walmart survey summary"}
+ temp<-here::here('2_code', 'Walmart', '15_balance_check_WMT.R')
+source(temp)
+rm(temp)
+
+tbl_sum_WMT_1
+tbl_sum_WMT_2
+tbl_sum_WMT_1w
+tbl_sum_WMT_2w
+```
+
+
+```{r tab-bal-wmt, echo=FALSE, eval = FALSE, tab.cap= "Balance tests for Walmart survey sample"}
+bal_tbl <- tab$Balance[,1:3]
+
+bal_tbl %>%
+  kbl(
+    format = "latex",
+    booktabs = TRUE,
+    caption = "Covariate Balance Table \\label{tab:balance}"
+  ) %>%
+  kable_styling(latex_options = c("striped", "hold_position"))
+
+#print(bal_tbl)
+```
+
+\FloatBarrier
+
+# Alternative specifications & Study 1
+
+\FloatBarrier
+
+# Alternative specifications & Study 2
+
+\FloatBarrier
+
+# Video treatment and placebo similarities {#app-vidsim}
+
+We use text, acoustic, and dynamic video embeddings to characterize the multimodal similarity between (i) the Walmart placebo and treatment videos and (ii) the Home Depot and Walmart treatment videos. Visual comparability is assessed with CLIP ViT-B/32 [@radfordLearningTransferableVisual2021], implemented via OpenCLIP on 200 frames per file. For acoustic similarity, we segment the audio tracks into overlapping 10-second windows and encode them with CLAP [@wuLargeScaleContrastiveLanguageAudio2023]. For transcript comparability we use Sentence-BERT embeddings [@reimersSentenceBERTSentenceEmbeddings2019] to capture semantic similarity of the narrated content. In each case we report the cosine similarity of the mean embeddings as the video-level score.
+
+The results match the design. The placebo and treatment videos are highly similar in visual and acoustic form but diverge sharply in semantic content, isolating message content from audiovisual style. The Home Depot and Walmart treatment videos, by contrast, are highly similar across all three modalities---visual, acoustic, and semantic---confirming that the Walmart-adapted video is a faithful analog of the Homer Fund original.
+
+```{r, echo=FALSE, out.width="80%", fig.cap="Multimodal similarity: Walmart treatment vs. Walmart placebo", fig.align="center"}
+knitr::include_graphics(
+  here("4_output", "plots", "compare_charity_placebo_summary.png")
+  )
+```
+
+```{r, echo=FALSE, out.width="80%", fig.cap="Multimodal similarity: Home Depot treatment vs. Walmart treatment", fig.align="center"}
+knitr::include_graphics(
+  here("4_output", "plots", "compare_trt_charity_summary.png")
+  )
+```
+
+\FloatBarrier
+
+# Manipulation check Study 3 {#app-wmt-manip}
+
+In the Walmart sample, treatment significantly increased the probability that a respondent would correctly state that Walmart has an EHF. 
+```{r tab-manip-check, echo=FALSE, tab.cap="manipulation check"}
+
+manip_model_print_compact
+
+```
+
+\FloatBarrier
+
+# Alternative models for ACNT donation {#app-wmt-altdonate}
+
+```{r tab-donate-models-wmt-app, eval=TRUE, echo = FALSE, tab.cap="Taking action to Donate to EHF (Walmart)", results='asis'}
+
+donation_tab_app
+```
+
+\FloatBarrier
+
+# Alternative specifications & Study 3
+
+
+<!---
+######
+
+
+Past generations of workers built organizations to help one another in hard times.  Some of these mutual aid societies eventually transformed into full-fledged trade unions.  Others morphed into mutual insurance companies that later informed government social insurance programs [@deswaanWorkersClientsMutualism1986].  Such organizations transformed workplace relations, socialized workers into political life, and produced labor-based political movements. 
+
+
+EHFs present a tractable, unexploited context to study important questions in the social sciences and management.  EHFs present a well-defined intervention for studying  whether "private governance" initiatives actually benefit workers themselves [@anderson_private_2017; @ahlquist_firm_2020; @locke_promise_2013; @malesky_chains_2018; @distelhorst_does_2017; ].      
+
+I argue that EHFs are a blend of employer-driven welfare capitalism and worker mutual aid.  Drawing on interviews with executives and EHF managers, I expect EHFs to be closely connected to the corporate culture in which they are embedded, producing mixed and contingent effects on worker attitudes. Using three original, pre-registered studies, I present the first _systematic_ description of worker awareness and experience with EHFs as well as experimental evidence on the effect of corporate messaging around EHFs. I show that EHFs can build attachment to employers and coworkers when they are generous, well-promoted, and align with other corporate signals and management practices, but they do not affect workers' subjective financial security.
+
+In study 1, I use a survey of US retail workers to describe retail workers' awareness of EHF programs among major employers, their level of interest in such programs, and their preferred influence over how the fund is run.  I find that awareness is limited and retail workers are not well-informed about which firms offer such programs.  Nevertheless, when weighed against other job amenities, emergency cash support is second only to paid time off in inducing workers to consider a hypothetical job offer at another retailer.  Respondents strongly support the creation of an EHF at their current employer and preferred a program in which workers themselves have meaningful influence over fund management.
+
+In studies 2 and 3,  I focus on workers at two large retailers with long-standing EHF programs: the Home Depot and Walmart.  Both firms have EHFs that are over two decades old and managed in-house.   But the firms and programs differ in important ways.  The Home Depot EHF, the Homer Fund, is considerably more generous (with a maximum grant of \$10,000 against Walmart's \$1,500) and more heavily promoted among workers and executives.  IRS filing data indicates that the Homer Fund is also considerably larger than Walmart's EHF, even though Walmart is over three times the size of the Home Depot in US employee headcount.  Both firms also maintain strikingly different corporate cultures, with the Home Depot known for.^[According to the MIT Sloan Culture 500 rankings, based on analysis of Glassdoor postings, Walmart's]  
+
+Using social media to manage the difficult task of recruiting a sample of workers linked to specific firms, I fielded original, independent surveys of Home Depot and Walmart workers. I find considerable differences in program awareness across employers.  Among Home Depot workers, awareness is "broad-but-thin": over 60% of Home Depot respondents displayed some awareness of the Homer Fund, but there were inconsistencies across measurement items, suggesting recognition but not real understanding. At Walmart, only 38% were aware of the program.  At both employers, tenure with the firm is the primary consistent predictor of EHF awareness and engagement.
+
+In both studies 2 and 3, I use survey experiments to identify the impact of messages that raise EHF awareness.  Specifically, I exploit employer-produced promotional video messages about the EHF and look at effects on workers' subjective financial security, job attachment, and support for unionization and government-provided social insurance. In the Walmart survey I look at additional outcomes, including willingness to click on a link to donate to the EHF and perceptions about co-workers' support for unionization. 
+
+In Study 2, Home Depot workers who were already aware of the Homer Fund prior to the survey were more confident in their financial stability, more attached to their employer and coworkers, less supportive of unions, and less supportive of unemployment benefits, even after adjusting for job tenure.  The video treatment produced an average increase in job attachment of about 0.6 standard deviations on the relevant scale.  On average, the video treatment makes workers more _uncertain_ about unionization.  Further decomposing treatment effects, I find that the Homer Fund video treatment effects were largely concentrated among respondents _unaware_ of the EHF prior to my survey. Among this group, the video treatment significantly reduced support for unionization while increasing uncertainty (as opposed to outright opposition).
+
+In Study 3, I find both similarities and differences with Study 2.  As in the Home Depot sample, Walmart workers who were already aware of their EHF prior to the survey were more confident in their financial stability, more attached to their employer and coworkers, and less supportive of unions, even after adjusting for job tenure.  For the experiment in Study 3, I construct a custom video vignette that reproduced the Homer Fund video for the Walmart context.  The video treatment again produced no detectable effect on perceived financial stability.  But, contrary to findings in the Home Depot sample, I find no evidence of a treatment effect on job attachment, including quit intentions.  The video treatment did produce a four percentage point increase in the likelihood a respondent takes an action to donate.  The video treatment reduces opposition to unionization and increases (by four percentage points) the percent of coworkers expected to vote for unionization.   In contrast to the Home Depot sample, the Walmart sample showed no evidence of heterogeneous treatment effects based on prior knowledge of the Walmart EHF, known as the Associates in Critical Need Trust Together Fund (ACNT). 
+
+
+
+
+Workers value emergency aid arrangements, which coincides with the renewed emphasis on mutual aid--and other solidaristic selective incentives--as a basis for rebuilding worker solidarity [@hertel-fernandezWhyPublicSector2021;@jarleyUnionsSocialCapital2005; @horowitzMutualismBuildingNext2021].  The development, management, and outreach around programs like EHFs provide a clear point of common interest between workers, unions, and management.  To date this possibility remains unexplored.
+
+
+EHFs present a fascinating window into employer behavior and the state of the low wage labor market in the US and beyond. Future research can extend in a variety of productive directions.  
+
+
+EHF may be viewed as "private insurance", which could dampen support for social insurance. Prompting workers with information about their employer's EHF will reduce workers' willingness to vote for unionization and reduce stated support for government aid programs for unemployment or emergencies.
+
+
+@fishbackSocialInsurancePublic2020
+
+ Some EHFs appear to be the result of spontaneous initiatives from executives, often in response to a major natural disaster affecting a region closely connected to the firm and its employees.^[Disaster aid and social insurance are closely linked in the US [@landisFateResponsibilityNatural1999].]  Based on interviews, this often stemmed from frustration with the slow and uneven government aid. 
+
+--->
+
+\FloatBarrier
+
+# Placebos for UI support (Home Depot) {#app-placebo}
+```{r tab-placebo, echo=FALSE, tab.cap="Placebo regressions for UI"}
+
+placebo_tab
+
+```
+
+
