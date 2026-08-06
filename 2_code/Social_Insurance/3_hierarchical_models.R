@@ -6,12 +6,12 @@ gr_clean <- read.csv(here("3_cleaned_data", "general_retail_clean.csv")) %>%
 
 ## EHF Support Models
 model_1 <- lm(ehf_support_both_num ~ st_directed + age_clean + nonwhite +
-                male + college + tenure_num + fulltime + hourly + main_job + has_ehf,
+                male + college + tenure_num + fulltime + hourly + main_job + has_ehf + (other_welfare == "Yes"),
               data = gr_clean)
 
 model_2 <- lm(ehf_support_both_num ~ st_directed + age_clean + nonwhite +
                 male + college + tenure_num + fulltime + hourly + main_job + 
-                religious + conservative + income_num + has_ehf + home_appreciation,
+                religious + conservative + income_num + has_ehf + home_appreciation + (other_welfare == "Yes"),
               data = gr_clean)
 
 rob_1_alt_supp <- coeftest(model_1, vcov. = vcovCL(model_1, cluster = gr_clean$residence))
@@ -42,6 +42,7 @@ names(supp_mods) <- c("Model A", "Model B", "Model C", "Model D", "Model E")
 coef_maps <- c(
   "st_directed" = "State safety net generosity",
   "has_ehfTRUE" = "Has an EHF",
+  'other_welfare == "Yes"TRUE' = "Previous welfare recipient",
   "conservativeTRUE" = "Conservative", 
   'st_directed:conservativeTRUE' = "Generosity x Conservative",
   "home_ownershipTRUE" = "Home owner",
@@ -60,10 +61,9 @@ rows<-tribble(
   ~"",~"",~"",~"",~"",~"",
   "Model Type", "Cluster-robust", "Cluster-robust", "HLM", "HLM","HLM", 
   "AIC", AIC[1], AIC[2], AIC[3], AIC[4], AIC[5])
-attr(rows, 'position') <- c(17)
+attr(rows, 'position') <- c(19)
 
-note1 <- "Additional covariates include age, gender race, job tenure, hourly and full time status, college degree, main job, income, religiosity."
-#note2 <- "Robust standard errors in parentheses."
+note1 <- "Standard errors in parentheses. Additional covariates include age, gender, race, job tenure, hourly and full time status, college degree, whether the reported employment is their main job, income, religiosity."
 
 gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0))
@@ -75,20 +75,19 @@ mod_tab_supp <-modelsummary(supp_mods,
                                    gof_map = gm,
                                    add_rows = rows,
                                    notes = list(note1),
-                                   output = "kableExtra",
-                                   threeparttable=TRUE, 
-                                   #stars = c('*' = .05, '**' = .01),
+                                   stars = c('*' = .1, '**' = .05, '***' = .01),
+                                   threeparttable = TRUE,
                                    escape = FALSE
 )
 
 ## EHF Donation Models
 model_1 <- lm(ehf_donate_new_num ~ st_directed + age_clean + nonwhite +
-                male + college + tenure_num + fulltime + hourly + main_job,
+                male + college + tenure_num + fulltime + hourly + main_job + (other_welfare == "Yes"),
               data = gr_clean)
 
 model_2 <- lm(ehf_donate_new_num ~ st_directed + age_clean + nonwhite +
                 male + college + tenure_num + fulltime + hourly + main_job + home_appreciation +
-                religious + conservative + income_num ,
+                religious + conservative + income_num + (other_welfare == "Yes"),
               data = gr_clean)
 
 rob_1_alt_don <- coeftest(model_1, vcov. = vcovCL(model_1, cluster = gr_clean$residence))
@@ -118,6 +117,7 @@ names(don_mods) <- c("Model A", "Model B", "Model C", "Model D", "Model E")
 coef_maps <- c(
   "st_directed" = "State safety net generosity",
   "has_ehfTRUE" = "Has an EHF",
+  'other_welfare == "Yes"TRUE' = "Previous welfare recipient",
   "conservativeTRUE" = "Conservative", 
   'st_directed:conservativeTRUE' = "Generosity x Conservative",
   "home_ownershipTRUE" = "Home owner",
@@ -136,23 +136,20 @@ rows<-tribble(
   ~"",~"",~"",~"",~"",~"",
   "Model Type", "Cluster-robust", "Cluster-robust", "HLM", "HLM","HLM", 
   "AIC", AIC[1], AIC[2], AIC[3], AIC[4], AIC[5])
-attr(rows, 'position') <- c(15)
-
-note1 <- "Additional covariates include age, gender race, job tenure, hourly and full time status, college degree, main job, income, religiosity."
-#note2 <- "Robust standard errors in parentheses."
+attr(rows, 'position') <- c(17)
 
 gm <- list(
   list("raw" = "nobs", "clean" = "$N$", "fmt" = 0))
 
 mod_tab_don <-modelsummary(don_mods,
                             #shape = term + response ~ statistic,
-                            coef_map = coef_maps,
-                            title = "Willingness to donate to EHF among retail workers who do not have an EHF, by state level safety net generosity models. There is no detected state level variation.  \\label{tab:tab-genpop-ui-don}",
-                            gof_map = gm,
-                            add_rows = rows,
-                            notes = list(note1),
-                            output = "kableExtra",
-                            threeparttable=TRUE, 
-                            #stars = c('*' = .05, '**' = .01),
-                            escape = FALSE
+                           coef_map = coef_maps,
+                           title = "Willingness to donate to EHF among retail workers who do not have an EHF, by state level safety net generosity models. There is no detected state level variation. \\label{tab:tab-genpop-ui-don}",
+                           gof_map = gm,
+                           add_rows = rows,
+                           notes = list(note1),
+                           stars = c('*' = .1, '**' = .05, '***' = .01),
+                           threeparttable = TRUE,
+                           escape = FALSE
 )
+

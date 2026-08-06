@@ -140,7 +140,8 @@ placebo_tab<-modelsummary(placebo.models.uw,
             vcov = "robust",
             notes = list("Robust standard errors in parentheses."),
             threeparttable = TRUE,
-            stars = c('*' = .05, '**' = .01)
+            stars = c('*' = 0.1, '**' = .05, '***' = .01),
+            escape = F
 )
 
 

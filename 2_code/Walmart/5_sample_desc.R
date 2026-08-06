@@ -139,7 +139,7 @@ manip_model_print<- modelsummary::modelsummary( mc_all,
                             title = "OLS regression of treatment on correctly reporting a Walmart EHF (manipulation check) \\label{tab:tab-manip-check}",
                             output = "kableExtra",
                             notes = list(note2),
-                            stars = c('*' = .05, '**' = .01),
+                            stars = c('*' = .1, '**' = .05, '***' = .01),
                             escape = FALSE
 )
 
@@ -162,7 +162,7 @@ manip_model_print_compact<- modelsummary::modelsummary( mc_c,
                             title = "OLS regression of treatment on correctly reporting a Walmart EHF (manipulation check) \\label{tab:tab-manip-check}",
                             output = "kableExtra",
                             notes = list(note2),
-                            stars = c('+' = .1, '*' = .05, '**' = .01),
+                            stars = c('*' = .1, '**' = .05, '***' = .01),
                             escape = FALSE
 )
 

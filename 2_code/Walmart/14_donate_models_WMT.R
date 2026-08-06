@@ -138,8 +138,8 @@ donation_tab_app <- modelsummary(d_mods_app,
                                notes = "Robust standard errors for OLS model",
                                threeparttable=TRUE, 
                                output = "kableExtra",
-                               stars = c('+' = 0.1, '*' = .05, '**' = .01)#,
-                               #escape = FALSE
+                               stars = c('*' = 0.1, '**' = .05, '***' = .01),
+                               escape = FALSE
 )
 
 

@@ -8,13 +8,13 @@ gr_clean <- read.csv(here("3_cleaned_data", "general_retail_clean.csv")) %>%
 p_supp_st <- ggplot(gr_clean) +
   geom_point(aes(y = ehf_support_both_num, x = st_directed*1000), size = 5, shape=1) +
   geom_smooth(aes(y = ehf_support_both_num, x = st_directed*1000), method = "lm", se = FALSE) +
-  labs(x = "State safety net generosity (USD)", title = "EHF support level by State generosity", y = "") +
+  labs(x = "State safety net generosity (USD)", title = "", y = "") +
   scale_y_continuous(
     labels = c("Not at all supportive", "Moderately supportive", "Very supportive"), 
     breaks = c(0, 0.5, 1),
   ) +
   scale_x_continuous(expand = c(0, 0)) +  # Also remove padding on x-axis
-  coord_cartesian(ylim = c(-0.1, 1.1)) +  # ← Zoom in/out by adjusting these values
+  coord_cartesian(ylim = c(-0.1, 1.1)) +  
   theme(
     axis.text.y = element_text(angle = 45, vjust = -1.5),
     plot.margin = margin(5, 5, 5, 5, "pt")  # Reduce plot margins (top, right, bottom, left)
@@ -30,7 +30,7 @@ ggsave(filename = 'ui_plot_gr_supp.png',
 p_don_st <- ggplot(gr_clean) +
   geom_point(aes(y = as.numeric(ehf_donate_new_num), x = st_directed*1000), size = 5, shape=1) +
   geom_smooth(aes(y = as.numeric(ehf_donate_new_num), x = st_directed*1000), method = "lm", se = FALSE) +
-  labs(x = "State safety net generosity (USD)", title = "Willingness to donate to EHF by State generosity", y = "") +
+  labs(x = "State safety net generosity (USD)", title = "", y = "") +
   scale_y_continuous(
     labels = c("Would not donate", "One time <$20", 
                "One time >$20", "Recurring <$20", "Recurring >$20"),
