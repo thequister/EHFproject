@@ -54,7 +54,7 @@ coef_maps <- c("treatment_binTRUE" = "Treated",
                "income_num" = "HH income",
                "religiousTRUE" = "Religiosity",
                "ideology_conservative" = "Conservative",
-               "as.numeric(home_ownership):hpi_5year" = "house appreciation")
+               "as.numeric(home_ownership):hpi_5year" = "House appreciation")
 
 rows <- tribble(
   ~"term",      ~"Base",  ~"State",          ~"Pre-exposed", ~"Pre-registered", ~"Expanded",

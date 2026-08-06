@@ -140,7 +140,8 @@ manip_model_print<- modelsummary::modelsummary( mc_all,
                             output = "kableExtra",
                             notes = list(note2),
                             stars = c('*' = .1, '**' = .05, '***' = .01),
-                            escape = FALSE
+                            escape = FALSE,
+                            threeparttable = T
 )
 
 mc_c <- list(mc_bin_hq, mc_full_hq, mc_bin_hq_int, mc_full_hq_int)
@@ -159,11 +160,12 @@ manip_model_print_compact<- modelsummary::modelsummary( mc_c,
                             gof_map = gm,
                             #vcov = "robust",
                             #add_rows = extra_row_c,
-                            title = "OLS regression of treatment on correctly reporting a Walmart EHF (manipulation check) \\label{tab:tab-manip-check}",
                             output = "kableExtra",
+                            title = "OLS regression of treatment on correctly reporting a Walmart EHF (manipulation check) \\label{tab:tab-manip-check}",
                             notes = list(note2),
                             stars = c('*' = .1, '**' = .05, '***' = .01),
-                            escape = FALSE
+                            escape = FALSE,
+                            threeparttable = T
 )
 
 

@@ -52,7 +52,7 @@ coef_maps <- c("HDTreatmenttxt" = "Text treatment",
                "religiousTRUE" = "Religiosity",
                "st_directed" = "State safety net generosity",
                "ideology_conservative" = "Conservative",
-               "as.numeric(home_ownership):hpi_5year" = "house appreciation")
+               "as.numeric(home_ownership):hpi_5year" = "House appreciation")
 
 rows<-tribble(
   ~"term", ~"Base", ~"Preexposure",  ~"Pre-registered", ~"Expanded",
@@ -140,6 +140,7 @@ placebo_tab<-modelsummary(placebo.models.uw,
             vcov = "robust",
             notes = list("Robust standard errors in parentheses."),
             threeparttable = TRUE,
+            output = "kableExtra",
             stars = c('*' = 0.1, '**' = .05, '***' = .01),
             escape = F
 )
